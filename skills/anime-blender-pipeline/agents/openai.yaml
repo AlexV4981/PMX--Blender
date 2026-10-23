@@ -1,0 +1,14 @@
+interface:
+  display_name: Anime Blender Pipeline
+  short_description: Coordinate reviewed anime character conversions
+  default_prompt: Use $anime-blender-pipeline to convert this anime game character
+    into an approved, editable Cycles animation asset.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

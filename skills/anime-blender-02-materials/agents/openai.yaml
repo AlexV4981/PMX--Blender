@@ -1,0 +1,14 @@
+interface:
+  display_name: 'Anime Blender 02: Cycles material restoration'
+  short_description: Stage 02 native Blender pipeline review and execution
+  default_prompt: Use $anime-blender-02-materials to prepare the next exact candidate
+    and evidence for human review.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

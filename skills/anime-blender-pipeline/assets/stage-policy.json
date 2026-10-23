@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "pack_version": "1.0.0",
+  "candidate_limit": 3,
+  "dependency_alternative_limit": 10,
+  "stages": {
+    "00": {"required_checks": ["source-inventory", "environment-lock", "reference-and-scope", "capability-spec"]},
+    "01": {"required_checks": ["import-inventory", "feature-loss-report", "texture-dependencies", "baseline-integrity"]},
+    "02": {"required_checks": ["material-mapping", "cycles-comparisons", "preview-behavior", "material-flag-report"]},
+    "03": {"required_checks": ["geometry-change-comparisons", "morph-integrity", "deformation-tests", "correspondence-map"]},
+    "04": {"required_checks": ["control-capabilities", "rig-integrity", "switching-demonstrations", "runtime-dependencies"]},
+    "05": {"required_checks": ["face-and-visemes", "animation-usability", "retarget-profiles", "animator-guide"]},
+    "06": {"required_checks": ["motion-fixtures", "deformation-review", "integrity-lint", "clean-core-rig"]},
+    "07": {"required_checks": ["final-style-spec", "cycles-look-comparisons", "lighting-and-motion", "preview-limitations"]},
+    "08": {"required_checks": ["physics-part-map", "cold-motion-tests", "category-toggles", "editable-unbaked", "physics-settings"]},
+    "09": {"required_checks": ["final-quality", "physics-off-fps", "cold-physics-fps", "frame-time-and-memory", "regression-tests", "relocated-clean-open", "dependency-disposition", "delivery-guide-and-recipe"]}
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "pack_version": "1.0.0",
+  "character": {"id": null, "game": null, "source_revision": null, "reference_files": []},
+  "environment": {"blender_binary": null, "blender_version": null, "blender_sha256": null, "os": null, "gpu": null, "driver": null, "construction_addons": []},
+  "units": {"unit_meters": 1.0, "up_axis": "Z", "forward_axis": "-Y", "approved_height_m": null, "height_landmarks": null},
+  "render": {"engine": "CYCLES", "diagnostic_view_transform": "Standard", "showcase_view_transform": null, "exposure": 0, "gamma": 1, "samples": null, "seed": 0, "device": null, "resolution": [1920, 1080]},
+  "rig": {"body_ik_fk": true, "fingers": true, "face": true, "eye_aim": true, "editable_visemes": true, "space_switches": true, "root_motion": true, "retarget_source_profiles": [], "rotation_modes": {}, "rest_correspondence": null},
+  "physics": {"fps": 24, "fps_base": 1.0, "start_frame": null, "preroll_frames": null, "categories": {}, "baked_delivery": false},
+  "benchmark": {"cpu": "AMD Ryzen 5 7535HS", "ram_gb": 16, "vram_gb": 6, "gpu_exact": null, "mode": "MATERIAL", "physics_off_min_average_fps": 24, "cold_physics_target_average_fps": 12, "project_fps": 24, "viewport_pixels": null, "fixture_frames": 240, "repetitions": 3, "stall_review_threshold_ms": null},
+  "tolerances": {"qualification_status": "uncalibrated", "geometry_height_fraction": null, "normal_angle_degrees": null, "switch_translation_height_fraction": null, "switch_rotation_degrees": null, "silhouette_iou_min": null, "color_metric": null, "physics_tip_length_fraction": null, "collision_penetration": null},
+  "approved_assets": [],
+  "runtime_dependencies": [],
+  "unresolved_assumptions": [],
+  "qualification_status": "not_model_qualified"
+}

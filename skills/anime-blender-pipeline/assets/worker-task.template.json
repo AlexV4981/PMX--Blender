@@ -1,0 +1,17 @@
+{
+  "stage": null,
+  "candidate_id": null,
+  "role": "worker",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "input_checkpoint_sha256": null,
+  "objective": null,
+  "allowed_mutations": [],
+  "forbidden_mutations": [],
+  "recipe_and_reference_paths": [],
+  "output_paths": [],
+  "required_evidence": [],
+  "stop_when": ["scope is unclear", "human judgment is needed", "a submitted or approved artifact would be overwritten", "no usable candidate can be produced"],
+  "report": {"changes": [], "commands": [], "evidence": [], "failures": [], "assumptions": [], "escalation_needed": false},
+  "may_approve": false
+}

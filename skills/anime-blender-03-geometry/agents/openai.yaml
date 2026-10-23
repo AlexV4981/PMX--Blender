@@ -1,0 +1,14 @@
+interface:
+  display_name: 'Anime Blender 03: Geometry and deformation foundation'
+  short_description: Stage 03 native Blender pipeline review and execution
+  default_prompt: Use $anime-blender-03-geometry to prepare the next exact candidate
+    and evidence for human review.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

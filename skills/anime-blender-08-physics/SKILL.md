@@ -1,0 +1,135 @@
+---
+name: anime-blender-08-physics
+description: Execute stage 08, editable native physics, for a Codex PMX anime-humanoid to native Blender pipeline. Use for physics work on Wuthering Waves-style game characters after the pipeline stage prerequisites are approved; preserve explicit human candidate gates and source identity.
+---
+
+# Stage 08: Editable native physics
+
+## Load the execution contract
+
+1. Set STAGE_SKILL to this loaded skill's absolute resource directory. Resolve PACK with `python3 "$STAGE_SKILL/scripts/locate_pipeline.py"`; installed folder IDs may differ from skill names.
+2. Read PACK/references/contract.md and PACK/references/schemas.md before stage work or gate records.
+3. Read PACK/references/roles.md, then [stage implementation checklist](references/stage.md) for procedures and primary sources.
+4. Block execution if the shared pack cannot be uniquely located. If skills are exposed only through a catalogue, resolve the exact anime-blender-pipeline package there and use its resource paths; do not invent sibling paths.
+5. Inspect `python3 "$PACK/scripts/pipeline.py" --help`; use only supported forms.
+6. Follow explicit user instructions over research-era policy wording.
+
+## Scope and priorities
+
+- Execute through Codex; let Sol 6.1 High orchestrate and handle difficult implementation.
+- Assign routine implementation to Sol 6.1 Light (low effort where exposed); escalate to Astra if High yields no usable candidate.
+- Verify actual role/model availability; never claim requested prose labels configured or ran a model.
+- Keep one writer per live .blend and one laptop Blender workload; use private worker assets.
+- Preserve fidelity before animation quality, realism, performance and convenience.
+- Support only tested PMX anime-humanoid feature profiles; do not advertise universal game support.
+- Keep original sources and every approved checkpoint immutable.
+- Prepare descendants from the exact approved predecessor; never edit an archived checkpoint in place.
+- Keep at most three candidate IDs per stage and create only the one to three needed.
+- Revise an existing ID only after recorded human critique; do not evade the cap by archiving IDs.
+- Obtain explicit human selection or critique at this stage even if replaying an accepted recipe.
+- Record assumptions where character, visual, rig or hardware references are missing.
+- Treat Blender execution, character fidelity and hardware qualification as unverified until measured.
+
+## Inputs and preflight
+
+1. Locate the run workspace, `run.json`, source manifest and approved predecessor identity.
+2. Check recorded hashes against actual source and approved checkpoint files.
+3. Check stage-order and invalidation state using the common pipeline validator.
+4. Confirm pinned Blender build, construction tool versions and relevant fixture revisions.
+5. Load character-specific scope, allowed edits, reference confidence and calibrated tolerances.
+6. Stop if prerequisites are unapproved, stale or incompatible; report the concrete blocker.
+7. Use `audit/` for reports and evidence; use `candidates/` for working derivatives.
+8. Keep exact assets and deterministic edits needed for replay rather than prose-only artistic instructions.
+
+## Perform the ordered stage work
+
+1. Map visible hair, garments, accessories, tails, ears and soft tissue against PMX rigid bodies and joints.
+2. Choose native solver candidates per physical structure; do not force a universal jiggle-bone system.
+3. Build distinct simulation/collision proxies and render surfaces with one-way attachment-to-solver-to-deformation flow.
+4. Test modifier order and double-transform/dependency-cycle risks before full-character evaluation.
+5. Record solver-specific scale, mass assumptions, stiffness, damping, gravity, masks, collision pairs, quality and timebase.
+6. Implement independent category toggles that stop solver work; measure evaluation and demonstrate manual animation with each off.
+7. Define reset/rest/pre-roll and cache invalidation; run settle, acceleration/stop, turns, locomotion, crouch, landing and contacts.
+8. Measure normalized tip travel, settle time, stretch, penetration and instability; save approved parameter sets and clear final caches.
+
+## Preserve runtime portability
+
+- Allow pinned third-party construction add-ons and construction-time embedded Python.
+- Inventory every runtime add-on, module, handler, driver namespace and embedded text dependency.
+- Disclose exact embedded Python, behavior and execution requirements for human review.
+- Keep core native posing independent of unapproved runtime add-ons.
+- Require an addon-free final file unless the exact hyperspecific exception has ten distinct documented failed alternatives and explicit human approval.
+- Record up to ten distinct alternatives per dependency with method, outcome and evidence; stop early if one succeeds.
+- Escalate incapable routine retries to High/Astra; ten failures permit requesting an exception, never granting it.
+- Keep native constraints, controls and editable data; do not substitute screenshots or videos for assets.
+
+## Produce reviewable outputs
+
+1. Save editable solver/proxy assets, category toggles, settings and cold-test evidence.
+2. Save candidate `.blend` and registered assets inside WORKSPACE without overwriting its approved predecessor.
+   Keep original sources outside registered work assets; registration does not copy originals.
+3. Record every substantive edit separately with source IDs, parameters and owning-stage rationale.
+4. Record comparisons under fixed cameras, lights, display transform and fixture versions.
+5. Classify each required check as pass, fail or blocked with an evidence file.
+6. Name known omissions and unsupported PMX features explicitly.
+7. Match recipe entries to the exact files and hashes actually submitted.
+8. Keep test evidence separate from production actions and temporary caches.
+
+## Required check evidence
+
+Read the frozen WORKSPACE `policy.json`; record all these exact required names, each with nonempty actual evidence.
+Do not edit run.json or policy to force acceptance; changing policy in an existing run is rejected.
+
+| Required check name | Evidence to produce |
+| --- | --- |
+| `physics-part-map` | Actual movable parts, native method map, omissions and assumptions. |
+| `cold-motion-tests` | Reset/pre-roll and cold sequential clips with motion/collision metrics. |
+| `category-toggles` | Independent category solver-disable cost tests and manual fallback. |
+| `editable-unbaked` | Native editable simulations with final bakes cleared and reset guide. |
+| `physics-settings` | Exact measured solver-specific parameters, masks, proxies and collision scopes. |
+
+## Register and submit the exact candidate
+
+Resolve PACK by frontmatter using the locator above; do not assume the installed directory name.
+Run `python3 "$PACK/scripts/pipeline.py" --help` before relying on this interface.
+Use these verified forms; inspect subcommand help again if the installed script changes:
+
+```bash
+python3 "$PACK/scripts/pipeline.py" validate WORKSPACE
+python3 "$PACK/scripts/pipeline.py" candidate WORKSPACE 08 CANDIDATE --file BLEND --asset ASSET
+python3 "$PACK/scripts/pipeline.py" check WORKSPACE 08 CANDIDATE --name NAME --status pass --evidence FILE
+python3 "$PACK/scripts/pipeline.py" submit WORKSPACE 08 CANDIDATE
+python3 "$PACK/scripts/pipeline.py" status WORKSPACE
+```
+
+Repeat `--asset` for every linked texture/config dependency; omit it only for a truly self-contained bundle.
+Use `fail` or `blocked` instead of `pass` for checks without passing evidence.
+Do not share writable dependency files between candidates; submitted snapshots freeze the registered bundle.
+Do not translate a successful command exit into visual or functional acceptance.
+
+## Human gate and rollback
+
+1. Present exact candidate IDs, differences, comparisons, check results and limitations.
+2. Ask the user to select a candidate or critique the submission; never select on their behalf.
+3. Wait for explicit observed human approval tied to the exact current candidate.
+4. Return the observed human statement to the orchestrator; let it record approval only after exact human acceptance.
+   Never invoke approve/review on worker authority or fabricate actor/statement/evidence.
+5. Re-run validation and preserve the approved result as an immutable checkpoint.
+6. After human critique, record feedback through the orchestrator and revise the existing candidate ID as a new file derivative; repeat affected checks and the gate.
+7. If a candidate changes after submission, invalidate its old review and submit the new identity.
+8. On failure, keep evidence and route repairs to the owner stage. Branch a new run to revisit accepted work;
+   revalidate and obtain affected approvals without copying old approval records.
+9. Invalidate downstream checks/bindings/approvals when an upstream edit affects them.
+10. Report missing Blender, model, references or target laptop as blocked rather than passing by inference.
+
+## Allowed actions
+
+| Action | Permission | Condition |
+| --- | --- | --- |
+| Choose solver methods and physical motion strength | HUMAN GATE | Show measured settings and editable category behavior. |
+| Accept substantive edits or choose a winner | HUMAN GATE | Ask selection/critique of the exact candidate. |
+| Change another stage-owned system | NO | Route to owner and invalidate dependents. |
+| Optimize character quality before stage 09 | NO | Defer measured performance tradeoffs. |
+| Claim missing checks passed | NO | Record blocked status and the missing evidence. |
+
+Keep stage ownership and the explicit human gate even for rows marked YES.
