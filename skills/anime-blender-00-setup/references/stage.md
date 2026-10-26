@@ -29,6 +29,12 @@ Define actual UI benchmark protocol and its availability; headless evaluation is
 | reference-and-scope | Reference board with confidence, allowed edits, cameras and calibrated assumptions |
 | capability-spec | Rig/physics requirements, pilot scene settings, tolerance status and hardware test plan |
 
+## Apply mathematical support
+
+Use robust landmark reprojection fitting to calibrate camera while keeping known pose/geometry fixed. Save pixel residuals and ambiguity; ask for framing/landmark confirmation at the existing setup gate.
+
+Read PACK/references/mathematics.md for the 00 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

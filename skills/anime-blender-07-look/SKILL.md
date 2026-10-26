@@ -20,6 +20,10 @@ Change one causal variable per experiment and render/measure the affected region
 
 Do not compensate for a fault in another subsystem: do not fix lighting with albedo, shader faults with normals, a rest-space error with weights, or attachment faults with excessive damping. Route cross-stage changes to their owner and requalify affected downstream work.
 
+## Mathematical support
+
+Read the 07 section and shared rules in PACK/references/mathematics.md when applying a fit or numerical comparison. Reuse the material color/camera profile. Use regional CIEDE2000 and boundary comparisons; optional LPIPS is supporting evidence only. Use human preference feedback for artistic selection while preserving protected attributes. Record methods/results under the existing checks; add no new human gate.
+
 ## Evidence and handoff
 
 Required check names from the frozen run policy:

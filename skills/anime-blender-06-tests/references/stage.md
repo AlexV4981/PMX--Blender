@@ -27,6 +27,12 @@ Route failures to 02/03/04/05 as appropriate with a minimal reproduction, affect
 | integrity-lint | Actual driver/target/numeric/binding diagnostics and resolved intentional exceptions |
 | clean-core-rig | Fresh-process fixture results and environment/dependency facts |
 
+## Apply mathematical support
+
+Evaluate held-out poses/views plus fixed regression fixtures, compare actual arrays with calibrated tolerances, and report residual distributions/worst cases/repeatability. Human visual review does not replace hidden rig/dependency tests.
+
+Read PACK/references/mathematics.md for the 06 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

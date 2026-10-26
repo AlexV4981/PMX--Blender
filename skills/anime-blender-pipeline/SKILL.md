@@ -21,6 +21,10 @@ For materials require raw channel inspection -> UV/material ownership -> emissio
 
 Use one writer per blend and one laptop Blender workload. Delegate only bounded proven operations with private artifacts. Verify actual model availability; requested role names do not configure a running client. Preserve the existing Sol High orchestration/Light routine-work/Astra escalation preference where actually supported.
 
+## Use mathematical support without changing the workflow
+
+Read [mathematics.md](references/mathematics.md) for the active stage and shared fitting/color rules. Use bounded stage-local fitting, regional CIEDE2000 with provisional target <3, and human preference feedback within the existing gates. Keep unknown inputs/thresholds explicit and protected features as constraints. Copy assets/mathematical-profile.template.json into a mutable run derivative before an actual fit. Distinguish bundled measurements from optional external solvers. Do not implement workflow simplifications merely because a comparison map proposes them.
+
 ## Initialize or resume without laundering approvals
 
 Use scripts/pipeline.py --help. Set PACK to this skill directory and RUN to the absolute conversion workspace.

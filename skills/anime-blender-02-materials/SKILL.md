@@ -20,6 +20,10 @@ Change one causal variable per experiment and render/measure the affected region
 
 Do not compensate for a fault in another subsystem: do not fix lighting with albedo, shader faults with normals, a rest-space error with weights, or attachment faults with excessive damping. Route cross-stage changes to their owner and requalify affected downstream work.
 
+## Mathematical support
+
+Read the 02 section and shared rules in PACK/references/mathematics.md when applying a fit or numerical comparison. After the diagnostic ladder, fit only verified, bounded material parameters using actual Cycles renders. Use regional CIEDE2000 with provisional p95 < 3, expose maximum/outlier regions, and keep alpha/shadow/eye checks separate. Human confirms comparison conditions/statistic before this becomes an acceptance rule. Record methods/results under the existing checks; add no new human gate.
+
 ## Evidence and handoff
 
 Required check names from the frozen run policy:

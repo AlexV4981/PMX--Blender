@@ -20,6 +20,10 @@ Change one causal variable per experiment and render/measure the affected region
 
 Do not compensate for a fault in another subsystem: do not fix lighting with albedo, shader faults with normals, a rest-space error with weights, or attachment faults with excessive damping. Route cross-stage changes to their owner and requalify affected downstream work.
 
+## Mathematical support
+
+Read the 09 section and shared rules in PACK/references/mathematics.md when applying a fit or numerical comparison. Keep quality/function/dependency/performance as separate acceptance conditions and report measurement variation. Use constrained tradeoff selection; retain all existing 09 subgates. This integration does not apply workflow or asset optimization. Record methods/results under the existing checks; add no new human gate.
+
 ## Evidence and handoff
 
 Required check names from the frozen run policy:

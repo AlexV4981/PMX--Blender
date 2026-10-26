@@ -82,3 +82,16 @@ Copy assets/material-plan.template.json into the run; populate it with actual pa
 A valid plan is a record, not visual acceptance. Required unknown maps block the material and remain unconnected. Empty templates fail intentionally. Record all actual Blender graph and image-setting changes in the recipe and inspect the renders. Neither utility repairs shaders automatically.
 
 Version 2 pipeline.py rejects old pack-version ledgers. Do not edit an old policy or run.json to bypass that rejection. Preserve the original run and use fresh lineage/review for a version 2 run.
+
+## Mathematical measurements (revision 1)
+
+Read mathematics.md for assumptions and stage-specific methods. math_tools.py requires NumPy; it is a read-only measurement utility, not an optimizer or acceptance tool. No new dependency is required to open/animate the final blend.
+
+    python3 "$PACK/scripts/math_tools.py" colors "$RUN/audit/color-samples.json" --output "$RUN/audit/color-result-001.json"
+    python3 "$PACK/scripts/math_tools.py" align "$RUN/audit/corresponding-points.json" --output "$RUN/audit/alignment-001.json"
+
+Colors input: encoding='display-srgb', matched_conditions_evidence=[paths], regions=[{name,reference_rgb:[[r,g,b],...],candidate_rgb:[[r,g,b],...]}]. Use JSON double quotes. Values are corresponding display-referred sRGB samples in [0,1]; evidence paths resolve relative to the input file. No ICC/OCIO conversion is performed. Report per-region CIEDE2000 median/p95/max and fraction >=3; the provisional p95<3 result is not stage acceptance. Unknown lighting/registration remains a diagnostic limit.
+
+Align input: source and target equal N-by-3 arrays with known correspondence, after documented axis and scale conversion. Proper SVD rigid alignment rejects collinear data, never allows reflection/scale, and reports residuals. CLI outputs refuse overwrite. Python APIs also expose quaternion_angle and summarize; see their docstrings for units.
+
+Camera/IK/ARAP/PSD/preference/inverse-simulation solvers are procedures or external options, not implemented by this utility. Record actual method/code/version/results before claiming execution. Store a copy of assets/mathematical-profile.template.json with each actual fit; fill relevant fields only and preserve evidence. Existing ledger check names and gates remain unchanged.

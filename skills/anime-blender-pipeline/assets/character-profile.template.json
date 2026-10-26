@@ -78,12 +78,20 @@
     "switch_translation_height_fraction": null,
     "switch_rotation_degrees": null,
     "silhouette_iou_min": null,
-    "color_metric": null,
+    "color_metric": {
+      "formula": "CIEDE2000",
+      "threshold": 3.0,
+      "statistic": "per-region-p95",
+      "status": "provisional_requires_human_calibration",
+      "white_point": "D65",
+      "encoding": "display-srgb"
+    },
     "physics_tip_length_fraction": null,
     "collision_penetration": null
   },
   "approved_assets": [],
   "runtime_dependencies": [],
   "unresolved_assumptions": [],
-  "qualification_status": "not_model_qualified"
+  "qualification_status": "not_model_qualified",
+  "mathematics_revision": 1
 }

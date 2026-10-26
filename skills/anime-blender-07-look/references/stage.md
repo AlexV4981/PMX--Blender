@@ -27,6 +27,12 @@ Save numeric palette/shadow/highlight settings, node-group hashes, map/channel r
 | lighting-and-motion | Key/backlight sweep and head/body motion regressions |
 | preview-limitations | Actual preview comparison and unsupported effects stated precisely |
 
+## Apply mathematical support
+
+Reuse the material color/camera profile. Use regional CIEDE2000 and boundary comparisons; optional LPIPS is supporting evidence only. Use human preference feedback for artistic selection while preserving protected attributes.
+
+Read PACK/references/mathematics.md for the 07 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

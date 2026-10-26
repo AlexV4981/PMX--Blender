@@ -20,6 +20,10 @@ Change one causal variable per experiment and render/measure the affected region
 
 Do not compensate for a fault in another subsystem: do not fix lighting with albedo, shader faults with normals, a rest-space error with weights, or attachment faults with excessive damping. Route cross-stage changes to their owner and requalify affected downstream work.
 
+## Mathematical support
+
+Read the 05 section and shared rules in PACK/references/mathematics.md when applying a fit or numerical comparison. Use bounded shape-delta fitting for known targets and pose-space correctives for reviewed combination faults. Preserve native portable controls; do not treat 2D observations as corresponding 3D vertices or assume independent shape weights sum to one. Record methods/results under the existing checks; add no new human gate.
+
 ## Evidence and handoff
 
 Required check names from the frozen run policy:

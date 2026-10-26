@@ -28,6 +28,12 @@ Check required external modules, Python driver namespace functions, handlers, us
 
 Use all eight canonical names in frozen stage policy: final-quality, physics-off-fps, cold-physics-fps, frame-time-and-memory, regression-tests, relocated-clean-open, dependency-disposition, delivery-guide-and-recipe. Attach actual images, timings, clean-process results and exact package manifests respectively. Record the audit, optimization, reaudit and delivery human subgates through pipeline.py only after the corresponding observed decision. A blocked hardware/runtime check cannot become pass merely because the document is complete.
 
+## Apply mathematical support
+
+Keep quality/function/dependency/performance as separate acceptance conditions and report measurement variation. Use constrained tradeoff selection; retain all existing 09 subgates. This integration does not apply workflow or asset optimization.
+
+Read PACK/references/mathematics.md for the 09 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

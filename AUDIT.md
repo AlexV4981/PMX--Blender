@@ -52,3 +52,7 @@ No live Blender, actual character conversion, viewport benchmark, native graph v
 ## Resume recommendation
 
 Use the last correct import, not the damaged shader derivative. Keep original source textures unchanged. Start a version 2 run with explicit lineage and fresh relevant gates. Diagnose one face material, one hair material and an alpha edge; inspect real renders before propagating. Do not ask the agent to rebuild the entire character to solve an isolated material fault.
+
+## Subsequent mathematical integration
+
+Additive mathematical support now covers all eleven skills without changing their stage order or gates. A shared method reference and profile document camera fitting, rigid alignment, regional color/appearance fitting, deformation/rig/face methods, held-out qualification and motion identification. The numerical helper implements CIEDE2000, declared sRGB/Lab conversion, rigid SVD alignment and quaternion distance; external solvers are explicitly unimplemented procedures. The current suite passes 41 tests, including 20 selected published color reference cases. WORKFLOW_COMPARISON.md freezes the integrated hierarchy and separately proposes reductions in redundant review; those reductions are not applied.

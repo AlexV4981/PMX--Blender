@@ -31,4 +31,8 @@ python3 skills/anime-blender-pipeline/scripts/material_plan.py /path/material-pl
 
 The texture auditor requires Pillow; other pure-Python utilities use the standard library. Channel sheets are observations, not role inference. Material plans validate evidence structure, not visual truth. Generic Toon/Principled seeds remain experimental fixture graphs, not Wuthering Waves material presets.
 
-Thirty utility tests passed. Blender is unavailable in this authoring environment. Live Blender execution, original-model fidelity, actual laptop FPS and cross-machine replay remain unqualified. Read [qualification.md](skills/anime-blender-pipeline/references/qualification.md) before claiming those results. The target remains a Cycles blend with usable animation preview, editable unbaked physics and verified portability; no timing claim is implied by these documents.
+Forty-one utility tests passed. Blender is unavailable in this authoring environment. Live Blender execution, original-model fidelity, actual laptop FPS and cross-machine replay remain unqualified. Read [qualification.md](skills/anime-blender-pipeline/references/qualification.md) before claiming those results. The target remains a Cycles blend with usable animation preview, editable unbaked physics and verified portability; no timing claim is implied by these documents.
+
+## Mathematical integration
+
+All eleven skills now link to stage-specific fitting/measurement procedures, with a tested CIEDE2000 helper and provisional regional Delta E <3 target. External camera/IK/ARAP/PSD/preference/inverse-simulation solvers are documented methods, not bundled Blender implementations. See [WORKFLOW_COMPARISON.md](WORKFLOW_COMPARISON.md) for the active hierarchy and an unapplied simplification proposal. The ten stages, ledger checks and gates remain unchanged.

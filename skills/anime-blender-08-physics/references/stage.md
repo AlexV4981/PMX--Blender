@@ -38,6 +38,12 @@ Test every category alone and all combined, including viewport AND render state.
 | editable-unbaked | Native solver/proxy/settings retained, final bake/cache state |
 | physics-settings | Exact solver parameters/units, collision scope, bindings and reset/pre-roll recipe |
 
+## Apply mathematical support
+
+Fit declared native solver settings to observed or human-approved target motion using inverse simulation. Freeze driver motion/timebase/reset. Keep XPBD and oscillator equations as appropriately limited references; prove actual toggles/cold behavior.
+
+Read PACK/references/mathematics.md for the 08 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

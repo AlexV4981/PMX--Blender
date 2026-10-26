@@ -41,7 +41,7 @@ Physics-off average must reach >=24 FPS. Cold active physics targets approximate
 
 Use exact hashes for source/approved file identity and direct array comparisons with unit-aware tolerances for evaluated geometry/bones/UVs/normals. Hashing rounded floats is not tolerance testing. Normalize geometric displacement by approved character height, record angular differences and compare switching endpoints.
 
-Use matched cameras/lights/world/color management and region masks for silhouette and color metrics. If using Delta E, name the formula, RGB/Lab conversion, white point, masks and statistic. Do not adopt a universal <=3 threshold against screenshots with unknown rendering conditions. Derive thresholds from repeated fixtures and visible differences, then freeze the approved numeric profile.
+Use matched cameras/lights/world/color management and region masks for silhouette and color metrics. If using Delta E, name the formula, RGB/Lab conversion, white point, masks and statistic. Use the user-requested provisional Delta E 00 <3 target under the conditions in mathematics.md; it is not a universal guarantee against screenshots of unknown rendering conditions. Propose per-region p95, report tails/maximum and calibrate masks/statistic with the human before treating it as acceptance. Keep unknown-condition comparisons diagnostic.
 
 Measure native physics settling time, part-length-normalized travel, stretch, penetration and stability under the exact reset/preroll/motion settings. No baked delivery is necessary to retain audit clips and numeric evidence. Simulation numerical differences across platforms use tolerances, not exact moving-vertex hashes.
 
@@ -53,3 +53,7 @@ Record pass/fail/blocked per feature, not a single score. Mark assumptions and u
 ## Version 2 instruction and utility validation
 
 Thirty pure-Python tests exercise ledger/PMX behavior and diagnostic records/raw channel observation. Independent task simulations check how the rewritten materials and rig/physics procedures handle ambiguous inputs and unavailable Blender. This is instruction-level evaluation only. No Blender, model, hardware or replay qualification is implied. The material plan validator does not verify artistic truth, graph equivalence, or screenshot fidelity.
+
+## Mathematical integration qualification
+
+The combined utility suite now has 41 tests. CIEDE2000 matches 20 selected published Sharma/Wu/Dalal reference cases within their four-decimal rounding tolerance, including zero-chroma and hue wraparound. Tests also exercise declared sRGB conversion, visible error tails, reflected/degenerate rigid alignment, quaternion sign equivalence and evidence prerequisites. These qualify the numerical helper on those cases, not image registration, camera/rig fitting, external solvers, real Blender scenes or artistic fidelity. Existing Blender/hardware limitations remain.

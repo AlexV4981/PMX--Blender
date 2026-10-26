@@ -25,6 +25,12 @@ Embed a concise animator guide in the blend: entry controls, property ranges, sw
 | retarget-profiles | Requested profile and actual clip results, or explicit approved absence |
 | animator-guide | Actual embedded text plus guide procedure replay on the candidate |
 
+## Apply mathematical support
+
+Use bounded shape-delta fitting for known targets and pose-space correctives for reviewed combination faults. Preserve native portable controls; do not treat 2D observations as corresponding 3D vertices or assume independent shape weights sum to one.
+
+Read PACK/references/mathematics.md for the 05 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

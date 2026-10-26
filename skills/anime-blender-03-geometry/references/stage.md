@@ -27,6 +27,12 @@ For thickness, proportions, eyes or hidden surfaces, show one isolated delta wit
 | deformation-tests | Original versus repaired isolated poses, evaluated displacement/collapse and silhouette checks |
 | correspondence-map | Exact source/import/final indices or tested transfer with failures disclosed |
 
+## Apply mathematical support
+
+Use ARAP only for an approved geometric correction, compare skinning models only for an observed deformation fault, and preserve all shape/UV/normal correspondence. Measure evaluated displacement; human accepts the form/motion delta.
+
+Read PACK/references/mathematics.md for the 03 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

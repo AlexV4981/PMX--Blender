@@ -71,6 +71,12 @@ Run `python3 "$PACK/scripts/material_plan.py" PLAN.json` before registering. Thi
 
 A necessary map that is absent, or an unresolved face/alpha fault, remains blocked. Present a draft for critique when needed; do not call it shader restoration merely because it renders.
 
+## Apply mathematical support
+
+After the diagnostic ladder, fit only verified, bounded material parameters using actual Cycles renders. Use regional CIEDE2000 with provisional p95 < 3, expose maximum/outlier regions, and keep alpha/shadow/eye checks separate. Human confirms comparison conditions/statistic before this becomes an acceptance rule.
+
+Read PACK/references/mathematics.md for the 02 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

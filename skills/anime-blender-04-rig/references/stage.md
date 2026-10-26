@@ -29,6 +29,12 @@ Rigify may construct a rig, but generated Python UI and snapping are separate de
 | switching-demonstrations | Actual pre/post matrices and rendered/keyed IK/FK and space switch fixtures |
 | runtime-dependencies | Exact add-on/driver/text/handler dependencies and clean native posing test |
 
+## Apply mathematical support
+
+Use bounded IK/transform fitting where needed. Measure switching translation and normalized-quaternion angular error in common spaces, including intermediate joints; human judges actual control behavior.
+
+Read PACK/references/mathematics.md for the 04 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

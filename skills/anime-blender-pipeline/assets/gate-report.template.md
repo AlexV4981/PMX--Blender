@@ -26,3 +26,14 @@ Record required final add-ons, each alternative method and its evidence. A hyper
 
 Actor / exact observed statement / candidate digest / date:
 Do not prefill approval, invent consent or treat another agent's decision as human approval.
+
+## Numerical support, if used
+
+- Method and actual implementation/version:
+- Input, fixture and mask/correspondence identity:
+- Variables/bounds and frozen attributes:
+- Regional metrics/worst cases and uncertainty:
+- Provisional versus human-calibrated acceptance criteria:
+- Human visual preference and unresolved differences:
+
+Use not applicable when no fit is needed. Do not add a gate or claim optional solvers ran.

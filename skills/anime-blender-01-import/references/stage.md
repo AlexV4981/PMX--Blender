@@ -27,6 +27,12 @@ If the import is already structurally correct, preserve it. Stage 02 begins by d
 | texture-dependencies | Exact resolved image hashes, ambiguity/missing-file list |
 | baseline-integrity | Saved raw import, settings and front/side/face diagnostic images |
 
+## Apply mathematical support
+
+Use known source correspondences and proper SVD rigid alignment after the documented axis/scale conversion. Inspect residuals without nonrigid warping; keep topology/UV/material integrity checks separate.
+
+Read PACK/references/mathematics.md for the 01 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.
