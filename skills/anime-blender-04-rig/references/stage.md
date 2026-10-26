@@ -1,5 +1,9 @@
 # 04 — Native control rig: working procedure
 
+## Routine path
+
+Use the shared motion fixture for changed-control/switch smoke tests and a control demo. Reserve full qualification for 06 while retaining actual safety/space checks. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Preserve the proven deform skeleton
 
 Map anatomical roles using rest positions, hierarchy and influence regions; Japanese/English bone names are hints. Keep the imported deform skeleton/rest bind where it works. Build separate control/mechanism bones rather than rebuilding and reweighting everything. Inventory grants, twist, IK, SDEF callbacks and morph dependencies before removal.

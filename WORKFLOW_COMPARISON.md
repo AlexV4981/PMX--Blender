@@ -1,8 +1,8 @@
-# Workflow comparison after mathematical integration
+# Workflow comparison — lightweight Cycles workflow applied
 
-**Map A describes the integrated skills. Map B is an unapplied proposal for review.** No stage, gate, required check or ledger behavior was removed during integration. All ten stages remain in order, each with exact-candidate human acceptance; stage 09 retains its four internal reviews.
+**Map A preserves the version-2 workflow for comparison. Map B is now the active version-3 workflow, approved by the user.** All ten stages and their handoffs remain. Stage 09 now has two decisions; final delivery also accepts the stage. Production rendering, comparisons, animation previews and timing use Cycles only unless the user explicitly requests another engine.
 
-## Map A — integrated hierarchy (active)
+## Map A — before simplification (historical version 2)
 
 Numbers give execution order. These branches group the hierarchy; they do not authorize parallel Blender writers.
 
@@ -154,13 +154,13 @@ flowchart TD
 | LPIPS or external differentiable renderer | Optional external method; results require actual execution and Cycles verification |
 | Provisional color target | Delta E 00 <3, proposed per-region p95; human calibrates conditions, masks and statistic; maximum/tail still shown |
 
-## Map B — lighter hierarchy (proposal only)
+## Map B — applied lightweight Cycles hierarchy (version 3)
 
-Keep the same ten stage skills and ten stage handoffs. Change routine review depth, not the character goal or source protection. None of the following is installed or enforced yet.
+The same ten stage skills and handoffs remain. Routine work uses short Cycles demonstrations and human critique, with focused diagnostics/fitting for observed or uncertain faults. This path is applied in the skills, shared contract, policy and CLI.
 
 ```mermaid
 flowchart TD
-  R["Proposed lighter workflow"] --> F["Foundation"]
+  R["Active Cycles-only workflow"] --> F["Foundation"]
   R --> C["Construction"]
   R --> D["Finishing"]
   F --> S00["00 Confirm camera and scope once"]
@@ -175,7 +175,7 @@ flowchart TD
   S08 --> S09["09 Audit decision and final delivery decision"]
 ```
 
-### Proposed stage loop
+### Active stage loop
 
 ```mermaid
 flowchart TD
@@ -190,9 +190,9 @@ flowchart TD
 
 When a required numeric/color condition fails, the gate must show it. Human may request a correction or explicitly amend the scope/tolerance; it cannot be relabeled a numerical pass. Reuse prior evidence only with matching dependency/fixture identities and an explicit unaffected-system rationale. Changed candidate files still need the existing ledger identity and relevant updated checks.
 
-## Redundancy review using Map A
+## Applied reductions derived from Map A
 
-| Map A location | Proposed reduction | Keep |
+| Map A location | Applied reduction | Keep |
 | --- | --- | --- |
 | Repeated preflight in every stage | Keep one environment/source record; re-probe only changed facts and verify identity | Source/input identity, pinned version and stale-input detection |
 | 00 camera calibration repeated during look work | Human confirms camera once; revisit only if references/camera/pose change | Matched comparison conditions and explicit ambiguity |
@@ -201,18 +201,28 @@ When a required numeric/color condition fails, the gate must show it. Human may 
 | 04/05/06/09 overlapping animation demos | Maintain one versioned motion/face fixture suite; collect local smoke tests in 04/05 and full qualification in 06; rerun affected cases later | Actual switch, reset, binding, invalid-driver and clean-runtime checks |
 | Per-parameter artistic analysis or preference model | Default to a compact side-by-side and human critique; invoke preference optimization only for difficult repeated search | Distinct candidate identity, bounded trials and protected accepted features |
 | 08 exhaustive parameter searching for motion feel | Use a short settle/turn/landing demo with human critique before expensive inverse fitting | Cold reset, penetration/stretch, real solver suspension and manual fallback |
-| 09 four internal reviews plus final stage acceptance | Propose combining audit+optimization disposition into one decision and reaudit+delivery+stage acceptance into one exact final decision | Actual audit, re-audit after changes, target-machine measurement and relocated clean open |
+| 09 four internal reviews plus final stage acceptance | Combined audit+optimization disposition into one decision and reaudit+delivery+stage acceptance into one exact final decision | Actual audit, re-audit after changes, target-machine measurement and relocated clean open |
 | Large repeated evidence prose | Generate one compact stage report referencing the common recipe/fixtures and listing changes/failures | Evidence bindings, known limitations and actual human decision |
 
 ## Review boundaries
 
 A visual gate can replace redundant artistic deliberation or repeated aesthetic scoring. It cannot prove hidden dependencies, stable native simulation, correct correspondence, safe evaluation order, clean-open portability or actual UI FPS. Those need the relevant executable tests. Do not remove the Delta E check that helped the user; use human review to interpret local differences and stop needless tuning once the accepted target is met.
 
-All simplifications above remain proposals. A later approved implementation would need coordinated contract, policy, ledger CLI/tests and stage-text changes where gate semantics change. Do not merely delete prose while the executable ledger still requires the old subgates.
+The simplifications are applied as version 3. The contract, frozen policy template, CLI, tests and stage procedures agree: audit then delivery. review --gate delivery validates the current submitted bundle and approves stage 09 atomically. The old optimization/reaudit gate commands are rejected. Historical version 1/2 runs retain their original tools/policy/approvals; do not rewrite them or copy their approvals. Reuse a good import as source with explicit lineage and fresh affected review rather than needlessly reimporting.
 
 ## Validation
 
 - All eleven installed skill validators pass; local Markdown links resolve.
-- Combined pure-Python suite: 41 passing tests. CIEDE2000 includes 20 published reference cases.
+- Combined pure-Python suite: 51 passing tests. CIEDE2000 includes 20 published reference cases.
 - Independent scenario check rejected a misleading global Delta E average, raw linear EXR input, unknown lighting and reflected import alignment.
 - No Blender executable or actual character was available. Solvers described as procedures were not run, and model fidelity/hardware performance remain unqualified.
+
+## Applied Cycles-only scope
+
+- Use scene.render.engine='CYCLES' and 3D viewport shading.type='RENDERED' with the actual scene materials/lights/world.
+- Build no alternate-engine graph, Eevee preview or external-renderer fitting path unless explicitly requested. Solid/wireframe diagnosis is not appearance/timing evidence.
+- Keep the regional Delta E 00 <3 provisional target and critical-region visual review.
+- Retain legacy preview check names for continuity, but define their evidence as Cycles Rendered viewport.
+- Pin viewport samples, denoising, device and resolution. Freshly qualify the desired 24 FPS off / approximately 12 FPS cold active goals in Cycles; old preview-engine timing does not transfer.
+- Read-only inspection flags a non-Cycles scene; seed construction selects Cycles explicitly. Live Blender execution remains unqualified here.
+- An independent scenario check confirmed localized finger-control work does not trigger accepted face-material rebuilding, camera refitting or a second-engine graph; two observed final decisions require no third prompt.

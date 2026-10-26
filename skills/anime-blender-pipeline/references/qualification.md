@@ -9,7 +9,7 @@
 5. Cross-machine replay-qualified: same sources/recipe reproduced equivalent results on a second machine within approved tolerances.
 6. Feature-family qualified: structurally different characters exercise claimed face, hair, garment, rig and PMX variations.
 
-Report the actual level and individual tools/features tested. Do not advance the label because an agent or user likes the documentation. Version 2 authoring environment lacked Blender and supplied real models; native .blend/shader, complete conversion and laptop performance were not tested there.
+Report the actual level and individual tools/features tested. Do not advance the label because an agent or user likes the documentation. Authoring environment lacked Blender and supplied real models; native .blend/shader, complete conversion and laptop performance were not tested there.
 
 ## Script checks
 
@@ -22,20 +22,20 @@ Run the skill creator quick validator on all eleven skills after edits. Check lo
 
 - Verify pinned importer options, texture paths/color spaces, alpha, shared toon handling, flags, additional UVs and morph interpretation.
 - Exercise BDEF/SDEF/QDEF cases and document actual supported behavior and native replacements. Do not assume their equivalence.
-- Render native seed groups, face/eye/hair/outline candidates in Cycles. Verify useful Material Preview separately, including renderer-specific outputs when used.
+- Render native seed groups, face/eye/hair/outline candidates in Cycles. Verify the same graphs in Cycles Rendered viewport; do not build an alternate-engine preview unless explicitly requested.
 - Test original-to-native deformation correspondence, weights, normals, shape keys, IK/FK and parent switches; diagnose dependent Python.
 - Test each native physics method, one-way evaluation, collision scope, real category-disable behavior and reset/preroll. Deliver no baked-only systems.
 - Relocate and clean-open the resulting .blend without construction add-ons. Test core controls with automatic Python disabled and approved embedded convenience helpers separately.
 
 ## Laptop benchmark
 
-Record exact GPU, Blender build, driver, OS, power/thermal state, UI scaling and viewport pixel dimensions. Baseline: Nitro V Ryzen 5 7535HS, 16 GB RAM, 6 GB VRAM. Use a fixed full-character scene and motion fixture. Proposed initial fixture: 240 measured frames, three repetitions, Material Preview, 24 FPS scene timebase; obtain stage 00 approval of the exact profile.
+Record exact GPU, Blender build, driver, OS, power/thermal state, UI scaling and viewport pixel dimensions. Baseline: Nitro V Ryzen 5 7535HS, 16 GB RAM, 6 GB VRAM. Use a fixed full-character scene and motion fixture. Proposed initial fixture: 240 measured frames, three repetitions, Cycles Rendered viewport with pinned samples/denoising/device, 24 FPS scene timebase; obtain stage 00 approval of the exact profile.
 
 Use actual completed UI redraw/evaluation timing with Play Every Frame, no dropped frames. Normal 24 FPS capped playback cannot establish throughput above that cap. Qualify an uncapped UI redraw-driven stepping method that keeps scene FPS fixed, and cross-check against observed playback; do not increase scene FPS to uncap a test because this changes simulation timing. A background frame_set loop is not a viewport test.
 
 Compile shaders first and report initialization separately. Clear simulation caches and run sequentially for each cold active-physics repetition; report prereoll/time separately. Distinguish cached playback explicitly. Count completed frames/elapsed wall time. Report aggregate and per-repetition averages, frame-time percentiles, longest stalls/segments, peak RAM/VRAM and evidence of actual enabled categories.
 
-Physics-off average must reach >=24 FPS. Cold active physics targets approximately 12 FPS. Flag sustained near-1-FPS behavior; calibrate precise stall-duration rules using the pilot and obtain human agreement. Do not turn 12 into an invented hard minimum or let a favorable average conceal severe pauses. Preserve the user's priority order when performance conflicts.
+The desired physics-off average is >=24 FPS, to be newly qualified in the agreed Cycles Rendered viewport configuration. Cold active physics targets approximately 12 FPS. Flag sustained near-1-FPS behavior; calibrate precise stall-duration rules using the pilot and obtain human agreement. Do not turn 12 into an invented hard minimum or let a favorable average conceal severe pauses. Preserve the user's priority order when performance conflicts.
 
 ## Numerical and visual comparisons
 
@@ -57,3 +57,9 @@ Thirty pure-Python tests exercise ledger/PMX behavior and diagnostic records/raw
 ## Mathematical integration qualification
 
 The combined utility suite now has 41 tests. CIEDE2000 matches 20 selected published Sharma/Wu/Dalal reference cases within their four-decimal rounding tolerance, including zero-chroma and hue wraparound. Tests also exercise declared sRGB conversion, visible error tails, reflected/degenerate rigid alignment, quaternion sign equivalence and evidence prerequisites. These qualify the numerical helper on those cases, not image registration, camera/rig fitting, external solvers, real Blender scenes or artistic fidelity. Existing Blender/hardware limitations remain.
+
+## Version 3 workflow qualification
+
+Use the two stage-09 decisions (audit, delivery) and preserve version 1/2 runs with their original tools. Version 3 tests cover current-bundle final acceptance, rejection of missing/stale reviews, delivery-on-draft rejection, legacy-gate rejection and old-ledger incompatibility. Reused component results require a current evidence report with original evidence and dependency/fixture identity; never reuse a stale pass or old human approval. Benchmarks must count completed animation frames at the fixed Cycles sampling policy, not progressive render updates. No live Blender or Cycles viewport performance is qualified by these utility tests.
+
+The version 3 suite contains 51 passing utility tests, including an actual delivery CLI call that persists final acceptance in one operation. The Blender inspector engine warning and seed construction setting remain syntax-checked but live-Blender-unqualified here.

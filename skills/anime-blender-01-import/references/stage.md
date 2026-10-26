@@ -1,5 +1,9 @@
 # 01 — Import and loss inventory: working procedure
 
+## Routine path
+
+Preserve the working import. Reuse its inventory when identity/correspondence is unchanged; show the import and actual losses for the existing gate. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Preserve the import that works
 
 Run the read-only PMX inventory before Blender import. Read exit status: partial inventory remains partial. Extract a working copy preserving Unicode paths; preserve the original archive. Record every importer option and unavoidable conversion. Import once without merge-by-distance, triangulation changes, decimation, normal recalculation or automatic rig rebuilding.

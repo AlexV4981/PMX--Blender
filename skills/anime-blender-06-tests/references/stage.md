@@ -1,5 +1,9 @@
 # 06 — Animation qualification: working procedure
 
+## Routine path
+
+Maintain one versioned full motion/face qualification suite with held-out cases. Later stages rerun affected cases and critical final checks rather than recreate the suite. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Test without secretly repairing
 
 Use a private test derivative with a versioned action/pose fixture and approved character-specific ranges. Freeze control-space inputs and sample frames. Test shoulders/hips, elbow/knee flexion, forearm twist, wrists, spine/neck, crouch, walk/run, planted-foot turn, jump/landing, fingers/grip and face combinations. Add only applicable fixtures; explain scoped exclusions.

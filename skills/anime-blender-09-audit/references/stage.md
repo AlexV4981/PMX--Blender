@@ -1,39 +1,35 @@
 # 09 — Audit and delivery: working procedure
 
-## 1. Audit before optimizing (09A)
+## 1. Audit and one plan decision
 
-Load accepted visual, rig and physics evidence and inventory unresolved assumptions. Repeat representative Cycles face/full-body views, switches, expressions, physics reset/toggles and dependency checks on the exact final candidate. Obtain human review of the actual audit and proposed tradeoffs. This is a model acceptance gate, not permission to prepare the audit.
+Read PACK/references/workflow.md. Reuse the accepted camera/color recipe and shared motion/face fixture identities; inspect actual changed systems and critical final Cycles face/full-body views, switches, expressions, cold physics/reset/toggles and dependencies. Keep unresolved faults visible. Present the actual audit plus the concrete optimization plan or 'not needed' disposition together. One observed human decision is recorded as review --gate audit. Do all audit preparation before asking; do not ask separately whether to prepare it.
 
-## 2. Measure the intended machine and workload
+## 2. Measure the actual Cycles workload
 
-Record exact CPU/GPU/VRAM/RAM, Blender/driver/OS, power and thermal state, viewport pixel dimensions, UI scaling, lighting, overlays and enabled visible/physics categories. Use the approved full-character fixture, 24 FPS project timebase, proposed 240 measured frames and three repetitions. Compile shaders before timing and report initialization separately.
+Use Cycles Rendered viewport (scene.render.engine='CYCLES', shading.type='RENDERED') with actual scene materials/lights/world. Material Preview is a different engine and is outside scope unless explicitly requested. Pin Cycles viewport samples, denoising, device, viewport pixels/UI scaling and shader/scene state. Record exact CPU/GPU/RAM/VRAM, Blender/driver/OS, power and thermal state. Retain the approved 24 FPS project timebase, proposed 240 measured frames and three repetitions, or the human-approved fixture. Desired goals remain >=24 FPS physics-off and approximately 12 FPS fresh active physics, with severe sustained stalls unacceptable; they require fresh Cycles qualification and cannot inherit prior preview-engine results.
 
-Count completed UI redraw/evaluation frames and elapsed wall time; FPS=N/t. Play Every Frame avoids dropping frames, but capped playback cannot prove spare throughput above its cap. Use an independently qualified redraw-driven uncapped UI harness retaining the same scene timebase, and cross-check observed playback. No such recorder is bundled as a tested tool. If unavailable, report the measurement limitation and block the throughput claim; do not substitute a background frame_set timer.
+Count completed viewport frame evaluations/redraws at the pinned sampling policy and elapsed wall time (FPS=N/t). Do not count progressive sampling updates as new animation frames. Compile shaders first; report initialization and pre-roll separately. Use no frame dropping. A playback cap cannot prove spare throughput; a qualified uncapped UI harness must retain the simulation timebase and fixed sampling policy. No tested UI recorder is bundled. Report this limitation and block a throughput claim if measurement is unavailable; never substitute headless frame_set timing or an alternate engine.
 
-Measure physics-off, fresh active physics and cached playback separately. Clear caches and run sequentially with documented pre-roll for each cold repetition. Report each repeat, aggregate, percentiles/longest frame stalls, memory peaks and actual categories. Physics-off target is >=24 FPS; active physics aims near 12 FPS with sustained near-1-FPS stalls unacceptable. Use approved pilot stall/tolerance limits, not a fabricated threshold.
+Separate physics-off, cleared-cache sequential cold physics and cached playback. Report repetitions, frame-time distributions/long stalls, memory and actual enabled categories. Keep fidelity and functional conditions separate from timing; do not hide objects, alter masks, lower render/physics quality or disable collisions to force a pass.
 
-## 3. Optimize measured cost only (09B), then re-audit (09C)
+## 3. Apply selected work and re-audit affected systems
 
-Prepare a concrete plan and obtain its required human gate before quality tradeoffs. Prioritize duplicate evaluation/dead dependencies, proxy and collision scope, then control overhead. Any viewport-only simplification needs an explicitly labeled measured configuration and preserved final render quality. Visible geometry/texture/physics changes require individual comparisons and owner-stage requalification. Do not silently hide objects, drop frames, downsample textures or disable collisions to pass.
+Perform only the combined audit decision's selected plan. Prioritize measured duplicate evaluation/dead dependencies, proxy/collision scope and control overhead. Changes to quality or visible assets require the already specified comparisons and owner-stage requalification; a changed tradeoff/scope requires a fresh combined audit decision. If no work is needed, record that disposition and continue to package tests. Reuse passing unchanged-component evidence with explicit dependency identity/rationale, and rerun affected fixtures plus the critical final checks. Keep source and accepted checkpoints immutable.
 
-If no optimization is needed, record that disposition at the optimization review; do not manufacture changes. Repeat affected visual/motion/dependency and timing checks on the final bundle. Preserve fidelity priority if hardware cannot meet the goal; report the conflict.
+## 4. Test the actual package and one final delivery decision
 
-## 4. Test the actual package (09D)
+Package local rig/material data and packed/relative required textures. Save neutral animation state, separate audit actions and embedded guide; clear simulation bakes while preserving editable solvers. Open the relocated package in fresh stock Blender without construction add-ons and core automatic Python execution. Test native controls/shape keys, Cycles graph output, reset/short simulation and dependencies; run approved optional helpers separately. Keep user-specific paths/modules/driver namespace/handlers/reference links disclosed and resolved.
 
-Make needed material/rig data local or package linked dependencies intentionally. Pack eligible assets or use verified relative texture paths. Save neutral animation state, isolated audit actions and embedded guide. Clear simulation bakes while preserving editable settings. Reopen from a new directory in a fresh stock Blender profile, with construction add-ons unavailable and automatic Python disabled. Replay core controls, shape keys, graph outputs and short simulation reset. Test any approved optional embedded helpers separately.
-
-Check required external modules, Python driver namespace functions, handlers, user-specific paths and reference-model links. An inspection report inventories possible dependencies; only replay demonstrates whether they are required. Preserve exact recipe/settings, source correspondence and qualified limitations. Deliver the blend and necessary textures; keep audit artifacts separate from production animation.
+Register the final file/assets, record required checks and submit the exact bundle. Present the final Cycles result, changed-system re-audit, package tests and timing evidence together. One observed human delivery decision covers re-audit, delivery and final stage acceptance. The orchestrator records review --gate delivery; the CLI validates the exact submitted bundle and approves stage 09 atomically. Do not ask another final-approval question or run approve a second time. Workers cannot grant either decision.
 
 ## Evidence
 
-Use all eight canonical names in frozen stage policy: final-quality, physics-off-fps, cold-physics-fps, frame-time-and-memory, regression-tests, relocated-clean-open, dependency-disposition, delivery-guide-and-recipe. Attach actual images, timings, clean-process results and exact package manifests respectively. Record the audit, optimization, reaudit and delivery human subgates through pipeline.py only after the corresponding observed decision. A blocked hardware/runtime check cannot become pass merely because the document is complete.
+Retain the eight canonical names: final-quality, physics-off-fps, cold-physics-fps, frame-time-and-memory, regression-tests, relocated-clean-open, dependency-disposition, delivery-guide-and-recipe. Use one compact report with references or separate evidence files as appropriate; each ledger check binds actual evidence to the current bundle. A failed/blocked check remains failed/blocked despite a flattering image. Do not transplant old approvals into version 3 runs.
 
-## Apply mathematical support
+## Mathematical support
 
-Keep quality/function/dependency/performance as separate acceptance conditions and report measurement variation. Use constrained tradeoff selection; retain all existing 09 subgates. This integration does not apply workflow or asset optimization.
-
-Read PACK/references/mathematics.md for the 09 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
+Use PACK/references/mathematics.md section 09 for residual/uncertainty and constrained tradeoff principles. Keep quality/function/dependency/performance separate; the two human decisions are audit and delivery. No scalar similarity score or timing average can silently waive a fault.
 
 ## Technical references
 
-Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.
+Consult PACK/references/sources.md for primary Blender documentation and PACK/references/workflow.md for the active lightweight procedure.

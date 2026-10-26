@@ -1,5 +1,9 @@
 # 03 — Geometry and deformation foundation: working procedure
 
+## Routine path
+
+When no geometry change is needed, submit a no-change integrity/correspondence report at the existing gate. Do not manufacture geometric work. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Diagnose without cleanup
 
 Inspect deliberate disconnected layers, open garment boundaries, mirrored UVs, coincident seam vertices, custom split normals, vertex order, shape keys and deform/utility groups. Nonmanifold does not mean broken for game characters. Render neutral diffuse and normal diagnostics to distinguish shading-normal faults from topology faults. Preserve stylized facial normals unless a specific edit is justified by matched evidence.

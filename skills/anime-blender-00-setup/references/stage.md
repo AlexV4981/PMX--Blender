@@ -1,5 +1,9 @@
 # 00 — Setup and reference calibration: working procedure
 
+## Routine path
+
+Confirm camera/scope at the existing gate and retain the camera/environment recipe. Re-fit or re-probe only changed dependencies; source/input identity checks still run. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Establish evidence and identity
 
 Inventory PMX, archive, textures, source terms and supplied references by hash. Identify exact character, costume and source revision. Distinguish an original game asset from a fan PMX interpretation: missing game shader inputs cannot be recovered from the PMX by wishful inference. Preserve source readmes and encoding. Label reference confidence per feature (direct visible evidence, indirect, unknown).

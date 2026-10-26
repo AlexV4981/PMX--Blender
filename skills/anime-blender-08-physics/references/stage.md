@@ -1,5 +1,9 @@
 # 08 — Editable native physics: working procedure
 
+## Routine path
+
+Use the short cold-reset/settle/turn/landing demo and human motion critique before expensive fitting. Still test category suspension, manual fallback, collisions and stability. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Start with one physical structure
 
 Map PMX bodies/joints plus visible hair, garments, accessories, tail/ears and applicable soft tissue to source IDs. Use the PMX as intent evidence; MMD solver numbers are not transferable Blender material constants. Choose one representative chain or panel before full-character construction. Preserve manual rig behavior and approved visible shape.

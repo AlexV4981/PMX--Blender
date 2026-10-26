@@ -39,7 +39,7 @@ Keep core posing usable without construction add-ons. Disclose embedded helper e
 
 ## Laptop performance
 
-Baseline: Acer Nitro V, Ryzen 5 7535HS, 16 GB RAM, 6 GB VRAM. Record exact GPU, OS, driver and power state. Average Material Preview physics-off >=24 FPS. Cold active simulation target approximately 12 FPS, with persistent near-1-FPS behavior unacceptable. Calibrate exact stall limits in the pilot.
+Baseline: Acer Nitro V, Ryzen 5 7535HS, 16 GB RAM, 6 GB VRAM. Record exact GPU, OS, driver and power state. Desired Cycles Rendered viewport physics-off >=24 FPS, with samples/denoising/device pinned and newly qualified. Cold active simulation target approximately 12 FPS, with persistent near-1-FPS behavior unacceptable. Calibrate exact stall limits in the pilot.
 
 Measure real UI viewport updates, not headless frame stepping or cached physics. Keep simulation timebase fixed; separate calculation throughput from capped playback. Report frame-time spikes, RAM/VRAM and cold/warm results. Never hide objects, drop frames, silently lower fidelity or alter tests for a pass.
 
@@ -52,6 +52,10 @@ Require source hashes, pinned tools, approved exact assets/edits, material param
 Treat screenshot lighting/camera uncertainty explicitly. Compare replay outputs under the same approved scene and use direct numerical tolerances rather than rounded hashes. Label unsupported losses, assumptions and uncalibrated metrics. A script's success exit code does not prove model quality.
 
 
-## Diagnostic execution (version 2)
+## Diagnostic execution (version 3)
 
-Read diagnosis.md for failed attempts. Preserve working imports/materials. Require evidence-led map interpretation and isolated pilots before broad changes. Two consecutive non-improving experiments trigger rollback and renewed diagnosis, not another blind fix. Keep generic seeds distinct from approved character shaders. Never compensate across lighting, albedo, normals, bind spaces or solver attachment faults. Stage procedures own the concrete evidence requirements; existing ledger check names remain stable. Version 2 runs do not inherit version 1 approvals.
+Read diagnosis.md for failed attempts. Preserve working imports/materials. Require evidence-led map interpretation and isolated pilots before broad changes. Two consecutive non-improving experiments trigger rollback and renewed diagnosis, not another blind fix. Keep generic seeds distinct from approved character shaders. Never compensate across lighting, albedo, normals, bind spaces or solver attachment faults. Stage procedures own the concrete evidence requirements; existing required-check names remain stable; legacy preview labels refer only to Cycles Rendered viewport. Version 3 runs do not inherit version 1/2 approvals.
+
+## Active lightweight workflow and renderer
+
+Follow workflow.md: verify source/input identity but reuse unchanged environment facts, accepted camera/color recipes and the shared motion suite; collect focused demonstrations and changed-system checks. Keep all ten stage handoffs and essential safety/portability/physics tests. Use short human artistic critique instead of redundant preference-model searches. Stage 09 has two observed decisions, audit and delivery; final delivery also accepts the stage. Other engines or a compatibility graph are outside default scope and require an explicit user request. Use Cycles Rendered viewport for all preview/animation/timing evidence; Material Preview does not satisfy that requirement. Wireframe/solid inspection is diagnostic only. Preserve the user's desired FPS goals but qualify them afresh for Cycles; do not claim an old preview-engine benchmark transfers.

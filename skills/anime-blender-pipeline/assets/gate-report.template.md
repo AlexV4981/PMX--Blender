@@ -37,3 +37,14 @@ Do not prefill approval, invent consent or treat another agent's decision as hum
 - Human visual preference and unresolved differences:
 
 Use not applicable when no fit is needed. Do not add a gate or claim optional solvers ran.
+
+## Compact current-stage review
+
+- Current stage/candidate and actual changed systems:
+- Accepted recipe/environment/fixture facts reused, with identity/rationale:
+- Essential checks and Cycles render/Rendered-viewport evidence:
+- Regional color summary and visible outliers when applicable:
+- Short human question: does this look/behave right, or what needs correction?
+- Stage 09 decision: audit or delivery; delivery includes final acceptance.
+
+Do not rerun unchanged artistic analysis or omit hidden-fault tests.

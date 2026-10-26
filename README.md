@@ -1,38 +1,30 @@
-# PMX to native Blender skills — version 2
+# PMX to native Blender skills — version 3
 
-Eleven Codex skills for source-preserving PMX anime character conversion to a native Cycles animation asset. All stage entrypoints and working procedures have been rewritten around diagnosis, isolated experiments and actual evidence. See [AUDIT.md](AUDIT.md) for the failure analysis, per-stage changes and validation limits.
+Eleven skills for PMX anime character conversion with a lightweight, human-reviewed Cycles-only workflow. The ten stage handoffs remain. Each stage uses essential checks and a short Cycles demonstration, expanding diagnosis or mathematical fitting only for an observed or uncertain fault.
 
-## Use the rewritten source
+## What changed
 
-Copy the eleven directories inside `skills/` into the skills directory used by your Codex installation. Keep them as siblings, with each SKILL.md directly inside its folder. Replace the corresponding old skills; avoid duplicate named copies. The version 1 ZIP under `downloads/` is historical and does **not** contain the rewrite. Use the current repository source for version 2.
+Reuse accepted camera/environment/color definitions while their dependencies match. Share one motion/face suite and rerun affected cases. Use a no-change integrity report when geometry needs no repair. Keep regional Delta E 00 measurements, explicit limits and human artistic critique.
 
-A skill cannot control Blender on your laptop unless the running Codex environment actually has access to it. Provide the exact PMX, texture package, last correct import, failed derivative if available, reference images and Blender executable. Preserve originals. No game models/textures, approved character shaders or completed character recipes are included.
+Stage 09 now has two decisions: audit plus selected plan/disposition; final re-audit plus delivery and stage acceptance. The CLI applies final acceptance in the delivery operation, with current checks and submitted-bundle validation. No third approval question follows.
 
-Suggested restart prompt:
+## Cycles-only scope
 
-> Use $anime-blender-pipeline version 2. Preserve my last correct import and original textures. Inspect the failed shader result and diagnose one face material, one hair material and an alpha edge with the stage 02 ladder. Show actual diagnostic renders before propagating any fix. Keep missing map roles unknown. Stop at the existing human review gates.
+Use Cycles for all final renders, comparisons, review images and animation previews. Use the Cycles Rendered viewport (CYCLES / RENDERED), not Material Preview, for viewport evidence. No alternate-engine graph or external rendering path is built unless the user explicitly requests it. Pin viewport samples, denoising, device and resolution; freshly qualify the desired FPS goals rather than transferring an old preview-engine timing pass.
 
-Choose the parent model in the client. The pack retains the Sol High/Light routine-work/Astra escalation preference where supported; prose role names do not configure an unavailable model. Use bounded workers for proven operations, not unfamiliar shader or rig design.
+## Installation and version boundary
 
-## Version compatibility
+Copy all eleven directories inside skills/ into your Codex skills location as siblings, replacing matching older copies. The historical version-1 ZIP is not the current source. Keep originals and accepted checkpoints immutable.
 
-Version 2 uses fresh ledger runs. Do not change the policy/version in a version 1 ledger, copy old approvals or overwrite accepted files. Keep historical runs with their historical tools. Reuse a correct imported blend as an explicit source artifact with recorded lineage and fresh affected review; another import is not automatically necessary.
+Version 3 changes approval semantics and renderer requirements. Start a new run with explicit lineage; preserve version 1/2 runs and their original tools. Never edit a historical policy/version or copy its approvals. A correct earlier imported blend can be a new source with fresh affected review; another import is not automatically required.
 
-The product priorities remain fidelity > animation > realism > performance > convenience. Each stage has a human candidate gate. Final core posing should be native and independent of construction add-ons. The exception process for a hyperspecific required runtime add-on remains unchanged.
+## Maps and validation
 
-## Tools and validation
+[WORKFLOW_COMPARISON.md](WORKFLOW_COMPARISON.md) preserves the historical hierarchy and shows the active lighter hierarchy. [AUDIT.md](AUDIT.md) records the previous diagnosis and subsequent changes.
+
+All eleven skills validate. Fifty-one utility tests pass, including 20 published CIEDE2000 cases and stage-09 CLI acceptance/stale-evidence checks. No live Blender/model/target-laptop qualification is claimed. Documented camera/IK/ARAP/PSD/preference/inverse-simulation solvers remain procedures or external options, not bundled Blender implementations. Numerical helpers require NumPy; the texture auditor additionally requires Pillow.
 
 ```sh
 python3 -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -v
 python3 skills/anime-blender-pipeline/scripts/blender_tools.py validate-seeds
-python3 skills/anime-blender-pipeline/scripts/texture_audit.py /path/map.png --output /path/new-audit-dir
-python3 skills/anime-blender-pipeline/scripts/material_plan.py /path/material-plan.json
 ```
-
-The texture auditor requires Pillow; other pure-Python utilities use the standard library. Channel sheets are observations, not role inference. Material plans validate evidence structure, not visual truth. Generic Toon/Principled seeds remain experimental fixture graphs, not Wuthering Waves material presets.
-
-Forty-one utility tests passed. Blender is unavailable in this authoring environment. Live Blender execution, original-model fidelity, actual laptop FPS and cross-machine replay remain unqualified. Read [qualification.md](skills/anime-blender-pipeline/references/qualification.md) before claiming those results. The target remains a Cycles blend with usable animation preview, editable unbaked physics and verified portability; no timing claim is implied by these documents.
-
-## Mathematical integration
-
-All eleven skills now link to stage-specific fitting/measurement procedures, with a tested CIEDE2000 helper and provisional regional Delta E <3 target. External camera/IK/ARAP/PSD/preference/inverse-simulation solvers are documented methods, not bundled Blender implementations. See [WORKFLOW_COMPARISON.md](WORKFLOW_COMPARISON.md) for the active hierarchy and an unapplied simplification proposal. The ten stages, ledger checks and gates remain unchanged.

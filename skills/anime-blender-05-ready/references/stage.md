@@ -1,5 +1,9 @@
 # 05 — Face controls and animation usability: working procedure
 
+## Routine path
+
+Use the shared face fixture for changed expression combinations, reset/keying and a short human demo. Reserve full qualification for 06; retain actual retarget tests when required. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Preserve the expression vocabulary
 
 Map source vertex, group, bone, UV and material morphs to native controls explicitly. Shape keys only represent compatible vertex deformations. Record original ranges and intentional asymmetry; do not rename away the source mapping. Preserve neutral Basis and relative-key relationships.

@@ -36,3 +36,8 @@ During this rewrite, official indexed documentation confirmed the Toon/Cycles an
 ## Mathematical methods
 
 See [mathematics.md](mathematics.md) for stage mapping, assumptions and the primary references for robust fitting, CIEDE2000, rigid alignment, ARAP, skinning, expression fitting, inverse simulation and human preference models. The documented external solvers are not bundled Blender implementations.
+
+## Cycles viewport scope
+
+- [Blender viewport shading](https://docs.blender.org/manual/en/4.4/editors/3dview/display/shading.html): Rendered mode uses the scene engine; Material Preview is not a Cycles substitute.
+- [Blender Eevee developer documentation](https://developer.blender.org/docs/features/eevee/): Material Preview uses Eevee even for a Cycles project. The default workflow therefore uses Cycles Rendered viewport and builds no alternate-engine graph.

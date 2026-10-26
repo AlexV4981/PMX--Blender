@@ -21,7 +21,7 @@ approve/review record externally observed human statements. The CLI cannot authe
 
 ## Stage 09
 
-Record audit, optimization, reaudit and delivery reviews in order. Optimization can explicitly be not needed. Audit/optimization records remain historical through revision; reaudit/delivery must match the final bundle. Re-submit after changes and repeat affected checks. The orchestrator must prevent edits before plan acceptance; a ledger cannot semantically validate every Blender action.
+Record audit then delivery. Audit covers audit plus selected plan/not-needed disposition and remains historical across revisions within that scope. If scope changes, obtain a fresh audit decision. Delivery must identify the current submitted bundle and passing checks; it covers re-audit/delivery/final acceptance and approves stage 09 atomically. Re-submit after edits and repeat affected checks. The ledger cannot semantically prove every edit followed the selected plan.
 
 ## Recipe contents
 
@@ -34,8 +34,12 @@ Save manual edits as data or deterministic operations, not directives to make so
 Record up to ten distinct alternatives per final dependency, each with failed/succeeded outcome and nonempty evidence. Ten failures permit requesting a hyperspecific exception; they do not grant it. Record actual Astra role/session and resulting artifacts when used. If unavailable, record that fact and remaining choices, not manufactured escalation evidence.
 
 
-## Version 2 diagnostic records
+## Diagnostic records
 
 Use assets/material-plan.template.json. Record baseline evidence and each material's source ID, mesh/slot owner, disposition (preserve/proposed/blocked), output method/limits, PMX semantics, map hashes, image datablocks, UVs, role evidence, color-space rationale and regression evidence. Packed maps name all RGBA channels, including unused. Unknown roles stay unconnected; required unknowns block the material. Paths resolve relative to the plan file. Validator success is only structural evidence.
 
-Do not add plan fields to run.json or manually mutate the frozen ledger policy. Register the plan as a candidate dependency and store its validation report separately. Maintain map/graph/fixture/recipe identity across changes. Version 2 uses pack_version 2.0.0; historical approvals remain in their original runs.
+Do not add plan fields to run.json or manually mutate the frozen ledger policy. Register the plan as a candidate dependency and store its validation report separately. Maintain map/graph/fixture/recipe identity across changes. Version 3 uses pack_version 3.0.0; historical version 1/2 approvals remain in their original runs.
+
+## Renderer and reused evidence
+
+New profiles use CYCLES and RENDERED viewport with samples/denoising/device explicit. Other engines require a recorded explicit user request. Legacy preview check labels now mean Cycles Rendered viewport. A reused unchanged-component result is accompanied by a fresh current-bundle evidence report identifying original evidence, matching component/fixture/environment hashes and rationale. No copied approvals or invented test execution is permitted.
