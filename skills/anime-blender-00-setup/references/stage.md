@@ -1,79 +1,34 @@
-# Stage 00 implementation checklist
+# 00 — Setup and reference calibration: working procedure
 
-Read this with the live shared contract. Treat the research excerpt below as technical rationale, not a claim of implementation or authority over newer user rules.
+## 1. Establish evidence and identity
 
-## Execute and verify
+Inventory PMX, archive, textures, source terms and supplied references by hash. Identify exact character, costume and source revision. Distinguish an original game asset from a fan PMX interpretation: missing game shader inputs cannot be recovered from the PMX by wishful inference. Preserve source readmes and encoding. Label reference confidence per feature (direct visible evidence, indirect, unknown).
 
-1. Inventory original PMX package, texture files, source terms and reference images; hash each original before copying.
-2. Pin exact Blender build and construction add-on commits; record OS, GPU, drivers and dependency hashes.
-3. Record Nitro V Ryzen 5 7535HS, 16 GB RAM, 6 GB VRAM baseline and actual device differences.
-4. Measure approved character height; propose Z-up, -Y-forward, meters; record landmark-based scale conversion.
-5. Separate confirmed in-game references from inferred details; capture professional rig references as capability evidence.
-6. Create fixed neutral Cycles, lighting sweep, showcase and Material Preview fixtures with recorded cameras and color management.
-7. Propose numerical tolerance pilot and character-specific pose ranges; leave unmeasured thresholds pending human calibration.
-8. Save environment lock, intake manifest, reference board, run.json recipe skeleton and acceptance proposal.
+Record Blender executable/build hash, importer release/commit, OS, Python, GPU/driver, enabled add-ons and OCIO configuration. Pin a tested combination; do not upgrade an existing conversion to a moving latest release. Run the environment probe and existing utility tests. A missing laptop blocks hardware qualification, not preparation of the scene.
 
-## Binding policy updates
+## 2. Calibrate comparison conditions
 
-- Execute through Codex. Use Sol 6.1 High for orchestration and difficult implementation, Sol 6.1 Light for routine work, and Astra when High produces no usable candidate.
-- Keep at most three active candidates; prepare only the one to three needed. Ask the user to select or critique each exact submission.
-- Allow third-party add-ons and embedded Python during construction. Deliver addon-free core behavior except a hyperspecific runtime add-on exception supported by ten distinct documented failed alternatives and explicit human approval of the exact exception; stop early when an alternative works.
-- Disclose and review embedded Python; keep basic native posing independent of unapproved runtime add-ons. Inspect required script behavior separately from add-on installation.
-- Keep source and approved checkpoints immutable; use descendants and invalidate dependent approvals after changes.
-- Give fidelity priority over animation, realism, performance and convenience, in that order. Optimize only in stage 09.
-- Mark missing models, references, hardware, fixtures or Blender execution as blocked/assumed; never infer qualification from documentation.
+Create separate immutable fixture settings for (a) texture/emission diagnosis, (b) neutral diffuse response, (c) directional light sweep and (d) final showcase. Pin cameras, projection/focal length, resolution, lights/world, exposure, view transform/look, samples, seed and denoising. Use Standard as a proposed diagnostic setting, not a global cure for washed-out colors. Preserve a separately approved showcase transform. Do not adjust exposure while tuning a texture.
 
-## Research technical rationale
+Choose Z-up, -Y-forward and meters if compatible with the project. Measure body height using anatomical landmarks, excluding tall accessories. For approved height H and measured import height h, scale factor s=H/h; transform mesh, rest bones, shape-key positions and later physical dimensions consistently. Setting scene units alone does not resize geometry. Do not apply transforms to a bound character without a correspondence test.
 
-## 00 — Setup, intake and reference specification
+Classify screenshots by camera, pose and lighting uncertainty. Use matched landmarks before color comparison; unknown FOV and perspective can imitate proportion errors. Record all assumptions and proposed tolerance units. Leave uncalibrated thresholds null. Never invent model measurements or universal color-error limits.
 
-**What it does:** Establishes the exact environment, character identity, source inventory, comparison scenes and acceptance rules before any conversion.
+## 3. Specify a practical pilot
 
-**How it does it:** Use stock Blender 4.5 LTS as the proposed initial qualification branch, with one exact patch/build and checksum frozen after fixture testing. Pin a matching MMD Tools release or commit; do not use a moving “latest” dependency. Blender 4.5 LTS is a stable starting branch, not a claim that a specific patch/add-on combination has already passed testing. Record all build-time extensions separately from final-file dependencies. [1,2]
+Freeze required rig controls, expressions, physics categories and approved ranges. Begin with a small material pilot: one face/skin patch, one hair clump, one opaque garment and one alpha edge, including front/three-quarter/backlight views. Do not launch full-character shader replacement before this pilot works. Keep geometry and animation acceptance separate from shader matching.
 
-Collect the PMX package, original textures, source terms/readmes, in-game front/side/back/face references and professional rig examples. Label unknown character features and camera/lighting uncertainties instead of inventing them. Define character height from an approved anatomical measurement or user-approved estimate; do not make every character the same height. Use a documented Blender coordinate convention, proposed as Z-up and -Y-forward, and one Blender unit per meter. Record every conversion transform. If scaling by height, scale_factor = approved_height / measured_import_height; document the measurement landmarks and transform geometry, armature and later collision construction consistently.
+Define actual UI benchmark protocol and its availability; headless evaluation is not viewport FPS. Prepare fixtures without claiming they have run on the target laptop.
 
-Create fixed Cycles neutral-light, lighting-sweep and showcase scenes, plus a Material Preview animation scene. Pin camera, resolution, color management, light/world assets, sample count, seed, denoising and render device. A color-diagnostic preset can use Standard, while the approved showcase preset is separately fixed. Never compare images made with different view transforms and call the difference a shader error. AgX and Standard are display transforms with different behavior. [3]
+## Evidence
 
-**Gate output:** environment lock, intake inventory, reference board, character recipe skeleton, rig capability checklist, test scene settings, proposed per-model tolerances and approved scope.
+| Check | Minimum actual evidence |
+| --- | --- |
+| source-inventory | File hashes, model identity, license/readme inventory, missing dependencies |
+| environment-lock | Executable/build/add-on/OCIO facts and probe log |
+| reference-and-scope | Reference board with confidence, allowed edits, cameras and calibrated assumptions |
+| capability-spec | Rig/physics requirements, pilot scene settings, tolerance status and hardware test plan |
 
-| Action | Allowed? | Condition |
-| --- | --- | --- |
-| Inventory, hash, inspect and create comparison scenes | YES | No mutation of source assets |
-| Select scale, style assumptions, rig requirements or references | REVIEW | Record uncertainty and the chosen evidence |
-| Upgrade a pinned tool during an existing run | NO | Requalify a new pack version |
-| Guess unavailable visual details and mark them confirmed | NO | Record a reconstruction proposal instead |
+## Technical references
 
-
-## Sources
-
-Primary documentation consulted; source pages describe Blender/MMD capabilities, while pipeline choices and approval rules above are proposed for this project.
-
-1. [Blender 4.5 LTS release/support](https://www.blender.org/releases/4-5/)
-2. [Maintained MMD Tools repository: compatibility and known IK/physics limitations](https://github.com/MMD-Blender/blender_mmd_tools)
-3. [Blender color management](https://docs.blender.org/manual/en/4.4/render/color_management.html)
-4. [Upstream MMD Tools feature documentation, including SDEF](https://github.com/powroupi/blender_mmd_tools/wiki/MMD_TOOLS-LIST-OF-FEATURES-AND-BRIEF-TUTORIAL-INFORMATION-FOR-FEATURES)
-5. [Toon BSDF, Blender 4.5](https://docs.blender.org/manual/pt/4.5/render/shader_nodes/shader/toon.html)
-6. [Shader to RGB limitations](https://docs.blender.org/manual/id/4.0/render/shader_nodes/converter/shader_to_rgb.html)
-7. [Blender developer documentation: Material Preview uses Eevee](https://archive.blender.org/developer/differential/0005/0005612/index.html)
-8. [Blender 4.5 API: Material Output renderer targets](https://docs.blender.org/api/4.5/bpy.types.ShaderNodeOutputMaterial.html)
-9. [Shape-key introduction and topology guidance](https://docs.blender.org/manual/nl/4.5/animation/shape_keys/introduction.html)
-10. [Data Transfer topology/index mapping](https://docs.blender.org/UATEST/manual/en/4.5/modeling/modifiers/modify/data_transfer.html)
-11. [Armature modifier and Preserve Volume](https://docs.blender.org/manual/en/latest/modeling/modifiers/deform/armature.html)
-12. [Corrective Smooth](https://docs.blender.org/manual/es/4.5/modeling/modifiers/deform/corrective_smooth.html)
-13. [Driver workflow and corrective shape keys](https://docs.blender.org/manual/id/4.5/animation/drivers/workflow_examples.html)
-14. [Rigify distribution/runtime statement](https://docs.blender.org/manual/en/2.81/addons/rigging/rigify.html)
-15. [Rigify generated rig features](https://docs.blender.org/manual/en/4.5/addons/rigging/rigify/rig_features.html)
-16. [Driver execution restrictions](https://docs.blender.org/manual/nl/4.5/animation/drivers/troubleshooting.html)
-17. [Drivers panel and variables](https://docs.blender.org/manual/ar/4.5/animation/drivers/drivers_panel.html)
-18. [Solidify thickness and vertex groups](https://docs.blender.org/manual/en/4.5/modeling/modifiers/generate/solidify.html)
-19. [Freestyle introduction](https://docs.blender.org/manual/en/4.5/render/freestyle/introduction.html)
-20. [Surface Deform proxy workflow](https://docs.blender.org/manual/en/latest/modeling/modifiers/deform/surface_deform.html)
-21. [Cloth pin groups](https://docs.blender.org/manual/id/4.5/physics/cloth/settings/shape.html)
-22. [Soft-body goals](https://docs.blender.org/UATEST/manual/en/4.5/physics/soft_body/settings/goal.html)
-23. [Generic spring constraints](https://docs.blender.org/manual/uk/4.5/physics/rigid_body/constraints/types/generic_spring.html)
-24. [Rigid Body World settings](https://docs.blender.org/manual/en/latest/physics/rigid_body/world.html)
-25. [Cloth collisions and quality](https://docs.blender.org/manual/nl/4.5/physics/cloth/settings/collisions.html)
-26. [Simulation caching/baking](https://docs.blender.org/manual/en/5.0/physics/baking.html)
-27. [Blender 4.5 timeline playback modes](https://docs.blender.org/manual/en/4.5/editors/timeline.html)
-28. [Packed data, relative paths and missing-file tools](https://docs.blender.org/manual/fi/4.5/interface/window_system/topbar.html)
+Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

@@ -19,7 +19,7 @@ import sys
 import tempfile
 
 PACK = Path(__file__).resolve().parents[1]
-VERSION = "1.0.0"
+VERSION = "2.0.0"
 STAGES = tuple(f"{i:02d}" for i in range(10))
 ID = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$")
 

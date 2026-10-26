@@ -9,7 +9,7 @@
 5. Cross-machine replay-qualified: same sources/recipe reproduced equivalent results on a second machine within approved tolerances.
 6. Feature-family qualified: structurally different characters exercise claimed face, hair, garment, rig and PMX variations.
 
-Report the actual level and individual tools/features tested. Do not advance the label because an agent or user likes the documentation. Authoring environment lacked Blender and supplied real models; native .blend/shader, complete conversion and laptop performance were not tested there.
+Report the actual level and individual tools/features tested. Do not advance the label because an agent or user likes the documentation. Version 2 authoring environment lacked Blender and supplied real models; native .blend/shader, complete conversion and laptop performance were not tested there.
 
 ## Script checks
 
@@ -48,3 +48,8 @@ Measure native physics settling time, part-length-normalized travel, stretch, pe
 ## Failure and acceptance
 
 Record pass/fail/blocked per feature, not a single score. Mark assumptions and unsupported losses. For every candidate, provide side-by-side visual/geometry differences and affected motion tests. Ask the human to choose or critique; preserve at most three IDs. Escalate hard inability to produce a candidate to actual Astra, then return unresolved avenues if needed.
+
+
+## Version 2 instruction and utility validation
+
+Thirty pure-Python tests exercise ledger/PMX behavior and diagnostic records/raw channel observation. Independent task simulations check how the rewritten materials and rig/physics procedures handle ambiguous inputs and unavailable Blender. This is instruction-level evaluation only. No Blender, model, hardware or replay qualification is implied. The material plan validator does not verify artistic truth, graph equivalence, or screenshot fidelity.

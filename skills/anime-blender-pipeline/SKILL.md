@@ -1,67 +1,65 @@
 ---
 name: anime-blender-pipeline
-description: Coordinate a human-reviewed PMX anime game character conversion into a native Cycles Blender animation asset, especially Wuthering Waves-style humanoids. Use for the complete ten-stage pipeline, resuming a conversion, reproducing a showcased character recipe, dispatching stage skills, enforcing candidate and approval gates, or handling difficult Blender/MMD conversion failures. Do not claim model or laptop qualification without actual tests.
+description: "Coordinate and diagnose a human-reviewed PMX anime character conversion to a native Cycles Blender animation asset. Use for the complete pipeline, resuming stages, failed shader repair, source-preserving reconstruction, or replaying an accepted recipe."
 ---
 
-# Anime Blender Pipeline
+# PMX to native Blender
 
-## Load only the relevant instructions
+## Start with the failure and the actual asset
 
-Read [contract.md](references/contract.md) before conversion, [schemas.md](references/schemas.md) before ledger operations, and [roles.md](references/roles.md) before delegation. Load only the current stage and its references. Use [tools.md](references/tools.md) for commands, [qualification.md](references/qualification.md) for evidence and [sources.md](references/sources.md) for version-sensitive technical verification.
+Read [contract.md](references/contract.md). When a previous attempt failed, read [diagnosis.md](references/diagnosis.md) and inspect the last correct checkpoint, failed derivative, rendered evidence and actual commands/logs. If those artifacts are unavailable, distinguish an instruction defect from an unconfirmed runtime cause. Do not claim to have diagnosed a particular model from the skill text alone.
 
-## Establish actual capability
+Locate the Blender binary, exact build, importer and supplied model/references. Probe actual capabilities. Keep the correct import intact. Do not replace every material or reimport to solve an isolated shader fault. Treat the bundled generic shader seeds as diagnostic fixtures, not game-character presets or an original game shader recovery.
 
-Locate the user's project and Blender binary. Probe the exact build/add-on versions. If Blender, model sources, references or a required model role are unavailable, report precisely what is blocked and continue only independent preparation. Never claim local workstation access from an unrelated cloud workspace or substitute a random downloaded character.
+Read only the active [stage procedure](#stages), plus [tools.md](references/tools.md), [schemas.md](references/schemas.md) for ledger work and [sources.md](references/sources.md) for version-sensitive Blender behavior. Read [roles.md](references/roles.md) before actual delegation. Missing tools block their dependent work, not independent analysis/preparation.
 
-Treat this pack as workflow and verification implementation. Qualify bundled shader seed definitions and Blender-dependent tools in live Blender before use. They are not approved character presets. A new character has no proven showcase recipe until it completes the pipeline.
+## Run an evidence-driven pilot
 
-## Coordinate roles
+Before editing state the observed fault, competing causes, distinguishing test, bounded edit and rollback. Change one causal variable, inspect the result and neighboring regressions, then expand only a proven fix. After two non-improving experiments restore the best draft and re-diagnose or escalate. Do not give Light unfamiliar shader, rig-space or physics design decisions merely because they occur in a routine stage.
 
-Use GPT-6.1 Sol High (gpt-6.1-sol, high) as orchestrator, GPT-6.1 Sol Light (gpt-6.1-sol, low where exposed) for bounded routine work, High for unfamiliar implementation and actual Astra escalation when no usable candidate can be produced. Report unavailable models honestly. Keep one writer/workload per Blender project by default. Review compact reports at task boundaries rather than repeating worker actions.
+For materials require raw channel inspection -> UV/material ownership -> emission texture-only -> neutral diffuse -> verified alpha -> isolated shading/specular -> full scene. Classify each map by evidence. Keep unknowns unknown; do not infer original game masks or face SDFs from a filename. Stage 02 contains the detailed procedure and material-plan validator.
 
-## Initialize or resume
+Use one writer per blend and one laptop Blender workload. Delegate only bounded proven operations with private artifacts. Verify actual model availability; requested role names do not configure a running client. Preserve the existing Sol High orchestration/Light routine-work/Astra escalation preference where actually supported.
 
-Set PACK to this skill directory and RUN to the chosen absolute project workspace. Consult scripts/pipeline.py --help for canonical arguments.
+## Initialize or resume without laundering approvals
 
-    python3 "$PACK/scripts/pipeline.py" init "$RUN" --source /absolute/source/model.pmx --source /absolute/source/texture.png
-    python3 "$PACK/scripts/pipeline.py" status "$RUN"
-    python3 "$PACK/scripts/pipeline.py" validate "$RUN"
+Use scripts/pipeline.py --help. Set PACK to this skill directory and RUN to the absolute conversion workspace.
 
-Register every authoritative source file. Init hashes files and never modifies originals. For an archive, register the archive and independently extracted authoritative files. Place mutable derivatives/evidence inside RUN; preserve submitted snapshots under checkpoints. Give each candidate private asset copies. A valid ledger proves integrity, not visual quality.
+```bash
+python3 "$PACK/scripts/pipeline.py" init "$RUN" --source /absolute/source/model.pmx --source /absolute/source/texture.png
+python3 "$PACK/scripts/pipeline.py" status "$RUN"
+python3 "$PACK/scripts/pipeline.py" validate "$RUN"
+```
 
-Copy assets/character-profile.template.json into the run and fill observed facts. Leave unknowns null. Do not invent GPU, height, texture channels, accepted tolerances or version hashes. Save manual edits as exact assets or deterministic operations. Distinguish adapting a new character from replaying a known recipe.
+Register all authoritative sources by hash; keep extracted source files and originals unchanged. Copy assets/character-profile.template.json into the run and fill observed facts, leaving unknowns null. Version 2 uses fresh runs; do not rewrite version 1 policy/ledgers or transplant old approvals. Use a validated version 1 tool to inspect its historical run. An imported checkpoint can be reused as an input artifact in a new run with explicit lineage and fresh affected review, without needlessly importing again.
 
-## Dispatch stages
+Keep immutable accepted checkpoints and private candidate dependencies. Hashes identify files; separate numerical/visual tests establish behavior. Record manual edits as exact assets or replayable operations. Read [qualification.md](references/qualification.md) before making a qualification claim.
 
-| Stage | Skill | Responsibility |
+## Stages
+
+| Stage | Skill | Concrete purpose |
 | --- | --- | --- |
-| 00 | $anime-blender-00-setup | Environment, references and scope |
-| 01 | $anime-blender-01-import | Import baseline and loss inventory |
-| 02 | $anime-blender-02-materials | Cycles restoration and preview |
-| 03 | $anime-blender-03-geometry | Approved geometry/deformation foundation |
-| 04 | $anime-blender-04-rig | Native Blender controls |
-| 05 | $anime-blender-05-ready | Face, usability and retarget profiles |
-| 06 | $anime-blender-06-tests | Motion, deformation and integrity tests |
-| 07 | $anime-blender-07-look | Final in-game appearance |
-| 08 | $anime-blender-08-physics | Editable native secondary motion |
-| 09 | $anime-blender-09-audit | Audit, approved optimization and delivery |
+| 00 | $anime-blender-00-setup | Pin tools, calibrate references, freeze scope and small pilot |
+| 01 | $anime-blender-01-import | Preserve working import and document correspondence/loss |
+| 02 | $anime-blender-02-materials | Diagnose maps/UV/color/alpha before bounded Cycles restoration |
+| 03 | $anime-blender-03-geometry | Prove scoped geometry/normal/weight/morph repairs |
+| 04 | $anime-blender-04-rig | Build controls around verified rest spaces and deformation |
+| 05 | $anime-blender-05-ready | Expose/test face and animator workflows |
+| 06 | $anime-blender-06-tests | Qualify evaluated motion and clean native runtime |
+| 07 | $anime-blender-07-look | Match camera/light before final material calibration |
+| 08 | $anime-blender-08-physics | Prove one physical structure, expand with tested toggles |
+| 09 | $anime-blender-09-audit | Audit, benchmark, review tradeoffs and relocate/clean-open |
 
-Require the preceding accepted checkpoint before constructing the next stage. Stop at every human gate. Produce one to three candidates as needed and ask which to continue with or what to critique. Never select a winner or fill a quota. Revise existing IDs after critique rather than evading the cap.
+Obtain the exact preceding stage acceptance before constructing the next stage. Prepare one to three user-facing candidates only as needed. Reversible diagnostic drafts are experiments inside a candidate, not extra designs that evade the cap. Present failed drafts for critique honestly; submit as passing only with actual required evidence. Never select a winner for the human or manufacture consent.
 
-## Bind decisions to artifacts
+## Submit exact work
 
-Register the primary file and every required asset with candidate --file and repeated --asset arguments. Log required checks with separate nonempty evidence. Submit only after required checks pass. Use assets/gate-report.template.md and list each substantive visual/geometry change separately under matched comparison conditions.
+Register the final saved file plus every required mutable asset. Log each frozen-policy required check with a separate nonempty evidence file. After edits, re-register and rerun affected checks; do not reuse stale evidence. Use assets/gate-report.template.md. Present matched before/after views, individual deltas, checked/blocked features and unresolved assumptions. Complete all authorized preparation before the gate.
 
-After explicit human selection/approval, record the actual actor and observed statement with approve. The CLI records a trust assertion, not authenticated consent. Workers must not approve themselves. Artifact edits invalidate checks and approvals. Never modify an approved checkpoint; branch a new run for retrospective revisions and requalify affected stages.
+After an observed explicit human decision tied to the current candidate, the orchestrator may record approve. Workers return evidence and the observed statement. The ledger is an integrity/trust log, not an authenticated approval system. Preserve stage 09 audit, optimization, reaudit and delivery subgates. Return late geometry changes to 03 and invalidate affected bindings/tests/approvals.
 
-Use feedback to record observed human critique and unlock a submitted candidate for revision. Retain earlier snapshots. At stage 09, record audit, optimization, reaudit and delivery human subgates with review. Explicitly record optimization as not needed when appropriate; still perform clean-package tests.
+Allow construction add-ons and inspected embedded Python. Keep core final behavior native; disclose helper execution separately. A required hyperspecific runtime add-on exception still needs ten distinct evidenced failed alternatives and exact human acceptance. Stop alternatives early when a native method succeeds; do not confuse this budget with candidate count.
 
-## Handle difficult problems and dependencies
+## Deliver with measured limits
 
-Allow third-party construction tools and reviewed embedded Python. Aim for an addon-independent final character. For a hyperspecific required runtime add-on, log up to ten genuinely distinct alternative methods with attempts and evidence; stop early if one succeeds. After ten failures, ask the human to accept or reject the exact dependency/version and limitations. This budget does not permit ten model candidates.
-
-Escalate inability to produce a candidate to Astra with failed approaches and artifacts. If Astra also fails or is unavailable, leave actionable avenues for the human. Do not impersonate escalation. Label assumptions when references are missing rather than claiming reconstructed details as facts.
-
-## Finish truthfully
-
-Deliver a relocated, clean-open-tested Cycles .blend, editable unbaked simulations, relative texture assets, dependency disclosures, recipe, animator guide and evidence. Require >=24 average Material Preview FPS with physics off; target approximately 12 during fresh active calculation and disclose severe stalls. Optimize only at stage 09 and rerun affected checks. Never claim hardware qualification, recipe reproducibility or addon independence without actual evidence.
+Deliver the native Cycles blend, necessary external textures if any, embedded animator/reset guide, editable unbaked physics and accepted recipe/evidence. Test a relocated package in clean stock Blender without construction add-ons and core auto execution. Measure real UI Material Preview behavior on the stated laptop: physics off >=24 average FPS, fresh active physics target near 12 with severe stalls disclosed. A headless loop is not UI FPS. Documentation and utility tests alone do not qualify Blender output, character fidelity or hardware performance.
