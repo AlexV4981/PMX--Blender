@@ -1,92 +1,43 @@
-# Stage 08 implementation checklist
+# 08 — Editable native physics: working procedure
 
-Read this with the live shared contract. Treat the research excerpt below as technical rationale, not a claim of implementation or authority over newer user rules.
+## 1. Start with one physical structure
 
-## Execute and verify
+Map PMX bodies/joints plus visible hair, garments, accessories, tail/ears and applicable soft tissue to source IDs. Use the PMX as intent evidence; MMD solver numbers are not transferable Blender material constants. Choose one representative chain or panel before full-character construction. Preserve manual rig behavior and approved visible shape.
 
-1. Map visible hair, garments, accessories, tails, ears and soft tissue against PMX rigid bodies and joints.
-2. Choose native solver candidates per physical structure; do not force a universal jiggle-bone system.
-3. Build distinct simulation/collision proxies and render surfaces with one-way attachment-to-solver-to-deformation flow.
-4. Test modifier order and double-transform/dependency-cycle risks before full-character evaluation.
-5. Record solver-specific scale, mass assumptions, stiffness, damping, gravity, masks, collision pairs, quality and timebase.
-6. Implement independent category toggles that stop solver work; measure evaluation and demonstrate manual animation with each off.
-7. Define reset/rest/pre-roll and cache invalidation; run settle, acceleration/stop, turns, locomotion, crouch, landing and contacts.
-8. Measure normalized tip travel, settle time, stretch, penetration and instability; save approved parameter sets and clear final caches.
+Choose cloth proxy for sheetlike garments; reviewed strip/volume proxy or constrained rigid-body chain for hair/tails; constrained rigid bodies for rigid pendants; localized soft-body or cloth proxy for suitable soft regions. Record why a method fits bending/stretch/collision needs and what it cannot model. Do not call a tracked empty, sinusoidal driver or damping-only constraint a native dynamic simulation.
 
-## Binding policy updates
+## 2. Build one-way evaluation
 
-- Execute through Codex. Use Sol 6.1 High for orchestration and difficult implementation, Sol 6.1 Light for routine work, and Astra when High produces no usable candidate.
-- Keep at most three active candidates; prepare only the one to three needed. Ask the user to select or critique each exact submission.
-- Allow third-party add-ons and embedded Python during construction. Deliver addon-free core behavior except a hyperspecific runtime add-on exception supported by ten distinct documented failed alternatives and explicit human approval of the exact exception; stop early when an alternative works.
-- Disclose and review embedded Python; keep basic native posing independent of unapproved runtime add-ons. Inspect required script behavior separately from add-on installation.
-- Keep source and approved checkpoints immutable; use descendants and invalidate dependent approvals after changes.
-- Give fidelity priority over animation, realism, performance and convenience, in that order. Optimize only in stage 09.
-- Mark missing models, references, hardware, fixtures or Blender execution as blocked/assumed; never infer qualification from documentation.
+Use animation rig -> animated attachments/colliders -> simulation proxy -> visible deformation. Keep proxy rest shape, pin/goal weights, collision surface and rendered mesh separate. Never drive an attachment from the already simulated mesh. Test modifier order with rigid translation/rotation and physics disabled first: render motion must not be applied twice.
 
-## Research technical rationale
+Bind Surface Deform/Mesh Deform or other native transfer in the intended rest pose and record transforms/topology; rebind after relevant topology or rest changes. Test identity at rest, unit translation, rotation and manual fallback. Do not add Armature after proxy transfer merely to fix a double transform without measuring spaces.
 
-## 08 — Editable native physics
+Record real scale and apply transforms only with correspondence verification. Collision margin must be small relative to part thickness/separation, not a memorized meter value. Fix intersecting rest shapes and pinning before raising quality. Exclude adjacent constrained bodies from mutual collision where technically justified; preserve intended body/garment contacts. Add collision pairs gradually.
 
-**What it does:** Replaces the old physics with Blender-native, editable secondary motion while maintaining the approved character design and animation controls.
+## 3. Tune from dynamics and failures
 
-**How it does it:** Use the PMX rigid-body/joint assignments as evidence of intended movable parts, not as mandatory final solver parameters. Cross-check visible hair, clothing, accessories, tails, ears and soft tissue. Flag visually movable parts with no imported physics and ambiguous body/accessory assignments for human review. Select the method by physical structure instead of forcing a universal jiggle-bone system.
+For a conceptual spring m*x''+c*x'+k*x=0, natural frequency omega=sqrt(k/m), damping ratio zeta=c/(2*sqrt(k*m)), and timestep dt=1/(fps*substeps). These explain oscillation and stability; Blender cloth/soft-body parameters are not all literal k and c. Do not paste these values into unrelated settings. Record solver-specific actual settings, mass/density assumptions, quality, substeps, gravity and timebase.
 
-| Part class | Proposed native starting method | Required controls |
-| --- | --- | --- |
-| Skirts, sleeves, capes, ribbons | Cloth on a separate suitable proxy, driven by the animated attachment/pin regions | Pin groups, collision scope, material stiffness/damping, reset instructions |
-| Hair clumps, tails, flexible ears | Reviewed cloth-strip/volume proxy or constrained spring-body mechanism, selected per structure | Stable attachment, limited stretch, collision, manual fallback |
-| Rigid ornaments and dangling hardware | Native rigid bodies and constrained spring/hinge relationships | Attachment, collision collection/pairs, limits and damping |
-| Soft tissue | Localized soft-body or cloth-with-internal-springs proxy where suitable | Goal/pin mask, damping, amplitude limits, collision and manual fallback |
+If it explodes at frame 1, inspect scale, initial intersections, pinning, masses, binding and dependency loops before stiffness. If it stretches, inspect constraint limits/proxy resolution/timestep before hiding it with damping. If it penetrates, inspect collision scope/margins and speed before increasing every quality setting. If it is too rigid, verify cache clearing and pin weights before lowering stiffness.
 
-These are qualification candidates, not universal production-ready presets. Surface Deform is documented for transferring a cloth proxy's movement to a detailed mesh; cloth pin weights and soft-body goal weights provide native attachment control. Rigid-body spring constraints provide a different solver with different parameters. [20,21,22,23]
+Define rest frame, sequential pre-roll, reset/cache-clear procedure and parameter-change invalidation. Run settle, start/stop, turns, locomotion, crouch, landing and contact tests from fresh caches. Measure tip travel/part length, stretch, penetration, settling and explosive frames. Report cold behavior separately from cached playback.
 
-Keep simulation proxies, collision proxies and rendered surfaces distinct. Establish one-way evaluation from animation rig to attachments/colliders, through simulation, to visible deformation. Avoid a visible mesh feeding its own collision driver through a dependency cycle or receiving both skin and proxy motion twice. Choose and test each modifier order; for example, many proxy stacks use attachment deformation before Cloth and render thickness after simulation, but no universal stack order is imposed on every model.
+## 4. Implement honest independent category controls
 
-Record actual solver-specific settings: scale, proxy topology, masses/density assumptions, stiffness/damping, gravity, pin/goal masks, collision distances, collision pairs, rigid-body substeps/iterations or cloth/soft-body solver settings, time scale, FPS, rest frame, pre-roll and reset procedure. There is no honest universal conversion from an abstract “stiffness 0.7” into every Blender solver. Quality/collision settings trade computation time for stability and collision handling. [24,25]
+Category off must provide a tested manual-animation result and stop that category's solver work. Cloth/soft-body modifiers can be disabled using tested native properties; rigid bodies share a world and category isolation requires actual tested architecture. Do not assume hiding a collection or changing constraint influence removes solver cost. If independent suspension cannot be established, mark it blocked instead of inventing a toggle.
 
-Provide separate category toggles and usable manual animation when each category is off. A disabled category must stop its solver work, not merely hide its output. Switching physics state requires cache invalidation/reset and a documented restart unless seamless switching has actually been implemented and tested. Use native modifier/constraint/world settings where supported and test the actual evaluation cost. Do not count a visibility toggle as proof of disabled calculation.
+Test every category alone and all combined, including viewport AND render state. A native property driver must reach the intended data path without handlers. Switching may require reset/pre-roll; do not promise seamless arbitrary-frame toggling unless demonstrated. Deliver editable unbaked simulations. Temporary QA caches are permitted; clear final bakes without deleting simulations.
 
-Test rest/settle, acceleration/stop, turns, walk/run, crouch, jump/landing and contacts using the approved fixture. Measure tip travel relative to part length, settling time, stretch, collision penetration and instability. PMX motion is not the target reference. The human approves plausible behavior within the character's design; exact real-world fabric properties cannot be inferred from a picture alone.
+## Evidence
 
-**Gate output:** category method map, editable native simulations, settings/masks/proxies, toggle demonstrations, cold-reset test clips and human-approved motion. No baked simulation cache is included in the deliverable. Blender still uses temporary caches while evaluating; unbaked simulation is not stateless arbitrary-frame playback. [26]
+| Check | Minimum actual evidence |
+| --- | --- |
+| physics-part-map | Every requested category, method, source parts, attachment/solver/transfer graph |
+| cold-motion-tests | Fresh-reset clips, metrics, settings, cache state and failure frames |
+| category-toggles | Each off/on state, manual fallback, real evaluation/cost evidence and reset limits |
+| editable-unbaked | Native solver/proxy/settings retained, final bake/cache state |
+| physics-settings | Exact solver parameters/units, collision scope, bindings and reset/pre-roll recipe |
 
-| Action | Allowed? | Condition |
-| --- | --- | --- |
-| Build native proxies, collisions, masks and scoped solver candidates | YES | Preserve approved visible surfaces and manual rig behavior |
-| Choose motion strength, soft-tissue behavior or solver substitutions | REVIEW | Motion comparisons, settings and limitations disclosed |
-| Add visible garment thickness or new body surfaces without approval | NO | Return to the geometry owner stage |
-| Replace editable simulations with baked-only motion | NO | Temporary QA caches are cleared for delivery |
+## Technical references
 
-
-## Sources
-
-Primary documentation consulted; source pages describe Blender/MMD capabilities, while pipeline choices and approval rules above are proposed for this project.
-
-1. [Blender 4.5 LTS release/support](https://www.blender.org/releases/4-5/)
-2. [Maintained MMD Tools repository: compatibility and known IK/physics limitations](https://github.com/MMD-Blender/blender_mmd_tools)
-3. [Blender color management](https://docs.blender.org/manual/en/4.4/render/color_management.html)
-4. [Upstream MMD Tools feature documentation, including SDEF](https://github.com/powroupi/blender_mmd_tools/wiki/MMD_TOOLS-LIST-OF-FEATURES-AND-BRIEF-TUTORIAL-INFORMATION-FOR-FEATURES)
-5. [Toon BSDF, Blender 4.5](https://docs.blender.org/manual/pt/4.5/render/shader_nodes/shader/toon.html)
-6. [Shader to RGB limitations](https://docs.blender.org/manual/id/4.0/render/shader_nodes/converter/shader_to_rgb.html)
-7. [Blender developer documentation: Material Preview uses Eevee](https://archive.blender.org/developer/differential/0005/0005612/index.html)
-8. [Blender 4.5 API: Material Output renderer targets](https://docs.blender.org/api/4.5/bpy.types.ShaderNodeOutputMaterial.html)
-9. [Shape-key introduction and topology guidance](https://docs.blender.org/manual/nl/4.5/animation/shape_keys/introduction.html)
-10. [Data Transfer topology/index mapping](https://docs.blender.org/UATEST/manual/en/4.5/modeling/modifiers/modify/data_transfer.html)
-11. [Armature modifier and Preserve Volume](https://docs.blender.org/manual/en/latest/modeling/modifiers/deform/armature.html)
-12. [Corrective Smooth](https://docs.blender.org/manual/es/4.5/modeling/modifiers/deform/corrective_smooth.html)
-13. [Driver workflow and corrective shape keys](https://docs.blender.org/manual/id/4.5/animation/drivers/workflow_examples.html)
-14. [Rigify distribution/runtime statement](https://docs.blender.org/manual/en/2.81/addons/rigging/rigify.html)
-15. [Rigify generated rig features](https://docs.blender.org/manual/en/4.5/addons/rigging/rigify/rig_features.html)
-16. [Driver execution restrictions](https://docs.blender.org/manual/nl/4.5/animation/drivers/troubleshooting.html)
-17. [Drivers panel and variables](https://docs.blender.org/manual/ar/4.5/animation/drivers/drivers_panel.html)
-18. [Solidify thickness and vertex groups](https://docs.blender.org/manual/en/4.5/modeling/modifiers/generate/solidify.html)
-19. [Freestyle introduction](https://docs.blender.org/manual/en/4.5/render/freestyle/introduction.html)
-20. [Surface Deform proxy workflow](https://docs.blender.org/manual/en/latest/modeling/modifiers/deform/surface_deform.html)
-21. [Cloth pin groups](https://docs.blender.org/manual/id/4.5/physics/cloth/settings/shape.html)
-22. [Soft-body goals](https://docs.blender.org/UATEST/manual/en/4.5/physics/soft_body/settings/goal.html)
-23. [Generic spring constraints](https://docs.blender.org/manual/uk/4.5/physics/rigid_body/constraints/types/generic_spring.html)
-24. [Rigid Body World settings](https://docs.blender.org/manual/en/latest/physics/rigid_body/world.html)
-25. [Cloth collisions and quality](https://docs.blender.org/manual/nl/4.5/physics/cloth/settings/collisions.html)
-26. [Simulation caching/baking](https://docs.blender.org/manual/en/5.0/physics/baking.html)
-27. [Blender 4.5 timeline playback modes](https://docs.blender.org/manual/en/4.5/editors/timeline.html)
-28. [Packed data, relative paths and missing-file tools](https://docs.blender.org/manual/fi/4.5/interface/window_system/topbar.html)
+Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

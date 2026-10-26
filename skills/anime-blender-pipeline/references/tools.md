@@ -65,3 +65,20 @@ The native Toon and Surface seed groups are starting graphs with fixed interface
 No UI FPS recorder is bundled or claimed tested. Implement and qualify a UI redraw-driven measurement harness in stage 00/09 before reporting actual viewport throughput. Do not substitute inspect, a background frame loop or a cached playback pass. The pack's templates/rules define the required benchmark, not a fabricated measurement tool.
 
 Blender-dependent paths were syntax/pure-data checked when authored without Blender available. Run live fixture tests before marking them qualified. Do not report that building the seed library qualifies the full pipeline.
+
+
+## Version 2 diagnostic utilities
+
+Run explicit image files only (Pillow required):
+
+    python3 "$PACK/scripts/texture_audit.py" /source/face.png /source/hair.png --output "$RUN/audit/channels-001"
+
+Output must be a new directory. Inspect texture-report.json and the channel sheets. Exit 3 means some inputs are blocked/unsupported. Sheets/statistics represent encoded file channels without ICC/OCIO transformation; synthetic opaque alpha may be added for RGB input. No roles are inferred, source pixels are not rewritten, and high-depth/HDR/multiframe inputs require separate inspection.
+
+Copy assets/material-plan.template.json into the run; populate it with actual paths, map roles, hashes, evidence and limitations. Evidence and texture paths resolve relative to the plan file; absolute paths are also supported. Then run:
+
+    python3 "$PACK/scripts/material_plan.py" "$RUN/work/material-plan.json"
+
+A valid plan is a record, not visual acceptance. Required unknown maps block the material and remain unconnected. Empty templates fail intentionally. Record all actual Blender graph and image-setting changes in the recipe and inspect the renders. Neither utility repairs shaders automatically.
+
+Version 2 pipeline.py rejects old pack-version ledgers. Do not edit an old policy or run.json to bypass that rejection. Preserve the original run and use fresh lineage/review for a version 2 run.

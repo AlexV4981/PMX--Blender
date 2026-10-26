@@ -1,18 +1,34 @@
-# Primary sources and version verification
+# Primary technical references
 
-Use these as technical references, not proof the pack's implementation has passed. Verify APIs/options in the pinned Blender build before writing model-specific scripts. Record source/retrieval date for new decisions.
+Use documentation for the exact pinned build, not a moving latest version. These sources describe capabilities; project procedures, formulas, acceptance gates and character-specific choices are engineering guidance. A documentation link is not evidence a graph or solver was run. If a versioned page is unavailable, inspect the actual Blender API/help and record the limitation rather than inventing properties.
 
-- [Blender 4.5 LTS](https://www.blender.org/releases/4-5/): proposed initial qualification branch; pin exact patch/build rather than moving latest.
-- [Maintained MMD Tools](https://github.com/MMD-Blender/blender_mmd_tools): importer compatibility, scope and documented MMD IK/physics differences.
-- [Upstream MMD feature documentation](https://github.com/powroupi/blender_mmd_tools/wiki/MMD_TOOLS-LIST-OF-FEATURES-AND-BRIEF-TUTORIAL-INFORMATION-FOR-FEATURES): SDEF and historical data preservation; recheck current implementation.
-- [Toon BSDF](https://docs.blender.org/manual/pt/4.5/render/shader_nodes/shader/toon.html) and [Shader to RGB](https://docs.blender.org/manual/id/4.0/render/shader_nodes/converter/shader_to_rgb.html): different render-engine support.
-- [Renderer-specific material outputs](https://docs.blender.org/api/4.5/bpy.types.ShaderNodeOutputMaterial.html) and [Material Preview design](https://archive.blender.org/developer/differential/0005/0005612/index.html).
-- [Color management](https://docs.blender.org/manual/en/4.4/render/color_management.html): view transforms and color interpretation.
-- [Shape-key topology guidance](https://docs.blender.org/manual/nl/4.5/animation/shape_keys/introduction.html), [Data Transfer](https://docs.blender.org/manual/en/4.5/scene_layout/object/editing/link_transfer/transfer_mesh_data.html), [Corrective Smooth](https://docs.blender.org/manual/es/4.5/modeling/modifiers/deform/corrective_smooth.html).
-- [Rigify generated features](https://docs.blender.org/manual/en/4.5/addons/rigging/rigify/rig_features.html), [native constraints](https://docs.blender.org/manual/en/4.5/animation/constraints/introduction.html), [driver execution](https://docs.blender.org/manual/nl/4.5/animation/drivers/troubleshooting.html).
-- [Surface Deform](https://docs.blender.org/manual/en/latest/modeling/modifiers/deform/surface_deform.html), [cloth pins](https://docs.blender.org/manual/id/4.5/physics/cloth/settings/shape.html), [soft-body goals](https://docs.blender.org/UATEST/manual/en/4.5/physics/soft_body/settings/goal.html), [spring constraints](https://docs.blender.org/manual/uk/4.5/physics/rigid_body/constraints/types/generic_spring.html).
-- [Cloth collisions](https://docs.blender.org/manual/nl/4.5/physics/cloth/settings/collisions.html), [rigid-body world](https://docs.blender.org/manual/en/latest/physics/rigid_body/world.html), [baking/caches](https://docs.blender.org/manual/en/5.0/physics/baking.html).
-- [Timeline playback modes](https://docs.blender.org/manual/en/4.5/editors/timeline.html), [relative paths/packing/missing files](https://docs.blender.org/manual/fi/4.5/interface/window_system/topbar.html).
-- [Official OpenAI model guidance](https://learn.chatgpt.com/docs/models) and [Codex subagents/custom agent configuration](https://learn.chatgpt.com/docs/agent-configuration/subagents): validate actual model availability and role settings. Skill text alone does not select the current parent model.
+## Material diagnosis (02 and 07)
 
-Some historical/manual translation pages are retained because they describe a researched behavior. Do not treat historical documentation as an unconditional claim about a different installed version. No upstream game-character, rig, toon-texture or add-on binaries are redistributed in this pack.
+- [Image Texture](https://docs.blender.org/manual/en/4.5/render/shader_nodes/textures/image.html): projection, color/data interpretation and image sampling.
+- [Image settings](https://docs.blender.org/manual/en/4.5/editors/image/image_settings.html): image-datablock color space and alpha interpretation.
+- [Color management](https://docs.blender.org/manual/en/4.5/render/color_management.html): scene-linear processing and view transforms.
+- [Normal Map](https://docs.blender.org/manual/en/4.5/render/shader_nodes/vector/normal_map.html): tangent/object/world normal conventions and UV basis.
+- [Toon BSDF](https://docs.blender.org/manual/en/4.5/render/shader_nodes/shader/toon.html): Cycles-only shader; not a general game shader replica.
+- [Shader to RGB](https://docs.blender.org/manual/en/4.5/render/shader_nodes/converter/shader_to_rgb.html): Eevee-only lighting conversion; cannot supply Cycles shading.
+- [Material Output API](https://docs.blender.org/api/4.5/bpy.types.ShaderNodeOutputMaterial.html): actual target/output properties.
+- [Solidify](https://docs.blender.org/manual/en/4.5/modeling/modifiers/generate/solidify.html) and [Freestyle](https://docs.blender.org/manual/en/4.5/render/freestyle/introduction.html): different outline construction/render methods.
+
+## Import, geometry, rig and controls (00–06)
+
+- [Maintained MMD Tools](https://github.com/MMD-Blender/blender_mmd_tools): pin an actual compatible release/commit; inspect documented limitations and source behavior.
+- [Blender shape keys](https://docs.blender.org/manual/en/4.5/animation/shape_keys/introduction.html): relative keys and topology assumptions.
+- [Armature modifier](https://docs.blender.org/manual/en/4.5/modeling/modifiers/deform/armature.html): vertex groups and Preserve Volume; not evidence of SDEF/QDEF equivalence.
+- [Corrective Smooth](https://docs.blender.org/manual/en/4.5/modeling/modifiers/deform/corrective_smooth.html): targeted correction with bind/rest considerations.
+- [PoseBone API](https://docs.blender.org/api/4.5/bpy.types.PoseBone.html), [Bone API](https://docs.blender.org/api/4.5/bpy.types.Bone.html) and [Object.convert_space](https://docs.blender.org/api/4.5/bpy.types.Object.html#bpy.types.Object.convert_space): distinguish rest, pose, local and world transforms.
+- [Driver troubleshooting](https://docs.blender.org/manual/en/4.5/animation/drivers/troubleshooting.html): driver execution/dependency limitations.
+
+## Native physics and delivery (08–09)
+
+- [Surface Deform](https://docs.blender.org/manual/en/4.5/modeling/modifiers/deform/surface_deform.html): transfer binding constraints and deformation.
+- [Cloth shape/pins](https://docs.blender.org/manual/en/4.5/physics/cloth/settings/shape.html) and [collisions](https://docs.blender.org/manual/en/4.5/physics/cloth/settings/collisions.html): attachment and solver settings are specific to cloth.
+- [Soft-body goals](https://docs.blender.org/manual/en/4.5/physics/soft_body/settings/goal.html): goal weights/behavior are not cloth stiffness values.
+- [Generic spring](https://docs.blender.org/manual/en/4.5/physics/rigid_body/constraints/types/generic_spring.html) and [Rigid Body World](https://docs.blender.org/manual/en/4.5/physics/rigid_body/world.html): constraints, collections and shared-world behavior.
+- [Timeline playback](https://docs.blender.org/manual/en/4.5/editors/timeline.html): synchronization/frame-dropping settings must be included in performance evidence.
+- [Packed data](https://docs.blender.org/manual/en/4.5/files/blend/packed_data.html): asset packing does not replace relocated clean-open tests.
+
+During this rewrite, official indexed documentation confirmed the Toon/Cycles and Shader-to-RGB/Eevee distinction and image color/alpha concepts. Some direct versioned manual fetches were unavailable. No API or Blender behavior was qualified by a live run here. Test every required feature in the actual pinned Blender build.

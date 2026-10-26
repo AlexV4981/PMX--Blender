@@ -50,3 +50,8 @@ Optimize at 09 after the human reviews the audit/plan. Resource safety checks ea
 Require source hashes, pinned tools, approved exact assets/edits, material parameters, rest rig/weights, simulation settings/reset/preroll, fixtures and showcase scene. Save manual mesh/paint edits as actual assets or deterministic operations. Verify correspondence before indexed patches.
 
 Treat screenshot lighting/camera uncertainty explicitly. Compare replay outputs under the same approved scene and use direct numerical tolerances rather than rounded hashes. Label unsupported losses, assumptions and uncalibrated metrics. A script's success exit code does not prove model quality.
+
+
+## Diagnostic execution (version 2)
+
+Read diagnosis.md for failed attempts. Preserve working imports/materials. Require evidence-led map interpretation and isolated pilots before broad changes. Two consecutive non-improving experiments trigger rollback and renewed diagnosis, not another blind fix. Keep generic seeds distinct from approved character shaders. Never compensate across lighting, albedo, normals, bind spaces or solver attachment faults. Stage procedures own the concrete evidence requirements; existing ledger check names remain stable. Version 2 runs do not inherit version 1 approvals.

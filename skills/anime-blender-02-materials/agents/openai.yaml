@@ -1,8 +1,8 @@
 interface:
   display_name: 'Anime Blender 02: Cycles material restoration'
-  short_description: Stage 02 native Blender pipeline review and execution
-  default_prompt: Use $anime-blender-02-materials to prepare the next exact candidate
-    and evidence for human review.
+  short_description: Diagnose, prepare and verify bounded Blender changes
+  default_prompt: Use $anime-blender-02-materials version 2 to diagnose the current
+    stage, preserve correct work, and prepare an evidenced candidate for human review.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

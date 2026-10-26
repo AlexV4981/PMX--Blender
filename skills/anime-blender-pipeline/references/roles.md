@@ -23,3 +23,8 @@ This is dispatch policy, not a guaranteed universal Codex setting. Apply actual 
 Use the supplied assets/codex-agents TOML files when the current local Codex supports the documented standalone custom-agent format. During project setup, copy them to the project's .codex/agents directory if absent; compare existing files instead of overwriting user configuration. They select Sol Light, Sol High and Astra High for named subagents. Select Sol High for the parent session separately; copying a worker profile does not change an already-running parent model. Where the surface exposes explicit model/effort arguments instead, use those and record actual selections.
 
 Do not change global model defaults, permissions, provider, API keys or MCP settings merely to install these skills. The profiles inherit session permissions and cannot grant extra access. Verify model availability at execution time.
+
+
+## Version 2 task boundary
+
+Routine means a proven script or exact accepted recipe with known input checks and observable outputs. Texture classification, unfamiliar shader construction, rest-space conversion and novel solver architecture require implementation judgment. Assign those to the capable role, then use routine workers for bounded application/collection. Include fault hypotheses, distinguishing test and rollback path in the task record. Stop after two consecutive non-improving experiments and return evidence for renewed diagnosis; do not manufacture ten technical approaches or three designs as quotas.

@@ -1,81 +1,76 @@
-# Stage 02 implementation checklist
+# 02 — Material diagnosis and Cycles restoration: working procedure
 
-Read this with the live shared contract. Treat the research excerpt below as technical rationale, not a claim of implementation or authority over newer user rules.
+## 1. Separate restoration from reconstruction
 
-## Execute and verify
+Treat PMX as geometry plus MMD material semantics, not the original game's shader. PMX diffuse/specular/ambient, base texture, toon texture, sphere mode, material morph and draw flags do not map one-to-one to a game PBR set. A fan PMX may omit the game's masks, face SDF, light maps or normals. Record missing inputs as missing; use a labeled proposed approximation only after showing its limits.
 
-1. Append versioned native shader templates with recorded socket contracts for each actual material class.
-2. Inspect packed image channels, alpha association and color-versus-data treatment using image evidence.
-3. Map every relevant PMX flag to implemented, approximate, inapplicable or unsupported Cycles behavior.
-4. Build Cycles-compatible toon shading; exclude Shader to RGB from required Cycles graphs.
-5. Provide a shared compatible preview graph or labeled Eevee approximation with shared palette parameters.
-6. Compare skin, eyes, hair-over-eye visibility, alpha, shadows, outlines and normals in fixed views and lighting sweep.
-7. Record each color, shading, outline or visibility departure separately for approval.
-8. Save material instances, exact textures, flag table, comparisons and preview limitations.
+Preserve existing materials and create private copies for experiments. Do not call nodes.clear() across the character, replace all materials with Principled/Toon, repaint textures, generate replacement textures, or perform blanket gamma/normal fixes. The generic seeds in PACK are fixture graphs, not skin, face, eye, cloth or game presets. Do not append them until an isolated fixture has passed in the pinned Blender build.
 
-## Binding policy updates
+## 2. Inventory maps before connecting them
 
-- Execute through Codex. Use Sol 6.1 High for orchestration and difficult implementation, Sol 6.1 Light for routine work, and Astra when High produces no usable candidate.
-- Keep at most three active candidates; prepare only the one to three needed. Ask the user to select or critique each exact submission.
-- Allow third-party add-ons and embedded Python during construction. Deliver addon-free core behavior except a hyperspecific runtime add-on exception supported by ten distinct documented failed alternatives and explicit human approval of the exact exception; stop early when an alternative works.
-- Disclose and review embedded Python; keep basic native posing independent of unapproved runtime add-ons. Inspect required script behavior separately from add-on installation.
-- Keep source and approved checkpoints immutable; use descendants and invalidate dependent approvals after changes.
-- Give fidelity priority over animation, realism, performance and convenience, in that order. Optimize only in stage 09.
-- Mark missing models, references, hardware, fixtures or Blender execution as blocked/assumed; never infer qualification from documentation.
+For every used material slot, record mesh/polygon ownership, source material ID, PMX factors/flags/morphs, image hashes, UV map, image-node interpolation/extension/projection, active output target and existing node path. Identify unused slots separately. Use PACK/scripts/texture_audit.py on explicit texture files to produce raw-channel contact sheets and statistics. These are observations, not automatic classifiers. Inspect the contact sheets and UV overlay.
 
-## Research technical rationale
+Build a material plan using PACK/assets/material-plan.template.json. For each map assign exactly one evidenced role or unknown; record separate per-channel roles for packed maps. Names and RGB appearance only suggest hypotheses. A purple image is not proof of tangent-space normals; alpha can contain a mask unrelated to opacity. Never connect an unknown map to Base Color or Alpha to make the graph complete. Unknown critical inputs block fidelity claims; preserve unused unknown maps in the inventory.
 
-## 02 — Cycles material and texture restoration
+Image color-space settings belong to the image datablock, not each node. When one file is sampled as color and numeric data, use separately configured image datablocks and record both. Do not change a shared image setting and unknowingly alter other materials.
 
-**What it does:** Restores the in-game appearance sufficiently to judge the model before changing its geometry or rig.
+## 3. Run the diagnostic ladder in order
 
-**How it does it:** Append versioned native node-group templates with fixed interfaces for skin/face, hair, eyes, cloth, metal, emission, transparency and outlines. Classify each image's actual data: color maps normally use their intended color transform; numeric masks, normals and other data maps use data treatment. Verify packed-channel meaning and alpha association rather than inferring all semantics from filenames.
+Use fixed camera, resolution, display transform and UV mapping. Save each diagnostic as a temporary material/scene derivative, never as the production fix.
 
-Map each relevant PMX material flag to an implemented, approximated, inapplicable or unsupported Cycles behavior. Double-sided surfaces, alpha, toon/sphere effects, outlines and shadows receive individual decisions. PMX draw order is not assumed to be equivalent to Cycles ray visibility. Face normals, hair-over-eye appearance and eyebrow visibility receive front/profile/three-quarter comparisons and lighting/motion tests.
-
-Cycles supports Toon BSDF, but Shader to RGB is Eevee-only. Proposed methods are Toon BSDF, controlled stylized BSDF combinations and carefully bounded native math/mask techniques, chosen by the approved game/character profile. No single template is claimed to recreate every game's shader. [5,6]
-
-Material Preview uses Eevee, so provide either a shared compatible graph or a deliberately approximate preview branch. Blender supports renderer-specific Material Output targets. Any preview branch shares the character's approved texture/palette parameters and is labeled an approximation; Cycles renders remain the appearance authority. Camera-dependent or ray-dependent tricks require explicit review of their lighting, reflection, shadow and movement limitations. [7,8]
-
-**Gate output:** restored material library instances, source-map assignments, flag handling table, matched comparisons, preview limitations and approved appearance checkpoint.
-
-| Action | Allowed? | Condition |
+| Diagnostic | What to isolate | Decision |
 | --- | --- | --- |
-| Relink known assets and instantiate a recorded shader template | YES | Use exact template version and logged parameters |
-| Change colors, shading, alpha, outlines, eyes or visibility tricks | REVIEW | Per-change comparisons in Cycles |
-| Replace eye geometry or change the character's proportions | NO | Route to stage 03 |
-| Use an Eevee-only node as a required final Cycles effect | NO | A preview-only branch is a separate documented case |
+| Raw file and RGBA channels | Decode, channel content, alpha edges | Fix exact dependency/decoding first; do not repaint |
+| UV overlay/checker on material region | Correct UV layer, transform, seam and face ownership | Fix mapping only if demonstrated; route actual UV edits to 03 |
+| Base color to Emission, strength 1, opaque | Texture and tint without lighting response | If wrong here, investigate map/UV/color/tint, not light or roughness |
+| Constant neutral diffuse with original normals | Lighting, face orientation, split/custom normals | If wrong here, isolate normals/geometry/lighting; do not alter albedo |
+| Verified opacity on a checker background | Actual opacity/association, edge fringe | Test straight/premultiplied interpretation and source flags |
+| One diffuse/stylized response, then specular | Shading and highlight separately | Add only components justified by references |
+| Whole material and nearby materials | Layering, shadows and interreflection | Expand only after the pilot works |
 
+Emission diagnosis is unlit, not color-management-free; keep the display transform fixed. Compare rendered output with a properly transformed reference, not raw file bytes. Emission final materials also affect scene lighting in Cycles, so an emission diagnostic is not a production default.
 
-## Sources
+## 4. Interpret color, alpha and normals explicitly
 
-Primary documentation consulted; source pages describe Blender/MMD capabilities, while pipeline choices and approval rules above are proposed for this project.
+For ordinary sRGB color, Blender converts the sample to scene linear. Do not add a second gamma node. The sRGB decode is c/12.92 for c<=0.04045, otherwise ((c+0.055)/1.055)^2.4. Numeric roughness/metallic/masks/normal data use Non-Color unless source evidence specifies another encoding. HDR/linear maps require their actual source encoding. Raw PNG channel statistics are encoded-file values, not shader-linear color.
 
-1. [Blender 4.5 LTS release/support](https://www.blender.org/releases/4-5/)
-2. [Maintained MMD Tools repository: compatibility and known IK/physics limitations](https://github.com/MMD-Blender/blender_mmd_tools)
-3. [Blender color management](https://docs.blender.org/manual/en/4.4/render/color_management.html)
-4. [Upstream MMD Tools feature documentation, including SDEF](https://github.com/powroupi/blender_mmd_tools/wiki/MMD_TOOLS-LIST-OF-FEATURES-AND-BRIEF-TUTORIAL-INFORMATION-FOR-FEATURES)
-5. [Toon BSDF, Blender 4.5](https://docs.blender.org/manual/pt/4.5/render/shader_nodes/shader/toon.html)
-6. [Shader to RGB limitations](https://docs.blender.org/manual/id/4.0/render/shader_nodes/converter/shader_to_rgb.html)
-7. [Blender developer documentation: Material Preview uses Eevee](https://archive.blender.org/developer/differential/0005/0005612/index.html)
-8. [Blender 4.5 API: Material Output renderer targets](https://docs.blender.org/api/4.5/bpy.types.ShaderNodeOutputMaterial.html)
-9. [Shape-key introduction and topology guidance](https://docs.blender.org/manual/nl/4.5/animation/shape_keys/introduction.html)
-10. [Data Transfer topology/index mapping](https://docs.blender.org/UATEST/manual/en/4.5/modeling/modifiers/modify/data_transfer.html)
-11. [Armature modifier and Preserve Volume](https://docs.blender.org/manual/en/latest/modeling/modifiers/deform/armature.html)
-12. [Corrective Smooth](https://docs.blender.org/manual/es/4.5/modeling/modifiers/deform/corrective_smooth.html)
-13. [Driver workflow and corrective shape keys](https://docs.blender.org/manual/id/4.5/animation/drivers/workflow_examples.html)
-14. [Rigify distribution/runtime statement](https://docs.blender.org/manual/en/2.81/addons/rigging/rigify.html)
-15. [Rigify generated rig features](https://docs.blender.org/manual/en/4.5/addons/rigging/rigify/rig_features.html)
-16. [Driver execution restrictions](https://docs.blender.org/manual/nl/4.5/animation/drivers/troubleshooting.html)
-17. [Drivers panel and variables](https://docs.blender.org/manual/ar/4.5/animation/drivers/drivers_panel.html)
-18. [Solidify thickness and vertex groups](https://docs.blender.org/manual/en/4.5/modeling/modifiers/generate/solidify.html)
-19. [Freestyle introduction](https://docs.blender.org/manual/en/4.5/render/freestyle/introduction.html)
-20. [Surface Deform proxy workflow](https://docs.blender.org/manual/en/latest/modeling/modifiers/deform/surface_deform.html)
-21. [Cloth pin groups](https://docs.blender.org/manual/id/4.5/physics/cloth/settings/shape.html)
-22. [Soft-body goals](https://docs.blender.org/UATEST/manual/en/4.5/physics/soft_body/settings/goal.html)
-23. [Generic spring constraints](https://docs.blender.org/manual/uk/4.5/physics/rigid_body/constraints/types/generic_spring.html)
-24. [Rigid Body World settings](https://docs.blender.org/manual/en/latest/physics/rigid_body/world.html)
-25. [Cloth collisions and quality](https://docs.blender.org/manual/nl/4.5/physics/cloth/settings/collisions.html)
-26. [Simulation caching/baking](https://docs.blender.org/manual/en/5.0/physics/baking.html)
-27. [Blender 4.5 timeline playback modes](https://docs.blender.org/manual/en/4.5/editors/timeline.html)
-28. [Packed data, relative paths and missing-file tools](https://docs.blender.org/manual/fi/4.5/interface/window_system/topbar.html)
+Document PMX diffuse multiplication and material morph effects. A texture multiplied by a nonwhite diffuse factor can become too dark, but setting every factor to white may destroy deliberate tinting. Isolate texture-only versus texture*tint and show the difference. MMD ambient is not automatically emission, AO or a physical color correction. Sphere maps use source multiply/add/subtexture semantics and coordinates; they are not ordinary albedo. A toon ramp is a shading lookup, not a face diffuse texture.
+
+For genuine opacity a in [0,1], an explicit Cycles mix uses factor a, first shader Transparent BSDF, second shader surface. Confirm orientation with a=0 and a=1 fixtures. Do not infer a from luminance or use every alpha channel as opacity. Include PMX material alpha/morph multipliers only when their semantics are evidenced. Inspect fringes over light and dark backgrounds. Correct image alpha association without repeatedly premultiplying. Do not use an obsolete Eevee blend-mode property as proof that Cycles alpha is fixed.
+
+For evidenced tangent normals decode n=normalize(2*RGB-1) through a Normal Map node with the correct UV basis. Never plug raw RGB into a shader Normal input. Test channel convention before flipping green. Do not reconstruct a normal map from a color texture. Preserve custom face normals; global recalculation can destroy anime facial shading. Route any approved normal edits to 03.
+
+## 5. Choose a Cycles method with stated limits
+
+Shader to RGB cannot supply Cycles lighting. Toon BSDF is a Cycles option, not a universal game-lighting reconstruction. BSDF output cannot be converted to a scalar light value by wiring it through Color Ramp. Test actual nodes and sockets in the pinned build.
+
+If a controlled analytic toon approximation is proposed, use a declared key direction L and normalized shading normal N in the same coordinate space: x=dot(N,L), t=smoothstep(e0,e1,x), C=(1-t)*Cshadow+t*Clight. Use u=clamp((x-e0)/(e1-e0),0,1), smoothstep=u*u*(3-2*u), e1>e0. A dot-product ramp alone does not receive scene-light shadows, attenuation, indirect illumination or multiple lights. Do not advertise it as the original shader. Object-space light vectors must follow head/body transforms correctly. Test rotating the head and key independently.
+
+Use a face SDF only if a real map and its convention are known. Derive head-space light using inverse rotation (exclude scale/translation), verify left/right mirroring and thresholds against actual channels. Do not invent an SDF from arbitrary albedo or apply spherical body shading to a face until it happens to resemble a screenshot.
+
+Test eyes as layered parts: sclera, iris, pupil, highlights, eyelid/lash and any cornea. Diagnose double reflections, dark refraction and incorrect alpha separately. Do not solve eye readability by moving/replacing geometry in 02. Keep hair-over-eye/eyebrow visibility proposals separate; do not disable all shadows, make hair transparent, or shrink eye occluders as an unreviewed shortcut.
+
+Treat outlines as a separate system with face/eye exclusions and a measured width in the comparison camera. Preserve imported edge information. New shell geometry belongs to 03; final line styling belongs to 07.
+
+## 6. Validate before expansion
+
+Render face/skin, hair, opaque garment and alpha pilots in Cycles front/three-quarter/profile, plus key-light sweep and backlight. Inspect actual images at native pixel size. Preserve local color, shadow placement, highlights, silhouettes and neighboring material behavior separately. Roll back any edit that improves one crop but breaks another. Only copy a proven setup to materials with the same evidenced semantics; material names alone are insufficient.
+
+Material Preview uses a different renderer. Toon BSDF and other Cycles-only features need a separately tested preview approximation or Rendered Cycles viewport. Share palette/mask values where feasible; label the preview limits rather than promising identical lighting. Verify renderer-specific Material Output targets in the actual build and inspect both views.
+
+Run `python3 "$PACK/scripts/material_plan.py" PLAN.json` before registering. This validates evidence fields and role completeness, not appearance or whether the claims are true. Preserve unresolved uncertainty and never fill evidence fields with fabricated paths.
+
+## Evidence
+
+| Check | Minimum actual evidence |
+| --- | --- |
+| material-mapping | Completed plan, channel sheets, UV/material ownership, graph/socket/image settings, before/after semantic inspection |
+| cycles-comparisons | Inspected diagnostic ladder and pilot images; full-character regression views, exact fixture settings and delta explanations |
+| preview-behavior | Actual Material Preview and Cycles comparison; unavailable effects and approximation labels |
+| material-flag-report | Every relevant PMX tint/alpha/morph/toon/sphere/shadow/double-side/edge decision and remaining unknown |
+
+A necessary map that is absent, or an unresolved face/alpha fault, remains blocked. Present a draft for critique when needed; do not call it shader restoration merely because it renders.
+
+## Technical references
+
+Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.

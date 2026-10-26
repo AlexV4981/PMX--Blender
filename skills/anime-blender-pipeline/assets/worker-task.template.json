@@ -11,7 +11,25 @@
   "recipe_and_reference_paths": [],
   "output_paths": [],
   "required_evidence": [],
-  "stop_when": ["scope is unclear", "human judgment is needed", "a submitted or approved artifact would be overwritten", "no usable candidate can be produced"],
-  "report": {"changes": [], "commands": [], "evidence": [], "failures": [], "assumptions": [], "escalation_needed": false},
-  "may_approve": false
+  "stop_when": [
+    "scope is unclear",
+    "human judgment is needed",
+    "a submitted or approved artifact would be overwritten",
+    "no usable candidate can be produced",
+    "two consecutive experiments without measurable improvement"
+  ],
+  "report": {
+    "changes": [],
+    "commands": [],
+    "evidence": [],
+    "failures": [],
+    "assumptions": [],
+    "escalation_needed": false
+  },
+  "may_approve": false,
+  "observed_fault": null,
+  "hypotheses": [],
+  "distinguishing_test": null,
+  "rollback_path": null,
+  "proven_recipe": null
 }

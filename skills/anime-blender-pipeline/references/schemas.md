@@ -32,3 +32,10 @@ Save manual edits as data or deterministic operations, not directives to make so
 ## Dependencies and escalation
 
 Record up to ten distinct alternatives per final dependency, each with failed/succeeded outcome and nonempty evidence. Ten failures permit requesting a hyperspecific exception; they do not grant it. Record actual Astra role/session and resulting artifacts when used. If unavailable, record that fact and remaining choices, not manufactured escalation evidence.
+
+
+## Version 2 diagnostic records
+
+Use assets/material-plan.template.json. Record baseline evidence and each material's source ID, mesh/slot owner, disposition (preserve/proposed/blocked), output method/limits, PMX semantics, map hashes, image datablocks, UVs, role evidence, color-space rationale and regression evidence. Packed maps name all RGBA channels, including unused. Unknown roles stay unconnected; required unknowns block the material. Paths resolve relative to the plan file. Validator success is only structural evidence.
+
+Do not add plan fields to run.json or manually mutate the frozen ledger policy. Register the plan as a candidate dependency and store its validation report separately. Maintain map/graph/fixture/recipe identity across changes. Version 2 uses pack_version 2.0.0; historical approvals remain in their original runs.

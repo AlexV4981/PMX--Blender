@@ -1,37 +1,189 @@
 {
   "schema_version": 1,
-  "pack_version": "1.0.0",
+  "pack_version": "2.0.0",
   "qualification": "requires_live_blender_and_character_review",
   "groups": [
     {
       "name": "AC_Toon_Seed_v1",
       "inputs": [
-        {"name": "Base Color", "type": "NodeSocketColor", "default": [0.8, 0.8, 0.8, 1]},
-        {"name": "Size", "type": "NodeSocketFloat", "default": 0.5},
-        {"name": "Smooth", "type": "NodeSocketFloat", "default": 0.05}
+        {
+          "name": "Base Color",
+          "type": "NodeSocketColor",
+          "default": [
+            0.8,
+            0.8,
+            0.8,
+            1
+          ]
+        },
+        {
+          "name": "Size",
+          "type": "NodeSocketFloat",
+          "default": 0.5
+        },
+        {
+          "name": "Smooth",
+          "type": "NodeSocketFloat",
+          "default": 0.05
+        }
       ],
       "nodes": [
-        {"id": "Inputs", "type": "NodeGroupInput", "location": [-300, 0]},
-        {"id": "Geometry", "type": "ShaderNodeNewGeometry", "location": [-300, -200]},
-        {"id": "Toon", "type": "ShaderNodeBsdfToon", "properties": {"component": "DIFFUSE"}, "location": [0, 0]},
-        {"id": "Outputs", "type": "NodeGroupOutput", "location": [300, 0]}
+        {
+          "id": "Inputs",
+          "type": "NodeGroupInput",
+          "location": [
+            -300,
+            0
+          ]
+        },
+        {
+          "id": "Geometry",
+          "type": "ShaderNodeNewGeometry",
+          "location": [
+            -300,
+            -200
+          ]
+        },
+        {
+          "id": "Toon",
+          "type": "ShaderNodeBsdfToon",
+          "properties": {
+            "component": "DIFFUSE"
+          },
+          "location": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Outputs",
+          "type": "NodeGroupOutput",
+          "location": [
+            300,
+            0
+          ]
+        }
       ],
-      "links": [["Inputs", "Base Color", "Toon", "Color"], ["Inputs", "Size", "Toon", "Size"], ["Inputs", "Smooth", "Toon", "Smooth"], ["Geometry", "Normal", "Toon", "Normal"], ["Toon", "BSDF", "Outputs", "Shader"]]
+      "links": [
+        [
+          "Inputs",
+          "Base Color",
+          "Toon",
+          "Color"
+        ],
+        [
+          "Inputs",
+          "Size",
+          "Toon",
+          "Size"
+        ],
+        [
+          "Inputs",
+          "Smooth",
+          "Toon",
+          "Smooth"
+        ],
+        [
+          "Geometry",
+          "Normal",
+          "Toon",
+          "Normal"
+        ],
+        [
+          "Toon",
+          "BSDF",
+          "Outputs",
+          "Shader"
+        ]
+      ]
     },
     {
       "name": "AC_Surface_Seed_v1",
       "inputs": [
-        {"name": "Base Color", "type": "NodeSocketColor", "default": [0.8, 0.8, 0.8, 1]},
-        {"name": "Roughness", "type": "NodeSocketFloat", "default": 0.5},
-        {"name": "Metallic", "type": "NodeSocketFloat", "default": 0},
-        {"name": "Alpha", "type": "NodeSocketFloat", "default": 1}
+        {
+          "name": "Base Color",
+          "type": "NodeSocketColor",
+          "default": [
+            0.8,
+            0.8,
+            0.8,
+            1
+          ]
+        },
+        {
+          "name": "Roughness",
+          "type": "NodeSocketFloat",
+          "default": 0.5
+        },
+        {
+          "name": "Metallic",
+          "type": "NodeSocketFloat",
+          "default": 0
+        },
+        {
+          "name": "Alpha",
+          "type": "NodeSocketFloat",
+          "default": 1
+        }
       ],
       "nodes": [
-        {"id": "Inputs", "type": "NodeGroupInput", "location": [-300, 0]},
-        {"id": "Surface", "type": "ShaderNodeBsdfPrincipled", "location": [0, 0]},
-        {"id": "Outputs", "type": "NodeGroupOutput", "location": [300, 0]}
+        {
+          "id": "Inputs",
+          "type": "NodeGroupInput",
+          "location": [
+            -300,
+            0
+          ]
+        },
+        {
+          "id": "Surface",
+          "type": "ShaderNodeBsdfPrincipled",
+          "location": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Outputs",
+          "type": "NodeGroupOutput",
+          "location": [
+            300,
+            0
+          ]
+        }
       ],
-      "links": [["Inputs", "Base Color", "Surface", "Base Color"], ["Inputs", "Roughness", "Surface", "Roughness"], ["Inputs", "Metallic", "Surface", "Metallic"], ["Inputs", "Alpha", "Surface", "Alpha"], ["Surface", "BSDF", "Outputs", "Shader"]]
+      "links": [
+        [
+          "Inputs",
+          "Base Color",
+          "Surface",
+          "Base Color"
+        ],
+        [
+          "Inputs",
+          "Roughness",
+          "Surface",
+          "Roughness"
+        ],
+        [
+          "Inputs",
+          "Metallic",
+          "Surface",
+          "Metallic"
+        ],
+        [
+          "Inputs",
+          "Alpha",
+          "Surface",
+          "Alpha"
+        ],
+        [
+          "Surface",
+          "BSDF",
+          "Outputs",
+          "Shader"
+        ]
+      ]
     }
   ]
 }

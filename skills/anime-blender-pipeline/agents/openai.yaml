@@ -1,8 +1,8 @@
 interface:
   display_name: Anime Blender Pipeline
-  short_description: Coordinate reviewed anime character conversions
-  default_prompt: Use $anime-blender-pipeline to convert this anime game character
-    into an approved, editable Cycles animation asset.
+  short_description: Diagnose, prepare and verify bounded Blender changes
+  default_prompt: Use $anime-blender-pipeline version 2 to diagnose the current stage,
+    preserve correct work, and prepare an evidenced candidate for human review.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:
