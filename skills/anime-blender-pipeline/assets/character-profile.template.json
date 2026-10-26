@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "pack_version": "2.0.0",
+  "pack_version": "3.0.0",
   "character": {
     "id": null,
     "game": null,
@@ -35,7 +35,11 @@
     "resolution": [
       1920,
       1080
-    ]
+    ],
+    "viewport_shading": "RENDERED",
+    "viewport_samples": null,
+    "viewport_denoising": null,
+    "other_engine_user_request": null
   },
   "rig": {
     "body_ik_fk": true,
@@ -62,14 +66,18 @@
     "ram_gb": 16,
     "vram_gb": 6,
     "gpu_exact": null,
-    "mode": "MATERIAL",
+    "mode": "RENDERED",
     "physics_off_min_average_fps": 24,
     "cold_physics_target_average_fps": 12,
     "project_fps": 24,
     "viewport_pixels": null,
     "fixture_frames": 240,
     "repetitions": 3,
-    "stall_review_threshold_ms": null
+    "stall_review_threshold_ms": null,
+    "engine": "CYCLES",
+    "viewport_samples": null,
+    "viewport_denoising": null,
+    "target_status": "goals_require_fresh_cycles_viewport_qualification"
   },
   "tolerances": {
     "qualification_status": "uncalibrated",
@@ -78,12 +86,21 @@
     "switch_translation_height_fraction": null,
     "switch_rotation_degrees": null,
     "silhouette_iou_min": null,
-    "color_metric": null,
+    "color_metric": {
+      "formula": "CIEDE2000",
+      "threshold": 3.0,
+      "statistic": "per-region-p95",
+      "status": "provisional_requires_human_calibration",
+      "white_point": "D65",
+      "encoding": "display-srgb"
+    },
     "physics_tip_length_fraction": null,
     "collision_penetration": null
   },
   "approved_assets": [],
   "runtime_dependencies": [],
   "unresolved_assumptions": [],
-  "qualification_status": "not_model_qualified"
+  "qualification_status": "not_model_qualified",
+  "mathematics_revision": 1,
+  "workflow_revision": 3
 }

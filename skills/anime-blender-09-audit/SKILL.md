@@ -8,17 +8,25 @@ description: "Audit appearance, deformation, dependencies and actual viewport pe
 ## Load the actual procedure
 
 1. Resolve this skill's absolute directory as STAGE_SKILL. Run `python3 "$STAGE_SKILL/scripts/locate_pipeline.py"` to resolve PACK; never assume installed folder names match skill names.
-2. Read PACK/references/contract.md and [stage.md](references/stage.md). Read PACK/references/diagnosis.md when a previous attempt failed. Read PACK/references/tools.md and schemas.md before ledger operations; roles.md only when delegating.
+2. Read PACK/references/contract.md, PACK/references/workflow.md and [stage.md](references/stage.md). Read PACK/references/diagnosis.md when a previous attempt failed. Read PACK/references/tools.md and schemas.md before ledger operations; roles.md only when delegating.
 3. Check the pinned version, source hashes and exact approved predecessor. Stage 00 has source input instead of a predecessor. Work on a private derivative; leave source and accepted files unchanged.
 4. Locate Blender and inspect its actual API before writing version-sensitive code. If tools, model or references are unavailable, complete independent preparation and report what remains untested.
 
 ## Execute with a bounded change
 
-Follow stage.md in order. State the observed fault, evidence, competing causes, distinguishing test, proposed edit and rollback file before editing. Run the distinguishing test first. Preserve a correct imported subsystem; never rebuild it simply because a template exists.
+Use the routine path in workflow.md first; expand relevant diagnosis in stage.md only for an observed or uncertain fault. State the observed fault, evidence, competing causes, distinguishing test, proposed edit and rollback file before editing. Run the distinguishing test first. Preserve a correct imported subsystem; never rebuild it simply because a template exists.
 
 Change one causal variable per experiment and render/measure the affected region before expanding to the character. Treat failed experiments as reversible drafts within a candidate, not as new candidate designs. Stop and restore the best draft after two consecutive experiments without measurable improvement; diagnose or escalate before another edit. Keep at most three user-facing candidate IDs and request human critique before revising a submitted candidate.
 
 Do not compensate for a fault in another subsystem: do not fix lighting with albedo, shader faults with normals, a rest-space error with weights, or attachment faults with excessive damping. Route cross-stage changes to their owner and requalify affected downstream work.
+
+## Lightweight Cycles workflow
+
+Use Cycles renders and Cycles Rendered viewport evidence by default; another engine requires an explicit user request. Combine audit plus optimization disposition into one human decision, then re-audit plus final delivery/acceptance into one exact final decision. Use only audit and delivery CLI gates. Reuse evidence only with the matching-dependency report required by workflow.md.
+
+## Mathematical support
+
+Read the 09 section and shared rules in PACK/references/mathematics.md when applying a fit or numerical comparison. Keep quality/function/dependency/performance as separate acceptance conditions and report measurement variation. Use constrained tradeoff selection; use the two 09 decisions defined in workflow.md. Asset quality tradeoffs still require the combined audit decision. Record methods/results under the existing checks; add no new human gate.
 
 ## Evidence and handoff
 

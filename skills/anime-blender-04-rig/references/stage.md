@@ -1,5 +1,9 @@
 # 04 — Native control rig: working procedure
 
+## Routine path
+
+Use the shared motion fixture for changed-control/switch smoke tests and a control demo. Reserve full qualification for 06 while retaining actual safety/space checks. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Preserve the proven deform skeleton
 
 Map anatomical roles using rest positions, hierarchy and influence regions; Japanese/English bone names are hints. Keep the imported deform skeleton/rest bind where it works. Build separate control/mechanism bones rather than rebuilding and reweighting everything. Inventory grants, twist, IK, SDEF callbacks and morph dependencies before removal.
@@ -28,6 +32,12 @@ Rigify may construct a rig, but generated Python UI and snapping are separate de
 | rig-integrity | Rest/evaluated mesh comparison, space/dependency map, target/driver/cycle diagnostics |
 | switching-demonstrations | Actual pre/post matrices and rendered/keyed IK/FK and space switch fixtures |
 | runtime-dependencies | Exact add-on/driver/text/handler dependencies and clean native posing test |
+
+## Apply mathematical support
+
+Use bounded IK/transform fitting where needed. Measure switching translation and normalized-quaternion angular error in common spaces, including intermediate joints; human judges actual control behavior.
+
+Read PACK/references/mathematics.md for the 04 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
 
 ## Technical references
 

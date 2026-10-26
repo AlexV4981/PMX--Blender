@@ -26,3 +26,25 @@ Record required final add-ons, each alternative method and its evidence. A hyper
 
 Actor / exact observed statement / candidate digest / date:
 Do not prefill approval, invent consent or treat another agent's decision as human approval.
+
+## Numerical support, if used
+
+- Method and actual implementation/version:
+- Input, fixture and mask/correspondence identity:
+- Variables/bounds and frozen attributes:
+- Regional metrics/worst cases and uncertainty:
+- Provisional versus human-calibrated acceptance criteria:
+- Human visual preference and unresolved differences:
+
+Use not applicable when no fit is needed. Do not add a gate or claim optional solvers ran.
+
+## Compact current-stage review
+
+- Current stage/candidate and actual changed systems:
+- Accepted recipe/environment/fixture facts reused, with identity/rationale:
+- Essential checks and Cycles render/Rendered-viewport evidence:
+- Regional color summary and visible outliers when applicable:
+- Short human question: does this look/behave right, or what needs correction?
+- Stage 09 decision: audit or delivery; delivery includes final acceptance.
+
+Do not rerun unchanged artistic analysis or omit hidden-fault tests.

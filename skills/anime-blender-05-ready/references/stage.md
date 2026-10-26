@@ -1,5 +1,9 @@
 # 05 — Face controls and animation usability: working procedure
 
+## Routine path
+
+Use the shared face fixture for changed expression combinations, reset/keying and a short human demo. Reserve full qualification for 06; retain actual retarget tests when required. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Preserve the expression vocabulary
 
 Map source vertex, group, bone, UV and material morphs to native controls explicitly. Shape keys only represent compatible vertex deformations. Record original ranges and intentional asymmetry; do not rename away the source mapping. Preserve neutral Basis and relative-key relationships.
@@ -24,6 +28,12 @@ Embed a concise animator guide in the blend: entry controls, property ranges, sw
 | animation-usability | Selection/key/reset/switch tests, root conventions and production-action state |
 | retarget-profiles | Requested profile and actual clip results, or explicit approved absence |
 | animator-guide | Actual embedded text plus guide procedure replay on the candidate |
+
+## Apply mathematical support
+
+Use bounded shape-delta fitting for known targets and pose-space correctives for reviewed combination faults. Preserve native portable controls; do not treat 2D observations as corresponding 3D vertices or assume independent shape weights sum to one.
+
+Read PACK/references/mathematics.md for the 05 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
 
 ## Technical references
 

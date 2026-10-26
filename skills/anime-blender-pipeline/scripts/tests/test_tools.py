@@ -110,17 +110,94 @@ class LedgerTests(unittest.TestCase):
         with self.assertRaises(p.PipelineError):
             p.register(args(stage="00", candidate="B", file=str(f), asset=[]), self.root, self.run)
 
-    def test_stage09_requires_all_human_subgates(self):
+    def stage09(self, submitted=True):
         for stage in p.STAGES:
             self.candidate(stage); self.check_all(stage)
             if stage != "09": self.accept(stage)
-        p.submit(args(stage="09", candidate="A"), self.root, self.run)
-        approval = args(stage="09", candidate="A", actor="fixture-human", statement="Explicit final acceptance")
+        if submitted: p.submit(args(stage="09", candidate="A"), self.root, self.run)
+
+    def review09(self, gate):
+        return p.review(args(stage="09", candidate="A", gate=gate, actor="fixture-human",
+            statement="Observed fixture decision", evidence=str(self.evidence)), self.root, self.run)
+
+    def test_stage09_two_decisions_and_no_third_approval(self):
+        self.stage09()
+        approval = args(stage="09", candidate="A", actor="fixture-human", statement="Explicit fixture acceptance")
         with self.assertRaises(p.PipelineError): p.approve(approval, self.root, self.run)
-        for name in ["audit", "optimization", "reaudit", "delivery"]:
-            p.review(args(stage="09", candidate="A", gate=name, actor="fixture-human", statement="Observed fixture decision", evidence=str(self.evidence)), self.root, self.run)
-        p.approve(approval, self.root, self.run)
-        self.assertEqual(self.run["stages"]["09"]["approved"], "A")
+        self.review09("audit")
+        self.assertIsNone(self.run["stages"]["09"]["approved"])
+        result=self.review09("delivery")
+        self.assertEqual(result["approved"],"A")
+        c=p.get_candidate(self.run,"09","A")
+        self.assertEqual(set(c["reviews"]),{"audit","delivery"})
+        self.assertEqual(c["approval"]["statement"],c["reviews"]["delivery"]["statement"])
+        self.assertEqual(self.run["stages"]["09"]["approved"],"A")
+        with self.assertRaises(p.PipelineError): p.approve(approval,self.root,self.run)
+
+    def test_stage09_delivery_without_audit_rejected(self):
+        self.stage09()
+        with self.assertRaises(p.PipelineError):self.review09("delivery")
+        self.assertNotIn("delivery",p.get_candidate(self.run,"09","A")["reviews"])
+
+    def test_stage09_delivery_on_draft_rejected(self):
+        self.stage09(submitted=False);self.review09("audit")
+        with self.assertRaises(p.PipelineError):self.review09("delivery")
+
+    def test_stage09_stale_final_bundle_rejected(self):
+        self.stage09();self.review09("audit")
+        c=p.get_candidate(self.run,"09","A");(self.root/c["primary"]).write_text("changed")
+        with self.assertRaises(p.PipelineError):self.review09("delivery")
+        self.assertIsNone(self.run["stages"]["09"]["approved"])
+
+    def test_stage09_stale_snapshot_rejected(self):
+        self.stage09();self.review09("audit")
+        c=p.get_candidate(self.run,"09","A");(self.root/c["snapshot"][0]["path"]).write_text("changed")
+        with self.assertRaises(p.PipelineError):self.review09("delivery")
+
+    def test_stage09_stale_audit_evidence_rejected(self):
+        self.stage09();self.review09("audit");self.evidence.write_text("tampered")
+        with self.assertRaises(p.PipelineError):self.review09("delivery")
+
+    def test_stage09_revisions_keep_audit_but_need_new_delivery(self):
+        self.stage09();self.review09("audit")
+        p.feedback(args(stage="09",candidate="A",statement="Observed fixture critique"),self.root,self.run)
+        self.candidate("09");self.check_all("09")
+        c=p.get_candidate(self.run,"09","A")
+        self.assertEqual(set(c["reviews"]),{"audit"})
+        p.submit(args(stage="09",candidate="A"),self.root,self.run)
+        self.review09("delivery")
+        self.assertEqual(c["approval"]["bundle_sha256"],c["bundle_sha256"])
+
+    def test_delivery_cli_persists_acceptance_in_one_operation(self):
+        import contextlib,io
+        self.stage09();self.review09("audit")
+        p.atomic_json(self.root/"run.json",self.run)
+        with contextlib.redirect_stdout(io.StringIO()):
+            code=p.main(["review",str(self.root),"09","A","--gate","delivery",
+                         "--actor","fixture-human","--statement","Deliver this fixture", "--evidence",str(self.evidence)])
+        self.assertEqual(code,0)
+        saved=p.load(self.root);c=p.get_candidate(saved,"09","A")
+        self.assertEqual(c["status"],"approved")
+        self.assertEqual(c["approval"]["statement"],"Deliver this fixture")
+        self.assertEqual(c["reviews"]["delivery"]["bundle_sha256"],c["bundle_sha256"])
+
+    def test_legacy_stage09_gates_rejected(self):
+        self.stage09()
+        for gate in ("optimization","reaudit"):
+            with self.assertRaises(p.PipelineError):self.review09(gate)
+
+    def test_old_version_is_not_silently_migrated(self):
+        self.run["pack_version"]="2.0.0";p.atomic_json(self.root/"run.json",self.run)
+        with self.assertRaises(p.PipelineError):p.load(self.root)
+
+    def test_cycles_profile_and_policy_defaults(self):
+        profile=p.read_json(p.PACK/"assets"/"character-profile.template.json")
+        policy=p.read_json(p.PACK/"assets"/"stage-policy.json")
+        self.assertEqual(profile["render"]["engine"],"CYCLES")
+        self.assertEqual(profile["render"]["viewport_shading"],"RENDERED")
+        self.assertEqual(profile["benchmark"]["engine"],"CYCLES")
+        self.assertEqual(profile["benchmark"]["mode"],"RENDERED")
+        self.assertEqual(policy["stage09_human_reviews"],list(p.REVIEW_GATES))
 
     def test_dependency_budget_no_duplicate_or_automatic_exception(self):
         for i in range(10):

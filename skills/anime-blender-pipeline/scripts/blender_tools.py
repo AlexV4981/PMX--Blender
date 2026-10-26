@@ -84,6 +84,9 @@ def inspect_scene(bpy):
               "limitations": ["Not a complete semantic fingerprint for every Blender data type",
                               "No UI performance measurement", "No automatic determination of dependency necessity",
                               "Evaluate required poses and native physics separately"]}
+    if bpy.context.scene.render.engine != "CYCLES":
+        result["issues"].append({"kind":"non-cycles-engine-review", "engine":bpy.context.scene.render.engine,
+                                 "requirement":"Cycles by default; another engine needs an explicit user request"})
     meshes = {}
     for mesh in sorted(bpy.data.meshes, key=lambda x:x.name):
         entry = {"vertices": len(mesh.vertices), "polygons": len(mesh.polygons), "loops": len(mesh.loops),
@@ -218,6 +221,7 @@ def build_seeds(bpy, spec, output):
     if bpy.data.filepath:
         raise ValueError("Build seeds in factory startup without opening a production .blend")
     if Path(output).exists(): raise ValueError("Refuse to overwrite an existing library")
+    bpy.context.scene.render.engine = "CYCLES"
     for g in spec["groups"]:
         if g["name"] in bpy.data.node_groups: raise ValueError("Seed group already exists")
         tree = bpy.data.node_groups.new(g["name"],"ShaderNodeTree"); tree.use_fake_user = True

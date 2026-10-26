@@ -1,5 +1,9 @@
 # 02 — Material diagnosis and Cycles restoration: working procedure
 
+## Routine path
+
+Begin with verified materials, regional Delta E 00 and a short Cycles review. Expand the diagnostic ladder only for observed/uncertain faults; keep alpha/eyes/shadows separate. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Separate restoration from reconstruction
 
 Treat PMX as geometry plus MMD material semantics, not the original game's shader. PMX diffuse/specular/ambient, base texture, toon texture, sphere mode, material morph and draw flags do not map one-to-one to a game PBR set. A fan PMX may omit the game's masks, face SDF, light maps or normals. Record missing inputs as missing; use a labeled proposed approximation only after showing its limits.
@@ -56,7 +60,7 @@ Treat outlines as a separate system with face/eye exclusions and a measured widt
 
 Render face/skin, hair, opaque garment and alpha pilots in Cycles front/three-quarter/profile, plus key-light sweep and backlight. Inspect actual images at native pixel size. Preserve local color, shadow placement, highlights, silhouettes and neighboring material behavior separately. Roll back any edit that improves one crop but breaks another. Only copy a proven setup to materials with the same evidenced semantics; material names alone are insufficient.
 
-Material Preview uses a different renderer. Toon BSDF and other Cycles-only features need a separately tested preview approximation or Rendered Cycles viewport. Share palette/mask values where feasible; label the preview limits rather than promising identical lighting. Verify renderer-specific Material Output targets in the actual build and inspect both views.
+Use scene.render.engine='CYCLES' and viewport shading.type='RENDERED' for animation review and viewport evidence. Do not create a separate preview graph, Eevee output or Material Preview workflow unless the user explicitly requests it. Use the same materials and scene lights/world; record viewport samples, denoising and device so comparisons are meaningful. The legacy check name preview-behavior now means actual Cycles Rendered viewport behavior.
 
 Run `python3 "$PACK/scripts/material_plan.py" PLAN.json` before registering. This validates evidence fields and role completeness, not appearance or whether the claims are true. Preserve unresolved uncertainty and never fill evidence fields with fabricated paths.
 
@@ -66,10 +70,16 @@ Run `python3 "$PACK/scripts/material_plan.py" PLAN.json` before registering. Thi
 | --- | --- |
 | material-mapping | Completed plan, channel sheets, UV/material ownership, graph/socket/image settings, before/after semantic inspection |
 | cycles-comparisons | Inspected diagnostic ladder and pilot images; full-character regression views, exact fixture settings and delta explanations |
-| preview-behavior | Actual Material Preview and Cycles comparison; unavailable effects and approximation labels |
+| preview-behavior | Actual Cycles Rendered viewport and final Cycles comparison with recorded settings; no second-engine requirement |
 | material-flag-report | Every relevant PMX tint/alpha/morph/toon/sphere/shadow/double-side/edge decision and remaining unknown |
 
 A necessary map that is absent, or an unresolved face/alpha fault, remains blocked. Present a draft for critique when needed; do not call it shader restoration merely because it renders.
+
+## Apply mathematical support
+
+After the diagnostic ladder, fit only verified, bounded material parameters using actual Cycles renders. Use regional CIEDE2000 with provisional p95 < 3, expose maximum/outlier regions, and keep alpha/shadow/eye checks separate. Human confirms comparison conditions/statistic before this becomes an acceptance rule.
+
+Read PACK/references/mathematics.md for the 02 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
 
 ## Technical references
 

@@ -32,3 +32,12 @@ Use documentation for the exact pinned build, not a moving latest version. These
 - [Packed data](https://docs.blender.org/manual/en/4.5/files/blend/packed_data.html): asset packing does not replace relocated clean-open tests.
 
 During this rewrite, official indexed documentation confirmed the Toon/Cycles and Shader-to-RGB/Eevee distinction and image color/alpha concepts. Some direct versioned manual fetches were unavailable. No API or Blender behavior was qualified by a live run here. Test every required feature in the actual pinned Blender build.
+
+## Mathematical methods
+
+See [mathematics.md](mathematics.md) for stage mapping, assumptions and the primary references for robust fitting, CIEDE2000, rigid alignment, ARAP, skinning, expression fitting, inverse simulation and human preference models. The documented external solvers are not bundled Blender implementations.
+
+## Cycles viewport scope
+
+- [Blender viewport shading](https://docs.blender.org/manual/en/4.4/editors/3dview/display/shading.html): Rendered mode uses the scene engine; Material Preview is not a Cycles substitute.
+- [Blender Eevee developer documentation](https://developer.blender.org/docs/features/eevee/): Material Preview uses Eevee even for a Cycles project. The default workflow therefore uses Cycles Rendered viewport and builds no alternate-engine graph.

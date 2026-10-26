@@ -52,3 +52,11 @@ No live Blender, actual character conversion, viewport benchmark, native graph v
 ## Resume recommendation
 
 Use the last correct import, not the damaged shader derivative. Keep original source textures unchanged. Start a version 2 run with explicit lineage and fresh relevant gates. Diagnose one face material, one hair material and an alpha edge; inspect real renders before propagating. Do not ask the agent to rebuild the entire character to solve an isolated material fault.
+
+## Subsequent mathematical integration
+
+Additive mathematical support now covers all eleven skills without changing their stage order or gates. A shared method reference and profile document camera fitting, rigid alignment, regional color/appearance fitting, deformation/rig/face methods, held-out qualification and motion identification. The numerical helper implements CIEDE2000, declared sRGB/Lab conversion, rigid SVD alignment and quaternion distance; external solvers are explicitly unimplemented procedures. The current suite passes 41 tests, including 20 selected published color reference cases. WORKFLOW_COMPARISON.md freezes the integrated hierarchy and separately proposes reductions in redundant review; those reductions are not applied.
+
+## Version 3 — approved lightweight Cycles workflow
+
+The user approved applying the lighter hierarchy and requested Cycles only unless otherwise instructed. Routine paths, shared workflow guidance, contract, templates, policy and CLI now agree. Ten stage handoffs remain; 09 uses audit and delivery, with final delivery atomically accepting the exact tested/submitted bundle. Stage-specific reductions reuse matching setup/color/fixture evidence, avoid no-op geometry repairs and reserve deep diagnosis/search for actual faults. Regional color and hidden-fault checks remain. All default preview/comparison/timing evidence is Cycles Rendered viewport; no automatic alternate-engine graphs are constructed. Version 3 preserves historical version 1/2 runs rather than migrating their approvals. The current suite has 51 passing utility tests; live Blender behavior/performance remains unqualified.

@@ -9,12 +9,30 @@
       "status": "blocked",
       "diagnostic_evidence": [],
       "output_method": null,
-      "pmx_semantics": {"diffuse_factor": null, "alpha": null, "toon": null, "sphere_mode": null, "material_morphs": []},
+      "pmx_semantics": {
+        "diffuse_factor": null,
+        "alpha": null,
+        "toon": null,
+        "sphere_mode": null,
+        "material_morphs": []
+      },
       "maps": [
-        {"file": null, "sha256": null, "image_datablock": null, "role": "unknown", "unknown_reason": null,
-         "required_for_fidelity": true, "uv_map": null, "connection": "unconnected", "role_evidence": [],
-         "color_space": null, "color_space_rationale": null, "encoding_exception_evidence": [],
-         "channel_roles": {}, "alpha_association": null}
+        {
+          "file": null,
+          "sha256": null,
+          "image_datablock": null,
+          "role": "unknown",
+          "unknown_reason": null,
+          "required_for_fidelity": true,
+          "uv_map": null,
+          "connection": "unconnected",
+          "role_evidence": [],
+          "color_space": null,
+          "color_space_rationale": null,
+          "encoding_exception_evidence": [],
+          "channel_roles": {},
+          "alpha_association": null
+        }
       ],
       "regression_evidence": [],
       "remaining_limits": []

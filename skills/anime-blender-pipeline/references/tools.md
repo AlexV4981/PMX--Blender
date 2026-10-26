@@ -24,7 +24,7 @@ Stage 09 internal human reviews:
 
     python3 "$PACK/scripts/pipeline.py" review "$RUN" 09 A --gate audit --actor HUMAN --statement 'Observed decision' --evidence audit/09-audit.md
 
-Use audit, optimization, reaudit and delivery in that order. Record optimization as not needed when appropriate. Reaudit/delivery must identify the final current bundle. Final approve still follows submit and all checks. Do not run review because a model thinks the user would agree.
+Use audit then delivery. The audit decision covers the actual audit and selected optimization plan or not-needed disposition. After affected re-tests/package checks, register and submit the final bundle; delivery covers re-audit, delivery and final stage acceptance. review --gate delivery validates checks/snapshot/current identity and approves stage 09 atomically. Do not ask another final-approval question or call approve again. Do not run review because a model thinks the user would agree.
 
 Dependency alternatives:
 
@@ -67,7 +67,7 @@ No UI FPS recorder is bundled or claimed tested. Implement and qualify a UI redr
 Blender-dependent paths were syntax/pure-data checked when authored without Blender available. Run live fixture tests before marking them qualified. Do not report that building the seed library qualifies the full pipeline.
 
 
-## Version 2 diagnostic utilities
+## Diagnostic utilities
 
 Run explicit image files only (Pillow required):
 
@@ -81,4 +81,23 @@ Copy assets/material-plan.template.json into the run; populate it with actual pa
 
 A valid plan is a record, not visual acceptance. Required unknown maps block the material and remain unconnected. Empty templates fail intentionally. Record all actual Blender graph and image-setting changes in the recipe and inspect the renders. Neither utility repairs shaders automatically.
 
-Version 2 pipeline.py rejects old pack-version ledgers. Do not edit an old policy or run.json to bypass that rejection. Preserve the original run and use fresh lineage/review for a version 2 run.
+Version 3 pipeline.py rejects version 1/2 ledgers. Do not edit a historical policy or run.json to bypass that rejection. Preserve old runs/tools and use fresh lineage/review for a version 3 run.
+
+## Mathematical measurements (revision 1)
+
+Read mathematics.md for assumptions and stage-specific methods. math_tools.py requires NumPy; it is a read-only measurement utility, not an optimizer or acceptance tool. No new dependency is required to open/animate the final blend.
+
+    python3 "$PACK/scripts/math_tools.py" colors "$RUN/audit/color-samples.json" --output "$RUN/audit/color-result-001.json"
+    python3 "$PACK/scripts/math_tools.py" align "$RUN/audit/corresponding-points.json" --output "$RUN/audit/alignment-001.json"
+
+Colors input: encoding='display-srgb', matched_conditions_evidence=[paths], regions=[{name,reference_rgb:[[r,g,b],...],candidate_rgb:[[r,g,b],...]}]. Use JSON double quotes. Values are corresponding display-referred sRGB samples in [0,1]; evidence paths resolve relative to the input file. No ICC/OCIO conversion is performed. Report per-region CIEDE2000 median/p95/max and fraction >=3; the provisional p95<3 result is not stage acceptance. Unknown lighting/registration remains a diagnostic limit.
+
+Align input: source and target equal N-by-3 arrays with known correspondence, after documented axis and scale conversion. Proper SVD rigid alignment rejects collinear data, never allows reflection/scale, and reports residuals. CLI outputs refuse overwrite. Python APIs also expose quaternion_angle and summarize; see their docstrings for units.
+
+Camera/IK/ARAP/PSD/preference/inverse-simulation solvers are procedures or external options, not implemented by this utility. Record actual method/code/version/results before claiming execution. Store a copy of assets/mathematical-profile.template.json with each actual fit; fill relevant fields only and preserve evidence. Required check names remain stable; stage 09 uses the two decisions specified in workflow.md.
+
+## Cycles-only renderer and compact evidence
+
+Set scene.render.engine='CYCLES' on working derivatives and viewport shading.type='RENDERED' for visual/animation/benchmark evidence. The read-only inspector reports non-cycles-engine-review without mutating the file; a genuinely requested engine exception must be documented, never assumed. Seed-library construction explicitly selects Cycles. Material Preview and an alternate engine are not defaults.
+
+Check names preview-behavior (02) and preview-limitations (07) are retained for continuity but mean Cycles Rendered viewport evidence. Use one compact report referencing unchanged accepted environment/camera/color/fixture facts and listing actual deltas, affected tests and limits. Evidence reuse still needs current identity and a matching-dependency rationale. See workflow.md before stage-09 reviews.

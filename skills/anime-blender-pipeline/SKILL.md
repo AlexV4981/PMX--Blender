@@ -7,7 +7,7 @@ description: "Coordinate and diagnose a human-reviewed PMX anime character conve
 
 ## Start with the failure and the actual asset
 
-Read [contract.md](references/contract.md). When a previous attempt failed, read [diagnosis.md](references/diagnosis.md) and inspect the last correct checkpoint, failed derivative, rendered evidence and actual commands/logs. If those artifacts are unavailable, distinguish an instruction defect from an unconfirmed runtime cause. Do not claim to have diagnosed a particular model from the skill text alone.
+Read [contract.md](references/contract.md) and [workflow.md](references/workflow.md). When a previous attempt failed, read [diagnosis.md](references/diagnosis.md) and inspect the last correct checkpoint, failed derivative, rendered evidence and actual commands/logs. If those artifacts are unavailable, distinguish an instruction defect from an unconfirmed runtime cause. Do not claim to have diagnosed a particular model from the skill text alone.
 
 Locate the Blender binary, exact build, importer and supplied model/references. Probe actual capabilities. Keep the correct import intact. Do not replace every material or reimport to solve an isolated shader fault. Treat the bundled generic shader seeds as diagnostic fixtures, not game-character presets or an original game shader recovery.
 
@@ -17,9 +17,13 @@ Read only the active [stage procedure](#stages), plus [tools.md](references/tool
 
 Before editing state the observed fault, competing causes, distinguishing test, bounded edit and rollback. Change one causal variable, inspect the result and neighboring regressions, then expand only a proven fix. After two non-improving experiments restore the best draft and re-diagnose or escalate. Do not give Light unfamiliar shader, rig-space or physics design decisions merely because they occur in a routine stage.
 
-For materials require raw channel inspection -> UV/material ownership -> emission texture-only -> neutral diffuse -> verified alpha -> isolated shading/specular -> full scene. Classify each map by evidence. Keep unknowns unknown; do not infer original game masks or face SDFs from a filename. Stage 02 contains the detailed procedure and material-plan validator.
+For material faults or uncertain roles, use raw channel inspection -> UV/material ownership -> emission texture-only -> neutral diffuse -> verified alpha -> isolated shading/specular -> full scene. Classify each map by evidence. Keep unknowns unknown; do not infer original game masks or face SDFs from a filename. Stage 02 contains the detailed procedure and material-plan validator.
 
 Use one writer per blend and one laptop Blender workload. Delegate only bounded proven operations with private artifacts. Verify actual model availability; requested role names do not configure a running client. Preserve the existing Sol High orchestration/Light routine-work/Astra escalation preference where actually supported.
+
+## Use mathematical support without changing the workflow
+
+Read [mathematics.md](references/mathematics.md) for the active stage and shared fitting/color rules. Use bounded stage-local fitting, regional CIEDE2000 with provisional target <3, and human preference feedback within the existing gates. Keep unknown inputs/thresholds explicit and protected features as constraints. Copy assets/mathematical-profile.template.json into a mutable run derivative before an actual fit. Distinguish bundled measurements from optional external solvers. Apply the active lightweight path in workflow.md: short Cycles demonstration and human review first, with focused diagnosis/fitting for faults. Reuse unchanged component evidence only with dependency identity and rationale.
 
 ## Initialize or resume without laundering approvals
 
@@ -31,7 +35,7 @@ python3 "$PACK/scripts/pipeline.py" status "$RUN"
 python3 "$PACK/scripts/pipeline.py" validate "$RUN"
 ```
 
-Register all authoritative sources by hash; keep extracted source files and originals unchanged. Copy assets/character-profile.template.json into the run and fill observed facts, leaving unknowns null. Version 2 uses fresh runs; do not rewrite version 1 policy/ledgers or transplant old approvals. Use a validated version 1 tool to inspect its historical run. An imported checkpoint can be reused as an input artifact in a new run with explicit lineage and fresh affected review, without needlessly importing again.
+Register all authoritative sources by hash; keep extracted source files and originals unchanged. Copy assets/character-profile.template.json into the run and fill observed facts, leaving unknowns null. Version 3 changes renderer/approval semantics and uses fresh runs; do not rewrite version 1/2 policy/ledgers or transplant old approvals. Use the matching historical tools to inspect old runs. An imported checkpoint can be reused as an input artifact in a new run with explicit lineage and fresh affected review, without needlessly importing again.
 
 Keep immutable accepted checkpoints and private candidate dependencies. Hashes identify files; separate numerical/visual tests establish behavior. Record manual edits as exact assets or replayable operations. Read [qualification.md](references/qualification.md) before making a qualification claim.
 
@@ -56,10 +60,10 @@ Obtain the exact preceding stage acceptance before constructing the next stage. 
 
 Register the final saved file plus every required mutable asset. Log each frozen-policy required check with a separate nonempty evidence file. After edits, re-register and rerun affected checks; do not reuse stale evidence. Use assets/gate-report.template.md. Present matched before/after views, individual deltas, checked/blocked features and unresolved assumptions. Complete all authorized preparation before the gate.
 
-After an observed explicit human decision tied to the current candidate, the orchestrator may record approve. Workers return evidence and the observed statement. The ledger is an integrity/trust log, not an authenticated approval system. Preserve stage 09 audit, optimization, reaudit and delivery subgates. Return late geometry changes to 03 and invalidate affected bindings/tests/approvals.
+After an observed explicit human decision tied to the current candidate, the orchestrator may record approve for stages 00–08. Workers return evidence and the observed statement. The ledger is an integrity/trust log, not an authenticated approval system. Use two stage-09 decisions: audit (audit plus selected plan/disposition) and delivery (re-audit plus delivery and final stage acceptance). review --gate delivery validates and approves the submitted final bundle in one operation; do not ask or call approve again. Return late geometry changes to 03 and invalidate affected bindings/tests/approvals.
 
 Allow construction add-ons and inspected embedded Python. Keep core final behavior native; disclose helper execution separately. A required hyperspecific runtime add-on exception still needs ten distinct evidenced failed alternatives and exact human acceptance. Stop alternatives early when a native method succeeds; do not confuse this budget with candidate count.
 
 ## Deliver with measured limits
 
-Deliver the native Cycles blend, necessary external textures if any, embedded animator/reset guide, editable unbaked physics and accepted recipe/evidence. Test a relocated package in clean stock Blender without construction add-ons and core auto execution. Measure real UI Material Preview behavior on the stated laptop: physics off >=24 average FPS, fresh active physics target near 12 with severe stalls disclosed. A headless loop is not UI FPS. Documentation and utility tests alone do not qualify Blender output, character fidelity or hardware performance.
+Deliver the native Cycles blend, necessary external textures if any, embedded animator/reset guide, editable unbaked physics and accepted recipe/evidence. Test a relocated package in clean stock Blender without construction add-ons and core auto execution. Use Cycles for final renders, comparisons and animation previews; use its Rendered viewport, never a second-engine graph by default. Another engine requires an explicit user request. Measure actual Cycles Rendered viewport behavior with pinned samples/denoising/device: retain >=24 FPS off and near-12 FPS cold active as desired goals, freshly qualify them and disclose severe stalls. A headless loop is not UI FPS. Documentation and utility tests alone do not qualify Blender output, character fidelity or hardware performance.

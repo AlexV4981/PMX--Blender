@@ -25,6 +25,6 @@ Use the supplied assets/codex-agents TOML files when the current local Codex sup
 Do not change global model defaults, permissions, provider, API keys or MCP settings merely to install these skills. The profiles inherit session permissions and cannot grant extra access. Verify model availability at execution time.
 
 
-## Version 2 task boundary
+## Task boundary
 
 Routine means a proven script or exact accepted recipe with known input checks and observable outputs. Texture classification, unfamiliar shader construction, rest-space conversion and novel solver architecture require implementation judgment. Assign those to the capable role, then use routine workers for bounded application/collection. Include fault hypotheses, distinguishing test and rollback path in the task record. Stop after two consecutive non-improving experiments and return evidence for renewed diagnosis; do not manufacture ten technical approaches or three designs as quotas.

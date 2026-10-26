@@ -1,5 +1,9 @@
 # 08 — Editable native physics: working procedure
 
+## Routine path
+
+Use the short cold-reset/settle/turn/landing demo and human motion critique before expensive fitting. Still test category suspension, manual fallback, collisions and stability. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Start with one physical structure
 
 Map PMX bodies/joints plus visible hair, garments, accessories, tail/ears and applicable soft tissue to source IDs. Use the PMX as intent evidence; MMD solver numbers are not transferable Blender material constants. Choose one representative chain or panel before full-character construction. Preserve manual rig behavior and approved visible shape.
@@ -37,6 +41,12 @@ Test every category alone and all combined, including viewport AND render state.
 | category-toggles | Each off/on state, manual fallback, real evaluation/cost evidence and reset limits |
 | editable-unbaked | Native solver/proxy/settings retained, final bake/cache state |
 | physics-settings | Exact solver parameters/units, collision scope, bindings and reset/pre-roll recipe |
+
+## Apply mathematical support
+
+Fit declared native solver settings to observed or human-approved target motion using inverse simulation. Freeze driver motion/timebase/reset. Keep XPBD and oscillator equations as appropriately limited references; prove actual toggles/cold behavior.
+
+Read PACK/references/mathematics.md for the 08 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
 
 ## Technical references
 

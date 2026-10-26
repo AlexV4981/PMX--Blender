@@ -1,5 +1,9 @@
 # 01 — Import and loss inventory: working procedure
 
+## Routine path
+
+Preserve the working import. Reuse its inventory when identity/correspondence is unchanged; show the import and actual losses for the existing gate. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Preserve the import that works
 
 Run the read-only PMX inventory before Blender import. Read exit status: partial inventory remains partial. Extract a working copy preserving Unicode paths; preserve the original archive. Record every importer option and unavoidable conversion. Import once without merge-by-distance, triangulation changes, decimation, normal recalculation or automatic rig rebuilding.
@@ -26,6 +30,12 @@ If the import is already structurally correct, preserve it. Stage 02 begins by d
 | feature-loss-report | Feature-by-feature status, morph/deformation exceptions and owner |
 | texture-dependencies | Exact resolved image hashes, ambiguity/missing-file list |
 | baseline-integrity | Saved raw import, settings and front/side/face diagnostic images |
+
+## Apply mathematical support
+
+Use known source correspondences and proper SVD rigid alignment after the documented axis/scale conversion. Inspect residuals without nonrigid warping; keep topology/UV/material integrity checks separate.
+
+Read PACK/references/mathematics.md for the 01 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
 
 ## Technical references
 

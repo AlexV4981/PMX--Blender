@@ -19,7 +19,8 @@ import sys
 import tempfile
 
 PACK = Path(__file__).resolve().parents[1]
-VERSION = "2.0.0"
+VERSION = "3.0.0"
+REVIEW_GATES = ("audit", "delivery")
 STAGES = tuple(f"{i:02d}" for i in range(10))
 ID = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$")
 
@@ -185,11 +186,11 @@ def gate_errors(root, run, stage, c, reviews=True):
         elif check["bundle_sha256"] != c["bundle_sha256"] or not verify_stamp(root, check["evidence"]):
             errors.append(f"Check/evidence stale: {name}")
     if reviews and stage == "09":
-        for name in ["audit", "optimization", "reaudit", "delivery"]:
+        for name in REVIEW_GATES:
             review = c["reviews"].get(name)
             if not review or not verify_stamp(root, review["evidence"]):
                 errors.append(f"Missing/stale explicit human subgate: {name}")
-            elif name in ("reaudit", "delivery") and review["bundle_sha256"] != c["bundle_sha256"]:
+            elif name == "delivery" and review["bundle_sha256"] != c["bundle_sha256"]:
                 errors.append(f"Human {name} review refers to an earlier candidate revision")
     return errors
 
@@ -247,7 +248,7 @@ def register(args, root, run):
             raise PipelineError("Candidate artifacts overlap another candidate; copy a private bundle.")
     rev = existing["revision"] + 1 if existing else 1
     historical_reviews = {k: v for k, v in (existing or {}).get("reviews", {}).items()
-                          if args.stage == "09" and k in ("audit", "optimization")}
+                          if args.stage == "09" and k == "audit"}
     c = {"id": args.candidate, "revision": rev, "status": "draft",
          "primary": stamp(root, args.file)["path"], "artifacts": artifacts,
          "bundle_sha256": canonical(artifacts), "input_sha256": inp,
@@ -320,7 +321,17 @@ def review(args, root, run):
     if c["status"] == "approved":
         raise PipelineError("Approved records are immutable.")
     require_current(root, run, args.stage, c)
-    order = ["audit", "optimization", "reaudit", "delivery"]
+    order = list(REVIEW_GATES)
+    if args.gate not in order:
+        raise PipelineError("Stage 09 supports audit and delivery reviews only.")
+    if args.gate == "delivery":
+        if c["status"] != "awaiting_review":
+            raise PipelineError("Final delivery decision requires the submitted exact candidate.")
+        errors = gate_errors(root, run, args.stage, c, reviews=False)
+        if not c["snapshot"] or not all(verify_stamp(root, x) for x in c["snapshot"]):
+            errors.append("Submission snapshot changed or is missing")
+        if errors:
+            raise PipelineError("; ".join(errors))
     for previous in order[:order.index(args.gate)]:
         if previous not in c["reviews"]:
             raise PipelineError(f"Human subgate required first: {previous}")
@@ -335,6 +346,10 @@ def review(args, root, run):
         c["reviews"].pop(later, None)
     append_event(run, "human_subgate", stage=args.stage, candidate=args.candidate,
                  gate=args.gate, record=record)
+    if args.gate == "delivery":
+        # One observed final human decision also accepts stage 09; no extra prompt.
+        result = approve(args, root, run)
+        return {**result, "recorded": "delivery", "notice": record["trust_boundary"]}
     return {"recorded": args.gate, "notice": record["trust_boundary"]}
 
 
@@ -365,7 +380,7 @@ def feedback(args, root, run):
         raise PipelineError("Record the actual human critique")
     c["status"] = "draft"
     c["checks"] = {}
-    c["reviews"] = {k: v for k, v in c["reviews"].items() if k in ("audit", "optimization")}
+    c["reviews"] = {k: v for k, v in c["reviews"].items() if k == "audit"}
     append_event(run, "human_feedback", stage=args.stage, candidate=args.candidate,
                  statement=args.statement)
     return {"status": "draft", "notice": "Revise this candidate ID; keep the submitted snapshot."}
@@ -417,7 +432,7 @@ def parser():
             q.add_argument("--actor", required=True); q.add_argument("--statement", required=True)
         if name == "feedback": q.add_argument("--statement", required=True)
         if name == "review":
-            q.add_argument("--gate", choices=["audit", "optimization", "reaudit", "delivery"], required=True)
+            q.add_argument("--gate", choices=REVIEW_GATES, required=True)
             q.add_argument("--evidence", required=True)
     a = subs.add_parser("attempts")
     a.add_argument("workspace"); a.add_argument("dependency"); a.add_argument("--method", required=True)

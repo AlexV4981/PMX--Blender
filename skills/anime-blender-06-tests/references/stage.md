@@ -1,5 +1,9 @@
 # 06 — Animation qualification: working procedure
 
+## Routine path
+
+Maintain one versioned full motion/face qualification suite with held-out cases. Later stages rerun affected cases and critical final checks rather than recreate the suite. Use PACK/references/workflow.md; retain Cycles-only evidence unless the user explicitly requests another engine. The technical sections below are the focused procedures for the work actually needed, not a requirement to redo unchanged systems.
+
 ## 1. Test without secretly repairing
 
 Use a private test derivative with a versioned action/pose fixture and approved character-specific ranges. Freeze control-space inputs and sample frames. Test shoulders/hips, elbow/knee flexion, forearm twist, wrists, spine/neck, crouch, walk/run, planted-foot turn, jump/landing, fingers/grip and face combinations. Add only applicable fixtures; explain scoped exclusions.
@@ -26,6 +30,12 @@ Route failures to 02/03/04/05 as appropriate with a minimal reproduction, affect
 | deformation-review | Evaluated regional metrics, silhouettes/close-ups, human review items |
 | integrity-lint | Actual driver/target/numeric/binding diagnostics and resolved intentional exceptions |
 | clean-core-rig | Fresh-process fixture results and environment/dependency facts |
+
+## Apply mathematical support
+
+Evaluate held-out poses/views plus fixed regression fixtures, compare actual arrays with calibrated tolerances, and report residual distributions/worst cases/repeatability. Human visual review does not replace hidden rig/dependency tests.
+
+Read PACK/references/mathematics.md for the 06 procedure, equations, assumptions, evidence fields and primary references. Use only methods relevant to this fault; preserve the ordered work above. Bundled measurements do not imply the optional solvers were implemented or that a human approved the result.
 
 ## Technical references
 
