@@ -1,36 +1,42 @@
-# Qwen local maintenance helper — experimental
+# Qwen Local Helper — portable Codex-managed coding worker
 
-This worker is only for menial Python repairs and small new diagnostic tools. It is **not** allowed to change pipeline architecture, Blender rendering, materials, physics, rigging, candidate gates, or human approvals.
+Copy the whole `qwen-helper/` directory into a project root. **Do not copy `project.json` unchanged**: this branch's example is PMX-specific.
 
-## Official benchmark basis
+Tell Codex: **Set up qwen-helper for this repository. Inspect the code and real tests, configure a narrow source allowlist, install its project-local Codex skill, check my Ollama model, and retain my existing Codex settings.**
 
-The Qwen team's [Qwen2.5-Coder release](https://qwenlm.github.io/blog/qwen2.5-coder/) and [Qwen2.5-Coder family report](https://qwenlm.github.io/blog/qwen2.5-coder-family/) report code generation/reasoning and repair evaluations. The headline **73.7 Aider score belongs to 32B Instruct**, not the 7B model. These benchmarks support exploring localized coding tasks, **not** a measured 90% success boundary for this 7B Q4 model in Blender. Start with the below conservative scope and refine it using actual outcomes.
+Codex can run (with real values):
 
-## Capability admission hard stop
+```sh
+python qwen-helper/setup.py --project . --allow src --check 'python -m pytest -q' --github-alert
+python qwen-helper/setup.py --doctor
+```
 
-Accept: isolated, reproducible one-file Python bugs, unexpected `0` results with known expected input/output, small logging/tests, and standalone diagnostic scripts named `qwen_*.py`.
+Setup can detect Python, JavaScript, Rust, and Go tests; requires at least one real check, preserves existing config by default, and installs `.agents/skills/qwen-local-helper/SKILL.md`. Use `--force-config` only after inspecting an existing config. `--github-alert` is optional; it installs the workflow template without overwriting an existing workflow. Install Ollama separately, then run `ollama pull qwen2.5-coder:7b-instruct-q4_K_M`.
 
-Reject to Codex *before inference*: cross-module refactors, unclear correct behavior, more than one reference, existing target or reference over 5,500 bytes, source/task over 9,200 characters, core `pipeline.py`, `blender_tools.py`, `math_tools.py`, `pmx_inventory.py`, anything requiring visual or mathematical solver architecture judgment. Generated replacement cannot exceed 6,500 bytes. These are deliberately chosen heuristics, **not** directly measured benchmark limits.
+## Delegate and verify
 
-## Laptop use
+Write a real JSON task based on `task.example.json` with objective, target, expected behavior, and reproducible bug evidence. Run in an isolated disposable git worktree:
 
-1. Install Ollama on Nitro V and run `ollama pull qwen2.5-coder:7b-instruct-q4_K_M`. Confirm the exact tag is available and fits in 6 GB VRAM; model residency/performance have not been tested here.
-2. Copy [task.example.json](task.example.json) outside tracked examples; replace with a real reproducible task and expected behavior.
-3. Run `python qwen-helper/local_worker.py propose --task /path/to/real-task.json`. This calls local Ollama at 127.0.0.1:11434 (4K context); it **generates but does not run** proposed code.
-4. Review `qwen-helper/outbox/<task-id>.json` and execute in a disposable local Git worktree: `python qwen-helper/local_worker.py apply --task /path/to/real-task.json --proposal qwen-helper/outbox/<task-id>.json`.
-5. Apply syntax-checks, runs the repository Python test suite and seed validation, and **restores the original file if tests fail**. Also run a *task-specific* regression test. Unit tests alone cannot prove that the zero bug or Blender-specific behavior was fixed. Review the diff, do not automatically merge.
-6. If Qwen fails, the higher-capability reviewer diagnoses and repairs it; preserve exact failing test/stack trace, diff and subsequent repair in a review entry. That human/Codex repair is not automatically performed by this helper or GitHub Actions.
+```sh
+python qwen-helper/local_worker.py propose --task /path/to/task.json
+# Inspect all generated source first.
+python qwen-helper/local_worker.py apply --task /path/to/task.json --proposal qwen-helper/outbox/TASK_ID.json --reviewed
+```
 
-### Repair-rate accounting and alerts
+Proposals are not executed on generation. Applying requires `--reviewed`, checks the original digest and a clean target, uses allowlisted directories, and runs configured test commands without shell expansion. Failing generic checks roll back the file. Passing them does not prove the bug was fixed: Codex must run a task-specific regression test and repair any errors itself. Nothing is merged or approved automatically.
 
-Each **reviewed** Qwen submission gets one manually verified JSONL row in [reviews.jsonl](reviews.jsonl), with `task_id`, `status`, `model`, `commit`, `verification`, `reviewed_at`, and `repair_notes` if it failed. Status must be `passed_first_try`, `reviewer_repaired`, or `rejected_unresolved`. A Qwen task that fails but is fixed by Codex counts as **reviewer_repaired**.
+Only small isolated bugs, logging, tests and new local diagnostic tools qualify. Multi-subsystem bugs, security-critical changes, shaders, Blender rig/physics design, approvals, and large-context code are sent to Codex. Limits are configurable in `project.json`; default 5.5 KB per source file, one reference, 9.2K prompt characters, and 6.5 KB output. They are conservative operating heuristics, not established 90% benchmark capability.
 
-Example format only (not a real task): `{"task_id":"bugfix-001","status":"reviewer_repaired","model":"qwen2.5-coder:7b-instruct-q4_K_M","commit":"ACTUAL_COMMIT","verification":"test details","reviewed_at":"YYYY-MM-DD","repair_notes":"Describe actual fix"}`.
+Qwen's [official coder release](https://qwenlm.github.io/blog/qwen2.5-coder/) and [model-family report](https://qwenlm.github.io/blog/qwen2.5-coder-family/) support trialing bounded coding tasks but do not guarantee high accuracy on arbitrary repositories. The often-cited Aider 73.7 score is for **32B**, not the 7B local model.
 
-Run `python qwen-helper/review.py` to calculate:
+## Correction-rate alert
 
-**correction rate = (reviewer_repaired + rejected_unresolved) / all reviewed Qwen submissions**.
+Record one independently reviewed submission per line in `reviews.jsonl`. Required fields: task_id, status (`passed_first_try`, `reviewer_repaired`, `rejected_unresolved`), model, commit SHA, verification, reviewed_at, and repair_notes for failures. Run:
 
-A strict rate **above 10%** (not equal to 10%) triggers a GitHub issue and failed CI once the updated ledger is pushed to this branch. With no reviews, the rate is **unmeasured**, not zero proven errors. Subscribe to GitHub issues/Actions notifications. GitHub notification delivery is not guaranteed instant; local uncommitted work is invisible to GitHub; ChatGPT cannot autonomously repair future code between conversations.
+```sh
+python qwen-helper/review.py --fail-over-threshold
+```
 
-Existing PMX/Blender stage acceptance and human review rules remain unchanged.
+Correction rate = (reviewer_repaired + rejected_unresolved) / all reviewed Qwen submissions. **Strictly over 10% means stop Qwen delegation and tell the user immediately.** Empty review history means unmeasured, not 0% demonstrated. With optional GitHub workflow enabled, a pushed ledger can create a GitHub issue, but local unpushed changes are invisible and delivery is not instantaneous.
+
+PMX's tracked `project.json` excludes its main conversion tools and uses its existing tests. Preserve that branch's human review gates and stages.

@@ -1,0 +1,41 @@
+name: Qwen helper correction rate
+on:
+  push:
+    paths:
+      - 'qwen-helper/reviews.jsonl'
+      - 'qwen-helper/review.py'
+      - '.github/workflows/qwen-helper.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Calculate
+        id: rate
+        run: python qwen-helper/review.py --github-output "$GITHUB_OUTPUT"
+      - name: Notify by GitHub issue
+        if: steps.rate.outputs.alert == 'true'
+        uses: actions/github-script@v7
+        env:
+          RATE: ${{ steps.rate.outputs.rate }}
+          TOTAL: ${{ steps.rate.outputs.total }}
+          FAILED: ${{ steps.rate.outputs.failed }}
+        with:
+          script: |
+            const {owner,repo}=context.repo;
+            const title='Qwen helper correction rate exceeded 10%';
+            const body='Reviewed '+process.env.TOTAL+' submissions; '+process.env.FAILED+' required correction/rejection. Rate '+process.env.RATE+'. Stop Qwen delegation and inspect qwen-helper/reviews.jsonl.';
+            const issues=await github.paginate(github.rest.issues.listForRepo,{owner,repo,state:'open',per_page:100});
+            const prior=issues.find(x=>x.title===title);
+            if(prior) await github.rest.issues.update({owner,repo,issue_number:prior.number,body});
+            else await github.rest.issues.create({owner,repo,title,body});
+      - name: Fail above threshold
+        if: steps.rate.outputs.alert == 'true'
+        run: exit 1
