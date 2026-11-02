@@ -1,133 +1,206 @@
 #!/usr/bin/env python3
-"""Bounded local Ollama proposer; apply runs tests and rolls back on failure."""
+"""Portable, bounded Ollama coding worker. Propose first; apply only after review."""
 import argparse
 import hashlib
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import subprocess
 import sys
+from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPTS = ROOT / "skills" / "anime-blender-pipeline" / "scripts"
-OUTBOX = ROOT / "qwen-helper" / "outbox"
-MODEL = "qwen2.5-coder:7b-instruct-q4_K_M"
-KINDS = {"bugfix", "new_utility", "test", "logging"}
-PROTECTED = {"pipeline.py", "blender_tools.py", "pmx_inventory.py", "math_tools.py"}
+HELPER = ROOT / "qwen-helper"
+OUTBOX = HELPER / "outbox"
+CONFIG = HELPER / "project.json"
+KINDS = {"bugfix", "new_tool", "test", "logging"}
+BLOCKED_PARTS = {".git", ".github", ".agents", "qwen-helper", ".venv",
+                 "node_modules", "__pycache__", ".env", "vendor", "dist", "build"}
 
 class Stop(ValueError):
     pass
 
-def safe_path(name):
+def read_config():
+    cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
+    if cfg.get("version") != 1 or not isinstance(cfg.get("allow_paths"), list) or not cfg["allow_paths"]:
+        raise Stop("Run setup.py before using the helper")
+    checks = cfg.get("checks")
+    if not isinstance(checks, list) or not checks or any(
+        not isinstance(cmd, list) or not cmd or any(not isinstance(v, str) or not v for v in cmd)
+        for cmd in checks
+    ):
+        raise Stop("At least one validated test command is required")
+    endpoint = urlsplit(cfg.get("ollama_url", "http://127.0.0.1:11434/api/generate"))
+    if endpoint.scheme != "http" or endpoint.hostname not in {"127.0.0.1", "localhost", "::1"} or endpoint.path != "/api/generate":
+        raise Stop("Ollama must use the loopback HTTP endpoint")
+    return cfg
+
+def parts_of(name):
     if not isinstance(name, str) or not name or "\\" in name:
         raise Stop("Invalid path")
-    p = (ROOT / name).resolve()
-    if p.parent not in {SCRIPTS.resolve(), (SCRIPTS / "tests").resolve()}:
-        raise Stop("Only scripts/ or scripts/tests/ files allowed")
-    if p.suffix != ".py" or p.name in PROTECTED or not re.fullmatch(r"[A-Za-z_]\w*\.py", p.name):
-        raise Stop("Protected or non-Python file")
-    return p
+    rel = PurePosixPath(name)
+    if rel.is_absolute() or any(p in ("..", "") for p in rel.parts):
+        raise Stop("Path escape rejected")
+    return rel
 
-def load_task(path):
-    task = json.loads(Path(path).read_text(encoding="utf-8"))
+def contained(path, root):
+    try:
+        path.relative_to(root)
+        return True
+    except ValueError:
+        return False
+
+def safe_path(name, cfg):
+    rel = parts_of(name)
+    if any(p.startswith(".") or p in BLOCKED_PARTS for p in rel.parts):
+        raise Stop("Hidden/protected path")
+    path = (ROOT / Path(*rel.parts)).resolve()
+    if not contained(path, ROOT.resolve()):
+        raise Stop("Path outside project")
+    for denied in cfg.get("deny_paths", []):
+        blocked = (ROOT / Path(*parts_of(denied).parts)).resolve()
+        if path == blocked or contained(path, blocked):
+            raise Stop("Target explicitly denied")
+    if not any(contained(path, (ROOT / Path(*parts_of(base).parts)).resolve())
+               for base in cfg["allow_paths"]):
+        raise Stop("Target outside allowed directories")
+    if path.suffix not in cfg.get("extensions", [".py"]):
+        raise Stop("Unsupported file extension")
+    cur = ROOT
+    for part in rel.parts:
+        cur = cur / part
+        if cur.is_symlink():
+            raise Stop("Symlink paths are forbidden")
+    return path
+
+def load_task(task_file, cfg):
+    task = json.loads(Path(task_file).read_text(encoding="utf-8"))
     if not isinstance(task, dict) or task.get("kind") not in KINDS:
-        raise Stop("Unsupported task category")
+        raise Stop("Unsupported task type")
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]{2,50}", str(task.get("task_id", ""))):
         raise Stop("Invalid task ID")
-    for key in ("objective", "expected_behavior"):
-        v = task.get(key)
-        if not isinstance(v, str) or not v.strip() or len(v) > 1600:
-            raise Stop("Missing or oversized objective/expected output")
+    for field in ("objective", "expected_behavior"):
+        value = task.get(field)
+        if not isinstance(value, str) or not value.strip() or len(value) > 1600:
+            raise Stop(f"Missing or excessive {field}")
+    if task["kind"] == "bugfix" and not str(task.get("reproducer", "")).strip():
+        raise Stop("Bugfix requires reproduction evidence")
     if task.get("cross_subsystem") or task.get("requires_visual_judgment"):
-        raise Stop("Complex or visual work belongs to Codex")
-    target = safe_path(task.get("target"))
-    if task["kind"] == "new_utility":
-        if target.exists() or not target.name.startswith("qwen_") or target.parent != SCRIPTS.resolve():
-            raise Stop("New tools must be new scripts/qwen_*.py")
+        raise Stop("Escalate multi-subsystem/visual tasks to Codex")
+    target = safe_path(task.get("target"), cfg)
+    if task["kind"] == "new_tool":
+        if target.exists():
+            raise Stop("New tool would overwrite existing file")
     elif not target.is_file():
-        raise Stop("Target does not exist")
+        raise Stop("Target missing")
     refs = task.get("references", [])
-    if not isinstance(refs, list) or len(refs) > 1:
-        raise Stop("At most one reference file")
+    limits = cfg.get("limits", {})
+    if not isinstance(refs, list) or len(refs) > limits.get("max_references", 1):
+        raise Stop("Too many reference files")
     sources = []
-    for p in [target] + [safe_path(r) for r in refs]:
+    for p in [target] + [safe_path(ref, cfg) for ref in refs]:
         if p.exists():
-            if not p.is_file() or p.stat().st_size > 5500:
-                raise Stop("File exceeds verified admission budget")
-            sources.append({"path": str(p.relative_to(ROOT)), "content": p.read_text(encoding="utf-8")})
+            if not p.is_file() or p.stat().st_size > limits.get("max_file_bytes", 5500):
+                raise Stop("Input file too large")
+            sources.append({"path": p.relative_to(ROOT).as_posix(), "content": p.read_text(encoding="utf-8")})
         elif p != target:
-            raise Stop("Missing reference")
-    if sum(len(s["content"]) for s in sources) + len(task["objective"]) + len(task["expected_behavior"]) > 9200:
-        raise Stop("Context too large")
+            raise Stop("Missing reference file")
+    if len(json.dumps({"task": task, "sources": sources})) > limits.get("max_input_chars", 9200):
+        raise Stop("Input context too large")
     return task, target, sources
 
-def digest(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else None
+def digest(p):
+    return hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None
 
 def propose(args):
-    task, target, sources = load_task(args.task)
-    prompt = ("Implement exactly one Python file. Do not change architecture, approvals, rigs, physics or shaders. "
-              "Return JSON {target, code, explanation}; code is COMPLETE file content, no markdown. "
-              "Return empty code if unable.\n" + json.dumps({"task": task, "source": sources}))
-    payload = {"model": MODEL, "prompt": prompt, "stream": False, "format": "json",
-               "options": {"num_ctx": 4096, "num_predict": 1536, "temperature": 0.1}}
-    req = Request("http://127.0.0.1:11434/api/generate", data=json.dumps(payload).encode(),
-                  headers={"Content-Type": "application/json"})
+    cfg = read_config()
+    task, target, sources = load_task(args.task, cfg)
+    message = ("Write exactly one complete source file for this localized task. "
+               "Do not alter unrelated behavior, secrets, permissions, architecture, or approvals. "
+               "Answer as JSON with target, code, explanation. If unsure, return empty code. "
+               "No markdown.\n" + json.dumps({"task": task, "sources": sources}, ensure_ascii=False))
+    limits = cfg.get("limits", {})
+    req = Request(cfg.get("ollama_url", "http://127.0.0.1:11434/api/generate"),
+        data=json.dumps({"model": cfg["model"], "prompt": message, "stream": False, "format": "json",
+                         "options": {"num_ctx": limits.get("context_tokens", 4096),
+                                     "num_predict": limits.get("output_tokens", 1536),
+                                     "temperature": 0.1}}).encode("utf-8"),
+        headers={"Content-Type": "application/json"})
     with urlopen(req, timeout=180) as response:
-        proposal = json.loads(json.loads(response.read().decode())["response"])
+        proposal = json.loads(json.loads(response.read().decode("utf-8"))["response"])
     code = proposal.get("code") if isinstance(proposal, dict) else None
-    if proposal.get("target") != task["target"] or not isinstance(code, str) or not code.strip() or len(code.encode()) > 6500:
-        raise Stop("Model could not produce an eligible patch")
-    compile(code, str(target), "exec")
+    if not isinstance(proposal, dict) or proposal.get("target") != task["target"] or not isinstance(code, str) or not code.strip():
+        raise Stop("Qwen did not return a valid one-file proposal")
+    if len(code.encode("utf-8")) > limits.get("max_output_bytes", 6500):
+        raise Stop("Proposed file exceeds limit")
+    if target.suffix == ".py":
+        compile(code, str(target), "exec")
     OUTBOX.mkdir(exist_ok=True)
-    dest = OUTBOX / (task["task_id"] + ".json")
-    if dest.exists():
-        raise Stop("Proposal ID already exists")
-    dest.write_text(json.dumps({"task": task, "base_sha256": digest(target), "proposal": proposal}, indent=2) + "\n")
-    print("Review proposal:", dest)
+    output = OUTBOX / (task["task_id"] + ".json")
+    if output.exists():
+        raise Stop("Task ID already proposed; keep original evidence")
+    output.write_text(json.dumps({"task": task, "model": cfg["model"],
+                  "base_sha256": digest(target), "proposal": proposal}, indent=2) + "\n", encoding="utf-8")
+    print("PROPOSED (not executed):", output)
 
 def apply(args):
-    task, target, _ = load_task(args.task)
-    record = json.loads(Path(args.proposal).read_text())
-    if record["task"] != task or record["base_sha256"] != digest(target):
-        raise Stop("Task or original file changed; stale proposal")
-    code = record["proposal"]["code"]
-    if record["proposal"].get("target") != task["target"] or not isinstance(code, str) or len(code.encode()) > 6500:
-        raise Stop("Unexpected replacement")
-    compile(code, str(target), "exec")
-    previous = target.read_bytes() if target.exists() else None
-    cmds = [[sys.executable, "-m", "unittest", "discover", "-s", str(SCRIPTS / "tests"), "-v"],
-            [sys.executable, str(SCRIPTS / "blender_tools.py"), "validate-seeds"]]
+    if not args.reviewed:
+        raise Stop("Explicit --reviewed required: inspect full generated code before execution")
+    cfg = read_config()
+    task, target, _ = load_task(args.task, cfg)
+    record = json.loads(Path(args.proposal).read_text(encoding="utf-8"))
+    if record.get("task") != task or record.get("model") != cfg["model"] or record.get("base_sha256") != digest(target):
+        raise Stop("Stale submission, different model, or changed task")
+    proposal = record.get("proposal", {})
+    code = proposal.get("code")
+    if proposal.get("target") != task["target"] or not isinstance(code, str) or not code.strip():
+        raise Stop("Invalid patch")
+    if len(code.encode("utf-8")) > cfg.get("limits", {}).get("max_output_bytes", 6500):
+        raise Stop("Output too large")
+    if target.suffix == ".py":
+        compile(code, str(target), "exec")
+    # Refuse any pre-existing local edit to the target. Never discard existing human work.
+    git = subprocess.run(["git", "status", "--porcelain", "--", task["target"]],
+                         cwd=ROOT, capture_output=True, text=True, timeout=15)
+    if git.returncode or git.stdout.strip():
+        raise Stop("Target is dirty or git status unavailable; use a clean disposable worktree")
+    before = target.read_bytes() if target.exists() else None
+    target.parent.mkdir(parents=True, exist_ok=True)
     logs, success = [], False
     target.write_text(code, encoding="utf-8")
     try:
-        for cmd in cmds:
-            p = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, timeout=180)
-            logs.append({"command": cmd, "exit_code": p.returncode, "log": (p.stdout + p.stderr)[-10000:]})
-            if p.returncode:
-                raise Stop("Tests failed, proposal rolled back")
+        for cmd in cfg["checks"]:
+            result = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True,
+                                    timeout=cfg.get("limits", {}).get("test_timeout_seconds", 180),
+                                    shell=False)
+            logs.append({"command": cmd, "exit_code": result.returncode,
+                         "output": (result.stdout + "\n" + result.stderr)[-12000:]})
+            if result.returncode:
+                raise Stop("Check failed: proposal reverted")
         success = True
     finally:
         if not success:
-            if previous is None:
+            if before is None:
                 target.unlink(missing_ok=True)
             else:
-                target.write_bytes(previous)
-        Path(args.proposal).with_suffix(".validation.json").write_text(
-            json.dumps({"task_id": task["task_id"], "passed": success, "logs": logs}, indent=2) + "\n")
-    print("Tests pass. Check git diff and behavior before recording approval.")
+                target.write_bytes(before)
+        Path(args.proposal).with_suffix(".validation.json").write_text(json.dumps(
+            {"task_id": task["task_id"], "passed": success, "checks": logs,
+             "note": "Passing generic checks does not replace task-specific acceptance testing."}, indent=2) + "\n")
+    print("Checks passed; inspect diff, run task-specific reproducer and record human/Codex review.")
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    sub = parser.add_subparsers(dest="command", required=True)
-    p = sub.add_parser("propose"); p.add_argument("--task", required=True)
-    p = sub.add_parser("apply"); p.add_argument("--task", required=True); p.add_argument("--proposal", required=True)
-    args = parser.parse_args()
+def main(argv=None):
+    p = argparse.ArgumentParser(description=__doc__)
+    commands = p.add_subparsers(dest="command", required=True)
+    x = commands.add_parser("propose"); x.add_argument("--task", required=True)
+    x = commands.add_parser("apply"); x.add_argument("--task", required=True)
+    x.add_argument("--proposal", required=True); x.add_argument("--reviewed", action="store_true")
+    args = p.parse_args(argv)
     try:
         {"propose": propose, "apply": apply}[args.command](args)
-    except (ValueError, OSError, KeyError, TimeoutError, subprocess.TimeoutExpired) as exc:
-        print("STOP / ESCALATE:", exc, file=sys.stderr)
+    except (ValueError, OSError, KeyError, TimeoutError, subprocess.TimeoutExpired) as e:
+        print("HARD STOP / CODEX ESCALATION:", e, file=sys.stderr)
         return 2
     return 0
 

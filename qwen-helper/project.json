@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+  "ollama_url": "http://127.0.0.1:11434/api/generate",
+  "allow_paths": [
+    "skills/anime-blender-pipeline/scripts"
+  ],
+  "deny_paths": [
+    "skills/anime-blender-pipeline/scripts/pipeline.py",
+    "skills/anime-blender-pipeline/scripts/blender_tools.py",
+    "skills/anime-blender-pipeline/scripts/math_tools.py",
+    "skills/anime-blender-pipeline/scripts/pmx_inventory.py"
+  ],
+  "extensions": [
+    ".py"
+  ],
+  "checks": [
+    [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "skills/anime-blender-pipeline/scripts/tests",
+      "-v"
+    ],
+    [
+      "python",
+      "skills/anime-blender-pipeline/scripts/blender_tools.py",
+      "validate-seeds"
+    ]
+  ],
+  "limits": {
+    "max_references": 1,
+    "max_file_bytes": 5500,
+    "max_input_chars": 9200,
+    "max_output_bytes": 6500,
+    "context_tokens": 4096,
+    "output_tokens": 1536,
+    "test_timeout_seconds": 180
+  }
+}
