@@ -1,0 +1,10 @@
+{
+  "task_id": "bugfix-example-001",
+  "kind": "bugfix",
+  "objective": "Illustrative only: repair a wrong zero return in an isolated utility; preserve other behavior.",
+  "expected_behavior": "Positive input produces expected nonzero result; valid zero input still produces zero.",
+  "target": "skills/anime-blender-pipeline/scripts/texture_audit.py",
+  "references": [],
+  "cross_subsystem": false,
+  "requires_visual_judgment": false
+}
