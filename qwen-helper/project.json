@@ -38,5 +38,7 @@
     "context_tokens": 4096,
     "output_tokens": 1536,
     "test_timeout_seconds": 180
-  }
+  },
+  "project_type": "pmx-to-native-blender",
+  "default_task_scope": "generic"
 }

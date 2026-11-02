@@ -1,0 +1,14 @@
+{
+  "task_id": "character-example-001",
+  "scope": "character_specific",
+  "kind": "new_tool",
+  "objective": "Example only: produce a small optional report for a character-specific accessory mapping.",
+  "expected_behavior": "Report configured accessory names and missing mappings without changing generic conversion defaults.",
+  "target": "skills/anime-blender-pipeline/scripts/qwen_character_accessory_report.py",
+  "references": [],
+  "character_id": "FILL_FROM_RUN_PROFILE",
+  "character_requirements": "FILL_WITH_VERIFIED_OBSERVATIONS_FROM_RUN_CHARACTER_PROFILE",
+  "generic_baseline": "Standard PMX inventory and reports are unchanged for all other characters.",
+  "cross_subsystem": false,
+  "requires_visual_judgment": false
+}

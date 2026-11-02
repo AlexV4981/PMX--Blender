@@ -28,6 +28,35 @@ class HelperTests(unittest.TestCase):
         for path in ("../../outside.py",".github/anything.py","qwen-helper/local_worker.py","skills/anime-blender-pipeline/scripts/pipeline.py"):
             with self.assertRaises(worker.Stop):worker.safe_path(path,cfg)
         self.assertTrue(worker.safe_path("skills/anime-blender-pipeline/scripts/texture_audit.py",cfg).is_file())
+    def test_generic_and_character_boundaries(self):
+        cfg={"allow_paths":["skills/anime-blender-pipeline/scripts"],
+             "extensions":[".py"],"deny_paths":[],"limits":{}}
+        valid={"task_id":"generic-001","kind":"new_tool","scope":"generic",
+               "objective":"Create a read-only audit summarizer",
+               "expected_behavior":"Input lists are summarized with counts",
+               "target":"skills/anime-blender-pipeline/scripts/qwen_audit_summary.py",
+               "references":[]}
+        import unittest.mock
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)/"task.json"
+            p.write_text(json.dumps(valid))
+            task,target,_=worker.load_task(p,cfg)
+            self.assertEqual(task["scope"],"generic")
+            bad=dict(valid,scope="character_specific")
+            p.write_text(json.dumps(bad))
+            with self.assertRaises(worker.Stop):worker.load_task(p,cfg)
+            per_char=dict(bad,target="skills/anime-blender-pipeline/scripts/qwen_character_accessory.py",
+                          character_id="sample",character_requirements="Extra accessory uses given map",
+                          generic_baseline="All unmodified characters use standard defaults")
+            p.write_text(json.dumps(per_char))
+            self.assertEqual(worker.load_task(p,cfg)[0]["scope"],"character_specific")
+            leaky=dict(valid,character_id="sample")
+            p.write_text(json.dumps(leaky))
+            with self.assertRaises(worker.Stop):worker.load_task(p,cfg)
+            overwrite=dict(valid,target="skills/anime-blender-pipeline/scripts/texture_audit.py")
+            p.write_text(json.dumps(overwrite))
+            with self.assertRaises(worker.Stop):worker.load_task(p,cfg)
+
     def test_detection(self):
         with tempfile.TemporaryDirectory() as d:
             self.assertEqual(setup.detect_checks(Path(d)),[])

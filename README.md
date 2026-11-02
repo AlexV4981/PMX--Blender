@@ -28,3 +28,7 @@ All eleven skills validate. Fifty-one utility tests pass, including 20 published
 python3 -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -v
 python3 skills/anime-blender-pipeline/scripts/blender_tools.py validate-seeds
 ```
+
+## Optional local Qwen maintenance assistant
+
+For bounded, **project-specific** coding chores only, see [Qwen Local Helper](qwen-helper/README.md). Codex can configure it on this branch; Qwen never substitutes for the generic PMX conversion workflow or human approval. Keep character-specific exceptions in each run's profile and opt-in adapters, not in the shared default pipeline.

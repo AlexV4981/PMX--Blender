@@ -1,10 +1,10 @@
 {
-  "task_id": "bugfix-example-001",
-  "kind": "bugfix",
-  "objective": "Example only: fix a wrong zero result in one small function.",
-  "expected_behavior": "For a positive fixture the function returns the documented positive value; zero input still returns zero.",
-  "reproducer": "Example only: exact input, observed output 0, expected output 3.",
-  "target": "src/small_module.py",
+  "task_id": "generic-audit-001",
+  "scope": "generic",
+  "kind": "new_tool",
+  "objective": "Example only: create a standalone read-only report summarizing PMX inventory warnings without editing source assets.",
+  "expected_behavior": "Given known synthetic inventory JSON, produce consistent summary counts; unknown entries remain unknown.",
+  "target": "skills/anime-blender-pipeline/scripts/qwen_inventory_summary.py",
   "references": [],
   "cross_subsystem": false,
   "requires_visual_judgment": false

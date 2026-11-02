@@ -15,6 +15,7 @@ HELPER = ROOT / "qwen-helper"
 OUTBOX = HELPER / "outbox"
 CONFIG = HELPER / "project.json"
 KINDS = {"bugfix", "new_tool", "test", "logging"}
+SCOPES = {"generic", "character_specific"}
 BLOCKED_PARTS = {".git", ".github", ".agents", "qwen-helper", ".venv",
                  "node_modules", "__pycache__", ".env", "vendor", "dist", "build"}
 
@@ -88,12 +89,26 @@ def load_task(task_file, cfg):
         raise Stop("Bugfix requires reproduction evidence")
     if task.get("cross_subsystem") or task.get("requires_visual_judgment"):
         raise Stop("Escalate multi-subsystem/visual tasks to Codex")
+    scope = task.get("scope", "generic")
+    if scope not in SCOPES:
+        raise Stop("Unknown task scope")
     target = safe_path(task.get("target"), cfg)
     if task["kind"] == "new_tool":
-        if target.exists():
-            raise Stop("New tool would overwrite existing file")
+        if target.exists() or not target.name.startswith("qwen_"):
+            raise Stop("New tools must be unused qwen_*.py files")
     elif not target.is_file():
         raise Stop("Target missing")
+    if scope == "character_specific":
+        if task["kind"] != "new_tool" or not target.name.startswith("qwen_character_"):
+            raise Stop("Character-specific changes must be a separate new qwen_character_*.py adapter")
+        if not isinstance(task.get("character_id"), str) or not task["character_id"].strip():
+            raise Stop("Character-specific task requires character_id")
+        if not isinstance(task.get("character_requirements"), str) or not task["character_requirements"].strip():
+            raise Stop("Character-specific task needs observed requirements from the run profile")
+        if not isinstance(task.get("generic_baseline"), str) or not task["generic_baseline"].strip():
+            raise Stop("Describe what generic behavior must remain unchanged")
+    elif any(task.get(k) for k in ("character_id", "character_requirements")):
+        raise Stop("Character-specific information requires explicit character_specific scope")
     refs = task.get("references", [])
     limits = cfg.get("limits", {})
     if not isinstance(refs, list) or len(refs) > limits.get("max_references", 1):
@@ -114,11 +129,20 @@ def digest(p):
     return hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None
 
 def propose(args):
+    # Prevent new delegation if reviewed Qwen results cross the configured >10% threshold.
+    gate = subprocess.run([sys.executable, str(HELPER / "review.py"), "--fail-over-threshold"],
+                          cwd=ROOT, capture_output=True, text=True, timeout=15)
+    if gate.returncode:
+        raise Stop("Review ledger invalid or correction rate above 10%; stop delegating. " + (gate.stdout + gate.stderr)[-1000:])
     cfg = read_config()
     task, target, sources = load_task(args.task, cfg)
-    message = ("Write exactly one complete source file for this localized task. "
-               "Do not alter unrelated behavior, secrets, permissions, architecture, or approvals. "
-               "Answer as JSON with target, code, explanation. If unsure, return empty code. "
+    message = ("You support a GENERAL PMX-to-native-Blender Cycles-only pipeline. "
+               "Write exactly one complete Python source file for this isolated maintenance task. "
+               "Preserve correct behavior for other characters; never hardcode character-specific constants "
+               "into generic tools. Character-specific tools are separate opt-in adapters only. "
+               "Do not alter shaders, geometry, rigs, physics, approvals, accepted artifacts, "
+               "secrets, permissions, or architecture. "
+               "Answer JSON with target, code, explanation. If uncertain return empty code. "
                "No markdown.\n" + json.dumps({"task": task, "sources": sources}, ensure_ascii=False))
     limits = cfg.get("limits", {})
     req = Request(cfg.get("ollama_url", "http://127.0.0.1:11434/api/generate"),

@@ -28,3 +28,11 @@ Do not change global model defaults, permissions, provider, API keys or MCP sett
 ## Task boundary
 
 Routine means a proven script or exact accepted recipe with known input checks and observable outputs. Texture classification, unfamiliar shader construction, rest-space conversion and novel solver architecture require implementation judgment. Assign those to the capable role, then use routine workers for bounded application/collection. Include fault hypotheses, distinguishing test and rollback path in the task record. Stop after two consecutive non-improving experiments and return evidence for renewed diagnosis; do not manufacture ten technical approaches or three designs as quotas.
+
+## Optional Qwen local programming helper (this branch)
+
+Use `qwen-helper/README.md` and its Codex skill **only for isolated programming maintenance**: reproducible numeric-return bugs, small standalone read-only tools, tests, and logging. Run proven deterministic scripts directly rather than asking Qwen to repeat deterministic work. Codex owns dispatch, testing, corrections, and reviewer-ledger entries. Qwen does **not** replace the routine pipeline operator or perform stage acceptance, material matching, rigs, physics, or artistic decisions.
+
+The **generic PMX behavior is the default for every character**. A character's specific requirements belong to that conversion run's `character-profile.json` and verified recipe. Codex may authorize an opt-in `character_specific` Qwen task only to create a standalone `qwen_character_*.py` adapter with explicit profile-derived requirements and a statement of unchanged generic behavior. Never embed those defaults into shared generic tools, and never copy an adapter into another character's run without requalification.
+
+The 10% review threshold measures actual Qwen submissions that require Codex repair or rejection, not their subjective complexity or the share of all tasks delegated. Follow the hard stop in `qwen-helper/review.py` and disclose results immediately during active use.
