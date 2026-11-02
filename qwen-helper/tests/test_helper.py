@@ -57,9 +57,14 @@ class HelperTests(unittest.TestCase):
             p.write_text(json.dumps(overwrite))
             with self.assertRaises(worker.Stop):worker.load_task(p,cfg)
 
-    def test_detection(self):
+    def test_pmx_specific_setup(self):
+        cfg=setup.pmx_defaults()
+        self.assertEqual(cfg["project_type"], "pmx-to-native-blender")
+        self.assertEqual(cfg["extensions"], [".py"])
+        self.assertEqual(cfg["allow_paths"], ["skills/anime-blender-pipeline/scripts"])
+        self.assertIn("skills/anime-blender-pipeline/scripts/pipeline.py",cfg["deny_paths"])
+        self.assertEqual(len(cfg["checks"]), 2)
+        self.assertTrue(setup.is_pmx_project(worker.ROOT))
         with tempfile.TemporaryDirectory() as d:
-            self.assertEqual(setup.detect_checks(Path(d)),[])
-            (Path(d)/"go.mod").write_text("module example")
-            self.assertEqual(setup.detect_checks(Path(d)),[["go","test","./..."]])
+            self.assertFalse(setup.is_pmx_project(Path(d)))
 if __name__=="__main__":unittest.main()

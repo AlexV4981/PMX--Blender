@@ -1,105 +1,89 @@
 #!/usr/bin/env python3
-"""Bootstrap the portable helper inside an existing project (Python stdlib only)."""
+"""Install project-local Qwen skill for the PMX-to-native-Blender pipeline only."""
 import argparse
 import json
 from pathlib import Path
-import shlex
 import shutil
-import subprocess
 import sys
 from urllib.request import urlopen
 
-DEFAULT_MODEL = "qwen2.5-coder:7b-instruct-q4_K_M"
-EXTENSIONS = [".py", ".js", ".jsx", ".ts", ".tsx", ".go", ".rs"]
-CONVENTIONAL = ("src", "lib", "scripts", "tests", "test", "app", "cmd", "internal")
+PACK = "skills/anime-blender-pipeline"
+SOURCE = PACK + "/scripts"
+MODEL = "qwen2.5-coder:7b-instruct-q4_K_M"
+DENIED = ["pipeline.py", "blender_tools.py", "math_tools.py", "pmx_inventory.py"]
 
-def detect_checks(root):
-    package = root / "package.json"
-    if (root / "Cargo.toml").exists():
-        return [["cargo", "test"]]
-    if (root / "go.mod").exists():
-        return [["go", "test", "./..."]]
-    if package.exists():
-        try:
-            script = json.loads(package.read_text(encoding="utf-8")).get("scripts", {}).get("test", "")
-            if script and "no test specified" not in script:
-                return [["npm", "test"]]
-        except (ValueError, OSError, TypeError):
-            pass
-    if any((root / key).exists() for key in ("pytest.ini", "tox.ini")) or (
-            (root / "pyproject.toml").exists() and (root / "tests").exists()):
-        return [[sys.executable, "-m", "pytest", "-q"]]
-    if (root / "tests").is_dir():
-        return [[sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"]]
-    return []
+def is_pmx_project(root):
+    return (root / PACK / "SKILL.md").is_file() and (root / SOURCE / "pipeline.py").is_file()
+
+def pmx_defaults(model=MODEL):
+    return {"version": 1, "project_type": "pmx-to-native-blender", "model": model,
+        "ollama_url": "http://127.0.0.1:11434/api/generate",
+        "default_task_scope": "generic",
+        "allow_paths": [SOURCE],
+        "deny_paths": [SOURCE + "/" + name for name in DENIED],
+        "extensions": [".py"],
+        "checks": [
+            ["python", "-m", "unittest", "discover", "-s", SOURCE + "/tests", "-v"],
+            ["python", SOURCE + "/blender_tools.py", "validate-seeds"]],
+        "limits": {"max_references": 1, "max_file_bytes": 5500,
+                   "max_input_chars": 9200, "max_output_bytes": 6500,
+                   "context_tokens": 4096, "output_tokens": 1536,
+                   "test_timeout_seconds": 180}}
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--project", type=Path, default=Path.cwd())
-    p.add_argument("--allow", action="append", help="Allowed relative source directories, repeatable")
-    p.add_argument("--check", action="append", help="Test command, repeatable, e.g. 'python -m pytest -q'")
-    p.add_argument("--model", default=DEFAULT_MODEL)
+    p.add_argument("--model", default=MODEL, help="Local Qwen coding model; not the PMX character model")
+    p.add_argument("--doctor", action="store_true")
     p.add_argument("--force-config", action="store_true")
     p.add_argument("--force-skill", action="store_true")
     p.add_argument("--github-alert", action="store_true")
-    p.add_argument("--doctor", action="store_true")
     args = p.parse_args(argv)
     root = args.project.resolve()
     helper = root / "qwen-helper"
+    if not is_pmx_project(root):
+        p.error("Only a PMX-to-native-Blender pipeline checkout is supported")
     if not (helper / "local_worker.py").is_file() or not (helper / "CODEX_SKILL.md").is_file():
-        p.error("Copy the complete qwen-helper directory to the project root first")
+        p.error("Missing complete qwen-helper directory")
+    config_file = helper / "project.json"
     if args.doctor:
+        print("PMX pipeline: detected")
         print("Python:", sys.version.split()[0])
         print("Ollama CLI:", shutil.which("ollama") or "not found")
+        wanted = args.model
+        if config_file.is_file():
+            wanted = json.loads(config_file.read_text(encoding="utf-8")).get("model", wanted)
         try:
-            with urlopen("http://127.0.0.1:11434/api/tags", timeout=2) as res:
-                tags = json.loads(res.read().decode())
-            found = [m.get("name") for m in tags.get("models", [])]
-            print("Ollama local server: reachable; model tag present:", args.model in found)
-        except Exception as exc:
-            print("Ollama local server: unavailable:", exc)
+            with urlopen("http://127.0.0.1:11434/api/tags", timeout=2) as response:
+                models = json.loads(response.read().decode("utf-8")).get("models", [])
+            print("Ollama server: connected; model installed:", wanted in {x.get("name") for x in models})
+        except (OSError, ValueError) as e:
+            print("Ollama server: unavailable:", e)
         return 0
-
-    config_file = helper / "project.json"
     if config_file.exists() and not args.force_config:
-        print("Keeping existing configuration:", config_file)
+        cfg = json.loads(config_file.read_text(encoding="utf-8"))
+        if cfg.get("project_type") != "pmx-to-native-blender":
+            p.error("Existing config is not PMX-specific; inspect before --force-config")
+        print("Preserved:", config_file)
     else:
-        allow = args.allow or [s for s in CONVENTIONAL if (root / s).is_dir()]
-        if not allow:
-            p.error("Cannot infer allowed source directories: provide --allow")
-        for name in allow:
-            location = (root / name).resolve()
-            if name.startswith(".") or name == "qwen-helper" or not location.is_dir() or not location.is_relative_to(root):
-                p.error("Invalid --allow (must be an existing unhidden project directory): " + name)
-        commands = [shlex.split(c) for c in args.check] if args.check else detect_checks(root)
-        if not commands or any(not c for c in commands):
-            p.error("No test command identified. Pass --check 'your project tests' (required)")
-        cfg = {"version": 1, "model": args.model,
-               "ollama_url": "http://127.0.0.1:11434/api/generate",
-               "allow_paths": allow, "deny_paths": [], "extensions": EXTENSIONS,
-               "checks": commands,
-               "limits": {"max_references": 1, "max_file_bytes": 5500,
-                          "max_input_chars": 9200, "max_output_bytes": 6500,
-                          "context_tokens": 4096, "output_tokens": 1536,
-                          "test_timeout_seconds": 180}}
-        config_file.write_text(json.dumps(cfg, indent=2) + "\n", encoding="utf-8")
-        print("Wrote:", config_file)
+        config_file.write_text(json.dumps(pmx_defaults(args.model), indent=2) + "\n", encoding="utf-8")
+        print("Created PMX-specific config:", config_file)
     skill = root / ".agents" / "skills" / "qwen-local-helper" / "SKILL.md"
     if not skill.exists() or args.force_skill:
         skill.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(helper / "CODEX_SKILL.md", skill)
-        print("Installed Codex skill:", skill)
+        print("Installed repository-local skill:", skill)
     else:
-        print("Keeping existing skill:", skill)
+        print("Preserved repository-local skill:", skill)
     if args.github_alert:
-        workflow = root / ".github" / "workflows" / "qwen-helper.yml"
-        if workflow.exists():
-            print("Keeping existing GitHub workflow:", workflow)
+        target = root / ".github" / "workflows" / "qwen-helper.yml"
+        if not target.exists():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(helper / "github-alert.template.yml", target)
+            print("Installed GitHub alert:", target)
         else:
-            workflow.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(helper / "github-alert.template.yml", workflow)
-            print("Installed optional GitHub issue alert:", workflow)
-    print("Next: run python qwen-helper/setup.py --doctor, then start Codex in this project.")
+            print("Preserved existing GitHub alert:", target)
+    print("Next: run python qwen-helper/setup.py --doctor")
     return 0
 
 if __name__ == "__main__":
