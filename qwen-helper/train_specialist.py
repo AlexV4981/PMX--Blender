@@ -18,7 +18,7 @@ def main():
     if not spec: p.error("Unknown specialist")
     if args.epochs<1 or args.epochs>8: p.error("Epochs must be 1-8")
     from datasets import Dataset
-    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments, Trainer, DataCollatorForLanguageModeling
+    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments, Trainer, default_data_collator
     from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
     import torch
     if not torch.cuda.is_available(): p.error("QLoRA training requires CUDA; no CPU fallback")
@@ -47,6 +47,15 @@ def main():
         encoded["labels"]=[-100]*min(len(prefix),len(encoded["input_ids"]))+encoded["input_ids"][len(prefix):]
         return encoded
     ds=Dataset.from_list(samples).map(tokenize,remove_columns=list(samples[0].keys()))
+    def collate(features):
+        # Pad supervised completion labels with -100, not EOS. Never train on user prompts.
+        import torch
+        width=max(len(x["input_ids"]) for x in features)
+        batch={}
+        for key in ("input_ids","attention_mask","labels"):
+            fill=-100 if key=="labels" else (tokenizer.pad_token_id if key=="input_ids" else 0)
+            batch[key]=torch.tensor([x[key]+[fill]*(width-len(x[key])) for x in features],dtype=torch.long)
+        return batch
     args.output.mkdir(parents=True,exist_ok=True)
     ta=TrainingArguments(output_dir=str(args.output/"checkpoints"),
         num_train_epochs=args.epochs,per_device_train_batch_size=1,

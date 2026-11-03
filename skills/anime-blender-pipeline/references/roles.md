@@ -36,3 +36,7 @@ Use `qwen-helper/README.md` and its Codex skill **only for isolated programming 
 The **generic PMX behavior is the default for every character**. A character's specific requirements belong to that conversion run's `character-profile.json` and verified recipe. Codex may authorize an opt-in `character_specific` Qwen task only to create a standalone `qwen_character_*.py` adapter with explicit profile-derived requirements and a statement of unchanged generic behavior. Never embed those defaults into shared generic tools, and never copy an adapter into another character's run without requalification.
 
 The 10% review threshold measures actual Qwen submissions that require Codex repair or rejection, not their subjective complexity or the share of all tasks delegated. Follow the hard stop in `qwen-helper/review.py` and disclose results immediately during active use.
+
+## Optional qualified specialist preflight (Qwen-Local-Helper only)
+
+Before routine *programming maintenance*, consult `qwen-helper/SPECIALISTS.md` and `qwen-helper/dispatch.py plan`. Only qualified narrow specialists may get **one** local proposal, followed by deterministic tests and a real Sol Light acceptance review. If ineligible, unavailable, invalid, or rejected, return to the **original** Sol High/Light/Astra workflow directly; do not retry local. Existing stage gates, shader/rig/physics judgment and human approvals are never delegated. Log actual model/reviewer/test evidence and the >10% production correction rate. Never imply Sol Light was invoked if that role was unavailable.

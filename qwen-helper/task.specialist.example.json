@@ -1,0 +1,12 @@
+{
+  "task_id": "inventory-synthetic-001",
+  "specialist": "inventory_summary",
+  "scope": "generic",
+  "kind": "new_tool",
+  "objective": "Build a standalone read-only JSON inventory counts reporter for synthetic fixtures",
+  "expected_behavior": "Given a valid synthetic JSON object with items list, report the exact length without changing assets; unknown fields remain unknown",
+  "target": "skills/anime-blender-pipeline/scripts/qwen_inventory_counts.py",
+  "references": [],
+  "cross_subsystem": false,
+  "requires_visual_judgment": false
+}

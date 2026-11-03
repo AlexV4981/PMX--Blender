@@ -32,3 +32,7 @@ python3 skills/anime-blender-pipeline/scripts/blender_tools.py validate-seeds
 ## Optional local Qwen maintenance assistant
 
 For bounded, **project-specific** coding chores only, see [Qwen Local Helper](qwen-helper/README.md). Codex can configure it on this branch; Qwen never substitutes for the generic PMX conversion workflow or human approval. Keep character-specific exceptions in each run's profile and opt-in adapters, not in the shared default pipeline.
+
+### Experimental local specialist routing (this branch only)
+
+Read [Qwen specialist setup and qualification](qwen-helper/SPECIALISTS.md). Separate QLoRA specialists have fail-closed eligibility and require independent held-out testing plus an actual Sol Light review. Any ineligible or rejected task returns to the unchanged Codex pipeline. Models ship **unqualified**; no performance or installation is assumed. This does not change `main` or human approval gates.

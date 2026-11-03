@@ -37,7 +37,7 @@ def run(args):
             return {"route": "pending_sol_light_review", "task_id": task["task_id"],
                     "proposal": str(local_worker.OUTBOX / (task["task_id"] + ".json")),
                     "next": "Sol Light independently reviews exact proposal; no automatic approval."}
-        except (ValueError, OSError, KeyError, TimeoutError) as exc:
+        except (ValueError, OSError, KeyError, TimeoutError, local_worker.subprocess.TimeoutExpired) as exc:
             return fallback(exc, task)
     proposal_path = local_worker.OUTBOX / (task["task_id"] + ".json")
     try:

@@ -1,2 +1,6 @@
 outbox/
-*.validation.json
+data/
+adapters/
+qualifications/private/
+__pycache__/
+*.pyc
