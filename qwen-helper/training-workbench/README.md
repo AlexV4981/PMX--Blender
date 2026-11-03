@@ -67,3 +67,7 @@ For the job-done signal, the existing trusted completion watcher uses `qwen-help
 No unverified stage scripts can change the main pipeline or approved state. Stage 03 may submit a no-change report when there is no actual fault; Stage 04 uses one arm/leg pilot first; Stage 05 tests neutral/isolated/combined controls; Stage 06 tests physics-off and clean stock Blender.
 
 [AGENTS.md](AGENTS.md) contains instructions for a future agent. [tracks.json](tracks.json) is the machine-readable map.
+
+## Existing model versus training base
+
+`install.py` **only pins the already-installed Ollama tag** for trial inference. Do **not** assume an Ollama GGUF is a Transformers/PEFT training checkpoint. To fine-tune, supply a compatible full-weight Hugging Face checkpoint directory via `workbench.py train --track geometry_builder --base-model /path/to/compatible/hf-weights`. Remote model downloads are disabled unless `--allow-download` is explicitly supplied. The default HF base is Qwen2.5-Coder-1.5B-Instruct, which may **not** match your existing Ollama model; choosing a mismatched model produces separate experiment weights and must not overwrite the Ollama tag. Stage-worker SFT completions must be valid JSON objects with `target`, `code` and `explanation` rather than bare code, matching the stage worker's proposal protocol. Always run an isolated base-model benchmark before investing in training.

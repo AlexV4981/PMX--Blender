@@ -13,6 +13,8 @@ def main():
     p.add_argument("--output",type=Path,required=True)
     p.add_argument("--epochs",type=int,default=2)
     p.add_argument("--max-length",type=int,default=1024)
+    p.add_argument("--base-model",help="Local full-weight HF checkpoint path or cached HF ID (GGUF/Ollama not supported)")
+    p.add_argument("--allow-download",action="store_true",help="Explicit permission for HF model downloads")
     args=p.parse_args()
     spec=specialists.registry()["specialists"].get(args.specialist)
     if not spec: p.error("Unknown specialist")
@@ -27,19 +29,26 @@ def main():
         not isinstance(s.get("prompt"),str) or not isinstance(s.get("completion"),str) for s in samples):
         p.error("Expected curated JSONL rows: case_id, prompt, completion")
     if len({s["case_id"] for s in samples})!=len(samples): p.error("Duplicate training case IDs")
-    base=specialists.registry()["base_model"]["huggingface"]
-    tokenizer=AutoTokenizer.from_pretrained(base)
+    base=args.base_model or specialists.registry()["base_model"]["huggingface"]
+    if not args.allow_download and args.base_model and not Path(base).is_dir():
+        p.error("--base-model must be a local Hugging Face checkpoint folder unless --allow-download is explicitly given")
+    tokenizer=AutoTokenizer.from_pretrained(base,local_files_only=not args.allow_download)
     if tokenizer.pad_token is None: tokenizer.pad_token=tokenizer.eos_token
     quant=BitsAndBytesConfig(load_in_4bit=True,bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.float16,bnb_4bit_use_double_quant=True)
-    model=AutoModelForCausalLM.from_pretrained(base,quantization_config=quant,device_map="auto")
+    model=AutoModelForCausalLM.from_pretrained(
+        base,quantization_config=quant,device_map="auto",local_files_only=not args.allow_download)
     model.config.use_cache=False
     model=prepare_model_for_kbit_training(model)
     model=get_peft_model(model,LoraConfig(r=16,lora_alpha=32,lora_dropout=0.05,
         bias="none",task_type="CAUSAL_LM",target_modules=["q_proj","k_proj","v_proj","o_proj","gate_proj","up_proj","down_proj"]))
     def tokenize(row):
+        system=("You are a qualified PMX Blender stage construction specialist. "
+                "Return only JSON with target, code, explanation; do not assume stage acceptance."
+                if spec["kind"]=="stage_candidate"
+                else "You are a narrow PMX Blender Python helper. Return JSON with target, code, explanation.")
         prompt=tokenizer.apply_chat_template([
-            {"role":"system","content":"You are a narrow PMX Blender Python helper. Return verified code only."},
+            {"role":"system","content":system},
             {"role":"user","content":row["prompt"]}],tokenize=False,add_generation_prompt=True)
         full=prompt+row["completion"]+tokenizer.eos_token
         encoded=tokenizer(full,truncation=True,max_length=args.max_length)

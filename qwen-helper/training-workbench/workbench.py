@@ -207,7 +207,7 @@ def status(name=None):
                 desc+="; INVALID SPLITS: "+str(e)
         print(f'{t["stage"]} {key}: {desc}; qualified={spec["qualified"]}')
 
-def train(name, epochs=2, max_length=1024):
+def train(name, epochs=2, max_length=1024, base_model=None, allow_download=False):
     check_branch()
     lookup(name)
     registry()
@@ -220,6 +220,10 @@ def train(name, epochs=2, max_length=1024):
         raise Stop("Adapter directory exists; refuse silent overwrite")
     cmd=[sys.executable,str(model),"--specialist",name,"--train",str(train_path),
          "--output",str(out),"--epochs",str(epochs),"--max-length",str(max_length)]
+    if base_model:
+        cmd.extend(["--base-model",base_model])
+    if allow_download:
+        cmd.append("--allow-download")
     print("Training local candidate, NOT qualified:",name,flush=True)
     subprocess.run(cmd,cwd=ROOT,check=True)
 
@@ -232,13 +236,15 @@ def main(argv=None):
     pr=sub.add_parser("prepare");pr.add_argument("--track",required=True)
     tr=sub.add_parser("train");tr.add_argument("--track",required=True)
     tr.add_argument("--epochs",type=int,default=2);tr.add_argument("--max-length",type=int,default=1024)
+    tr.add_argument("--base-model",help="Existing full-weight Hugging Face checkpoint directory")
+    tr.add_argument("--allow-download",action="store_true",help="Allow HF model download explicitly")
     args=parser.parse_args(argv)
     try:
         if args.action=="map":print_map()
         elif args.action=="bootstrap":bootstrap()
         elif args.action=="status":status(args.track)
         elif args.action=="prepare":prepare(args.track)
-        else:train(args.track,args.epochs,args.max_length)
+        else:train(args.track,args.epochs,args.max_length,args.base_model,args.allow_download)
     except (Stop,ValueError,OSError,KeyError,subprocess.CalledProcessError,
             subprocess.TimeoutExpired,json.JSONDecodeError) as exc:
         print("WORKBENCH STOP:",exc,file=sys.stderr)

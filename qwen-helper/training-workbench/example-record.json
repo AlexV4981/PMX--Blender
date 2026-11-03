@@ -1,10 +1,10 @@
 {
-  "case_id": "setup-synthetic-001",
-  "group_id": "source-fixture-alpha",
+  "case_id": "geometry-synthetic-001",
+  "group_id": "synthetic-geometry-family-a",
   "source_type": "deterministic_fixture",
   "provenance": "Human-authored synthetic PMX manifest example; not derived from proprietary asset",
   "verified_by": "FILL_WITH_ACTUAL_HUMAN_OR_INDEPENDENT_TEST",
   "verification": "FILL_WITH_EXECUTED_COMMAND_AND_RESULT",
-  "prompt": "Given a verified synthetic list of source file paths and sha256 values, write a standalone Python read-only report utility that flags missing hashes without altering input.",
-  "completion": "FILL_WITH_EXECUTED_AND_VERIFIED_PYTHON_SOURCE_ONLY"
+  "prompt": "Stage 03 synthetic fixture: produce a private Blender Python candidate that verifies shape-key index correspondence without modifying source; output target/code/explanation JSON.",
+  "completion": "{\"target\":\"qwen-helper/training-workbench/data/candidates/example-001/candidate.py\",\"code\":\"FILL_WITH_INDEPENDENTLY_TESTED_BLENDER_SOURCE\",\"explanation\":\"FILL_AFTER_VERIFICATION\"}"
 }

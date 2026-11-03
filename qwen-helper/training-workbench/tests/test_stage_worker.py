@@ -48,6 +48,12 @@ class SetupTests(unittest.TestCase):
         self.assertEqual(stage_worker.plan(t,demo=True)["mode"] if
             stage_worker.plan(t,demo=True)["route"]=="local_qwen_one_attempt" else
             stage_worker.plan(t,demo=True)["route"],"original_codex_pipeline")
+    def test_qualified_stage_gates_remain_off(self):
+        from pathlib import Path
+        import json
+        reg=json.loads((stage_worker.ROOT/"qwen-helper"/"specialists.json").read_text())
+        for key in ("geometry_builder","rig_builder","animator_builder","animation_qualifier"):
+            self.assertFalse(reg["specialists"][key]["qualified"])
     def test_wrong_branch_falls_back(self):
         with mock.patch.object(stage_worker,"verify_branch",side_effect=stage_worker.Stop("main forbidden")):
             self.assertEqual(stage_worker.plan(stage_task(),demo=True)["route"],"original_codex_pipeline")
