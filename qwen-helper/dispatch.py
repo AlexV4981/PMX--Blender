@@ -9,6 +9,7 @@ from types import SimpleNamespace
 
 import local_worker
 import specialists
+import done
 
 def fallback(reason, task=None):
     return {"route": "original_codex_pipeline", "local_attempts_remaining": 0,
@@ -43,6 +44,7 @@ def run(args):
         try:
             # The worker only writes a JSON proposal; it never executes generated code.
             local_worker.propose(SimpleNamespace(task=args.task))
+            done.emit(task["specialist"], task["task_id"])
             return {"route": "pending_sol_light_review", "task_id": task["task_id"],
                     "proposal": str(local_worker.OUTBOX / (task["task_id"] + ".json")),
                     "next": "Sol Light independently reviews exact proposal; no automatic approval."}

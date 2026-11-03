@@ -16,7 +16,7 @@ Substitute the registered specialist name: `inventory_summary`, `texture_diagnos
 python qwen-helper/done.py inventory_summary --task-id TASK_ID
 ```
 
-**Qwen does not choose a reviewer, execute its own code, accept anything, or decide what happens next.** It merely triggers a durable, local event bound to the original proposal's SHA-256. The existing `dispatch.py propose` wrapper now calls this signal automatically on successful proposals; pure Ollama inference cannot execute shell commands by itself.
+**Qwen does not choose a reviewer, execute its own code, accept anything, or decide what happens next.** It merely triggers a durable, local event bound to the original proposal's SHA-256. The existing `dispatch.py propose` wrapper calls this signal automatically on successful proposals; pure Ollama inference cannot execute shell commands by itself.
 
 ## Host-side setup (one time per Codex task/session)
 

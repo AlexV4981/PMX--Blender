@@ -19,3 +19,7 @@ This assistant is **only for the PMX-to-Blender project**. "Model-specific" mean
 ## Branch-local specialist offload
 
 For new optimized routing, first read `qwen-helper/SPECIALISTS.md`. Only on branch `Qwen-Local-Helper`, issue `python qwen-helper/dispatch.py plan --task TASK.json`; a qualified specialist gets **one** local attempt followed by deterministic checks and an observed Sol Light review. Otherwise follow this skill's original Codex path without Qwen. No automatic approval, adapter training, model download, or model deployment. The specialist registry ships unqualified. Keep original manual helper functionality for tasks without `specialist` field, but treat it as non-optimized/explicit manual use.
+
+## Completion signal (no reasoning required from Qwen)
+
+For qualified specialist tasks, the trusted `dispatch.py propose` command automatically emits an immutable handoff after creating the proposal. An externally-run specialist can instead issue `python qwen-helper/done.py SPECIALIST [--task-id ID]` as its sole completion command. The **host** must already run `python qwen-helper/done.py --watch --resume-thread CODEx_SESSION_UUID` or another trusted queue consumer to wake Codex; writing an event alone does not activate an idle chat. Review `qwen-helper/HANDOFF.md`. Do not run competing watchers against the same queue or resume a currently running Codex session.

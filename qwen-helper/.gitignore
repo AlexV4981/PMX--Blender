@@ -4,3 +4,4 @@ adapters/
 qualifications/private/
 __pycache__/
 *.pyc
+handoffs/
