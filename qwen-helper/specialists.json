@@ -36,14 +36,6 @@
       "filename_prefix": "qwen_fixture_",
       "purpose": "Synthetic regression-fixture generators only, no source asset writes"
     },
-    "setup_evidence": {
-      "model": "pmx-qwen-setup-evidence:v1",
-      "qualified": false,
-      "kind": "new_tool",
-      "scope": "generic",
-      "filename_prefix": "qwen_setup_",
-      "purpose": "Read-only setup and source-manifest consistency reports; no environment changes"
-    },
     "geometry_regression": {
       "model": "pmx-qwen-geometry-regression:v1",
       "qualified": false,
@@ -75,6 +67,38 @@
       "scope": "generic",
       "filename_prefix": "qwen_cycles_",
       "purpose": "Read-only Cycles render-settings and numerical comparison evidence reports; no shader design or visual acceptance"
+    },
+    "geometry_builder": {
+      "model": "pmx-stage03-geometry_builder:v1",
+      "qualified": false,
+      "kind": "stage_candidate",
+      "scope": "character_specific",
+      "stage": "03",
+      "purpose": "Stage 03 private Blender geometry/morph/deform script proposals based only on approved repair spec"
+    },
+    "rig_builder": {
+      "model": "pmx-stage04-rig_builder:v1",
+      "qualified": false,
+      "kind": "stage_candidate",
+      "scope": "character_specific",
+      "stage": "04",
+      "purpose": "Stage 04 private Blender native control rig construction based only on reviewed matrices/bone maps"
+    },
+    "animator_builder": {
+      "model": "pmx-stage05-animator_builder:v1",
+      "qualified": false,
+      "kind": "stage_candidate",
+      "scope": "character_specific",
+      "stage": "05",
+      "purpose": "Stage 05 native Blender face/viseme/reset/keyframe/control implementation based on approved mappings"
+    },
+    "animation_qualifier": {
+      "model": "pmx-stage06-animation_qualifier:v1",
+      "qualified": false,
+      "kind": "stage_candidate",
+      "scope": "character_specific",
+      "stage": "06",
+      "purpose": "Stage 06 executable repeatable motion/deformation qualification fixtures; no production edits"
     }
   }
 }

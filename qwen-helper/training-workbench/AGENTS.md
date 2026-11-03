@@ -1,10 +1,11 @@
-# Agent instructions — local PMX training area
+# Agent bootstrap and boundary
 
-1. Read `README.md`, `tracks.json`, `../SPECIALISTS.md` and `../../skills/anime-blender-pipeline/SKILL.md`.
-2. Work ONLY on `Qwen-Local-Helper`; never write to `main`. Respect the GitHub contributor restriction before pushing.
-3. `workbench.py map/bootstrap/status` first. Build permissioned, task-specific supervised examples and independently verify code; do not invent observed tests, benchmarks, or reviewer actions.
-4. Train one specialist at a time, group-split by task/source family, freeze the unseen holdout before training and never use it for training or manual prompt tuning.
-5. No private paths, personal details, secrets, PMX assets or large model weights in the repo. Keep training data and output under ignored `data/`.
-6. Fine-tune the selected 1.5B Qwen base only when real examples exist. The presence of a training script is not evidence it works on the hardware; stop and disclose setup or GPU limitations.
-7. Do not promote from a plausible JSON report. Require actual independent execution, Sol Light verification, exact Ollama digest, documented threshold and then explicit registry update.
-8. Original Sol High/Light/Astra path, human decisions and Cycles-only fidelity standards are unchanged.
+Read [INSTALL_PROMPT.md](INSTALL_PROMPT.md) and [README.md](README.md) before starting. Only branch `Qwen-Local-Helper` is allowed. Preserve existing work and verify commit-contributor policy before any remote push. Never touch `main`.
+
+**Stage 00 = Codex exclusively.** Stages 01/02/07 = Codex main, optional narrow local diagnostics; 08/09 = Codex. Stage 03/04/05/06 = **qualified** local Qwen may perform main implementation/test scripting on disposable candidates, checked by actual Sol Light then original human gates. No agent or local model can approve a gate.
+
+Reuse the *already installed* Ollama coding model; configure it through `install.py` with its exact observed tag/digest. No model pulls or global configuration changes. An Ollama GGUF tag is not a full-weight HF fine-tuning base; verify compatibility before QLoRA.
+
+The local specialist returns only a script proposal. `done.py` completion is an event, not acceptance. Codex independently verifies predecessor acceptance, approved constraints, stage skill requirements, candidate render/evaluation evidence, sandbox, and human decisions. Failure/absence/uncertainty routes to original Codex without retrying the local specialist.
+
+Train only with original/permissioned verified examples; keep datasets, models, runtime config, logs and candidates in ignored `data/`. Unseen holdout never enters training or prompt tuning. The qualification manifest needs real independent evidence (minimum 300 held-out cases and zero failures, Sol Light and actual runtime checks) and an exact model digest. No fabricated results or claimed perfection.

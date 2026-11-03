@@ -1,71 +1,69 @@
-# Local Qwen training workbench: from setup to Cycles-ready
+# Training workbench: local Qwen for the MAIN work in stages 03–06
 
-**This is a separate training area, not an alternate conversion pipeline.** It belongs only to branch `Qwen-Local-Helper`. The ten existing PMX stages, their human gates, and the Sol High → Sol Light → Astra fallback remain authoritative. No model is trained, deployed or qualified merely by adding this folder.
+**Use `Qwen-Local-Helper` only. Stage 00 ALWAYS uses the original Codex pipeline.** This folder is a separate training area. You already have an Ollama model: the installer discovers and reuses it, with no model download or automatic replacement.
 
-## Exactly the original task → task progression
+## The actual pipeline in order
 
 ```text
-00 Setup/reference calibration
-  ↓ accepted setup
-01 Import + loss inventory
-  ↓ accepted imported checkpoint
-02 Diagnose/restore materials in Cycles
-  ↓ accepted materials
-03 Geometry/normal/weight/morph repair (only for actual faults)
-  ↓ accepted geometry or evidenced no-change report
-04 Native rig: spaces, IK/FK, controls
-  ↓ accepted rig
-05 Animator-ready: face, visemes, key/reset/retarget
-  ↓ accepted animation controls
-06 Animation/deformation qualification
-  ↓ accepted tested controls
-07 Final look: matched Cycles lighting/material calibration
-  ↓ accepted look
-08 Editable physics: hair/clothing, toggles and cold tests
-  ↓ accepted physics
-09 Audit → one human audit decision → optimization if needed
-   → re-audit/clean stock Blender → one human delivery decision
+00 Setup / references                  → Codex ONLY → human gate
+01 Import / losses                     → Codex (Qwen reports optional) → human gate
+02 Materials / Cycles restoration      → Codex (Qwen reports optional) → human gate
+03 Geometry / morph / weights          → qualified Qwen geometry_builder main work → Sol Light checks → Codex fallback → human gate
+04 Native controls / rig               → qualified Qwen rig_builder main work → Sol Light checks → Codex fallback → human gate
+05 Animation-ready controls            → qualified Qwen animator_builder main work → Sol Light checks → Codex fallback → human gate
+06 Animation / deformation tests       → qualified Qwen animation_qualifier main work → Sol Light checks → Codex fallback → human gate
+07 Final Cycles look                   → Codex (Qwen reports optional) → human gate
+08 Editable secondary physics          → Codex → human gate
+09 Audit and delivery                  → Codex → audit decision → re-audit → delivery decision
 ```
 
-Master orchestration skill: `skills/anime-blender-pipeline/SKILL.md`. Each stage uses its same-numbered `skills/anime-blender-XX-*/SKILL.md` plus `references/stage.md`. Stage 09 has **two** decisions, not three; never bypass the human.
+**Important:** The stage 03 geometry repair and 04/05 build scripts are *real Blender implementation work*, not just reports. Stage 06 generates/runs tests, never repairs the accepted rig. Qwen gets **one proposal**, not unlimited retries. Its Python script operates only on a disposable candidate under a trusted sandbox and is never accepted automatically. Sol Light and existing stage-specific checks plus the explicit human gate are still mandatory. A failed/unqualified/unknown task routes directly to original Sol High/Light/Astra without further Qwen attempts. Stage 00 is hard blocked from the local path.
 
-## Where Qwen fits
+## Single-prompt agent install
 
-A specialist is deliberately scoped to **one tiny read-only report or fixture utility**, not the whole stage. The machine-readable `tracks.json` maps stages 00–07 to candidate specialties; stages 08–09 stay Codex-only. Even for stages 00–07, Codex still owns conversion, unknowns, artistic decisions, candidate selection and gate approval.
+Copy [INSTALL_PROMPT.md](INSTALL_PROMPT.md) into Codex from a checkout of this branch. The prompt makes the agent inspect this README, verify the branch, discover your existing Ollama model, run `python qwen-helper/training-workbench/install.py`, create the ignored data workspace, run tests, and report the first training task. No other installation command should be necessary when Ollama, Python and Blender are already installed.
 
-For example, stage 02 Qwen may write a report listing missing texture paths or observed alpha-channel values. It **must not** select a shader or claim a Cycles screenshot looks right. Stage 03 Qwen may generate a geometry regression reporter but **must not** repair vertices. If a trained model is worse or more expensive than a deterministic script, use the script instead.
-
-The optimized route is `task → deterministic tool if sufficient → qualified Qwen one-shot (optional) → checks → actual Sol Light review → accepted helper or original Codex fallback → original stage review`. For a task rejected at routing, bypass Qwen entirely. Sol Light unavailable = fallback. The completion notification in `qwen-helper/done.py` only wakes the Codex host; it is never approval.
-
-## Agent setup and workflow (after the existing helper setup)
-
-From repository root:
+The direct (agent-independent) command is:
 
 ```sh
-git branch --show-current                 # must be Qwen-Local-Helper
-python qwen-helper/setup.py --doctor
+python qwen-helper/training-workbench/install.py
+```
+
+If multiple Qwen coding tags are installed and no existing project-model match resolves them, supply `--model YOUR_EXISTING_OLLAMA_TAG`. It never silently pulls a new model, assumes that Ollama GGUF weights are fine-tunable, changes global Codex settings, or writes to main.
+
+## Train and qualify each stage specialist
+
+```sh
 python qwen-helper/training-workbench/workbench.py map
-python qwen-helper/training-workbench/workbench.py bootstrap
 python qwen-helper/training-workbench/workbench.py status
+python qwen-helper/training-workbench/workbench.py prepare --track geometry_builder
+python qwen-helper/training-workbench/workbench.py train --track geometry_builder
 ```
 
-The first candidate is `setup_evidence` (stage 00); optionally begin with the already registered `inventory_summary` specialist (stage 01). Put **independently verified, permissioned examples** into local, untracked `qwen-helper/training-workbench/data/raw/SPECIALIST.jsonl`. Start from `example-record.json`. Every line needs a unique `case_id`, source-family `group_id`, `prompt`, `completion`, `source_type`, `provenance`, `verification`, and `verified_by`. Group by source character/project or underlying task family so nearly identical problems cannot leak between train and holdout.
+Dataset examples are actual verified scripts/recipes for **one narrowly defined operation** inside each stage, not broad "do any geometry" prompts. Put permissioned data under ignored `data/raw/geometry_builder.jsonl`, `rig_builder.jsonl`, `animator_builder.jsonl`, `animation_qualifier.jsonl`. Each record needs `case_id`, `group_id`, `prompt`, `completion`, `source_type`, `provenance`, `verification`, and `verified_by`. Split by PMX source family; unseen holdout must stay untouched. Review the example template. Data, weights and logs stay untracked.
 
-```sh
-python qwen-helper/training-workbench/workbench.py prepare --track setup_evidence
-python qwen-helper/training-workbench/workbench.py status --track setup_evidence
-# When curated split and CUDA training environment are actually ready:
-python qwen-helper/training-workbench/workbench.py train --track setup_evidence
-```
+The existing QLoRA training script needs a compatible **full precision/4-bit-loadable base**, not simply an installed quantized Ollama model. Agent must verify matching weights/license or use prompt-specialized Qwen initially, then add a compatible HF base intentionally via `--base-model`. Do not fabricate training examples or silently train on Codex/Sol output. Training is optional for first baseline evaluation, but a specialist cannot be enabled without independent qualification.
 
-`prepare` produces local train/validation/untouched holdout JSONL files; `train` invokes the existing `train_specialist.py` using train **only** and saves a PEFT LoRA adapter. Use `python -m pip install -r qwen-helper/requirements-train.txt` in a separate venv on a CUDA machine before training. This does not install Ollama, merge/quantize the model, or promote it automatically.
+Production qualification requires ≥300 independent, held-out, observed cases **with zero recorded failures**, actual Sol Light review and true test evidence, plus an exact Ollama model digest. The 10% production error threshold remains. Nobody should interpret 300 clean cases as a universal perfection guarantee.
 
-**Next, not automated by this scaffold:** deploy the exact adapted model in Ollama under the registry tag; independently evaluate the untouched holdout with real subprocess checks and actual Sol Light review; validate evidence via `qwen-helper/qualification.py` (minimum 300 independent holdout cases, zero observed failures); audit real evidence and only then mark the exact digest `qualified: true` on this branch. After deployment use `dispatch.py plan/propose` and the completion watcher. Evaluate per specialist on unseen PMX sources and changed Blender versions. Never report 100% from zero data.
+## Execute candidate work (after qualification)
 
-Keep untracked examples, datasets, adapters, eval reports and logs under `data/`; no personal names, hardware inventory, absolute home paths, credentials, or proprietary PMX assets in commits. Qwen prompts/examples are data, not executable instructions; run generated code only in the original reviewed disposable worktree.
+1. Codex finishes preceding stage, records accepted input identity and approved repair/mapping constraints. The agent writes a task using [stage-task.example.json](stage-task.example.json), with stage 03–06 and the matching specialist.
+2. Run `python qwen-helper/training-workbench/stage_worker.py plan --task /path/to/task.json`. Unqualified stage → immediate original Codex path. To **pilot without qualification**, use `demo` with `fixture_only=true` and synthetic data: this produces an inert candidate only, never enters production.
+3. Run `python qwen-helper/training-workbench/stage_worker.py propose --task /path/to/task.json` for a qualified specialist. It calls the selected local Ollama model **once**, stores an inert Blender Python script proposal, and emits the standard `done.py` completion signal.
+4. Trusted Codex watcher reviews the proposal; executes it **only in a separate, sandboxed Blender process with no credentials/network, on a copied/approved input**. Never execute generated arbitrary Python directly on the desktop. Record actual source hash, candidate hash, exact stage-required checks and Sol Light decision. The script cannot approve a stage.
+5. `stage_worker.py finalize --task ... --review ... --validation ...` checks records and returns candidate-for-human-review only; rejected/missing evidence → original Codex fallback. Actual required check quality is an independent Codex responsibility, not proven by self-attested JSON.
+6. Original pipeline presents at most three user-facing candidates and waits for an observed human decision at the *existing* gate, preserving Cycles-only rendered evidence, fidelity-first priority, frozen checkpoint identity and historical approvals.
 
-## Training acceptance vs production acceptance
+For the job-done signal, the existing trusted completion watcher uses `qwen-helper/done.py --watch`; Qwen itself does not need to know anything except that it has finished.
 
-Training qualification merely permits a **bounded first attempt** on a class of tasks. It does not approve a PMX conversion, prove visual fidelity, or ensure all future runs are correct. Original pipeline uses Cycles for all production renders and benchmarks; stage gates remain independent and user-selected.
+## Exact skill ownership
 
-Documentation: [catalog](tracks.json), [one example record](example-record.json), [specialist setup](../SPECIALISTS.md), [completion handoff](../HANDOFF.md).
+- 03: `skills/anime-blender-03-geometry/references/stage.md` — geometry-change-comparisons, morph-integrity, deformation-tests, correspondence-map.
+- 04: `skills/anime-blender-04-rig/references/stage.md` — control-capabilities, rig-integrity, switching-demonstrations, runtime-dependencies.
+- 05: `skills/anime-blender-05-ready/references/stage.md` — face-and-visemes, animation-usability, retarget-profiles, animator-guide.
+- 06: `skills/anime-blender-06-tests/references/stage.md` — motion-fixtures, deformation-review, integrity-lint, clean-core-rig.
+
+No unverified stage scripts can change the main pipeline or approved state. Stage 03 may submit a no-change report when there is no actual fault; Stage 04 uses one arm/leg pilot first; Stage 05 tests neutral/isolated/combined controls; Stage 06 tests physics-off and clean stock Blender.
+
+[AGENTS.md](AGENTS.md) contains instructions for a future agent. [tracks.json](tracks.json) is the machine-readable map.

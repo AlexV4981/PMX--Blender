@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "training_basis": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
-  "curriculum_scope": "Read-only maintenance and isolated fixture/report generators; native PMX conversion stays in original skills",
+  "training_basis": "Reuse the user's verified installed Ollama coding model for pilots; QLoRA needs matching full-weight Hugging Face base, never infer from GGUF",
+  "curriculum_scope": "Qwen main construction/test work for stages 03-06 ONLY after verified qualification. Stage 00 always Codex; all stage gates owned by Codex and human. Stages 01/02/07 optional diagnostics; 08/09 Codex.",
   "stages": [
     {
       "stage": "00",
       "title": "Setup and reference calibration",
       "skill": "anime-blender-00-setup",
-      "specialist": "setup_evidence",
-      "eligibility": "training_ready",
-      "task": "Read-only source-hash, reference and environment-manifest consistency report",
-      "never": "Install drivers, change scene/camera, select scope or approve setup"
+      "specialist": null,
+      "eligibility": "codex_only",
+      "task": "Codex exclusively handles setup, reference calibration, environment locks and human gate.",
+      "never": "Never send any Stage 00 task to Qwen, including setup reports"
     },
     {
       "stage": "01",
@@ -34,37 +34,37 @@
       "stage": "03",
       "title": "Geometry repairs",
       "skill": "anime-blender-03-geometry",
-      "specialist": "geometry_regression",
-      "eligibility": "training_ready",
-      "task": "Read-only mesh counts, normal/UV/morph correspondence regression report",
-      "never": "Edit geometry, repair weights, choose silhouettes or move vertices"
+      "specialist": "geometry_builder",
+      "eligibility": "train_then_qualify",
+      "task": "Main implementation: scoped Blender Python repair proposals for approved geometry, normals, morphs or deform weights in private derivatives.",
+      "never": "Never touch original/accepted blend or decide ambiguous anatomy, new topology, source correspondence, or user preference"
     },
     {
       "stage": "04",
       "title": "Native control rig",
       "skill": "anime-blender-04-rig",
-      "specialist": "rig_regression",
-      "eligibility": "training_ready",
-      "task": "Numeric smoke-test fixtures and reports for bone/control mappings and switches",
-      "never": "Change rest spaces, solve unfamiliar IK/FK or edit live rigs"
+      "specialist": "rig_builder",
+      "eligibility": "train_then_qualify",
+      "task": "Main implementation: scoped native rig control/mechanism construction from Codex-approved skeleton mappings and transforms.",
+      "never": "Never invent rest spaces/mapping, delete imported skeleton, or approve switching/deformation"
     },
     {
       "stage": "05",
       "title": "Animation-ready controls",
       "skill": "anime-blender-05-ready",
-      "specialist": "animation_fixtures",
-      "eligibility": "training_ready",
-      "task": "Synthetic expression, reset/keyframe and retarget smoke-fixture report helpers",
-      "never": "Choose corrective shapes, alter controls or approve animator usability"
+      "specialist": "animator_builder",
+      "eligibility": "train_then_qualify",
+      "task": "Main implementation: native face/viseme/reset/keying/control creation from a verified mapping and ranges.",
+      "never": "Never invent morph semantics, visual corrections or retarget sources; no acceptance without human"
     },
     {
       "stage": "06",
       "title": "Motion and deformation tests",
       "skill": "anime-blender-06-tests",
-      "specialist": "regression_fixtures",
-      "eligibility": "training_ready",
-      "task": "Synthetic held-out regression fixture generators and test summary helpers",
-      "never": "Run unverified scripts on accepted assets or certify animation qualification"
+      "specialist": "animation_qualifier",
+      "eligibility": "train_then_qualify",
+      "task": "Main implementation: executable Blender animation/integrity test harnesses and observed evidence on private derivatives.",
+      "never": "Never modify accepted production assets, hide failures, approve rig qualification or repair upstream stages"
     },
     {
       "stage": "07",

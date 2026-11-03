@@ -1,0 +1,22 @@
+{
+  "task_id": "geometry-synthetic-001",
+  "stage": "03",
+  "kind": "stage_candidate",
+  "scope": "character_specific",
+  "specialist": "geometry_builder",
+  "fixture_only": true,
+  "objective": "Write Blender Python to check mesh shape-key index correspondence on a synthetic in-memory scene and preserve its original topology.",
+  "expected_behavior": "One standalone Blender Python script. It must not modify source meshes or accepted assets. Check known synthetic fixtures; record exact evidence.",
+  "constraints": "SYNTHETIC DEMO ONLY. Do not access live PMX sources, approved .blend checkpoints, credentials, or network. Do not request execution.",
+  "character_profile_summary": "Synthetic fixtures only, no real character data.",
+  "accepted_input_sha256": null,
+  "accepted_input_path": null,
+  "target": "qwen-helper/training-workbench/data/candidates/geometry-synthetic-001/candidate.py",
+  "output_candidate": "qwen-helper/training-workbench/data/candidates/geometry-synthetic-001/candidate.blend",
+  "required_checks": [
+    "geometry-change-comparisons",
+    "morph-integrity",
+    "deformation-tests",
+    "correspondence-map"
+  ]
+}
