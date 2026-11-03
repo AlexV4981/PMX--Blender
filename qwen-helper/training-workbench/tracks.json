@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "training_basis": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+  "curriculum_scope": "Read-only maintenance and isolated fixture/report generators; native PMX conversion stays in original skills",
+  "stages": [
+    {
+      "stage": "00",
+      "title": "Setup and reference calibration",
+      "skill": "anime-blender-00-setup",
+      "specialist": "setup_evidence",
+      "eligibility": "training_ready",
+      "task": "Read-only source-hash, reference and environment-manifest consistency report",
+      "never": "Install drivers, change scene/camera, select scope or approve setup"
+    },
+    {
+      "stage": "01",
+      "title": "Import and loss inventory",
+      "skill": "anime-blender-01-import",
+      "specialist": "inventory_summary",
+      "eligibility": "training_ready",
+      "task": "Read-only PMX import inventory/loss summary with explicit unknowns",
+      "never": "Import models, rewrite PMX, infer lost data or replace correct imports"
+    },
+    {
+      "stage": "02",
+      "title": "Material diagnosis and Cycles restoration",
+      "skill": "anime-blender-02-materials",
+      "specialist": "texture_diagnostics",
+      "eligibility": "training_ready",
+      "task": "Read-only missing texture/alpha/UV/role warning report from verified inputs",
+      "never": "Design or overwrite shaders; guess map roles; approve color or alpha"
+    },
+    {
+      "stage": "03",
+      "title": "Geometry repairs",
+      "skill": "anime-blender-03-geometry",
+      "specialist": "geometry_regression",
+      "eligibility": "training_ready",
+      "task": "Read-only mesh counts, normal/UV/morph correspondence regression report",
+      "never": "Edit geometry, repair weights, choose silhouettes or move vertices"
+    },
+    {
+      "stage": "04",
+      "title": "Native control rig",
+      "skill": "anime-blender-04-rig",
+      "specialist": "rig_regression",
+      "eligibility": "training_ready",
+      "task": "Numeric smoke-test fixtures and reports for bone/control mappings and switches",
+      "never": "Change rest spaces, solve unfamiliar IK/FK or edit live rigs"
+    },
+    {
+      "stage": "05",
+      "title": "Animation-ready controls",
+      "skill": "anime-blender-05-ready",
+      "specialist": "animation_fixtures",
+      "eligibility": "training_ready",
+      "task": "Synthetic expression, reset/keyframe and retarget smoke-fixture report helpers",
+      "never": "Choose corrective shapes, alter controls or approve animator usability"
+    },
+    {
+      "stage": "06",
+      "title": "Motion and deformation tests",
+      "skill": "anime-blender-06-tests",
+      "specialist": "regression_fixtures",
+      "eligibility": "training_ready",
+      "task": "Synthetic held-out regression fixture generators and test summary helpers",
+      "never": "Run unverified scripts on accepted assets or certify animation qualification"
+    },
+    {
+      "stage": "07",
+      "title": "Final Cycles look",
+      "skill": "anime-blender-07-look",
+      "specialist": "cycles_evidence",
+      "eligibility": "training_ready",
+      "task": "Read-only render configuration and per-region numerical comparison evidence report",
+      "never": "Judge appearance, optimize shader/lighting creatively or claim Cycles rendering"
+    },
+    {
+      "stage": "08",
+      "title": "Editable native physics",
+      "skill": "anime-blender-08-physics",
+      "specialist": null,
+      "eligibility": "codex_only",
+      "task": "For now, Codex runs physics tests and evaluates collision/secondary motion",
+      "never": "Local model physics design, parameter fitting or approval"
+    },
+    {
+      "stage": "09",
+      "title": "Audit and delivery",
+      "skill": "anime-blender-09-audit",
+      "specialist": null,
+      "eligibility": "codex_only",
+      "task": "For now, Codex performs actual clean-open, benchmark and human delivery gates",
+      "never": "Local model delivery approval or fabricated test evidence"
+    }
+  ]
+}

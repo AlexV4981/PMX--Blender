@@ -35,6 +35,46 @@
       "scope": "generic",
       "filename_prefix": "qwen_fixture_",
       "purpose": "Synthetic regression-fixture generators only, no source asset writes"
+    },
+    "setup_evidence": {
+      "model": "pmx-qwen-setup-evidence:v1",
+      "qualified": false,
+      "kind": "new_tool",
+      "scope": "generic",
+      "filename_prefix": "qwen_setup_",
+      "purpose": "Read-only setup and source-manifest consistency reports; no environment changes"
+    },
+    "geometry_regression": {
+      "model": "pmx-qwen-geometry-regression:v1",
+      "qualified": false,
+      "kind": "new_tool",
+      "scope": "generic",
+      "filename_prefix": "qwen_geometry_",
+      "purpose": "Read-only geometry, UV, normal and morph correspondence regression reporters; no mesh edits"
+    },
+    "rig_regression": {
+      "model": "pmx-qwen-rig-regression:v1",
+      "qualified": false,
+      "kind": "new_tool",
+      "scope": "generic",
+      "filename_prefix": "qwen_rig_",
+      "purpose": "Fixture-driven native rig numeric integrity reports; no rig construction or rest-space decisions"
+    },
+    "animation_fixtures": {
+      "model": "pmx-qwen-animation-fixtures:v1",
+      "qualified": false,
+      "kind": "new_tool",
+      "scope": "generic",
+      "filename_prefix": "qwen_anim_",
+      "purpose": "Synthetic expression, reset and keying test fixture/report helpers; no animation approval"
+    },
+    "cycles_evidence": {
+      "model": "pmx-qwen-cycles-evidence:v1",
+      "qualified": false,
+      "kind": "new_tool",
+      "scope": "generic",
+      "filename_prefix": "qwen_cycles_",
+      "purpose": "Read-only Cycles render-settings and numerical comparison evidence reports; no shader design or visual acceptance"
     }
   }
 }

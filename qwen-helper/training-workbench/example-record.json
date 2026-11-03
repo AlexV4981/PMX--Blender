@@ -1,0 +1,10 @@
+{
+  "case_id": "setup-synthetic-001",
+  "group_id": "source-fixture-alpha",
+  "source_type": "deterministic_fixture",
+  "provenance": "Human-authored synthetic PMX manifest example; not derived from proprietary asset",
+  "verified_by": "FILL_WITH_ACTUAL_HUMAN_OR_INDEPENDENT_TEST",
+  "verification": "FILL_WITH_EXECUTED_COMMAND_AND_RESULT",
+  "prompt": "Given a verified synthetic list of source file paths and sha256 values, write a standalone Python read-only report utility that flags missing hashes without altering input.",
+  "completion": "FILL_WITH_EXECUTED_AND_VERIFIED_PYTHON_SOURCE_ONLY"
+}
