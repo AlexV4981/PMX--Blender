@@ -1,0 +1,14 @@
+{
+  "case_id": "FILL_WITH_ACTUAL_CASE",
+  "stage": "06",
+  "fixture_family": "FILL_SOURCE_FAMILY",
+  "model": "FILL_MODEL_TAG",
+  "model_digest": "FILL_MODEL_DIGEST",
+  "blender_executed": false,
+  "blender_pass": false,
+  "sol_light_reviewed": false,
+  "protected_assets_ok": false,
+  "elapsed_seconds": 0,
+  "evidence": "NOT YET EVALUATED: replace only after actual Blender execution",
+  "astra_fallback_used": false
+}
