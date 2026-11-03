@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "base_model": {
+    "huggingface": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "ollama": "qwen2.5-coder:1.5b-instruct-q4_K_M",
+    "license": "Apache-2.0",
+    "notes": "Shared initial weights; fine-tune separate LoRA per narrow specialty, then export unique Ollama tag."
+  },
+  "qualification": {
+    "minimum_independent_holdout": 300,
+    "max_holdout_failures": 0,
+    "require_sol_light": true
+  },
+  "specialists": {
+    "inventory_summary": {
+      "model": "pmx-qwen-inventory-summary:v1",
+      "qualified": false,
+      "kind": "new_tool",
+      "scope": "generic",
+      "filename_prefix": "qwen_inventory_",
+      "purpose": "Read-only deterministic PMX inventory JSON summaries only"
+    },
+    "texture_diagnostics": {
+      "model": "pmx-qwen-texture-diagnostics:v1",
+      "qualified": false,
+      "kind": "new_tool",
+      "scope": "generic",
+      "filename_prefix": "qwen_texture_report_",
+      "purpose": "Read-only missing/ambiguous texture reference reports only"
+    },
+    "regression_fixtures": {
+      "model": "pmx-qwen-regression-fixtures:v1",
+      "qualified": false,
+      "kind": "new_tool",
+      "scope": "generic",
+      "filename_prefix": "qwen_fixture_",
+      "purpose": "Synthetic regression-fixture generators only, no source asset writes"
+    }
+  }
+}
