@@ -1,5 +1,10 @@
 # Role dispatch
 
+## Branch precedence: stage-specialist construction (Qwen-Local-Helper only)
+
+For stages **03 geometry, 04 rig, 05 animation ready, 06 animation tests**, use `qwen-helper/training-workbench/README.md` and `stage_worker.py`: after independent specialist qualification, Qwen can propose the **main stage implementation** in a private `data/candidates/` derivative, not just diagnostics. Codex verifies input and executes only in a safe disposable Blender environment with observed Sol Light review, then takes the original stage human gate. On any failure, unsupported model, unknowns or unqualified task, use original Sol High/Light/Astra execution. **Stage 00 is always Codex-only**, not eligible for any Qwen worker. Stages 01/02/07 remain Codex-led (optional tiny Qwen diagnostic helpers); 08/09 remain Codex-only. This stage scope supersedes older text below restricting all Qwen work to menial reports, without changing historical accepted artifacts, source files, gates or Cycles.
+
+
 | Role | Requested selection | Responsibility |
 | --- | --- | --- |
 | Orchestrator | gpt-6.1-sol / high | Assign work, enforce ownership, evaluate evidence and request human decisions |

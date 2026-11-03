@@ -40,3 +40,7 @@ Read [Qwen specialist setup and qualification](qwen-helper/SPECIALISTS.md). Sepa
 ### Stage-ordered local specialist training workbench
 
 A separate [training workbench](qwen-helper/training-workbench/README.md) maps **00 Setup → 01 Import → 02 Materials/Cycles → 03 Geometry → 04 Rig → 05 Animation Ready → 06 Motion Tests → 07 Final Look → 08 Physics → 09 Audit/Delivery** to bounded read-only support jobs. The runnable `workbench.py` can bootstrap ignored training directories and prepare group-separated training/validation/holdout examples; specialists remain unqualified until independently verified. Stages 08–09 remain Codex-only. No change to the main branch, the original stage gates or Cycles requirements.
+
+### Stage 03–06 main-work Qwen specialization (experimental branch only)
+
+Stage 00 stays **Codex-only**. The [one-prompt local installer](qwen-helper/training-workbench/INSTALL_PROMPT.md) reuses an existing installed Ollama model, installs the separate workbench, and begins synthetic tests without touching source assets. Qualified stage-specific workers may construct private geometry/rig/animation scripts for stages 03–06; the original Codex/actual Sol Light checks, Cycles and human gates remain. [Full workbench guide](qwen-helper/training-workbench/README.md).

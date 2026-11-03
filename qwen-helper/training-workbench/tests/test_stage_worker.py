@@ -45,9 +45,10 @@ class SetupTests(unittest.TestCase):
     def test_demo_never_approves_production(self):
         t=stage_task()
         with self.assertRaises(stage_worker.Stop):stage_worker.qualify_task(t,demo=False)
-        self.assertEqual(stage_worker.plan(t,demo=True)["mode"] if
-            stage_worker.plan(t,demo=True)["route"]=="local_qwen_one_attempt" else
-            stage_worker.plan(t,demo=True)["route"],"original_codex_pipeline")
+        result=stage_worker.plan(t,demo=True)
+        self.assertIn(result["route"],("local_qwen_one_attempt","original_codex_pipeline"))
+        if result["route"]=="local_qwen_one_attempt":
+            self.assertEqual(result["mode"],"synthetic_proposal_only")
     def test_qualified_stage_gates_remain_off(self):
         from pathlib import Path
         import json
