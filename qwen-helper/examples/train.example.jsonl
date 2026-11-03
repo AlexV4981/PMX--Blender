@@ -1,0 +1,1 @@
+{"case_id":"train-synthetic-001","prompt":"Write a standalone read-only Python helper that prints counts for items in a synthetic PMX inventory JSON file.","completion":"import json\nfrom pathlib import Path\ndef count_items(path):\n    data = json.loads(Path(path).read_text(encoding='utf-8'))\n    return {'count': len(data.get('items', []))}\n"}

@@ -1,0 +1,7 @@
+{
+  "task_id": "generic-audit-001",
+  "proposal_sha256": "FILL_WITH_SHA256_OF_EXACT_PROPOSAL_FILE",
+  "reviewer_role": "sol_light",
+  "decision": "reject",
+  "evidence": "FILL_WITH_OBSERVED_TEST_COMMANDS_AND_REASON; never approve a template"
+}

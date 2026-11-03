@@ -15,6 +15,15 @@ HELPER = ROOT / "qwen-helper"
 OUTBOX = HELPER / "outbox"
 CONFIG = HELPER / "project.json"
 KINDS = {"bugfix", "new_tool", "test", "logging"}
+
+# Legacy manual tasks use the configured original Qwen model. Qualified specialists
+# are opted into explicitly by task and are never assumed to be installed.
+def resolve_model(task, config):
+    if "specialist" not in task:
+        return config["model"]
+    import specialists
+    return specialists.model_for_task(task, config["model"])
+
 SCOPES = {"generic", "character_specific"}
 BLOCKED_PARTS = {".git", ".github", ".agents", "qwen-helper", ".venv",
                  "node_modules", "__pycache__", ".env", "vendor", "dist", "build"}
@@ -125,6 +134,14 @@ def load_task(task_file, cfg):
         raise Stop("Input context too large")
     return task, target, sources
 
+def load_task_data(task, cfg):
+    """Validate a planned task without modifying the worktree."""
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / "task.json"
+        path.write_text(json.dumps(task), encoding="utf-8")
+        return load_task(path, cfg)
+
 def digest(p):
     return hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None
 
@@ -136,6 +153,7 @@ def propose(args):
         raise Stop("Review ledger invalid or correction rate above 10%; stop delegating. " + (gate.stdout + gate.stderr)[-1000:])
     cfg = read_config()
     task, target, sources = load_task(args.task, cfg)
+    model_name = resolve_model(task, cfg)
     message = ("You support a GENERAL PMX-to-native-Blender Cycles-only pipeline. "
                "Write exactly one complete Python source file for this isolated maintenance task. "
                "Preserve correct behavior for other characters; never hardcode character-specific constants "
@@ -146,7 +164,7 @@ def propose(args):
                "No markdown.\n" + json.dumps({"task": task, "sources": sources}, ensure_ascii=False))
     limits = cfg.get("limits", {})
     req = Request(cfg.get("ollama_url", "http://127.0.0.1:11434/api/generate"),
-        data=json.dumps({"model": cfg["model"], "prompt": message, "stream": False, "format": "json",
+        data=json.dumps({"model": model_name, "prompt": message, "stream": False, "format": "json",
                          "options": {"num_ctx": limits.get("context_tokens", 4096),
                                      "num_predict": limits.get("output_tokens", 1536),
                                      "temperature": 0.1}}).encode("utf-8"),
@@ -164,7 +182,7 @@ def propose(args):
     output = OUTBOX / (task["task_id"] + ".json")
     if output.exists():
         raise Stop("Task ID already proposed; keep original evidence")
-    output.write_text(json.dumps({"task": task, "model": cfg["model"],
+    output.write_text(json.dumps({"task": task, "model": model_name,
                   "base_sha256": digest(target), "proposal": proposal}, indent=2) + "\n", encoding="utf-8")
     print("PROPOSED (not executed):", output)
 
@@ -173,8 +191,9 @@ def apply(args):
         raise Stop("Explicit --reviewed required: inspect full generated code before execution")
     cfg = read_config()
     task, target, _ = load_task(args.task, cfg)
+    model_name = resolve_model(task, cfg)
     record = json.loads(Path(args.proposal).read_text(encoding="utf-8"))
-    if record.get("task") != task or record.get("model") != cfg["model"] or record.get("base_sha256") != digest(target):
+    if record.get("task") != task or record.get("model") != model_name or record.get("base_sha256") != digest(target):
         raise Stop("Stale submission, different model, or changed task")
     proposal = record.get("proposal", {})
     code = proposal.get("code")
