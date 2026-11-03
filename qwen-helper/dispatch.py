@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -16,13 +17,21 @@ def fallback(reason, task=None):
 
 def plan(task):
     try:
-        spec = specialists.inspect(task)
+        branch=subprocess.run(["git","branch","--show-current"],cwd=local_worker.ROOT,
+            text=True,capture_output=True,timeout=8,check=True).stdout.strip()
+        if branch != "Qwen-Local-Helper":
+            raise ValueError("Local specialists are restricted to Qwen-Local-Helper branch")
+        gate=subprocess.run([local_worker.sys.executable,str(local_worker.HELPER/"review.py"),"--fail-over-threshold"],
+            cwd=local_worker.ROOT,capture_output=True,text=True,timeout=10)
+        if gate.returncode:
+            raise ValueError("10% production review threshold or invalid ledger; fallback")
+        spec = specialists.verify_served_model(task)
         cfg = local_worker.read_config()
         local_worker.load_task_data(task, cfg)
         return {"route": "local_qwen_one_attempt", "specialist": spec["name"],
                 "model": spec["model"], "reviewer": "Sol Light (actual available profile)",
                 "on_failure": "original_codex_pipeline"}
-    except (ValueError, OSError, KeyError) as exc:
+    except (ValueError, OSError, KeyError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
         return fallback(exc, task)
 
 def run(args):

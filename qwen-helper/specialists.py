@@ -1,5 +1,7 @@
 """Fail-closed eligibility for separately trained, single-purpose local Qwen workers."""
 import json
+from urllib.request import urlopen
+from urllib.error import URLError
 from pathlib import Path, PurePosixPath
 
 HERE = Path(__file__).resolve().parent
@@ -53,6 +55,20 @@ def inspect(task, require_qualified=True):
                 or evidence["training_set_sha256"] == evidence["holdout_set_sha256"]):
             raise Ineligible("Qualification evidence invalid or stale")
     return {"name": name, **spec}
+
+def verify_served_model(task, timeout=2):
+    """Check configured Ollama tag against the independently approved digest.
+
+    The local endpoint is hardcoded loopback; unresponsive/unknown models fail closed.
+    """
+    spec=inspect(task)
+    evidence=json.loads((MANIFESTS/(spec["name"]+".json")).read_text(encoding="utf-8"))
+    with urlopen("http://127.0.0.1:11434/api/tags",timeout=timeout) as r:
+        tags=json.loads(r.read().decode("utf-8"))["models"]
+    match=[m for m in tags if m.get("name")==spec["model"]]
+    if len(match)!=1 or match[0].get("digest")!=evidence["model_digest"]:
+        raise Ineligible("Served Ollama tag digest does not match qualification")
+    return spec
 
 def model_for_task(task, default_model):
     if "specialist" not in task:

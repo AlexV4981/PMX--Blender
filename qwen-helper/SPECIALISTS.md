@@ -31,3 +31,7 @@
 The `qualification.py` gate checks **report structure and file identity**, not the truth of externally recorded measurements. A claimed result is not actual Sol Light execution or Blender verification. Agents must perform these checks, never fabricate them. A qualified specialist is trusted only for its narrowly defined interface, input distribution and exact model digest. New PMX character sources or changed engine versions require regression checks. Restore the **original pipeline** without Qwen interaction on any exception.
 
 Review `qwen-helper/POLICY_PMX.md` for run-specific overrides and `qwen-helper/CODEX_SKILL.md` for existing worker safety boundaries.
+
+### Runtime identity check
+
+The dispatcher reads Ollama's local `/api/tags` and compares the **exact served model digest** to the independently audited qualification manifest. Any mismatch, unavailable Ollama server, dirty review ledger threshold, or wrong Git branch results in immediate original-Codex routing. Do not mark `qualified=true` solely because an evaluation JSON says it passed. Track separately the model digest, training code commit, frozen data splits and real Blender regression outcomes.

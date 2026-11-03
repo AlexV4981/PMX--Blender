@@ -29,6 +29,9 @@ class SpecialistTests(unittest.TestCase):
     def test_target_scope_rejected(self):
         t=self.task();t["target"]="skills/anime-blender-pipeline/scripts/pipeline.py"
         with self.assertRaises(specialists.Ineligible):specialists.inspect(t,False)
+    def test_branch_preflight_enforced(self):
+        # Every task is rejected unless branch, model digest and review ledger pass.
+        self.assertEqual(dispatch.plan(self.task())["route"],"original_codex_pipeline")
     def test_legacy_worker_model_unchanged(self):
         self.assertEqual(local_worker.resolve_model({},{"model":"legacy"}),"legacy")
     def test_no_faked_qualification_without_evidence(self):
