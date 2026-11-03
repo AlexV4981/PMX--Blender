@@ -26,17 +26,28 @@ def inspect(task, require_qualified=True):
         raise Ineligible("Task has no registered specialist; use original Codex pipeline")
     spec = registry()["specialists"][name]
     if (task.get("scope", "generic") != spec["scope"] or task.get("kind") != spec["kind"]
-            or task.get("cross_subsystem") or task.get("requires_visual_judgment")):
+            or task.get("cross_subsystem")):
         raise Ineligible("Task outside narrow local specialization")
+    if spec.get("kind") != "stage_candidate" and task.get("requires_visual_judgment"):
+        raise Ineligible("Task requires visual judgment")
     target = task.get("target")
     if not isinstance(target, str) or "\\" in target:
         raise Ineligible("Invalid target")
     path = PurePosixPath(target)
-    if (path.parent.as_posix() != TARGET_DIR or not path.name.startswith(spec["filename_prefix"])
-            or path.suffix != ".py" or ".." in path.parts):
-        raise Ineligible("Specialist can only create an approved standalone Python helper")
-    if task.get("character_id") or task.get("character_requirements"):
-        raise Ineligible("Character-specific requirements stay with the original pipeline")
+    if spec.get("kind") == "stage_candidate":
+        stage = spec.get("stage")
+        expected = f"qwen-helper/training-workbench/data/candidates/{task.get('task_id')}/candidate.py"
+        if (stage not in ("03", "04", "05", "06") or task.get("stage") != stage
+                or target != expected or task.get("fixture_only") is True):
+            # Synthetic demos are NEVER eligible for production qualification.
+            # Hand-off readers may inspect demo source, but only after explicit stage validation.
+            raise Ineligible("Invalid production stage candidate")
+    else:
+        if (path.parent.as_posix() != TARGET_DIR or not path.name.startswith(spec["filename_prefix"])
+                or path.suffix != ".py" or ".." in path.parts):
+            raise Ineligible("Specialist can only create an approved standalone Python helper")
+        if task.get("character_id") or task.get("character_requirements"):
+            raise Ineligible("Character-specific requirements stay with the original pipeline")
     if require_qualified:
         if spec.get("qualified") is not True:
             raise Ineligible("Specialist has not passed held-out qualification")

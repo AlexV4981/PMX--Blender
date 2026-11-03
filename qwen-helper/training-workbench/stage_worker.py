@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from urllib.request import Request, urlopen
 
 HERE=Path(__file__).resolve().parent
@@ -126,8 +127,8 @@ def generate(task, demo=False):
         if model!=local["model"]:
             return {"route":"original_codex_pipeline","reason":"Demo runtime mismatch"}
     else:
-        if model==local["model"] and not config()["specialists"][task["specialist"]]["qualified"]:
-            return {"route":"original_codex_pipeline","reason":"Unqualified specialist"}
+        if model != config()["specialists"][task["specialist"]]["model"]:
+            return {"route":"original_codex_pipeline","reason":"Qualified stage tag mismatch"}
     out=ROOT/task["target"]
     if out.exists() or out.is_symlink():
         return {"route":"original_codex_pipeline","reason":"Candidate already exists; no retry"}

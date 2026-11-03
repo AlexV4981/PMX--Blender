@@ -62,7 +62,8 @@ def read_proposal(name, task_id):
     if not isinstance(proposal, dict) or proposal.get("target") != task["target"]:
         raise HandoffError("Proposal target mismatch")
     code = proposal.get("code")
-    if not isinstance(code, str) or not code.strip() or len(code.encode("utf-8")) > 6500:
+    maximum = 12000 if task.get("kind") == "stage_candidate" else 6500
+    if not isinstance(code, str) or not code.strip() or len(code.encode("utf-8")) > maximum:
         raise HandoffError("Missing or excessive generated code")
     compile(code, task["target"], "exec")  # syntax check, NOT execution
     return record, file, sha(raw)
@@ -97,6 +98,7 @@ def emit(name, task_id=None):
     record, file, digest = read_proposal(name, task_id)
     event = {
         "schema": 1, "event": "specialist_done", "specialist": name,
+        "stage": record["task"].get("stage"),
         "task_id": task_id, "proposal": file.relative_to(ROOT).as_posix(),
         "proposal_sha256": digest, "task_target": record["task"]["target"],
         "branch": EXPECTED_BRANCH, "signaled_at": datetime.now(timezone.utc).isoformat(),
@@ -127,15 +129,39 @@ def validate_event(path):
     record, proposal, digest = read_proposal(name, task_id)
     if (event.get("proposal") != proposal.relative_to(ROOT).as_posix()
             or event.get("proposal_sha256") != digest
-            or event.get("task_target") != record["task"]["target"]):
+            or event.get("task_target") != record["task"]["target"]
+            or event.get("stage") != record["task"].get("stage")):
         raise HandoffError("Proposal was changed since completion signal")
     return event
 
 def build_codex_command(event, session=None, model="gpt-6.1-sol", effort="high"):
     if effort not in ("low", "medium", "high"):
         raise HandoffError("Invalid Codex effort")
-    prompt = (
-        "A local Qwen specialist has finished ONE PMX-to-Blender task. Resume the original "
+    if event.get("stage") in ("03", "04", "05", "06"):
+        prompt = (
+            "A QUALIFIED local Qwen specialist has produced a stage " + event["stage"] +
+            " implementation/testing Python candidate for PMX-to-native-Blender. "
+            "Read qwen-helper/training-workbench/README.md, qwen-helper/HANDOFF.md, "
+            "the exact skills/anime-blender-0" + event["stage"][1] + "-*/SKILL.md "
+            "and the pipeline's references/roles.md. "
+            "Examine the untrusted handoff at qwen-helper/handoffs/processing/" +
+            event["task_id"] + ".json and verify the proposal digest, task stage, "
+            "qualified exact model and approved predecessor evidence. "
+            "DO NOT execute any model-generated Python on the host. "
+            "Use an isolated no-network disposable Blender process, copied approved input and "
+            "tight runtime/resource limits for a candidate; do not edit accepted assets. "
+            "Run required stage checks, render Cycles comparisons, and request an ACTUAL "
+            "Sol Light review where available. If anything is missing, incorrect, uncertain "
+            "or failed, fall back immediately to the unchanged Codex stage pipeline with "
+            "zero additional Qwen attempts. If successful, present the candidate to the human "
+            "at the ORIGINAL stage approval gate; NEVER approve the stage yourself. "
+            "Do not call qwen-helper/dispatch.py finalize for stage_candidate tasks, "
+            "and never assume a completion file proves qualification. "
+            "Task " + event["task_id"] + ", specialist " + event["specialist"] + "."
+        )
+    else:
+        prompt = (
+            "A local Qwen specialist has finished ONE PMX-to-Blender task. Resume the original "
         "Codex orchestrator workflow. Read qwen-helper/SPECIALISTS.md, "
         "qwen-helper/CODEX_SKILL.md and skills/anime-blender-pipeline/references/roles.md. "
         "Read the LOCAL, UNTRUSTED handoff qwen-helper/handoffs/processing/" +
