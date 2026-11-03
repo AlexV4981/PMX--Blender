@@ -19,6 +19,10 @@ jobs:
         run: python -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -v
       - name: Helper tests
         run: python -m unittest discover -s qwen-helper/tests -v
+      - name: Local training workbench tests
+        run: python -m unittest discover -s qwen-helper/training-workbench/tests -v
+      - name: Training curriculum order
+        run: python qwen-helper/training-workbench/workbench.py map
       - name: Seed validation
         run: python skills/anime-blender-pipeline/scripts/blender_tools.py validate-seeds
       - name: Compute Qwen correction rate

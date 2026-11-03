@@ -4,7 +4,7 @@
 No auto downloads, no automatic qualification, no promotion to production.
 """
 import argparse
-from collections import Counter, defaultdict
+from collections import defaultdict
 import hashlib
 import json
 from pathlib import Path
@@ -97,7 +97,7 @@ def load_raw(path):
         for field in REQUIRED:
             if not isinstance(row.get(field), str) or not row[field].strip():
                 raise Stop(f"Line {n} missing independently verified field: {field}")
-        if row["verification"].startswith("FILL_") or row["verified_by"].startswith("FILL_"):
+        if any(row[key].startswith("FILL_") for key in REQUIRED):
             raise Stop(f"Line {n} still contains a placeholder")
         if not CASE_ID.fullmatch(row["case_id"]):
             raise Stop(f"Invalid case_id on line {n}")
