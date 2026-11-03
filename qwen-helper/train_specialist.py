@@ -18,7 +18,7 @@ def main():
     if not spec: p.error("Unknown specialist")
     if args.epochs<1 or args.epochs>8: p.error("Epochs must be 1-8")
     from datasets import Dataset
-    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments, Trainer, default_data_collator
+    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments, Trainer
     from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
     import torch
     if not torch.cuda.is_available(): p.error("QLoRA training requires CUDA; no CPU fallback")
@@ -62,7 +62,7 @@ def main():
         gradient_accumulation_steps=8,learning_rate=1e-4,logging_steps=10,
         save_strategy="epoch",report_to="none",fp16=True,gradient_checkpointing=True)
     trainer=Trainer(model=model,args=ta,train_dataset=ds,
-        data_collator=DataCollatorForLanguageModeling(tokenizer=tokenizer,mlm=False))
+        data_collator=collate)
     trainer.train()
     model.save_pretrained(args.output/"adapter")
     tokenizer.save_pretrained(args.output/"adapter")
