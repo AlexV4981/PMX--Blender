@@ -1,88 +1,94 @@
 {
-  "schema_version": 1,
-  "experiment": "astra-qwen-weight-lab",
-  "original_repository_branch": "Qwen-Local-Helper",
-  "base_weights": {
-    "recommended_repo": "Qwen/Qwen3.5-0.8B",
-    "mit_edited_repo": "RikiyaT/Qwen3.5-0.8B-weight-space-programming",
-    "require_exact_revision": true,
-    "never_modify_source": true,
-    "note": "Ollama GGUF tags are for inference; direct weight edits require compatible local HF safetensors checkpoints."
+  "schema_version": 2,
+  "active_experiment": "Qwen2.5-Coder-7B-Instruct Q4_K_M",
+  "base_ollama_tag": "qwen2.5-coder:7b-instruct-q4_K_M",
+  "stage_models": {
+    "03": "pmx-geometry-7b:pilot",
+    "04": "pmx-rig-7b:pilot",
+    "05": "pmx-animation-7b:pilot",
+    "06": "pmx-motion-tests-7b:pilot"
   },
-  "stages": {
-    "00": {
-      "mode": "codex_only"
+  "stage_owner": {
+    "00": "codex_only",
+    "01": "codex",
+    "02": "codex",
+    "03": "qualified_qwen_candidate",
+    "04": "qualified_qwen_candidate",
+    "05": "qualified_qwen_candidate",
+    "06": "qualified_qwen_candidate",
+    "07": "codex",
+    "08": "codex",
+    "09": "codex"
+  },
+  "pilot": {
+    "cases_per_stage": 20,
+    "seed": 20261104,
+    "stage_04_arm_only": true,
+    "go_no_go": {
+      "first_try_pass_rate_min": 0.75,
+      "max_severe_regressions": 0,
+      "local_review_relative_cost_limit": 0.35
     },
-    "01": {
-      "mode": "original_pipeline"
-    },
-    "02": {
-      "mode": "original_pipeline"
-    },
-    "03": {
-      "mode": "experiment_after_qualification",
-      "specialist": "geometry",
-      "task": "bounded source-preserving geometry/morph/weight repair"
-    },
-    "04": {
-      "mode": "experiment_after_qualification",
-      "specialist": "rig",
-      "task": "verified bone-space/IK-FK and native rig construction"
-    },
-    "05": {
-      "mode": "experiment_after_qualification",
-      "specialist": "animation_controls",
-      "task": "face/viseme/key/reset native controls"
-    },
-    "06": {
-      "mode": "experiment_after_qualification",
-      "specialist": "motion_tests",
-      "task": "observed animation/deformation qualification harnesses"
-    },
-    "07": {
-      "mode": "original_pipeline"
-    },
-    "08": {
-      "mode": "original_pipeline"
-    },
-    "09": {
-      "mode": "original_pipeline"
+    "decoding_profiles": [
+      {
+        "name": "greedy_legacy",
+        "temperature": 0,
+        "num_ctx": 4096,
+        "num_predict": 1536,
+        "thinking_requested": false
+      },
+      {
+        "name": "sampled_7b",
+        "temperature": 0.6,
+        "num_ctx": 8192,
+        "num_predict": 4096,
+        "thinking_requested": false
+      }
+    ],
+    "thinking_variants": [
+      "off",
+      "on_if_supported"
+    ],
+    "retry": {
+      "production_enabled": false,
+      "offline_research_only": true,
+      "max_retries": 1,
+      "requires_observed_failure": true
     }
   },
-  "validation": {
-    "pilot_min_cases_per_stage": 20,
-    "production_min_independent_cases_per_specialist": 300,
-    "production_max_failed_cases": 0,
-    "require_actual_blender_execution": true,
-    "require_observed_sol_light_review": true,
-    "require_human_stage_gates": true,
-    "production_error_stop_rate": 0.1,
-    "allow_unqualified_in_production": false
+  "qualification": {
+    "min_independent_holdout_per_stage": 300,
+    "max_failures": 0,
+    "qualified": false
   },
-  "patch_safety": {
-    "max_fraction_of_parameters": 0.0002,
-    "max_relative_l2_per_region": 0.05,
-    "allow_source_overwrite": false,
-    "allow_network_for_patch": false
+  "training": {
+    "method": "prompt_first_lora_if_needed",
+    "gpu_training_min_vram_gb": 24,
+    "source_weights": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "required_precise_base_revision": true,
+    "merge_quantize_tag_digest_pin": true
   },
-  "method_preference": [
-    "baseline",
-    "prompt_spec",
-    "independent_small_weight_edit",
-    "separate_lora_adapter"
-  ],
-  "defaults": {
-    "thinking": false,
-    "temperature": 0,
-    "num_ctx": 4096,
-    "num_predict": 2048
+  "resource_limits": {
+    "run_one_model_at_a_time": true,
+    "run_blender_model_concurrently": false,
+    "target_vram_gb": 6
   },
-  "required_report": [
-    "first_try_verified_pass",
-    "observed_runtime",
-    "actual_sol_light_review",
-    "astra_fallback_used",
-    "protected_asset_integrity",
-    "task_family"
-  ]
+  "stage_04": {
+    "status": "left_arm_pilot_only",
+    "pole_unresolved": true,
+    "no_pole_generation": true,
+    "require_codex_review_for_pole": true
+  },
+  "weight_edits": {
+    "enabled": false,
+    "only_after_reproducible_loop": true,
+    "archive_reference": "archive/qwen3.5-0.8b/"
+  },
+  "fallback": {
+    "on_failure": "original_codex_or_astra",
+    "sol_light_review_required": true,
+    "original_human_gates": true,
+    "one_production_attempt": true
+  },
+  "status": "pilot_only_all_7b_specialists_unqualified"
 }

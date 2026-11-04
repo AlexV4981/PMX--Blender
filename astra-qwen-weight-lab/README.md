@@ -1,51 +1,34 @@
-# Astra × Qwen Weight Lab (isolated experiment)
+# Qwen2.5-Coder-7B-Instruct — active PMX specialist pilot
 
-**Separate from every existing Qwen helper.** This entire experiment is confined to this top-level folder on `Qwen-Local-Helper`. The existing `qwen-helper/`, `qwen-helper/training-workbench/`, original master skill, original checkpoints, and `main` are NOT edited, configured, or overwritten by this lab.
+**ACTIVE** on `Qwen-Local-Helper`. The earlier Qwen3.5-0.8B implementation and three measured failures are preserved at [archive/qwen3.5-0.8b](archive/qwen3.5-0.8b/README.md) for retrospective review. **Do not run the archived tools in production.**
 
-## What this experiment tests
+## Fixed model and pipeline
 
-MIT CSAIL's November 2, 2026 weight-space programming experiment modified a tiny fraction of Qwen3.5-0.8B's weights to repair a looping defect. This is evidence that a bounded weight patch can correct some deficiencies, **not** evidence that it can imbue a 0.8B model with arbitrary Blender skills. The edited checkpoint is a candidate baseline, not automatically best.
+Use the already-configured local Ollama tag `qwen2.5-coder:7b-instruct-q4_K_M` (Q4_K_M). Verify it exists and pin its actual digest; **do not silently pull or replace it**. Stage 00 is ALWAYS Codex. Stages 01/02/07/08/09 remain original Codex. Stages 03,04,05,06 may eventually use qualified specialist Qwen candidates, always with deterministic Blender validation, real Sol Light review, Codex/Astra fallback and original human gates. **None is qualified yet**.
 
-- Base reference: https://huggingface.co/Qwen/Qwen3.5-0.8B
-- Published edited baseline: https://huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming
-- Research: https://rikiyat.github.io/blog/weight-space-programming/
+Stage 04 is **left-arm pilot ONLY**, with pole placement unresolved. Do not ask Qwen to construct pole targets or claim a finished IK/FK rig until Codex resolves the mathematical cause.
 
-Goal: **one source-weight family with four separately evaluated variants**, targeting stages **03 geometry, 04 rig, 05 animator controls, 06 motion testing**. Keep untouched reference weights and make independent scratch patches or adapters for each specialty. Stage **00 always Codex**; other stages retain original ownership.
+## One-prompt setup
 
-## Single-prompt setup
+Paste [CODEX_INSTALL_PROMPT.md](CODEX_INSTALL_PROMPT.md) into Codex. It coordinates existing-model discovery, 80 synthetic fixtures, four docs-grounded Modelfiles, A/B evaluations, real Blender oracles, and a measured recommendation. It does not authorize a model download, run training on the 6 GB laptop, or bypass the stage gate.
 
-Copy [`CODEX_INSTALL_PROMPT.md`](CODEX_INSTALL_PROMPT.md) into a Codex session opened in the `Qwen-Local-Helper` checkout. It instructs Codex to install only what is needed, discover your installed Ollama model, keep the legacy helpers untouched, run tests and create the first read-only inference comparison. The script here never automatically downloads model weights or imports edited weights.
+## Pilot sequence
 
-Manual equivalent from the checkout root:
+1. `python astra-qwen-weight-lab/fixtures.py generate` — **20 generated synthetic cases per stage, 80 total** with deterministic fixture parameters/oracles. This is a synthetic *PoC*, not 80 diverse real characters. Never treat it as the 300-case production holdout. Generated files go under gitignored `astra-qwen-weight-lab/data/`.
+2. `python astra-qwen-weight-lab/modelfiles.py` — produce **four Modelfiles** with authoritative contents of each stage's `references/stage.md`. `--create` explicitly adds Ollama specialist tags only after the base tag is installed. No downloaded weights.
+3. `python astra-qwen-weight-lab/pilot.py run --cases astra-qwen-weight-lab/data/fixtures/cases.jsonl --models qwen2.5-coder:7b-instruct-q4_K_M,pmx-geometry-7b:pilot --stage 03 --out astra-qwen-weight-lab/data/responses/ab03.jsonl` — use matching base and stage tag, not a 0.8B candidate. One local inference at a time.
+4. Pilot runs **greedy legacy** (temperature 0 / 4K context / 1536 outputs) and **sampled 7B** (temperature 0.6 / 8K context / 4096 outputs). It attempts thinking on/off only where the running Ollama/backend explicitly accepts it; unsupported think mode is **reported unsupported**, not a model failure. Qwen2.5-Coder-Instruct is not a native reasoning-model family.
+5. Codex independently executes selected generated scripts in a **disposable, network-disabled, resource-limited Blender container** (not the desktop). Use `blender_oracle.py` as the fixture builder and deterministic verifier inside that container. Validate source and candidate hashes. A syntax pass alone is not a Blender pass.
+6. Score observed first-try pass, need for Astra repair, severe regression, runtime and costs. **Pre-register go/no-go:** ≥75% first-try verified pass on the 20-case-per-stage pilot, zero severe regressions, and local+review work ≤35% of normal Codex work; otherwise do not proceed to LoRA. These are exploration gates, not production certification.
+7. Keep **one Qwen attempt and zero retries in production**. Optional **offline feedback retry** can be benchmarked only with actual failed Blender evidence and separately labeled second attempt; never use that number as first-try success or change production policy without explicit user agreement.
+8. Generate **training data before GPU rental**. Use only independently verified, licensed, source-family-separated examples. Minimum 300 untouched held-out **per specialist** and zero observed failures for production qualification; a proof-of-concept never sets `qualified=true`.
+9. If prompt specialization fails due to narrow repeatable errors, use a compatible Qwen2.5-Coder-7B full-weight checkpoint for LoRA on an optional **≥24 GB training GPU**, merge, quantize back to Q4_K_M, create exact Ollama tag and pin digest. The 6 GB target only runs one inference model at a time; do not run Blender and Qwen together there.
+10. **Weight editing only if repeated, reproducible reasoning loops appear**; not as a generic fix for invalid Blender API or low competence. The old experimental patcher is archived.
 
-```bash
-python astra-qwen-weight-lab/lab.py doctor
-python astra-qwen-weight-lab/lab.py init
-python -m unittest discover -s astra-qwen-weight-lab/tests -v
-python astra-qwen-weight-lab/lab.py pilot --models YOUR_INSTALLED_TAG --stage 06 --out astra-qwen-weight-lab/data/responses/stage06_baseline.jsonl
-```
+## Prevent false qualification
 
-**Pilot is deliberately inert:** it asks existing Ollama tags for code, saves the untrusted response under ignored `data/`, and checks only JSON/Python syntax. It never executes output or modifies Blender scenes. Codex must independently run candidate scripts inside a disposable network-blocked Blender sandbox, then provide verifiable outcomes.
-
-## Research sequence
-
-1. Pin exact source repository revision and original SHA-256 hashes. Prefer your already-installed Ollama model for first inference testing; original Qwen3.5-0.8B and MIT-edited checkpoint are OPTIONAL comparisons requiring explicit model acquisition.
-2. Build 20 genuinely distinct, verified synthetic/permissioned stage tasks **per specialty** (80 minimum) with separate source families. The supplied four cases are **examples, not evidence**.
-3. Compare original Qwen, MIT-edited Qwen, your existing coder, and optionally small prompt variants at matched decoding settings. Measure actual Blender pass/fail after isolated execution, along with runtime and reviewer cost.
-4. Have Astra inspect recurring *classes of failure*, test one bounded hypothesis and propose a patch specification plus separately stored numeric delta(s). Apply changes only to a fresh local copy of HF `safetensors` with `weight_patch.py`, never to installed Ollama weights or the shared source.
-5. Compare untouched base, MIT edit, targeted weight patch, and (if useful) independently trained LoRA adapter on never-seen cases. Reject if benchmark doesn't improve, even if a general benchmark improves. Every failure still routes to original Codex/Astra work, not additional local loops.
-6. Only after substantial holdout evidence (current policy: ≥300 independent evaluated cases and zero recorded failures **per specialty**, Sol Light review, immutable artifact digest) consider integration into the main pipeline. Do not assume a measured pass-rate guarantees perfection or bypass human gates.
-
-## Fallback and cost calculation
-
-Qwen attempts its bounded work once → deterministic validation → *actual* Sol Light review if available → if fail/uncertain, Codex/Astra repairs through the original pipeline → original human gate. Don't use Astra to rewrite weights for every failed candidate. Only offline recurring defects justify testing a new weight patch.
-
-If a normal Codex task costs **C**, local attempt plus checking costs **R**, and fallback costs **F**, expected work is `R + (1-p)*F` for first-pass success probability **p**. Test whether that is less than **C**, measuring both runtime and usage. The lab's `score.py` records observed task pass rates, not guessed probabilities.
-
-## Boundaries
-
-- All weight files/deltas/adapters/benchmark outputs are ignored under `astra-qwen-weight-lab/data/`; never commit checkpoints, proprietary PMX models, credentials, private paths or raw user sources.
-- Weight editing is experimental and supports local HF `safetensors`, not GGUF/Ollama blobs. Original checkpoint must be separately backed up and verified, untouched.
-- The edit tool does **not** autonomously discover improved patches; Astra must supply an independently reasoned, reviewed, testable delta. A numeric delta can make a model worse. Test rigorously.
-- Stage 00 is Codex-only; never claim model-generated code is safe because AST parsing passed. Never execute code without separate sandbox validation.
-- Do not touch Bobcat-fitness or any other repo. This experiment never modifies the existing Qwen helper work.
+- The 20 cases in each stage are seeded parametric variants. Validate on additional independently authored families before treating numbers as representative.
+- Real Blender execution is required for an observed pass; Codex/Sol Light/human review are separate stages.
+- If Stage 04 pole placement is unresolved, report blocked and use Codex fallback rather than promoting a fake rig.
+- Existing `qwen-helper/` baseline and master skills remain independent and usable.
+- This entire experiment is designed to be removed without affecting the originals.

@@ -1,9 +1,11 @@
-# Agent guide
+# Active 7B lab agent instructions
 
-This directory is a self-contained optional model-weight experiment, not a new production pipeline. Work only here and its ignored `data/`. Never modify `qwen-helper/` (including original helpers and training workbench), `skills/`, accepted Blender artifacts, or `main`.
+Read `README.md` and `CODEX_INSTALL_PROMPT.md`; work only on `Qwen-Local-Helper`. The original `qwen-helper/` and `skills/` are not yours to rewrite. Prior 0.8B materials are archived in `archive/qwen3.5-0.8b/` for retrospective comparison.
 
-Read `CODEX_INSTALL_PROMPT.md` and `README.md`. Start with `lab.py doctor/init` and tests. Record exact installed model identity and pin weight SHA/revisions. Stage 00 remains Codex. Target stages 03–06 only. Keep four variants isolated.
+Only local tag `qwen2.5-coder:7b-instruct-q4_K_M` is the active base, verified by actual Ollama tags/digest. Four stage-specific Modelfiles use literal authoritative contents of each stage's technical `references/stage.md`. Never invent fixes for unresolved Stage 04 pole placement: left-arm IK target pilot only.
 
-All produced code and weight-delta files are untrusted. No generated Python execution or direct host Blender calls inside this lab. For actual qualification, Codex must use disposable, no-network sandbox execution on copied fixtures with observed commands and independent Sol Light review. Never fabricate evidence or use benchmark math claims as Blender evidence.
+The 80-fixture run and first-try vs one-feedback-retry metrics are *experiments*. Production remains one attempt and no retries. Run generated scripts only in independently isolated Blender container and never on live source, accepted files, or host desktop. Record actual validation commands and failures. Do not claim passing on syntax alone.
 
-Weight changes are experiment artifacts; always compare against the intact baseline and MIT edited baseline when available. Astra may propose hypothesis and numeric patch using direct weight analysis only when model files and actual tools are available; do not assert weight modifications from a chat alone. Patch within hard fraction/norm bounds, never auto-promote.
+Go/no-go registered: ≥75% first-try verified passes per stage, zero severe regressions, relative local+review work ≤0.35 normal Codex. If pilot fails, fallback to original Codex. QLoRA only after verified failure clusters, on optional ≥24GB GPU, with exact compatible Hugging Face weights; production qualification requires 300 independent held-out cases and zero observed failures plus real Sol Light/human gates. Weight edits reserved for diagnosed repetition loops only.
+
+Keep all data, model training artifacts, generated Modelfiles, candidate code and verdicts in ignored `data/`. Never download weights or rent hardware without explicit approval.
