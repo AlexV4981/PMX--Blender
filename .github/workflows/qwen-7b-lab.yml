@@ -1,0 +1,34 @@
+name: Qwen 7B experimental lab CPU safeguards
+on:
+  push:
+    branches: [Qwen-Local-Helper]
+    paths:
+      - 'astra-qwen-weight-lab/**'
+      - '.github/workflows/qwen-7b-lab.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate-7b-pilot-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile active lab scripts without Blender or Ollama
+        run: |
+          python -m py_compile astra-qwen-weight-lab/fixtures.py astra-qwen-weight-lab/modelfiles.py astra-qwen-weight-lab/pilot.py astra-qwen-weight-lab/sandbox.py astra-qwen-weight-lab/blender_oracle.py astra-qwen-weight-lab/score.py
+      - name: CPU-only active lab tests
+        run: python -m unittest discover -s astra-qwen-weight-lab/tests -v
+      - name: Stage coverage (80 synthetic parametrized cases)
+        run: |
+          python - <<'PY'
+          import importlib.util
+          p='astra-qwen-weight-lab/fixtures.py'
+          s=importlib.util.spec_from_file_location('fixtures',p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+          rows=m.cases()
+          assert len(rows)==80
+          assert all(sum(c['stage']==stage for c in rows)==20 for stage in ('03','04','05','06'))
+          print('80 synthetic definitions; 20 each stage. Not independent Blender passes.')
+          PY

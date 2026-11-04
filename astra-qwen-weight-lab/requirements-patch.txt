@@ -1,5 +1,0 @@
-# Optional isolated offline checkpoint patching environment
-# Pin exact versions before use in a deployment
-safetensors>=0.4
-# torch must be installed with the platform-specific supported CUDA/CPU build
-torch

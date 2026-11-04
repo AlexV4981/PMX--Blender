@@ -1,5 +1,0 @@
-# Experiment boundary
-
-Read README.md first. This pilot ONLY compares installed local Ollama model outputs on Stage 03–06 synthetic/approved tasks. Stage 00 ALWAYS Codex. Do not download weights, run generated code, train, promote, or change accepted assets automatically. Any actual Blender code evaluation happens later in a disposable isolated environment under Codex, with Sol Light review and human gates intact.
-
-Use the MIT edited Qwen3.5-0.8B checkpoint as a **candidate**, not an assumed superior model. Capture same-task comparisons against official Qwen3.5-0.8B thinking-off and the existing coder model. Preserve exact weight hashes and independently track per-stage measured first-try success. On failures, escalate task to original Codex/Astra; do not assume direct weight edits can replace program debugging. Never modify main.
