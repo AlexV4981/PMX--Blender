@@ -100,6 +100,24 @@ def bind(args):
     args.out.write_text(json.dumps(record,indent=2)+"\n",encoding="utf-8")
     print(json.dumps(record,indent=2))
 
+def export_failures(args):
+    inside_data(args.verdict_dir);inside_data(args.out)
+    if args.out.exists():raise ScoreError("No overwriting failure exports")
+    failures=[]
+    for path in sorted(args.verdict_dir.glob("*.json")):
+        v=read_json(path)
+        if v.get("attempt")!=1 or v.get("blender_executed") is not True:
+            continue
+        if v.get("blender_pass") is True and v.get("protected_assets_ok") is True:
+            continue
+        if not isinstance(v.get("error_feedback"),str) or not v["error_feedback"].strip():
+            raise ScoreError("Cannot retry without observed failure feedback")
+        failures.append(v)
+    if not failures:raise ScoreError("No observed failed first attempts")
+    args.out.parent.mkdir(parents=True,exist_ok=True)
+    args.out.write_text("".join(json.dumps(v)+"\n" for v in failures),encoding="utf-8")
+    print("Exported offline feedback retry inputs:",len(failures),"to",args.out)
+
 def summarize(args):
     inside_data(args.verdict_dir)
     if not args.verdict_dir.is_dir():
@@ -170,6 +188,9 @@ def main():
     b.add_argument("--response",type=Path,required=True)
     b.add_argument("--oracle",type=Path,required=True)
     b.add_argument("--out",type=Path,required=True)
+    d=actions.add_parser("export-failures")
+    d.add_argument("--verdict-dir",type=Path,required=True)
+    d.add_argument("--out",type=Path,required=True)
     c=actions.add_parser("summarize")
     c.add_argument("--verdict-dir",type=Path,required=True)
     c.add_argument("--codex-cost",type=float);c.add_argument("--local-review-cost",type=float)
@@ -178,6 +199,7 @@ def main():
     try:
         if args.action=="extract":extract(args)
         elif args.action=="bind":bind(args)
+        elif args.action=="export-failures":export_failures(args)
         else:summarize(args)
         return 0
     except (ScoreError,OSError,ValueError,KeyError,TypeError,ZeroDivisionError,json.JSONDecodeError) as exc:

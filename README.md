@@ -44,3 +44,7 @@ A separate [training workbench](qwen-helper/training-workbench/README.md) maps *
 ### Stage 03–06 main-work Qwen specialization (experimental branch only)
 
 Stage 00 stays **Codex-only**. The [one-prompt local installer](qwen-helper/training-workbench/INSTALL_PROMPT.md) reuses an existing installed Ollama model, installs the separate workbench, and begins synthetic tests without touching source assets. Qualified stage-specific workers may construct private geometry/rig/animation scripts for stages 03–06; the original Codex/actual Sol Light checks, Cycles and human gates remain. [Full workbench guide](qwen-helper/training-workbench/README.md).
+
+## Active local Qwen2.5-Coder-7B pilot (branch-only)
+
+The [active Qwen2.5-Coder-7B A/B lab](astra-qwen-weight-lab/README.md) is now the preferred experimental route on `Qwen-Local-Helper`. It uses the existing `qwen2.5-coder:7b-instruct-q4_K_M` tag, 80 parametric Stage 03–06 synthetic fixture definitions with real Blender oracles, four stage-specific Modelfiles, and guarded inference/fallback evaluation. **Stage 00 is always Codex**; Stage 04 only targets the left-arm pilot while pole placement remains unresolved. Original `qwen-helper/` remains separately usable. The historical Qwen3.5-0.8B results and utilities are [preserved for retrospective review](astra-qwen-weight-lab/archive/qwen3.5-0.8b/README.md). No model is production-qualified based on these fixture pilots.

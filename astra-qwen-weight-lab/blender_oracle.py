@@ -121,10 +121,6 @@ def validate(scene,obj,case,before,result):
         keys=obj.data.shape_keys.key_blocks
         deps=bpy.context.evaluated_depsgraph_get()
         for name in p["keys"]:
-            if name not in controller or not keys[name].animation_data:
-                # ShapeKey animation_data is shared on the Key datablock, not the block;
-                # actual valid FCurve inspected below instead.
-                pass
             if name not in controller:
                 return False,"Missing custom property for "+name
             ad=obj.data.shape_keys.animation_data
