@@ -40,7 +40,7 @@ def build(args):
       "docker","run","--rm","--network","none","--read-only",
       "--cap-drop","ALL","--security-opt","no-new-privileges",
       "--pids-limit","128","--memory","5g","--cpus","4",
-      "--ipc","private",
+      "--ipc","private","--entrypoint","blender",
       "--tmpfs","/tmp:rw,nosuid,size=268435456",
       "--env","PMX_QWEN_ISOLATED_BLENDER=I_ACKNOWLEDGE_NO_NETWORK_SANDBOX",
       "--mount",f"type=bind,src={args.case.resolve()},dst=/lab/case.json,readonly",
@@ -48,7 +48,7 @@ def build(args):
       "--mount",f"type=bind,src={(HERE/'blender_oracle.py').resolve()},dst=/lab/oracle.py,readonly",
       "--mount",f"type=bind,src={args.out.parent.resolve()},dst=/results",
       args.image,
-      "blender","--background","--factory-startup","--python","/lab/oracle.py",
+      "--background","--factory-startup","--python","/lab/oracle.py",
       "--","--case","/lab/case.json","--source","/lab/candidate.py",
       "--out","/results/"+args.out.name
     ]
