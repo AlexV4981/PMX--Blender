@@ -56,9 +56,9 @@ def setup_stage(scene,case):
         bpy.ops.object.mode_set(mode="EDIT")
         if stage=="04":
             upper=arm.edit_bones.new("UpperArm_L");upper.head=(0,0,0)
-            upper.tail=(p["bend"],0,p["upper"])
+            upper.tail=(p["bend"],0,math.sqrt(p["upper"]**2-p["bend"]**2))
             lower=arm.edit_bones.new("Forearm_L");lower.parent=upper;lower.use_connect=True
-            lower.head=upper.tail;lower.tail=(p["bend"]*2,0,p["upper"]+p["lower"])
+            lower.head=upper.tail;lower.tail=(p["bend"]*2,0,upper.tail.z+math.sqrt(p["lower"]**2-p["bend"]**2))
         else:
             b=arm.edit_bones.new("TestBone");b.head=(0,0,0);b.tail=(0,p["length"],0)
         bpy.ops.object.mode_set(mode="OBJECT")

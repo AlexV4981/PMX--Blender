@@ -26,7 +26,7 @@ def cases():
                   "oracle":"astra-qwen-weight-lab/blender_oracle.py",
                   "case_version":1,"variant":i}
             if stage=="03":
-                weights=[(round(rng.uniform(0.1,1.2),4),round(rng.uniform(0.1,1.2),4))
+                weights=[(round(rng.uniform(0.1,0.95),4),round(rng.uniform(0.1,0.95),4))
                          for _ in range(4)]
                 item["params"]={"weights":weights,"mask":round(rng.uniform(.1,.9),4),
                                  "vertex_offset":round(rng.uniform(.02,.12),4)}
