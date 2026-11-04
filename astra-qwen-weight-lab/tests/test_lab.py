@@ -19,6 +19,7 @@ modelfiles=load("modelfiles")
 oracle=load("blender_oracle")
 score=load("score")
 sandbox=load("sandbox")
+training=load("train_7b")
 
 class Active7BTests(unittest.TestCase):
     def test_exactly_20_per_stage(self):
@@ -69,6 +70,26 @@ class Active7BTests(unittest.TestCase):
             args=type("A",(),{"case":case,"source":src,"out":home/"verdict.json","image":"blender:latest"})()
             with mock.patch.object(sandbox,"DATA",home):
                 with self.assertRaises(sandbox.SandboxError):sandbox.build(args)
+
+    def test_lora_refuses_unsupported_checkpoint(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp)
+            (base/"config.json").write_text(json.dumps({
+                "model_type":"qwen2","hidden_size":1536,"num_hidden_layers":28}))
+            (base/"model.safetensors").write_bytes(b"fixture-only")
+            with self.assertRaises(training.TrainError):
+                training.local_base(base)
+
+    def test_training_split_must_be_disjoint(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            data={"case_id":"row-001","group_id":"family-a","prompt":"test",
+                  "completion":"verified","source_type":"synthetic","verified_by":"oracle"}
+            for name in ("train","validation","holdout"):
+                (root/(name+".jsonl")).write_text(json.dumps(data)+"\n")
+            with mock.patch.object(training,"DATA",root):
+                with self.assertRaises(training.TrainError):
+                    training.validate(*(root/(n+".jsonl") for n in ("train","validation","holdout")))
 
     def test_no_08b_model_as_active_base(self):
         cfg=json.loads((HERE/"config.json").read_text())

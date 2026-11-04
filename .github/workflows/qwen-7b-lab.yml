@@ -18,7 +18,7 @@ jobs:
           python-version: '3.11'
       - name: Compile active lab scripts without Blender or Ollama
         run: |
-          python -m py_compile astra-qwen-weight-lab/fixtures.py astra-qwen-weight-lab/modelfiles.py astra-qwen-weight-lab/pilot.py astra-qwen-weight-lab/sandbox.py astra-qwen-weight-lab/blender_oracle.py astra-qwen-weight-lab/score.py
+          python -m py_compile astra-qwen-weight-lab/fixtures.py astra-qwen-weight-lab/modelfiles.py astra-qwen-weight-lab/pilot.py astra-qwen-weight-lab/sandbox.py astra-qwen-weight-lab/blender_oracle.py astra-qwen-weight-lab/score.py astra-qwen-weight-lab/train_7b.py
       - name: CPU-only active lab tests
         run: python -m unittest discover -s astra-qwen-weight-lab/tests -v
       - name: Stage coverage (80 synthetic parametrized cases)
