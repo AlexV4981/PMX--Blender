@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "comment": "SPECIFICATION EXAMPLE ONLY. DO NOT APPLY TO REAL WEIGHTS. Require Astra tensor review and observed defect evidence.",
+  "operations": [
+    {
+      "method": "sparse_add",
+      "file": "model-00001-of-00002.safetensors",
+      "tensor": "FILL_IN_REAL_TENSOR_NAME",
+      "cells": [
+        {
+          "index": [
+            0,
+            0
+          ],
+          "delta": 0.00001
+        }
+      ]
+    }
+  ]
+}

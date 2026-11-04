@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "experiment": "astra-qwen-weight-lab",
+  "original_repository_branch": "Qwen-Local-Helper",
+  "base_weights": {
+    "recommended_repo": "Qwen/Qwen3.5-0.8B",
+    "mit_edited_repo": "RikiyaT/Qwen3.5-0.8B-weight-space-programming",
+    "require_exact_revision": true,
+    "never_modify_source": true,
+    "note": "Ollama GGUF tags are for inference; direct weight edits require compatible local HF safetensors checkpoints."
+  },
+  "stages": {
+    "00": {
+      "mode": "codex_only"
+    },
+    "01": {
+      "mode": "original_pipeline"
+    },
+    "02": {
+      "mode": "original_pipeline"
+    },
+    "03": {
+      "mode": "experiment_after_qualification",
+      "specialist": "geometry",
+      "task": "bounded source-preserving geometry/morph/weight repair"
+    },
+    "04": {
+      "mode": "experiment_after_qualification",
+      "specialist": "rig",
+      "task": "verified bone-space/IK-FK and native rig construction"
+    },
+    "05": {
+      "mode": "experiment_after_qualification",
+      "specialist": "animation_controls",
+      "task": "face/viseme/key/reset native controls"
+    },
+    "06": {
+      "mode": "experiment_after_qualification",
+      "specialist": "motion_tests",
+      "task": "observed animation/deformation qualification harnesses"
+    },
+    "07": {
+      "mode": "original_pipeline"
+    },
+    "08": {
+      "mode": "original_pipeline"
+    },
+    "09": {
+      "mode": "original_pipeline"
+    }
+  },
+  "validation": {
+    "pilot_min_cases_per_stage": 20,
+    "production_min_independent_cases_per_specialist": 300,
+    "production_max_failed_cases": 0,
+    "require_actual_blender_execution": true,
+    "require_observed_sol_light_review": true,
+    "require_human_stage_gates": true,
+    "production_error_stop_rate": 0.1,
+    "allow_unqualified_in_production": false
+  },
+  "patch_safety": {
+    "max_fraction_of_parameters": 0.0002,
+    "max_relative_l2_per_region": 0.05,
+    "allow_source_overwrite": false,
+    "allow_network_for_patch": false
+  },
+  "method_preference": [
+    "baseline",
+    "prompt_spec",
+    "independent_small_weight_edit",
+    "separate_lora_adapter"
+  ],
+  "defaults": {
+    "thinking": false,
+    "temperature": 0,
+    "num_ctx": 4096,
+    "num_predict": 2048
+  },
+  "required_report": [
+    "first_try_verified_pass",
+    "observed_runtime",
+    "actual_sol_light_review",
+    "astra_fallback_used",
+    "protected_asset_integrity",
+    "task_family"
+  ]
+}
