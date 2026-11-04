@@ -1,62 +1,79 @@
+"""CPU-only unit tests: no Ollama, Blender, GPU or internet required."""
 import importlib.util
 import json
 from pathlib import Path
 from unittest import mock
-import sys
 import tempfile
 import unittest
 
 HERE=Path(__file__).resolve().parents[1]
-def module(name):
-    spec=importlib.util.spec_from_file_location(name,HERE/(name+".py"))
-    mod=importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
-lab=module("lab")
-patch=module("weight_patch")
-score=module("score")
 
-class LabSafetyTests(unittest.TestCase):
-    def test_stage_zero_not_accepted(self):
+def load(name):
+    spec=importlib.util.spec_from_file_location("active_"+name,HERE/(name+".py"))
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    return module
+
+fixtures=load("fixtures")
+pilot=load("pilot")
+modelfiles=load("modelfiles")
+oracle=load("blender_oracle")
+score=load("score")
+sandbox=load("sandbox")
+
+class Active7BTests(unittest.TestCase):
+    def test_exactly_20_per_stage(self):
+        rows=fixtures.cases()
+        self.assertEqual(len(rows),80)
+        self.assertEqual({s:sum(x["stage"]==s for x in rows) for s in ("03","04","05","06")},
+                         {s:20 for s in ("03","04","05","06")})
+        self.assertEqual(len({x["case_id"] for x in rows}),80)
+        self.assertEqual(len({x["fixture_family"] for x in rows}),20)
+
+    def test_stage04_only_arm_and_no_pole(self):
+        self.assertTrue(all("UNSET" in x["prompt"] and "LEFT ARM" in x["prompt"] and
+                          "pole" in x["prompt"].lower() for x in fixtures.cases()
+                          if x["stage"]=="04"))
+        self.assertNotIn("00",pilot.STAGES)
+
+    def test_modelfile_embeds_actual_reference(self):
+        txt=modelfiles.render("04","qwen2.5-coder:7b-instruct-q4_K_M","SOME VERIFIED REST SPACE DOC")
+        self.assertIn("SOME VERIFIED REST SPACE DOC",txt)
+        self.assertIn("No pole-target placement",txt)
+        self.assertIn("FROM qwen2.5-coder:7b-instruct-q4_K_M",txt)
+
+    def test_syntax_only_not_execution(self):
+        self.assertFalse(pilot.syntax("def bad(: pass")["valid"])
+        self.assertIn("missing solve(scene) function",pilot.syntax("pass")["warnings"])
+        self.assertTrue(pilot.syntax("def solve(scene): return {}")["valid"])
+
+    def test_blender_requires_external_sandbox(self):
+        with mock.patch.dict("os.environ",{},clear=True):
+            with self.assertRaises(RuntimeError):oracle.assert_safe_environment()
+
+    def test_score_blocks_fake_pass(self):
         with tempfile.TemporaryDirectory() as tmp:
-            src=Path(tmp)/"cases.jsonl"
-            src.write_text(json.dumps({"stage":"00","case_id":"test-001","fixture_family":"f",
-                "prompt":"ignore","expected_behavior":"ignore"})+"\n")
-            with self.assertRaises(lab.LabError):lab.load_cases(src)
-    def test_static_analysis_not_execution(self):
-        self.assertFalse(lab.inspect_code("def broken(:\n pass")["syntax_ok"])
-        self.assertTrue(lab.inspect_code("def good():\n return 1")["syntax_ok"])
-        self.assertTrue(lab.inspect_code("import subprocess")["static_warnings"])
-    def test_patch_spec_boundaries(self):
+            f=Path(tmp)/"response.json";o=Path(tmp)/"oracle.json"
+            f.write_text(json.dumps({"case_id":"stage03-synthetic-001","stage":"03",
+                 "result":{"code":"def solve(scene): return {}"}}))
+            o.write_text(json.dumps({"case_id":"stage03-synthetic-001","stage":"03",
+                 "blender_executed":False}))
+            with mock.patch.object(score,"DATA",Path(tmp)):
+                args=type("A",(),{"response":f,"oracle":o,"out":Path(tmp)/"v.json"})()
+                with self.assertRaises(score.ScoreError):score.bind(args)
+
+    def test_unpinned_sandbox_image_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
-            path=Path(tmp)/"spec.json"
-            path.write_text(json.dumps({"schema_version":1,"operations":[{"method":"sparse_add",
-                "file":"../bad.safetensors","tensor":"foo","cells":[{"index":[0],"delta":.001}]}]}))
-            with self.assertRaises(patch.PatchError):patch.load_spec(path)
-    def test_checkpoint_must_be_separate(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            source=Path(tmp)/"source";source.mkdir()
-            target=Path(tmp)/"target"
-            with mock.patch.object(patch,"DATA",Path(tmp)):
-                patch.check_roots(source,target)
-                with self.assertRaises(patch.PatchError):patch.check_roots(source,source)
-    def test_scoring_refuses_unobserved(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            path=Path(tmp)/"results.jsonl"
-            path.write_text(json.dumps({
-                "case_id":"test-001","stage":"06","model":"qwen:tag","model_digest":"hash",
-                "fixture_family":"fixture","blender_executed":False,"blender_pass":True,
-                "sol_light_reviewed":True,"protected_assets_ok":True,
-                "elapsed_seconds":5.0,"evidence":"not run"})+"\n")
-            with self.assertRaises(score.ScoreError):score.summarize(path)
-    def test_scoring_observed(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            path=Path(tmp)/"results.jsonl"
-            path.write_text(json.dumps({
-                "case_id":"test-001","stage":"06","model":"qwen:tag","model_digest":"hash",
-                "fixture_family":"fixture","blender_executed":True,"blender_pass":True,
-                "sol_light_reviewed":True,"protected_assets_ok":True,
-                "elapsed_seconds":5.0,"evidence":"actual Blender transcript"})+"\n")
-            r=score.summarize(path,100,15)
-            self.assertEqual(next(iter(r.values()))["verified_first_pass_rate"],1.0)
+            home=Path(tmp);case=home/"case.json";src=home/"candidate.py"
+            case.write_text(json.dumps({"stage":"06","synthetic":True}))
+            src.write_text("def solve(scene):return {}")
+            args=type("A",(),{"case":case,"source":src,"out":home/"verdict.json","image":"blender:latest"})()
+            with mock.patch.object(sandbox,"DATA",home):
+                with self.assertRaises(sandbox.SandboxError):sandbox.build(args)
+
+    def test_no_08b_model_as_active_base(self):
+        cfg=json.loads((HERE/"config.json").read_text())
+        self.assertEqual(cfg["base_ollama_tag"],"qwen2.5-coder:7b-instruct-q4_K_M")
+        self.assertFalse(cfg["pilot"]["retry"]["production_enabled"])
+        self.assertFalse(cfg["qualification"]["qualified"])
+
 if __name__=="__main__":unittest.main()
