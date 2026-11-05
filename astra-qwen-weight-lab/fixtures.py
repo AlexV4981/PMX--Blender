@@ -93,8 +93,8 @@ def main():
     try:
         branch=subprocess.run(["git","branch","--show-current"],cwd=ROOT,
             capture_output=True,text=True,check=True,timeout=10).stdout.strip()
-        if branch!="Qwen-Local-Helper":
-            raise FixtureError("Refuse outside Qwen-Local-Helper")
+        if branch not in ("Qwen-Local-Helper", "Multi-Model-PMX-Benchmark"):
+            raise FixtureError("Refuse outside approved experiment branches")
         items=cases()
         if len(items)!=80 or any(sum(x["stage"]==s for x in items)!=20 for s in ("03","04","05","06")):
             raise FixtureError("Expected exactly 20 examples per stage")
