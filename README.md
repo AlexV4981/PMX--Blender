@@ -29,6 +29,10 @@ python3 -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -v
 python3 skills/anime-blender-pipeline/scripts/blender_tools.py validate-seeds
 ```
 
+## Active multi-model experiment (this branch only)
+
+**Start here:** [MULTI_MODEL_WORKFLOW.md](MULTI_MODEL_WORKFLOW.md) and [multi-model-benchmark/README.md](multi-model-benchmark/README.md). Run one explicit <model> at a time with separate Stage 03–06 proposal-only inference, external Blender verification, and a seven-section individual report. Premade PMX/VMD and Blender FBX/BVH/GLB animation links and asset provenance slots are retained; motion binaries are not yet downloaded. The old Qwen-only lab below is retained for historical compatibility, not the active runner on this branch. The original branch is frozen at [archive/Qwen-Local-Helper-2026-11-05](https://github.com/AlexV4981/PMX--Blender/tree/archive/Qwen-Local-Helper-2026-11-05).
+
 ## Model benchmark reporting and humanoid motion qualification
 
 - **Required individual-model report format:** [MODEL_REPORT_STANDARD.md](MODEL_REPORT_STANDARD.md). Use its seven sections for every model, stage and lap, including failed experiments. Compare a model against its own baseline and the original workflow; reserve cross-model analysis for a separate later report.
