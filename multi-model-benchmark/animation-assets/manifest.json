@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "storage": "multi-model-benchmark/data/animation-assets",
+  "status": "not_downloaded",
+  "pmx_vmd": [
+    {
+      "id": "mmd-walk-run",
+      "source": "https://mikumikudanceguide.weebly.com/downloads.html",
+      "format": "VMD",
+      "license_status": "permission_for_AI_evaluation_unverified",
+      "status": "not_downloaded",
+      "sha256": null
+    },
+    {
+      "id": "cc0-eye-breath",
+      "source": "https://bowlroll.net/file/231043",
+      "format": "VMD",
+      "license_status": "CC0_listed_verify_archive",
+      "status": "not_downloaded",
+      "sha256": null
+    }
+  ],
+  "blender_native": [
+    {
+      "id": "quaternius-ual1",
+      "source": "https://quaternius.com/packs/universalanimationlibrary.html",
+      "format": "FBX/GLB",
+      "license_status": "CC0_listed_verify_pack",
+      "status": "not_downloaded",
+      "sha256": null
+    },
+    {
+      "id": "quaternius-ual2",
+      "source": "https://quaternius.com/packs/universalanimationlibrary2.html",
+      "format": "FBX/GLB",
+      "license_status": "CC0_listed_verify_pack",
+      "status": "not_downloaded",
+      "sha256": null
+    },
+    {
+      "id": "kinemiq-free35",
+      "source": "https://kinemiq.itch.io/free-game-animations",
+      "format": "FBX/GLB",
+      "license_status": "CC0_listed_verify_pack",
+      "status": "not_downloaded",
+      "sha256": null
+    },
+    {
+      "id": "cmu-mocap",
+      "source": "https://mocap.cs.cmu.edu/",
+      "format": "ASF/AMC/BVH_derivative",
+      "license_status": "check_provenance",
+      "status": "not_downloaded",
+      "sha256": null
+    },
+    {
+      "id": "accad-open",
+      "source": "https://accad.osu.edu/research/motion-lab/mocap-system-and-data",
+      "format": "BVH",
+      "license_status": "CC_BY_3_attribution",
+      "status": "not_downloaded",
+      "sha256": null
+    }
+  ],
+  "excluded": [
+    {
+      "id": "mixamo",
+      "reason": "AI training/testing/improvement restriction"
+    }
+  ]
+}
