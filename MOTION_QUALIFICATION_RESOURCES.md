@@ -54,7 +54,7 @@ For our **AI model** benchmark, prioritize *our self-authored deterministic fixt
 3. Run PMX reference/VMD baseline, then Blender-native test separately; record solver and retargeting differences. For Stage 04 obey arm-pilot restriction.
 4. Select real held-out clip families (walk, run, crouch, reach, kick, jump/landing, turning, dance/gestures). Retarget BVH onto Blender test rig with calibrated rest pose/axes/units, bake native Actions, sample keyed and intermediate frames. Where a VMD is needed, create a *mapped and reviewed derivative* only where rights allow; otherwise use our own VMD suite.
 5. Execute in disposable isolated Blender with physics-off baseline; run exact stage checks and Cycles contacts, Sol Light review, and the existing human gate. Do not silently repair failures in Stage 06.
-6. Record fixture IDs, source motion IDs, bone coverage %, frame coverage, failed mappings, observed errors, baseline-vs-final, runtime, confidence and report links in the single-model [REPORT_STANDARD.md](REPORT_STANDARD.md).
+6. Record fixture IDs, source motion IDs, bone coverage %, frame coverage, failed mappings, observed errors, baseline-vs-final, runtime, confidence and report links in the single-model [MODEL_REPORT_STANDARD.md](MODEL_REPORT_STANDARD.md).
 
 ## Limitations / scope exclusions
 
