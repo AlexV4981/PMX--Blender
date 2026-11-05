@@ -5,7 +5,7 @@ Run **one explicitly selected model** at a time on `Multi-Model-PMX-Benchmark`. 
 ## Preparation
 
 1. Install Ollama and the chosen model **manually**; confirm the exact installed tag and Q4_K_M (or explicitly document a different quantization). No script downloads models.
-2. Generate the existing 80 synthetic fixtures with `python astra-qwen-weight-lab/fixtures.py generate` (verify the legacy fixture generator accepts the new branch; if branch-guarded, use its documented output from a separate sandbox and copy the fixture JSONL into the ignored data folder). Never rewrite archived evidence.
+2. Generate the existing 80 synthetic fixtures with `python astra-qwen-weight-lab/fixtures.py generate` (the fixture generator is enabled for this branch). Never rewrite archived evidence.
 3. `python multi-model-benchmark/runner.py inspect --model qwen3.5:9b` records the locally installed digest.
 4. `python multi-model-benchmark/runner.py run --model qwen3.5:9b --stage 03 --cases astra-qwen-weight-lab/data/fixtures/cases.jsonl --out multi-model-benchmark/data/qwen35-03-lap00.jsonl`
 5. Optional stage-document prompting: rerun with `--specialized` and a **different new output file**. It does not train or change model weights.
