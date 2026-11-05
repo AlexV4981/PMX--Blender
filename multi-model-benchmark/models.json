@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "baseline": {
+    "id": "qwen35-9b",
+    "family": "Qwen",
+    "ollama_tag_suggestion": "qwen3.5:9b",
+    "quantization_target": "Q4_K_M"
+  },
+  "candidates": [
+    {
+      "id": "ministral3-8b",
+      "family": "Mistral",
+      "ollama_tag_suggestion": "ministral-3:8b"
+    },
+    {
+      "id": "granite42-8b",
+      "family": "IBM Granite",
+      "ollama_tag_suggestion": "granite4.2:8b"
+    },
+    {
+      "id": "gemma4-12b",
+      "family": "Google Gemma",
+      "ollama_tag_suggestion": "gemma4:12b"
+    },
+    {
+      "id": "phi4-14b",
+      "family": "Microsoft Phi",
+      "ollama_tag_suggestion": "phi4:14b"
+    },
+    {
+      "id": "nemotron3-4b",
+      "family": "NVIDIA Nemotron",
+      "ollama_tag_suggestion": "nemotron-3-nano:4b"
+    }
+  ],
+  "execution": {
+    "branch": "Multi-Model-PMX-Benchmark",
+    "automatic_download": false,
+    "one_model_at_a_time": true,
+    "unqualified_by_default": true,
+    "never_execute_generated_code": true
+  },
+  "stages": [
+    "03",
+    "04",
+    "05",
+    "06"
+  ]
+}
