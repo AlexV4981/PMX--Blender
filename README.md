@@ -29,6 +29,11 @@ python3 -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -v
 python3 skills/anime-blender-pipeline/scripts/blender_tools.py validate-seeds
 ```
 
+## Model benchmark reporting and humanoid motion qualification
+
+- **Required individual-model report format:** [MODEL_REPORT_STANDARD.md](MODEL_REPORT_STANDARD.md). Use its seven sections for every model, stage and lap, including failed experiments. Compare a model against its own baseline and the original workflow; reserve cross-model analysis for a separate later report.
+- **PMX and native Blender full-motion testing research:** [MOTION_QUALIFICATION_RESOURCES.md](MOTION_QUALIFICATION_RESOURCES.md). Controlled joint-range sweeps plus rights-cleared real human mocap supplement the existing Stage 04–06 checks; the document is a research/fixture plan, not evidence of tested assets.
+
 ## Optional local Qwen maintenance assistant
 
 For bounded, **project-specific** coding chores only, see [Qwen Local Helper](qwen-helper/README.md). Codex can configure it on this branch; Qwen never substitutes for the generic PMX conversion workflow or human approval. Keep character-specific exceptions in each run's profile and opt-in adapters, not in the shared default pipeline.
