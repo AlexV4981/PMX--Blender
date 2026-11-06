@@ -1,0 +1,1 @@
+{"exit_code": null, "oracle_result": null, "probe": {"why": "FileNotFoundError: [Errno 2] No such file or directory: 'docker'"}, "rubric": "pmx-synth-v1: critical = protected invariant (source geometry/morph/rest data, accepted rig, pole) violated", "staged_sha256": {}, "stderr_tail": "", "stdout_tail": "", "timed_out": false}

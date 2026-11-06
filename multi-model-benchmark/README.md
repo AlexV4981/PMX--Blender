@@ -1,3 +1,7 @@
+# **Start here:** [Download test animations + run the hardened smoke test](START_HERE.md)
+
+> **Evidence pipeline hardening v2:** Start with [HARDENING_v2_README.md](HARDENING_v2_README.md). The code is mock-tested only; no actual Blender/image/model performance is claimed. The candidate now executes separately from the trusted verifier, and production readiness is conservatively blocked until real evidence and cost measurements exist.
+
 # Multi-model benchmark runner
 
 Run **one explicitly selected model** at a time on `Multi-Model-PMX-Benchmark`. See [workflow](../MULTI_MODEL_WORKFLOW.md), [seven-section report standard](../MODEL_REPORT_STANDARD.md), [premade motion catalog](../PREMADE_ANIMATION_PACKS.md), and [motion asset manifest](animation-assets/manifest.json).
@@ -17,3 +21,7 @@ Run **one explicitly selected model** at a time on `Multi-Model-PMX-Benchmark`. 
 ## Animation assets
 
 Premade motion download sources and license notes are in [PREMADE_ANIMATION_PACKS.md](../PREMADE_ANIMATION_PACKS.md). The manifest contains source links and **not_downloaded** states. The binary VMD/BVH/FBX/GLB assets are **not yet bundled**; use separate PMX and Blender directories under ignored `data/animation-assets/` and retain hashes/provenance. Do not count a missing asset as a passed test.
+
+## Evidence ledger and reports
+
+See `EVIDENCE_LEDGER.md` (contract, limits, status, blockers) and `UNIVERSAL_MODEL_REPORT_v2.1.md`. Tests: `python3 -m unittest discover -s tests -p "test_*.py"`. Proposal-only runner output is still not a verified Blender result.

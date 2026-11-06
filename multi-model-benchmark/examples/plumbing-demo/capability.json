@@ -1,0 +1,21 @@
+[
+  {
+    "best_lap_id": null,
+    "dev_only_first_try_by_lap": {
+      "lap-00": [
+        0,
+        3
+      ]
+    },
+    "evidence_ref": "4cfab03479d16e475fcb87dd785f441aafb9f25974342243768fe85846471816",
+    "first_try_pass_count": null,
+    "model_digest": "AUTHORED-NOT-A-MODEL",
+    "n": null,
+    "readiness": "1 proposal-only",
+    "selection_rule": "max validation-split first-try pass rate; ties -> lower mean verified seconds",
+    "split_basis": "none",
+    "task_id": "geometry_weight_normalize",
+    "trusted_scope": "development-only synthetic smoke; not a production scope",
+    "uncertainty": null
+  }
+]

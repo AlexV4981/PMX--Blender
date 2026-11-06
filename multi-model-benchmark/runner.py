@@ -100,8 +100,9 @@ def infer(model, text, temperature, ctx, output_tokens):
     with urlopen(req, timeout=600) as r:
         answer = json.load(r)
     elapsed = round(time.monotonic() - start, 3)
+    raw_response = answer.get("response", "")
     try:
-        obj = json.loads(answer.get("response", ""))
+        obj = json.loads(raw_response)
     except (ValueError, TypeError):
         obj = None
     code = obj.get("code", "") if isinstance(obj, dict) else ""
@@ -109,6 +110,8 @@ def infer(model, text, temperature, ctx, output_tokens):
             "code": code if isinstance(code, str) else "",
             "explanation": str(obj.get("explanation", ""))[:1000] if isinstance(obj, dict) else "",
             "syntax": syntax(code), "elapsed_seconds": elapsed,
+            "raw_response_sha256": sha(raw_response.encode("utf-8")) if isinstance(raw_response, str) else None,
+            "raw_response_text": raw_response if isinstance(raw_response, str) else None,
             "prompt_tokens": answer.get("prompt_eval_count"), "output_tokens": answer.get("eval_count"),
             "blender_executed": False, "blender_pass": None}
 

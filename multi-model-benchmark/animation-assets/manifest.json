@@ -67,5 +67,28 @@
       "id": "mixamo",
       "reason": "AI training/testing/improvement restriction"
     }
+  ],
+  "bundling_policy": "No third-party binaries committed. Download source archives on demand and preserve receipts in ignored data/animation-assets/receipts.",
+  "acquisition_guide": "../START_HERE.md",
+  "automated_sources": [
+    {
+      "id": "quaternius-ual1",
+      "url": "https://quaternius.itch.io/universal-animation-library",
+      "method": "python multi-model-benchmark/assets.py import --asset quaternius-ual1 --file ZIP",
+      "status": "not_in_repository"
+    },
+    {
+      "id": "quaternius-ual2",
+      "url": "https://quaternius.itch.io/universal-animation-library-2",
+      "method": "python multi-model-benchmark/assets.py import --asset quaternius-ual2 --file ZIP",
+      "status": "not_in_repository"
+    },
+    {
+      "id": "mmd-tools-vmd-smoke",
+      "url": "https://raw.githubusercontent.com/MMD-Blender/blender_mmd_tools/main/samples/vmd/test.vmd",
+      "method": "python multi-model-benchmark/assets.py fetch --asset mmd-tools-vmd-smoke",
+      "status": "not_in_repository",
+      "scope": "format smoke only; not real full-body validation"
+    }
   ]
 }
