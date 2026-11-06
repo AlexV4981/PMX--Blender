@@ -48,4 +48,43 @@ class MotionAssetTests(unittest.TestCase):
             with zipfile.ZipFile(z,'w') as w:w.writestr('README.txt','hi')
             with self.assertRaises(ValueError):a.extract_motion_zip(z,root/'out')
 
+    def test_inbox_empty_does_not_download(self):
+        with tempfile.TemporaryDirectory() as td:
+            old = a.DATA
+            try:
+                a.DATA = Path(td)
+                self.assertEqual(a.import_inbox(), 0)
+                self.assertFalse((a.DATA / 'downloads').exists())
+            finally:
+                a.DATA = old
+
+    def test_user_supplied_vmd_import_is_repeatable(self):
+        with tempfile.TemporaryDirectory() as td:
+            old = a.DATA
+            try:
+                a.DATA = Path(td)
+                folder = a.DATA / 'manual-inbox/mmd-tools-vmd-smoke'
+                folder.mkdir(parents=True)
+                (folder / 'test.vmd').write_bytes(b'Vocaloid Motion Data 0002' + b'0' * 75)
+                self.assertEqual(a.import_inbox('mmd-tools-vmd-smoke'), 0)
+                self.assertTrue(a.verify('mmd-tools-vmd-smoke')[0])
+                self.assertEqual(a.import_inbox('mmd-tools-vmd-smoke'), 0)
+            finally:
+                a.DATA = old
+
+    def test_ambiguous_downloads_refused(self):
+        with tempfile.TemporaryDirectory() as td:
+            old = a.DATA
+            try:
+                a.DATA = Path(td)
+                folder = a.DATA / 'manual-inbox/mmd-tools-vmd-smoke'
+                folder.mkdir(parents=True)
+                (folder / 'first.vmd').write_bytes(b'Vocaloid Motion Data 0002')
+                (folder / 'second.vmd').write_bytes(b'Vocaloid Motion Data 0002')
+                self.assertEqual(a.import_inbox('mmd-tools-vmd-smoke'), 2)
+                self.assertFalse((a.DATA / 'downloads').exists())
+            finally:
+                a.DATA = old
+
+
 if __name__=='__main__':unittest.main()

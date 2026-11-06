@@ -44,8 +44,9 @@ CATALOG = {
     'notes':'Upstream VMD test fixture, format/parser smoke only. NOT full-body qualification; verify sample terms.'}
 }
 
-MAX_DOWNLOAD = 60 * 1024 * 1024
-MAX_UNPACK = 350 * 1024 * 1024
+MAX_DOWNLOAD = 60 * 1024 * 1024  # Small direct VMD downloads only
+MAX_IMPORT = 1024 * 1024 * 1024  # Operator-supplied ZIPs may be large
+MAX_UNPACK = 2 * 1024 * 1024 * 1024
 ALLOWED_SUFFIXES = {'.glb', '.fbx', '.bvh'}
 
 
@@ -122,8 +123,8 @@ def fetch(name, local_file=None):
             source = Path(local_file).resolve()
             if not source.is_file() or source.is_symlink():
                 raise ValueError('local source file must be a regular non-symlink')
-            if source.stat().st_size > MAX_DOWNLOAD:
-                raise ValueError('oversized downloaded package')
+            if source.stat().st_size > MAX_IMPORT:
+                raise ValueError('oversized manually supplied package')
             with target.open('xb') as out, source.open('rb') as src:
                 shutil.copyfileobj(src,out)
         elif entry['method']=='github-raw':
@@ -188,9 +189,38 @@ def verify(name):
     return True, 'valid ' + str(len(data['files'])) + ' motion files'
 
 
+def import_inbox(selected=None):
+    """Import manually supplied files without accessing the network."""
+    inbox = DATA / 'manual-inbox'
+    names = [selected] if selected else list(CATALOG)
+    errors = 0
+    for name in names:
+        extension = '.vmd' if name == 'mmd-tools-vmd-smoke' else '.zip'
+        folder = inbox / name
+        candidates = sorted(p for p in folder.iterdir()
+                            if p.is_file() and not p.is_symlink() and
+                            p.suffix.lower() == extension) if folder.is_dir() else []
+        if not candidates:
+            print('WAITING', name, '— place one', extension, 'file in', folder)
+            continue
+        if len(candidates) != 1:
+            print('FAIL', name, '— expected one', extension, 'file; found', len(candidates))
+            errors += 1
+            continue
+        try:
+            receipt = fetch(name, candidates[0])
+            print('IMPORTED', name, 'sha256:', receipt['sha256'], 'files:', len(receipt['files']))
+        except (OSError, ValueError, KeyError, zipfile.BadZipFile) as exc:
+            print('FAIL', name, str(exc))
+            errors += 1
+    return 2 if errors else 0
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     s=p.add_subparsers(dest='cmd',required=True)
+    b=s.add_parser('import-inbox', help='Import operator-supplied files; no network')
+    b.add_argument('--asset', choices=sorted(CATALOG))
     s.add_parser('list')
     f=s.add_parser('fetch')
     f.add_argument('--asset',choices=sorted(CATALOG),required=True)
@@ -200,6 +230,8 @@ def main():
     v=s.add_parser('verify')
     v.add_argument('--asset',choices=sorted(CATALOG))
     a=p.parse_args()
+    if a.cmd=='import-inbox':
+        return import_inbox(a.asset)
     if a.cmd=='list':
         for name,entry in CATALOG.items():
             ok,why=verify(name)
