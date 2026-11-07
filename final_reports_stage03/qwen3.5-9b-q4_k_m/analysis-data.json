@@ -1,0 +1,459 @@
+{
+  "schema_version": 2,
+  "scope": "Stage03 Qwen3.5 9B public analysis supplement; synthetic development observations and two separate real trials",
+  "model_metadata": {
+    "tag": "qwen3.5:9b",
+    "digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+    "format": "gguf",
+    "family": "qwen35",
+    "quantization": "Q4_K_M",
+    "backend_label_in_saved_metadata": "llamacpp",
+    "parameter_count": 8953803264,
+    "advertised_context_tokens_in_saved_metadata": 262144,
+    "tested_context_tokens": [
+      4096,
+      8192
+    ],
+    "block_count": 32,
+    "attention_heads": 16,
+    "kv_heads": 4,
+    "embedding_length": 4096,
+    "native_template_sha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+    "declared_native_parameters": {
+      "presence_penalty": 1.5,
+      "temperature": 1,
+      "top_k": 20,
+      "top_p": 0.95
+    },
+    "ollama_version_at_run": null,
+    "hardware_configuration_disclosed": false
+  },
+  "synthetic_laps": [
+    {
+      "lap_id": "lap-01",
+      "cases": 20,
+      "request_settings": {
+        "model": "qwen3.5:9b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        }
+      },
+      "termination_counts": {
+        "length": 20
+      },
+      "thinking_responses": 20,
+      "json_valid_responses": 0,
+      "syntax_valid_code": 0,
+      "post_lap_blob_integrity_recorded": null
+    },
+    {
+      "lap_id": "lap-02",
+      "cases": 20,
+      "request_settings": {
+        "model": "qwen3.5:9b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096
+        },
+        "think": false
+      },
+      "termination_counts": {
+        "stop": 20
+      },
+      "thinking_responses": 0,
+      "json_valid_responses": 20,
+      "syntax_valid_code": 16,
+      "post_lap_blob_integrity_recorded": null
+    },
+    {
+      "lap_id": "lap-03",
+      "cases": 20,
+      "request_settings": {
+        "model": "qwen3.5:9b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0
+        },
+        "think": false
+      },
+      "termination_counts": {
+        "stop": 20
+      },
+      "thinking_responses": 0,
+      "json_valid_responses": 20,
+      "syntax_valid_code": 20,
+      "post_lap_blob_integrity_recorded": true
+    },
+    {
+      "lap_id": "lap-04",
+      "cases": 20,
+      "request_settings": {
+        "model": "qwen3.5:9b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0
+        },
+        "think": false
+      },
+      "termination_counts": {
+        "stop": 20
+      },
+      "thinking_responses": 0,
+      "json_valid_responses": 20,
+      "syntax_valid_code": 20,
+      "post_lap_blob_integrity_recorded": true
+    },
+    {
+      "lap_id": "lap-05",
+      "cases": 20,
+      "request_settings": {
+        "model": "qwen3.5:9b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0
+        },
+        "think": false
+      },
+      "termination_counts": {
+        "stop": 20
+      },
+      "thinking_responses": 0,
+      "json_valid_responses": 20,
+      "syntax_valid_code": 20,
+      "post_lap_blob_integrity_recorded": true
+    },
+    {
+      "lap_id": "lap-06",
+      "cases": 20,
+      "request_settings": {
+        "model": "qwen3.5:9b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0
+        },
+        "think": false
+      },
+      "termination_counts": {
+        "stop": 20
+      },
+      "thinking_responses": 0,
+      "json_valid_responses": 20,
+      "syntax_valid_code": 20,
+      "post_lap_blob_integrity_recorded": true
+    },
+    {
+      "lap_id": "lap-07",
+      "cases": 20,
+      "request_settings": {
+        "model": "qwen3.5:9b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0
+        },
+        "think": false
+      },
+      "termination_counts": {
+        "stop": 20
+      },
+      "thinking_responses": 0,
+      "json_valid_responses": 20,
+      "syntax_valid_code": 20,
+      "post_lap_blob_integrity_recorded": true
+    },
+    {
+      "lap_id": "lap-08",
+      "cases": 20,
+      "request_settings": {
+        "model": "qwen3.5:9b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0
+        },
+        "think": false
+      },
+      "termination_counts": {
+        "stop": 20
+      },
+      "thinking_responses": 0,
+      "json_valid_responses": 20,
+      "syntax_valid_code": 20,
+      "post_lap_blob_integrity_recorded": true
+    }
+  ],
+  "synthetic_per_case_metrics": {
+    "columns": [
+      "lap_id",
+      "case_id",
+      "fixture_family",
+      "prompt_sha256",
+      "candidate_code_sha256",
+      "result",
+      "failure_category",
+      "severity",
+      "severe_regression",
+      "response_json_valid",
+      "code_present",
+      "code_syntax_valid",
+      "done_reason",
+      "thinking_field_present_and_nonempty",
+      "input_tokens",
+      "output_tokens",
+      "cached_input_tokens",
+      "inference_seconds",
+      "oracle_wall_seconds",
+      "api_total_seconds",
+      "api_load_seconds",
+      "api_prompt_eval_seconds",
+      "api_generation_seconds",
+      "builder_exit_code",
+      "fresh_verifier_exit_code"
+    ],
+    "rows": [
+      ["lap-01", "stage03-synthetic-000", "synthetic-03-family-0", "c15225e0f724644240018f128f6b4b99ea8da8e4a9a2c82f7f18ccae75227249", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 150.768, 0.001, 150.636443, 32.696849, 27.51751, 90.410506, null, null],
+      ["lap-01", "stage03-synthetic-001", "synthetic-03-family-0", "787b9bcdff002f8d22951c054604cb68dd59879748463cd927897ed8dd73659b", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 88.388, 0.0, 88.351295, 0.005456, 0.415106, 87.848102, null, null],
+      ["lap-01", "stage03-synthetic-002", "synthetic-03-family-0", "a9ab0020df8d452e00631cd741d1c8e960b36480ca04a0d2a1fce98bb338a561", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 304, 1536, 0, 88.839, 0.0, 88.773187, 0.000732, 0.397405, 88.249843, null, null],
+      ["lap-01", "stage03-synthetic-003", "synthetic-03-family-0", "0038e567a5ae141b455db94b4a89ba7901ffdad34bdfa79649ca13f070a2338f", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 304, 1536, 0, 88.056, 0.0, 88.005058, 0.000497, 0.402427, 87.544681, null, null],
+      ["lap-01", "stage03-synthetic-004", "synthetic-03-family-1", "2809f7be006e4277a064743847b89b8f56f7fed766718dfc7aafddf71686c581", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 88.023, 0.0, 87.973145, 0.000483, 0.393121, 87.503829, null, null],
+      ["lap-01", "stage03-synthetic-005", "synthetic-03-family-1", "d56df82f277033cb4be4993e4f7384fea425df714651e8af4605e30e6ec596e6", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 304, 1536, 0, 87.914, 0.0, 87.867186, 0.000483, 0.402079, 87.398686, null, null],
+      ["lap-01", "stage03-synthetic-006", "synthetic-03-family-1", "850d76a856b778236a611ad8dc184e5c1ba9fb5a55acb29d1cc61f8cfabc571b", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 88.106, 0.0, 88.069898, 0.000496, 0.403877, 87.587169, null, null],
+      ["lap-01", "stage03-synthetic-007", "synthetic-03-family-1", "ca0a7247bac727d0ef9a10065d84f022c1ce89e6f0874de0728c2830add807a1", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 303, 1536, 0, 87.46, 0.0, 87.413248, 0.000481, 0.404308, 86.919093, null, null],
+      ["lap-01", "stage03-synthetic-008", "synthetic-03-family-2", "7b02f8b77833396cec605cb660522cc4eed5bbb853e59c4591a2213737a6ec33", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 89.762, 0.0, 89.738972, 0.001126, 0.405954, 89.233398, null, null],
+      ["lap-01", "stage03-synthetic-009", "synthetic-03-family-2", "32e82d0083d143a976779b4a452abb1367ff2a3fd1198c93106b677b77864795", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 88.081, 0.001, 88.05174, 0.000516, 0.496608, 87.510926, null, null],
+      ["lap-01", "stage03-synthetic-010", "synthetic-03-family-2", "5ff5bb36c35771cc0b658889ba9b5cf522a047ed8da4e8581dd4850fd466fe28", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 87.883, 0.0, 87.86069, 0.000466, 0.391475, 87.432038, null, null],
+      ["lap-01", "stage03-synthetic-011", "synthetic-03-family-2", "9b3fbbc910268029a4d2b00175b2b9a18ce4ef09210a7ba915c688b7b960571d", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 87.507, 0.0, 87.483591, 0.000495, 0.382925, 87.046077, null, null],
+      ["lap-01", "stage03-synthetic-012", "synthetic-03-family-3", "bac0fe07515126fe8d3b2b7edb63114772194ecc5cc5cce9c7252657128f0a5c", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 303, 1536, 0, 87.599, 0.0, 87.572548, 0.000492, 0.40058, 87.133406, null, null],
+      ["lap-01", "stage03-synthetic-013", "synthetic-03-family-3", "82a26c7f4f51617432178059a17120fa39b87d73941bf427a9e1fb0816e55dc4", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 301, 1536, 0, 87.785, 0.0, 87.767299, 0.000497, 0.399864, 87.307351, null, null],
+      ["lap-01", "stage03-synthetic-014", "synthetic-03-family-3", "9b691e6ddcabef778516c8d99b7abaf5b4253ad89518d02de95ad678b6d09643", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 304, 1536, 0, 90.585, 0.0, 90.563136, 0.000475, 0.390091, 90.112379, null, null],
+      ["lap-01", "stage03-synthetic-015", "synthetic-03-family-3", "05a3b8120729b03f357cd115768fc514ac9369fed22ef5a55bab0564b2a84f1a", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 88.169, 0.0, 88.155217, 0.000452, 0.391211, 87.669273, null, null],
+      ["lap-01", "stage03-synthetic-016", "synthetic-03-family-4", "69736a567d47f7fd6547f932f775eda6bb81b190a64f4ee02c1653000bac628b", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 303, 1536, 0, 87.775, 0.0, 87.762173, 0.000482, 0.407708, 87.315026, null, null],
+      ["lap-01", "stage03-synthetic-017", "synthetic-03-family-4", "c93cfcf0e8bbc11c30c1425dd4dd47d66f54263336325016b8f48d598d23b77f", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 305, 1536, 0, 87.425, 0.0, 87.403698, 0.000514, 0.401785, 86.964237, null, null],
+      ["lap-01", "stage03-synthetic-018", "synthetic-03-family-4", "ef0228a50d10ce8c1474ab2e80bcfa96c72c82f93bc8df764dc6513324acb6e6", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 304, 1536, 0, 87.054, 0.0, 87.033405, 0.000484, 0.395084, 86.597553, null, null],
+      ["lap-01", "stage03-synthetic-019", "synthetic-03-family-4", "a65017579772231bba4b24ff35f8d4888e0181c48388ec6d1ad28886cbef8483", null, "not_run", "invalid_output", "none", false, false, false, false, "length", true, 304, 1536, 0, 87.363, 0.0, 87.345217, 0.000443, 0.395016, 86.914161, null, null],
+      ["lap-02", "stage03-synthetic-000", "synthetic-03-family-0", "c15225e0f724644240018f128f6b4b99ea8da8e4a9a2c82f7f18ccae75227249", "734fcd03e0e16565df446793696a8cf735b398f4270f3feb9f2d0a49fccb80f5", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 307, 680, 0, 47.162, 1.814, 47.156361, 6.902082, 0.464021, 39.787085, 1, null],
+      ["lap-02", "stage03-synthetic-001", "synthetic-03-family-0", "787b9bcdff002f8d22951c054604cb68dd59879748463cd927897ed8dd73659b", "0a66ca7ee41c0678e2c71a8b071983416a770a3c851b3f497544018bb3a667f3", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 307, 740, 0, 44.205, 0.735, 44.199464, 0.000494, 0.421765, 43.699538, 1, null],
+      ["lap-02", "stage03-synthetic-002", "synthetic-03-family-0", "a9ab0020df8d452e00631cd741d1c8e960b36480ca04a0d2a1fce98bb338a561", "5661526f9e3ed958a194fcf9fafa8d59624821c85266f192a3646fbfdb037e60", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 306, 923, 0, 55.006, 0.797, 55.000875, 0.00047, 0.426189, 54.500856, 1, null],
+      ["lap-02", "stage03-synthetic-003", "synthetic-03-family-0", "0038e567a5ae141b455db94b4a89ba7901ffdad34bdfa79649ca13f070a2338f", "0a70fc3056c21bd792f74d1fc26b0601fdbf03d8c618bf15605eda95b1c1e239", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 306, 660, 0, 39.464, 0.724, 39.459391, 0.000587, 0.426862, 38.949915, 1, null],
+      ["lap-02", "stage03-synthetic-004", "synthetic-03-family-1", "2809f7be006e4277a064743847b89b8f56f7fed766718dfc7aafddf71686c581", "5eaa9ad35bfccb47b92b40ce20c7a316e181a87efdb5c91d33fbc4c439ae7b6c", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 307, 676, 0, 40.452, 0.746, 40.447263, 0.00047, 0.422726, 39.950458, 1, null],
+      ["lap-02", "stage03-synthetic-005", "synthetic-03-family-1", "d56df82f277033cb4be4993e4f7384fea425df714651e8af4605e30e6ec596e6", "a375924a27067324dc121bc9e0b9f9d55407826f2b760d68c720fb9c5c918c2d", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 306, 695, 0, 41.57, 0.714, 41.56412, 0.000453, 0.431745, 41.061538, 1, null],
+      ["lap-02", "stage03-synthetic-006", "synthetic-03-family-1", "850d76a856b778236a611ad8dc184e5c1ba9fb5a55acb29d1cc61f8cfabc571b", "ba8dced417639ecb088efd2afa43584cb0174bd055c648d78ef5d822b09512ae", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 307, 716, 0, 42.739, 0.71, 42.734431, 0.000501, 0.423433, 42.249395, 1, null],
+      ["lap-02", "stage03-synthetic-007", "synthetic-03-family-1", "ca0a7247bac727d0ef9a10065d84f022c1ce89e6f0874de0728c2830add807a1", "1e0095be5e7d1fb6cd9dc6c6dafcb6cdc17bd0d84fd47177a0fef733d2a2429c", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 305, 661, 0, 39.427, 0.739, 39.423213, 0.000478, 0.416731, 38.940403, 1, null],
+      ["lap-02", "stage03-synthetic-008", "synthetic-03-family-2", "7b02f8b77833396cec605cb660522cc4eed5bbb853e59c4591a2213737a6ec33", "57a047f2d3388b4aaa7c5f5ed386bb62835618117f26c9cf9a7940d8ef5ff9be", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 307, 946, 0, 56.534, 0.756, 56.529309, 0.000459, 0.422969, 56.034046, 1, null],
+      ["lap-02", "stage03-synthetic-009", "synthetic-03-family-2", "32e82d0083d143a976779b4a452abb1367ff2a3fd1198c93106b677b77864795", "b9188068515c6e8fec666dcf531f5791870e180701a4b663dc2651f6a4860cc1", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 307, 598, 0, 35.76, 0.751, 35.756155, 0.000443, 0.425083, 35.249717, 1, null],
+      ["lap-02", "stage03-synthetic-010", "synthetic-03-family-2", "5ff5bb36c35771cc0b658889ba9b5cf522a047ed8da4e8581dd4850fd466fe28", "f9ba4cde6c2481be0eddc7a40d8b1bfb5bb80e34f27160540868eb77cb98c798", "blocked", "evaluator", "none", false, true, true, false, "stop", false, 307, 859, 0, 51.342, 0.723, 51.337157, 0.000459, 0.426933, 50.851095, 1, null],
+      ["lap-02", "stage03-synthetic-011", "synthetic-03-family-2", "9b3fbbc910268029a4d2b00175b2b9a18ce4ef09210a7ba915c688b7b960571d", "b8ddc074a47adf2c8b295d7a4d217299dd0b7e1452deb9805de87a4ceff9fada", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 307, 692, 0, 41.405, 0.705, 41.399658, 0.000818, 0.430322, 40.891173, 1, null],
+      ["lap-02", "stage03-synthetic-012", "synthetic-03-family-3", "bac0fe07515126fe8d3b2b7edb63114772194ecc5cc5cce9c7252657128f0a5c", "50bfba0bbbd7a4d47350f17a129d28cfca2d5eab8929af38c68be091a3158ee6", "fail", "deformation", "major", false, true, true, true, "stop", false, 305, 947, 0, 56.773, 1.549, 56.767485, 0.000476, 0.414539, 56.277158, 0, 0],
+      ["lap-02", "stage03-synthetic-013", "synthetic-03-family-3", "82a26c7f4f51617432178059a17120fa39b87d73941bf427a9e1fb0816e55dc4", null, "not_run", "invalid_output", "none", false, true, false, false, "stop", false, 303, 180, 0, 11.091, 0.0, 11.087522, 0.000511, 0.430745, 10.58081, null, null],
+      ["lap-02", "stage03-synthetic-014", "synthetic-03-family-3", "9b691e6ddcabef778516c8d99b7abaf5b4253ad89518d02de95ad678b6d09643", null, "not_run", "invalid_output", "none", false, true, false, false, "stop", false, 306, 156, 0, 9.65, 0.0, 9.647223, 0.000482, 0.421658, 9.15973, null, null],
+      ["lap-02", "stage03-synthetic-015", "synthetic-03-family-3", "05a3b8120729b03f357cd115768fc514ac9369fed22ef5a55bab0564b2a84f1a", "ff48f3ada69077820e45af6d1dbc46b4ce5fccecc34e10af68bf098371780f6c", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 307, 550, 0, 32.946, 0.716, 32.942422, 0.000553, 0.419487, 32.454109, 1, null],
+      ["lap-02", "stage03-synthetic-016", "synthetic-03-family-4", "69736a567d47f7fd6547f932f775eda6bb81b190a64f4ee02c1653000bac628b", "796989d9ed5b8d1fc2c6afbd4362bb8774879439e79cf48be453b0e51b1863ec", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 305, 676, 0, 40.445, 0.721, 40.440131, 0.00045, 0.420576, 39.959061, 1, null],
+      ["lap-02", "stage03-synthetic-017", "synthetic-03-family-4", "c93cfcf0e8bbc11c30c1425dd4dd47d66f54263336325016b8f48d598d23b77f", "7550f0fd7adc19241ff87482187920d557666f5d6f6b61bde0da58f92420c52d", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 307, 608, 0, 36.272, 0.736, 36.267725, 0.000493, 0.427918, 35.769645, 1, null],
+      ["lap-02", "stage03-synthetic-018", "synthetic-03-family-4", "ef0228a50d10ce8c1474ab2e80bcfa96c72c82f93bc8df764dc6513324acb6e6", "7918ea4b2375828b28c5fe2d7d40379c3351f7c461137562ecbadf0a9e5bb5b8", "blocked", "evaluator", "none", false, true, true, false, "stop", false, 306, 669, 0, 39.758, 0.759, 39.754117, 0.000482, 0.420854, 39.253737, 1, null],
+      ["lap-02", "stage03-synthetic-019", "synthetic-03-family-4", "a65017579772231bba4b24ff35f8d4888e0181c48388ec6d1ad28886cbef8483", "aefc7176ce6b2547d3b7d98bd9b1139dfdb1cc4ad79cfbd3dfdd4368acbafcf2", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 306, 752, 0, 44.655, 0.705, 44.650376, 0.00042, 0.423413, 44.162549, 1, null],
+      ["lap-03", "stage03-synthetic-000", "synthetic-03-family-0", "fb76b918cbf449bb9190c52739dc53c0deee568d00fc0bf70b4375fe6ea870b4", "2d40ec6e4082bb314f25fdf849c589b255565b0c756accea82599bc60ab559fa", "pass", "none", "none", false, true, true, true, "stop", false, 704, 505, 0, 36.316, 4.589, 36.31098, 5.917573, 0.802308, 29.585815, 0, 0],
+      ["lap-03", "stage03-synthetic-001", "synthetic-03-family-0", "8bce087810c907e16ad22f1f8a70821666144151c68a4648cc08d0fbb2724afa", "1abbee5f7aee4fe5e309c01aef1d7c00a9970c1e0659522ed43bf8edb44fbb8b", "pass", "none", "none", false, true, true, true, "stop", false, 704, 474, 192, 28.548, 2.009, 28.543271, 0.000536, 0.570436, 27.869083, 0, 0],
+      ["lap-03", "stage03-synthetic-002", "synthetic-03-family-0", "76effb1b9441d42aca3894e101af02ac86a3f317d38d037391fea4b6ede03cee", "1abbee5f7aee4fe5e309c01aef1d7c00a9970c1e0659522ed43bf8edb44fbb8b", "pass", "none", "none", false, true, true, true, "stop", false, 703, 473, 192, 28.036, 1.648, 28.031492, 0.000506, 0.553879, 27.390536, 0, 0],
+      ["lap-03", "stage03-synthetic-003", "synthetic-03-family-0", "f7eb2e16d67594d561250a5482668ba6887c1a6fffd5d7860c9b7f7074f29707", "b8252bfe51c6eb44dcee952d4e13329cdfcbd95e3e98944ed12e7df2844acad9", "pass", "none", "none", false, true, true, true, "stop", false, 703, 550, 192, 32.653, 1.548, 32.647754, 0.000517, 0.559592, 31.99803, 0, 0],
+      ["lap-03", "stage03-synthetic-004", "synthetic-03-family-1", "998a3557d134e3d7952bf5a660fd8f369f1b1e03b195a1b01e2739340956cf55", "9b0e92c3e9d982121223b8e3066fe3baa037f7edd6aa054c2cd7544de387f9b9", "pass", "none", "none", false, true, true, true, "stop", false, 704, 471, 192, 27.834, 1.536, 27.829127, 0.000487, 0.567555, 27.156866, 0, 0],
+      ["lap-03", "stage03-synthetic-005", "synthetic-03-family-1", "7296da00f8e2ce269006362747db20d9540b76848ae65e663aba3772bb962140", "8cd23a634849731f72a9da1848a06cd5b216e8682f2bfaf77733a6bd30c17620", "pass", "none", "none", false, true, true, true, "stop", false, 703, 486, 192, 28.848, 1.545, 28.842818, 0.000492, 0.556733, 28.188035, 0, 0],
+      ["lap-03", "stage03-synthetic-006", "synthetic-03-family-1", "cd0fce996c2314917897c1edeb0763314c3436c27326eee0d90ac9c33be78062", "472ae686256d70e8b32dd0cfcd1bf9de377fbd2cb82c63d99e0fb42aed370328", "pass", "none", "none", false, true, true, true, "stop", false, 704, 416, 192, 24.788, 1.553, 24.782515, 0.000532, 0.545626, 24.140837, 0, 0],
+      ["lap-03", "stage03-synthetic-007", "synthetic-03-family-1", "0c2c6935b9e06c263dfb5a0bc13a27aa716f2276a863e82e3dbe0638ad36e822", "d6439ec5e8e5091578dbc1dda4d10c6922f685a7170b8f88de377ac68b0d64bb", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 702, 511, 192, 30.299, 0.725, 30.293532, 0.000535, 0.558902, 29.627835, 1, null],
+      ["lap-03", "stage03-synthetic-008", "synthetic-03-family-2", "1bec2b12c109a8c00c45f6b61d783d6184738726fd44b28061a38277c9c34ba4", "7959c73db8fec6c87e08c43f506a9d72f295b53d0083900bc06783f420f0e6e3", "pass", "none", "none", false, true, true, true, "stop", false, 704, 488, 192, 29.456, 1.545, 29.449937, 0.00057, 0.562809, 28.770072, 0, 0],
+      ["lap-03", "stage03-synthetic-009", "synthetic-03-family-2", "cdf2af40a73652eaf2d04441d55661c8164ca239054ff3daad2f9c1d011d699a", "cef0c0737b2e093a683156ee211c0a21daceea39add5994998052fe07f5824a3", "pass", "none", "none", false, true, true, true, "stop", false, 704, 601, 192, 35.489, 1.473, 35.483121, 0.000654, 0.568839, 34.805415, 0, 0],
+      ["lap-03", "stage03-synthetic-010", "synthetic-03-family-2", "0292d47b34a629b098b44faddea3f91f30840aabfa68b57ee93c5513dbea2a64", "c2151e4c0016cf50009f6da6b5ff49042174cfb2264b54ae21e3148f7b22bce4", "pass", "none", "none", false, true, true, true, "stop", false, 704, 463, 192, 27.506, 1.519, 27.501299, 0.000593, 0.565494, 26.820629, 0, 0],
+      ["lap-03", "stage03-synthetic-011", "synthetic-03-family-2", "7bfd6046073e558aa0b13ed24accad4b6b41b86fcbf83c0b9bd5a98bd6824183", "b4751279a5ede84a612c7e467ff38f7330d8a7bc33a20e0408890bcdcf5c7379", "pass", "none", "none", false, true, true, true, "stop", false, 704, 497, 192, 29.593, 1.46, 29.587651, 0.000582, 0.57723, 28.907626, 0, 0],
+      ["lap-03", "stage03-synthetic-012", "synthetic-03-family-3", "5eccdd6e0a00e6b2f8de9fc02c888b730da31220d240afbaed6299bbc0ec6d9b", "06f7f624328bc45b2f0ff324b2c0dcbacfa498cfd693733524394f33a13281a6", "pass", "none", "none", false, true, true, true, "stop", false, 702, 703, 192, 41.963, 1.503, 41.95669, 0.000538, 0.55568, 41.289465, 0, 0],
+      ["lap-03", "stage03-synthetic-013", "synthetic-03-family-3", "b7ba336828b49aa62c4ad7fd8ef83dd3c84f0bc5e0d91f6a6abe411643e3239b", "5b2a6d10769d61a745e62902d7a27e5dc28160e472d102706700e5f9a9f29d5a", "pass", "none", "none", false, true, true, true, "stop", false, 700, 474, 192, 28.204, 1.517, 28.199826, 0.00055, 0.565383, 27.516348, 0, 0],
+      ["lap-03", "stage03-synthetic-014", "synthetic-03-family-3", "ea7e6b35b9d1db0522b393f903f0bc5985e91bb760d7bf8a755fa609cf256235", "b9212e36e3288411dcb59858bc037983366df9810999432636daed31fbaf68c5", "pass", "none", "none", false, true, true, true, "stop", false, 703, 692, 192, 41.09, 1.526, 41.083592, 0.000578, 0.561836, 40.409264, 0, 0],
+      ["lap-03", "stage03-synthetic-015", "synthetic-03-family-3", "b81b45c8d287c0e9eca414bababf8b4b8f31d3fd398d2245dc52d07fbf8f1c58", "ff98b28dce1ca2a5211197013c90a7113b7aa414c7debf0bc163529d47883d53", "pass", "none", "none", false, true, true, true, "stop", false, 704, 479, 192, 28.223, 1.548, 28.21787, 0.000489, 0.569793, 27.540998, 0, 0],
+      ["lap-03", "stage03-synthetic-016", "synthetic-03-family-4", "d0e91cb52635d4b27258163954ab764412e456ad86b5a3339d2c938b8afd3531", "1acb98522524e68a9aed7031d011c588e977f70f37f56c147515449896c5562c", "pass", "none", "none", false, true, true, true, "stop", false, 702, 515, 192, 30.635, 1.535, 30.630172, 0.000614, 0.55916, 29.959583, 0, 0],
+      ["lap-03", "stage03-synthetic-017", "synthetic-03-family-4", "47b8bed35c416b80b4b520ab606b47f302575fbf36eb5d819ee8bc696b189e74", "5d5566bf1d955a6f850bf49c9e353874a6c2581772027cec04f15ed12bacd681", "pass", "none", "none", false, true, true, true, "stop", false, 704, 520, 192, 30.791, 1.512, 30.786309, 0.000487, 0.560158, 30.118016, 0, 0],
+      ["lap-03", "stage03-synthetic-018", "synthetic-03-family-4", "7b37a14c953a21947e6876034bfd96d1be31f645c594e29bc97b7f8984d6fa2f", "413dcb0569e0c55ba3b0f918763cedb2e9fe798253477c3f9aea9d2966d30c87", "pass", "none", "none", false, true, true, true, "stop", false, 703, 826, 192, 49.045, 1.547, 49.039383, 0.000587, 0.560026, 48.374071, 0, 0],
+      ["lap-03", "stage03-synthetic-019", "synthetic-03-family-4", "cbfcf5b7076e4ced15bff10fa68c49bc5b4cc10875db6e87aa16a9d9f26b4a07", "6d77da85d45071629a3314ac06d553b38267ba6772cedb8fc7eecbac8cb63b97", "pass", "none", "none", false, true, true, true, "stop", false, 703, 517, 192, 30.516, 1.541, 30.510332, 0.000536, 0.568105, 29.829404, 0, 0],
+      ["lap-04", "stage03-synthetic-000", "synthetic-03-family-0", "fb76b918cbf449bb9190c52739dc53c0deee568d00fc0bf70b4375fe6ea870b4", "2d40ec6e4082bb314f25fdf849c589b255565b0c756accea82599bc60ab559fa", "pass", "none", "none", false, true, true, true, "stop", false, 704, 505, 0, 41.493, 1.534, 41.487253, 10.082696, 1.044347, 30.354324, 0, 0],
+      ["lap-04", "stage03-synthetic-001", "synthetic-03-family-0", "8bce087810c907e16ad22f1f8a70821666144151c68a4648cc08d0fbb2724afa", "1abbee5f7aee4fe5e309c01aef1d7c00a9970c1e0659522ed43bf8edb44fbb8b", "pass", "none", "none", false, true, true, true, "stop", false, 704, 474, 192, 29.466, 1.559, 29.460702, 0.000589, 0.541667, 28.864322, 0, 0],
+      ["lap-04", "stage03-synthetic-002", "synthetic-03-family-0", "76effb1b9441d42aca3894e101af02ac86a3f317d38d037391fea4b6ede03cee", "1abbee5f7aee4fe5e309c01aef1d7c00a9970c1e0659522ed43bf8edb44fbb8b", "pass", "none", "none", false, true, true, true, "stop", false, 703, 473, 192, 28.03, 1.5, 28.024472, 0.000556, 0.603439, 27.364019, 0, 0],
+      ["lap-04", "stage03-synthetic-003", "synthetic-03-family-0", "f7eb2e16d67594d561250a5482668ba6887c1a6fffd5d7860c9b7f7074f29707", "b8252bfe51c6eb44dcee952d4e13329cdfcbd95e3e98944ed12e7df2844acad9", "pass", "none", "none", false, true, true, true, "stop", false, 703, 550, 192, 32.224, 1.485, 32.21961, 0.000514, 0.544914, 31.62824, 0, 0],
+      ["lap-04", "stage03-synthetic-004", "synthetic-03-family-1", "998a3557d134e3d7952bf5a660fd8f369f1b1e03b195a1b01e2739340956cf55", "9b0e92c3e9d982121223b8e3066fe3baa037f7edd6aa054c2cd7544de387f9b9", "pass", "none", "none", false, true, true, true, "stop", false, 704, 471, 192, 28.967, 1.497, 28.96202, 0.000496, 0.548234, 28.358599, 0, 0],
+      ["lap-04", "stage03-synthetic-005", "synthetic-03-family-1", "7296da00f8e2ce269006362747db20d9540b76848ae65e663aba3772bb962140", "8cd23a634849731f72a9da1848a06cd5b216e8682f2bfaf77733a6bd30c17620", "pass", "none", "none", false, true, true, true, "stop", false, 703, 486, 192, 28.306, 1.431, 28.301418, 0.001517, 0.545802, 27.686532, 0, 0],
+      ["lap-04", "stage03-synthetic-006", "synthetic-03-family-1", "cd0fce996c2314917897c1edeb0763314c3436c27326eee0d90ac9c33be78062", "472ae686256d70e8b32dd0cfcd1bf9de377fbd2cb82c63d99e0fb42aed370328", "pass", "none", "none", false, true, true, true, "stop", false, 704, 416, 192, 24.401, 1.524, 24.39639, 0.000529, 0.545051, 23.807542, 0, 0],
+      ["lap-04", "stage03-synthetic-007", "synthetic-03-family-1", "0c2c6935b9e06c263dfb5a0bc13a27aa716f2276a863e82e3dbe0638ad36e822", "d6439ec5e8e5091578dbc1dda4d10c6922f685a7170b8f88de377ac68b0d64bb", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 702, 511, 192, 29.791, 0.722, 29.785693, 0.000559, 0.564312, 29.166069, 1, null],
+      ["lap-04", "stage03-synthetic-008", "synthetic-03-family-2", "1bec2b12c109a8c00c45f6b61d783d6184738726fd44b28061a38277c9c34ba4", "7959c73db8fec6c87e08c43f506a9d72f295b53d0083900bc06783f420f0e6e3", "pass", "none", "none", false, true, true, true, "stop", false, 704, 488, 192, 28.43, 1.527, 28.424785, 0.000564, 0.553071, 27.800611, 0, 0],
+      ["lap-04", "stage03-synthetic-009", "synthetic-03-family-2", "cdf2af40a73652eaf2d04441d55661c8164ca239054ff3daad2f9c1d011d699a", "cef0c0737b2e093a683156ee211c0a21daceea39add5994998052fe07f5824a3", "pass", "none", "none", false, true, true, true, "stop", false, 704, 601, 192, 35.053, 1.471, 35.047608, 0.000659, 0.546072, 34.410705, 0, 0],
+      ["lap-04", "stage03-synthetic-010", "synthetic-03-family-2", "0292d47b34a629b098b44faddea3f91f30840aabfa68b57ee93c5513dbea2a64", "c2151e4c0016cf50009f6da6b5ff49042174cfb2264b54ae21e3148f7b22bce4", "pass", "none", "none", false, true, true, true, "stop", false, 704, 463, 192, 27.05, 1.507, 27.043986, 0.000662, 0.546346, 26.408026, 0, 0],
+      ["lap-04", "stage03-synthetic-011", "synthetic-03-family-2", "7bfd6046073e558aa0b13ed24accad4b6b41b86fcbf83c0b9bd5a98bd6824183", "b4751279a5ede84a612c7e467ff38f7330d8a7bc33a20e0408890bcdcf5c7379", "pass", "none", "none", false, true, true, true, "stop", false, 704, 497, 192, 29.038, 1.476, 29.032547, 0.00052, 0.56045, 28.353296, 0, 0],
+      ["lap-04", "stage03-synthetic-012", "synthetic-03-family-3", "5eccdd6e0a00e6b2f8de9fc02c888b730da31220d240afbaed6299bbc0ec6d9b", "06f7f624328bc45b2f0ff324b2c0dcbacfa498cfd693733524394f33a13281a6", "pass", "none", "none", false, true, true, true, "stop", false, 702, 703, 192, 40.92, 1.536, 40.913428, 0.000948, 0.535346, 40.282314, 0, 0],
+      ["lap-04", "stage03-synthetic-013", "synthetic-03-family-3", "b7ba336828b49aa62c4ad7fd8ef83dd3c84f0bc5e0d91f6a6abe411643e3239b", "5b2a6d10769d61a745e62902d7a27e5dc28160e472d102706700e5f9a9f29d5a", "pass", "none", "none", false, true, true, true, "stop", false, 700, 474, 192, 28.104, 1.497, 28.097751, 0.000558, 0.566305, 27.389898, 0, 0],
+      ["lap-04", "stage03-synthetic-014", "synthetic-03-family-3", "ea7e6b35b9d1db0522b393f903f0bc5985e91bb760d7bf8a755fa609cf256235", "b9212e36e3288411dcb59858bc037983366df9810999432636daed31fbaf68c5", "pass", "none", "none", false, true, true, true, "stop", false, 703, 692, 192, 40.168, 1.47, 40.161599, 0.000523, 0.527079, 39.519509, 0, 0],
+      ["lap-04", "stage03-synthetic-015", "synthetic-03-family-3", "b81b45c8d287c0e9eca414bababf8b4b8f31d3fd398d2245dc52d07fbf8f1c58", "ff98b28dce1ca2a5211197013c90a7113b7aa414c7debf0bc163529d47883d53", "pass", "none", "none", false, true, true, true, "stop", false, 704, 479, 192, 28.047, 1.455, 28.040851, 0.000536, 0.536436, 27.375166, 0, 0],
+      ["lap-04", "stage03-synthetic-016", "synthetic-03-family-4", "d0e91cb52635d4b27258163954ab764412e456ad86b5a3339d2c938b8afd3531", "1acb98522524e68a9aed7031d011c588e977f70f37f56c147515449896c5562c", "pass", "none", "none", false, true, true, true, "stop", false, 702, 515, 192, 30.24, 1.494, 30.234655, 0.000542, 0.546891, 29.580486, 0, 0],
+      ["lap-04", "stage03-synthetic-017", "synthetic-03-family-4", "47b8bed35c416b80b4b520ab606b47f302575fbf36eb5d819ee8bc696b189e74", "5d5566bf1d955a6f850bf49c9e353874a6c2581772027cec04f15ed12bacd681", "pass", "none", "none", false, true, true, true, "stop", false, 704, 520, 192, 30.32, 1.512, 30.314401, 0.00054, 0.545976, 29.645047, 0, 0],
+      ["lap-04", "stage03-synthetic-018", "synthetic-03-family-4", "7b37a14c953a21947e6876034bfd96d1be31f645c594e29bc97b7f8984d6fa2f", "413dcb0569e0c55ba3b0f918763cedb2e9fe798253477c3f9aea9d2966d30c87", "pass", "none", "none", false, true, true, true, "stop", false, 703, 826, 192, 47.912, 1.514, 47.905908, 0.000517, 0.566827, 47.2256, 0, 0],
+      ["lap-04", "stage03-synthetic-019", "synthetic-03-family-4", "cbfcf5b7076e4ced15bff10fa68c49bc5b4cc10875db6e87aa16a9d9f26b4a07", "6d77da85d45071629a3314ac06d553b38267ba6772cedb8fc7eecbac8cb63b97", "pass", "none", "none", false, true, true, true, "stop", false, 703, 517, 192, 30.373, 1.537, 30.368923, 0.000496, 0.544328, 29.699533, 0, 0],
+      ["lap-05", "stage03-synthetic-000", "synthetic-03-family-0", "fb76b918cbf449bb9190c52739dc53c0deee568d00fc0bf70b4375fe6ea870b4", "2d40ec6e4082bb314f25fdf849c589b255565b0c756accea82599bc60ab559fa", "pass", "none", "none", false, true, true, true, "stop", false, 704, 505, 0, 38.109, 1.868, 38.103204, 8.417713, 0.825442, 28.85502, 0, 0],
+      ["lap-05", "stage03-synthetic-001", "synthetic-03-family-0", "8bce087810c907e16ad22f1f8a70821666144151c68a4648cc08d0fbb2724afa", "1abbee5f7aee4fe5e309c01aef1d7c00a9970c1e0659522ed43bf8edb44fbb8b", "pass", "none", "none", false, true, true, true, "stop", false, 704, 474, 192, 27.482, 1.5, 27.477014, 0.000607, 0.550183, 26.877278, 0, 0],
+      ["lap-05", "stage03-synthetic-002", "synthetic-03-family-0", "76effb1b9441d42aca3894e101af02ac86a3f317d38d037391fea4b6ede03cee", "1abbee5f7aee4fe5e309c01aef1d7c00a9970c1e0659522ed43bf8edb44fbb8b", "pass", "none", "none", false, true, true, true, "stop", false, 703, 473, 192, 27.474, 1.511, 27.468163, 0.000573, 0.536091, 26.863314, 0, 0],
+      ["lap-05", "stage03-synthetic-003", "synthetic-03-family-0", "f7eb2e16d67594d561250a5482668ba6887c1a6fffd5d7860c9b7f7074f29707", "b8252bfe51c6eb44dcee952d4e13329cdfcbd95e3e98944ed12e7df2844acad9", "pass", "none", "none", false, true, true, true, "stop", false, 703, 550, 192, 32.265, 1.451, 32.258961, 0.00052, 0.54228, 31.620709, 0, 0],
+      ["lap-05", "stage03-synthetic-004", "synthetic-03-family-1", "998a3557d134e3d7952bf5a660fd8f369f1b1e03b195a1b01e2739340956cf55", "9b0e92c3e9d982121223b8e3066fe3baa037f7edd6aa054c2cd7544de387f9b9", "pass", "none", "none", false, true, true, true, "stop", false, 704, 471, 192, 27.52, 1.562, 27.513794, 0.000526, 0.59803, 26.804213, 0, 0],
+      ["lap-05", "stage03-synthetic-005", "synthetic-03-family-1", "7296da00f8e2ce269006362747db20d9540b76848ae65e663aba3772bb962140", "8cd23a634849731f72a9da1848a06cd5b216e8682f2bfaf77733a6bd30c17620", "pass", "none", "none", false, true, true, true, "stop", false, 703, 486, 192, 28.331, 1.519, 28.325895, 0.000556, 0.542004, 27.680055, 0, 0],
+      ["lap-05", "stage03-synthetic-006", "synthetic-03-family-1", "cd0fce996c2314917897c1edeb0763314c3436c27326eee0d90ac9c33be78062", "472ae686256d70e8b32dd0cfcd1bf9de377fbd2cb82c63d99e0fb42aed370328", "pass", "none", "none", false, true, true, true, "stop", false, 704, 416, 192, 24.355, 1.533, 24.350277, 0.000486, 0.53981, 23.707547, 0, 0],
+      ["lap-05", "stage03-synthetic-007", "synthetic-03-family-1", "0c2c6935b9e06c263dfb5a0bc13a27aa716f2276a863e82e3dbe0638ad36e822", "d6439ec5e8e5091578dbc1dda4d10c6922f685a7170b8f88de377ac68b0d64bb", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 702, 511, 192, 29.685, 0.724, 29.679522, 0.000588, 0.53017, 29.054949, 1, null],
+      ["lap-05", "stage03-synthetic-008", "synthetic-03-family-2", "1bec2b12c109a8c00c45f6b61d783d6184738726fd44b28061a38277c9c34ba4", "7959c73db8fec6c87e08c43f506a9d72f295b53d0083900bc06783f420f0e6e3", "pass", "none", "none", false, true, true, true, "stop", false, 704, 488, 192, 28.493, 1.521, 28.487664, 0.000508, 0.546919, 27.840299, 0, 0],
+      ["lap-05", "stage03-synthetic-009", "synthetic-03-family-2", "cdf2af40a73652eaf2d04441d55661c8164ca239054ff3daad2f9c1d011d699a", "cef0c0737b2e093a683156ee211c0a21daceea39add5994998052fe07f5824a3", "pass", "none", "none", false, true, true, true, "stop", false, 704, 601, 192, 35.143, 1.448, 35.137632, 0.00053, 0.562492, 34.472613, 0, 0],
+      ["lap-05", "stage03-synthetic-010", "synthetic-03-family-2", "0292d47b34a629b098b44faddea3f91f30840aabfa68b57ee93c5513dbea2a64", "c2151e4c0016cf50009f6da6b5ff49042174cfb2264b54ae21e3148f7b22bce4", "pass", "none", "none", false, true, true, true, "stop", false, 704, 463, 192, 27.059, 1.476, 27.054026, 0.00048, 0.532243, 26.412918, 0, 0],
+      ["lap-05", "stage03-synthetic-011", "synthetic-03-family-2", "7bfd6046073e558aa0b13ed24accad4b6b41b86fcbf83c0b9bd5a98bd6824183", "b4751279a5ede84a612c7e467ff38f7330d8a7bc33a20e0408890bcdcf5c7379", "pass", "none", "none", false, true, true, true, "stop", false, 704, 497, 192, 28.992, 1.519, 28.986628, 0.000583, 0.56998, 28.323774, 0, 0],
+      ["lap-05", "stage03-synthetic-012", "synthetic-03-family-3", "5eccdd6e0a00e6b2f8de9fc02c888b730da31220d240afbaed6299bbc0ec6d9b", "06f7f624328bc45b2f0ff324b2c0dcbacfa498cfd693733524394f33a13281a6", "pass", "none", "none", false, true, true, true, "stop", false, 702, 703, 192, 40.83, 1.456, 40.824094, 0.000529, 0.550832, 40.172893, 0, 0],
+      ["lap-05", "stage03-synthetic-013", "synthetic-03-family-3", "b7ba336828b49aa62c4ad7fd8ef83dd3c84f0bc5e0d91f6a6abe411643e3239b", "5b2a6d10769d61a745e62902d7a27e5dc28160e472d102706700e5f9a9f29d5a", "pass", "none", "none", false, true, true, true, "stop", false, 700, 474, 192, 27.712, 1.512, 27.70727, 0.000507, 0.548259, 27.067155, 0, 0],
+      ["lap-05", "stage03-synthetic-014", "synthetic-03-family-3", "ea7e6b35b9d1db0522b393f903f0bc5985e91bb760d7bf8a755fa609cf256235", "b9212e36e3288411dcb59858bc037983366df9810999432636daed31fbaf68c5", "pass", "none", "none", false, true, true, true, "stop", false, 703, 692, 192, 40.191, 1.538, 40.185616, 0.000525, 0.540143, 39.571016, 0, 0],
+      ["lap-05", "stage03-synthetic-015", "synthetic-03-family-3", "b81b45c8d287c0e9eca414bababf8b4b8f31d3fd398d2245dc52d07fbf8f1c58", "ff98b28dce1ca2a5211197013c90a7113b7aa414c7debf0bc163529d47883d53", "pass", "none", "none", false, true, true, true, "stop", false, 704, 479, 192, 28.223, 1.547, 28.217709, 0.00053, 0.546062, 27.578348, 0, 0],
+      ["lap-05", "stage03-synthetic-016", "synthetic-03-family-4", "d0e91cb52635d4b27258163954ab764412e456ad86b5a3339d2c938b8afd3531", "1acb98522524e68a9aed7031d011c588e977f70f37f56c147515449896c5562c", "pass", "none", "none", false, true, true, true, "stop", false, 702, 515, 192, 30.035, 1.471, 30.029227, 0.000503, 0.544106, 29.397823, 0, 0],
+      ["lap-05", "stage03-synthetic-017", "synthetic-03-family-4", "47b8bed35c416b80b4b520ab606b47f302575fbf36eb5d819ee8bc696b189e74", "5d5566bf1d955a6f850bf49c9e353874a6c2581772027cec04f15ed12bacd681", "pass", "none", "none", false, true, true, true, "stop", false, 704, 520, 192, 30.324, 1.439, 30.319137, 0.000503, 0.551065, 29.716581, 0, 0],
+      ["lap-05", "stage03-synthetic-018", "synthetic-03-family-4", "7b37a14c953a21947e6876034bfd96d1be31f645c594e29bc97b7f8984d6fa2f", "413dcb0569e0c55ba3b0f918763cedb2e9fe798253477c3f9aea9d2966d30c87", "pass", "none", "none", false, true, true, true, "stop", false, 703, 826, 192, 48.228, 1.482, 48.221409, 0.000502, 0.530762, 47.627813, 0, 0],
+      ["lap-05", "stage03-synthetic-019", "synthetic-03-family-4", "cbfcf5b7076e4ced15bff10fa68c49bc5b4cc10875db6e87aa16a9d9f26b4a07", "6d77da85d45071629a3314ac06d553b38267ba6772cedb8fc7eecbac8cb63b97", "pass", "none", "none", false, true, true, true, "stop", false, 703, 517, 192, 30.462, 1.408, 30.456682, 0.00046, 0.539971, 29.855946, 0, 0],
+      ["lap-06", "stage03-synthetic-000", "synthetic-03-family-0", "e71852b55ce4e4ac2c38379ee684deb874b64a9b7860eb0dcab2530259ea99ea", "456641eee418f178d39c64c2c977d2e94b5a88579ebb84b3ba0430f22e960008", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 840, 481, 0, 38.843, 1.583, 38.837304, 10.098144, 0.922815, 27.809716, 1, null],
+      ["lap-06", "stage03-synthetic-001", "synthetic-03-family-0", "651c994accd3fcca84c0cc2e841fb74b637c6497d594cc28fe341530e138bfdb", "2ac3d886460ec894cce5d3cfa08e10576eeda51c4bf7a56c629834467ca9cd63", "pass", "none", "none", false, true, true, true, "stop", false, 840, 629, 0, 37.818, 1.46, 37.8114, 0.000539, 0.857301, 36.850887, 0, 0],
+      ["lap-06", "stage03-synthetic-002", "synthetic-03-family-0", "0efd3b1eb2f727ec6b7e3fcf699e45ede5fff4d23a6e22766398aaa197372257", "9f065e17b575bd3ae88f040aca9e806460622f590872b51f5df277d7c30d663c", "pass", "none", "none", false, true, true, true, "stop", false, 839, 1276, 0, 76.508, 1.654, 76.50041, 0.000553, 0.870165, 75.510686, 0, 0],
+      ["lap-06", "stage03-synthetic-003", "synthetic-03-family-0", "c06036071aafecb17560bf83e6ba208dc0c09826b7058f85141519ed4898c1b5", "61357dbf2c0ae482569f1f24ac43823ed85630fc1fc56cd074e115c7219302d8", "pass", "none", "none", false, true, true, true, "stop", false, 839, 840, 0, 50.57, 1.508, 50.562712, 0.000497, 0.85373, 49.579258, 0, 0],
+      ["lap-06", "stage03-synthetic-004", "synthetic-03-family-1", "2da5992c067250ca529404afa8521cbe52c2aa9283b873583bdf4f2543133bfb", "f7f7a1bc23efb2534ca3ac304c8ed86b899670f7453e21b38f111a03d84b205a", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 840, 439, 0, 26.499, 0.763, 26.494457, 0.000731, 0.869331, 25.506884, 1, null],
+      ["lap-06", "stage03-synthetic-005", "synthetic-03-family-1", "85d0d77591b4c6fbe157e275def22b0af493a0deba9d8988ba7c1341385892b9", "d4ece9e6b0fc44edb97d29d474d155d5bbefb7451c31a67bb374fc9067e63a8d", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 839, 1167, 0, 69.873, 0.74, 69.86572, 0.000498, 0.856662, 68.906508, 1, null],
+      ["lap-06", "stage03-synthetic-006", "synthetic-03-family-1", "04c651ec00b48a587e9c20a89ce22a2c3c25e290c4cac81ba7389c700c6cbf55", "a578659fd14f9d7713c82bef59f6cdce88390a3b5a510ce8c7e3e1b3557318f7", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 840, 431, 0, 26.026, 0.721, 26.02003, 0.000638, 0.859717, 25.040253, 1, null],
+      ["lap-06", "stage03-synthetic-007", "synthetic-03-family-1", "59b35623ea8885297639207700d0fbf6d95e99208914d18f7a167199034eacbf", "a57c69e4f20222f1c6a22829ed5d25241effea7d4ff725c4ddf2e8dcf99fc9f8", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 838, 566, 0, 34.071, 0.723, 34.065614, 0.000521, 0.863671, 33.089503, 1, null],
+      ["lap-06", "stage03-synthetic-008", "synthetic-03-family-2", "1c47207a62c225dfa2ed4a12265cc0e0ecd9087da52582525fb80da31fe08058", "6938dbf56f0dc5e07ae3a61a4fedade731979da58fb0b92064bcd02ec60d0619", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 840, 421, 0, 25.238, 0.736, 25.231758, 0.000916, 0.866676, 24.255079, 1, null],
+      ["lap-06", "stage03-synthetic-009", "synthetic-03-family-2", "4df4b7fd57a041c4cd4464aaeee20228eb538becb00311e2a66bf4cfe62efd60", "fadb3a4b98db264f56afca9ea3dba52f937cca1ed51c25ff5a2a79cfcf5c266a", "pass", "none", "none", false, true, true, true, "stop", false, 840, 434, 0, 26.254, 1.515, 26.247056, 0.000575, 0.864932, 25.28401, 0, 0],
+      ["lap-06", "stage03-synthetic-010", "synthetic-03-family-2", "81b81c76462dbb7f33e525c222e884111cf8235681c7746cdc2ccc6ddf2294bd", "c9e9b1fac2af6a1266556670b461b3ab317a3ac3e641c764963a4bb607d7618b", "pass", "none", "none", false, true, true, true, "stop", false, 840, 512, 0, 30.636, 1.474, 30.629946, 0.000556, 0.85416, 29.674129, 0, 0],
+      ["lap-06", "stage03-synthetic-011", "synthetic-03-family-2", "2fc1748e14dc17a92a02cd71dd628976e11f32776f82f2ca5e51cb1124a1ad2a", "f7f7a1bc23efb2534ca3ac304c8ed86b899670f7453e21b38f111a03d84b205a", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 840, 441, 0, 26.819, 0.739, 26.812311, 0.000545, 0.86933, 25.846467, 1, null],
+      ["lap-06", "stage03-synthetic-012", "synthetic-03-family-3", "9493ef3fdd180f59078d8575d910194d0fbaeeb396af04677aeca5ea16f2f262", "f7f7a1bc23efb2534ca3ac304c8ed86b899670f7453e21b38f111a03d84b205a", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 838, 439, 0, 26.55, 0.732, 26.544353, 0.000595, 0.881526, 25.544918, 1, null],
+      ["lap-06", "stage03-synthetic-013", "synthetic-03-family-3", "147d8eba866395e8b8ce6552e76b55cf750862555455d32be83fa65e87c9d090", "087ae23e4423a92614599429eff9b3a748859a9dc39a2ad3a3214fd7113b88e8", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 836, 519, 0, 31.271, 0.761, 31.264684, 0.000515, 0.856337, 30.339066, 1, null],
+      ["lap-06", "stage03-synthetic-014", "synthetic-03-family-3", "dfc6f49f74da1a5e0efae63622f23719aa170f4e62f2af190f4378addf00fb60", "4b9f5e72627df783f19ee78b7ef2fdb9d7122ede7c4c80fad8aeb75b1b2e46b3", "pass", "none", "none", false, true, true, true, "stop", false, 839, 736, 0, 44.122, 1.486, 44.115454, 0.000534, 0.877291, 43.143257, 0, 0],
+      ["lap-06", "stage03-synthetic-015", "synthetic-03-family-3", "7127b98730f4f64495bfbe2f5ad96cfa12ca6b680cbf18df9256b79a6ee0ecf6", "7a8f4f3e8e17e9f116fb415f25ed0c3d2678a9a88c994ac19c2e1183863972bb", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 840, 468, 0, 28.375, 0.737, 28.368444, 0.000552, 0.880639, 27.334299, 1, null],
+      ["lap-06", "stage03-synthetic-016", "synthetic-03-family-4", "9d298a3f9de1922ba2613b594917cf3412b5e40477e558ba2a0ba1c4d1e8175d", "5dd709f73d7b54c04bb6b43c766a00b83c7b8f512b8a4567921a269bf3ae8102", "pass", "none", "none", false, true, true, true, "stop", false, 838, 660, 0, 39.71, 1.486, 39.703673, 0.00051, 0.842751, 38.79165, 0, 0],
+      ["lap-06", "stage03-synthetic-017", "synthetic-03-family-4", "fa4478f86ef255b3403e442d0876ac59a1f1d0b549b7cb429b57cf95870ba458", "1cc68e1995b6f3d54e1613bd8cde6cb0024bc4db4e2470476795d815b296aa9d", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 840, 438, 0, 27.324, 0.757, 27.31868, 0.000516, 0.870682, 26.340768, 1, null],
+      ["lap-06", "stage03-synthetic-018", "synthetic-03-family-4", "ac8304fc33fe1ddd57ff89bb6f6faca4468a5570a51484f92a5b7b3b1403c794", "1cc68e1995b6f3d54e1613bd8cde6cb0024bc4db4e2470476795d815b296aa9d", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 839, 431, 0, 26.003, 0.672, 25.997443, 0.000495, 0.872315, 25.058064, 1, null],
+      ["lap-06", "stage03-synthetic-019", "synthetic-03-family-4", "52b1af0dc7cc999f39b8319625944bb7ea4429d9fc0847a4ffdff9d9c1f7a3ca", "dd37439e3d33d0352a74147e331a8a935a4cbe859f56904f02a47795ea188560", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 839, 578, 0, 34.444, 0.718, 34.438481, 0.000512, 0.865859, 33.527037, 1, null],
+      ["lap-07", "stage03-synthetic-000", "synthetic-03-family-0", "77b299ac90481e82763185a181f45f0b8bf785bf2e83439b5d7bd01b3efa776e", "faed54e20070230a495e0a44bfd24478ac81eb2a4f9ba701f22b2b3273169564", "pass", "none", "none", false, true, true, true, "stop", false, 793, 601, 0, 43.696, 2.464, 43.691303, 8.355891, 0.894113, 34.435782, 0, 0],
+      ["lap-07", "stage03-synthetic-001", "synthetic-03-family-0", "3d980a94340b34d0393569753235338ca6e8d76e01c9a0ec5082eb64086baf52", "79b251f8619b4e3e8087e956b46aa8f6af3ac15214b4424a74ed38234c24124e", "pass", "none", "none", false, true, true, true, "stop", false, 793, 559, 0, 33.702, 1.51, 33.695801, 0.001059, 0.831457, 32.77742, 0, 0],
+      ["lap-07", "stage03-synthetic-002", "synthetic-03-family-0", "728c00422801026238160e1275d0a04ee9208ce1aadaf69782ec81d0b2beee75", "ea05901dbc84226226268233d2f47c3fbb28e5d96fe803bfd498e5afbed895aa", "pass", "none", "none", false, true, true, true, "stop", false, 792, 534, 0, 32.24, 1.437, 32.233641, 0.000512, 0.834263, 31.30438, 0, 0],
+      ["lap-07", "stage03-synthetic-003", "synthetic-03-family-0", "3a0ad999fcfc5455ea4ac3ee0a9d2330e63e589c2f3b132e5e88a200d82af5b4", "3bfe64d0ca8edf1020e08a39cc95cb23f3bd3d8c5a857d79e4f0103dff059ab9", "pass", "none", "none", false, true, true, true, "stop", false, 792, 792, 0, 47.558, 1.47, 47.552437, 0.000568, 0.839169, 46.610526, 0, 0],
+      ["lap-07", "stage03-synthetic-004", "synthetic-03-family-1", "3036e1785a72bdaed5dd6ff16664c3eeb4fb4173142de7700efc6668afeefc0d", "2b01f35fe9a10eff3320f5bb5964e354db39a5a7c58fc0966c2c960139f915f1", "pass", "none", "none", false, true, true, true, "stop", false, 793, 524, 0, 31.608, 1.522, 31.602233, 0.000549, 0.84649, 30.64676, 0, 0],
+      ["lap-07", "stage03-synthetic-005", "synthetic-03-family-1", "fa6d32a6620f6dd580fe0b091a4d412f1c6b09e29e0d7663669d5dcf22917773", "a94f4b05bed6a086a84d0773e61f310c8c40784cb1f4068921ab499634351bbe", "fail", "deformation", "major", false, true, true, true, "stop", false, 792, 546, 0, 33.04, 1.432, 33.032967, 0.000519, 0.83644, 32.089304, 0, 0],
+      ["lap-07", "stage03-synthetic-006", "synthetic-03-family-1", "8957da9b28393d0dc04a0cbce954a18edec900d780172e297b7e3b63f1370e96", "fe3ff86efac0c591a8a5ab2e42b6d2c991896884633b0ed2df357578c261284d", "pass", "none", "none", false, true, true, true, "stop", false, 793, 438, 0, 26.457, 1.448, 26.452265, 0.000509, 0.839351, 25.509657, 0, 0],
+      ["lap-07", "stage03-synthetic-007", "synthetic-03-family-1", "a3aef233072b251a015fe28e10bd05a3bd0e12d57cab379ea51fa38f4c030207", "2b01f35fe9a10eff3320f5bb5964e354db39a5a7c58fc0966c2c960139f915f1", "pass", "none", "none", false, true, true, true, "stop", false, 791, 523, 0, 31.471, 1.522, 31.464946, 0.000543, 0.843208, 30.518335, 0, 0],
+      ["lap-07", "stage03-synthetic-008", "synthetic-03-family-2", "9a930c4a22a5281fa6fa51231206bc8a366b7738b76b54ee6f436a6247e5acba", "40d60682110db1f7c2e53adb5818469a6c3f6bf57dba42e63c9332b01e9a5fd3", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 793, 396, 0, 24.09, 0.724, 24.083833, 0.000535, 0.83315, 23.144833, 1, null],
+      ["lap-07", "stage03-synthetic-009", "synthetic-03-family-2", "88e092e1cd30edf6cb7539fd5152db1a1e28ca348be2dee8cf6ab9227330b68c", "01073a188deb474682317c82d167e80fd0943ce39e91110125a500c24bd26c49", "pass", "none", "none", false, true, true, true, "stop", false, 793, 707, 0, 42.656, 1.459, 42.648981, 0.000521, 0.847123, 41.695435, 0, 0],
+      ["lap-07", "stage03-synthetic-010", "synthetic-03-family-2", "9336d92400a1635702fb0d9d3f72b4c80e0386f764406a6a8a82af01ae0aaaea", "876323e5f08b7f71fe038900db40286d9034dc5db0ade47ff6ea017374fdec45", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 793, 971, 0, 58.292, 0.662, 58.284467, 0.000486, 0.828917, 57.344071, 1, null],
+      ["lap-07", "stage03-synthetic-011", "synthetic-03-family-2", "a535630c21be7e2fdaacfd23171fa7cb12398b2f7f7ca7b33a7fda194aadd965", "26a86c7a8b93ef38c9da20cd37ec169b8d3caf44a50920fde8c40566d730c7d4", "pass", "none", "none", false, true, true, true, "stop", false, 793, 560, 0, 33.873, 1.482, 33.866047, 0.000544, 0.854653, 32.908748, 0, 0],
+      ["lap-07", "stage03-synthetic-012", "synthetic-03-family-3", "de3338738680073cc1cc119275613520df06e24fc2af124e9c9c60e65a49522e", "5690f4f4ea647f0e4e62ee0ff5a04f717dae6b5c308fa8df23b79e946c816293", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 791, 583, 0, 34.919, 0.677, 34.91337, 0.000503, 0.834071, 33.971145, 1, null],
+      ["lap-07", "stage03-synthetic-013", "synthetic-03-family-3", "4b81fec697284aed3231949f2836e5f0ad752433f0c8f13bbf949d9c32f90ab8", "bd4ee07d3d48646ef143be0e37993743eb1e33499dc615d21c030a041f80fad1", "pass", "none", "none", false, true, true, true, "stop", false, 789, 551, 0, 33.352, 1.523, 33.346332, 0.000434, 0.831045, 32.415214, 0, 0],
+      ["lap-07", "stage03-synthetic-014", "synthetic-03-family-3", "99ae8c8005e4830ece55c7b653daa93688acc7b67a31782ee83b95eb21f8e3c9", "39d83b5cb35c09c774d8c00f022fbe051f39c3a1f7afafd5b6b33ef49b841ac0", "pass", "none", "none", false, true, true, true, "stop", false, 792, 517, 0, 30.909, 1.474, 30.90338, 0.000502, 0.843143, 29.952558, 0, 0],
+      ["lap-07", "stage03-synthetic-015", "synthetic-03-family-3", "35559fa75683abf3c01b1a2a1c5de1017725c9f35ec1fcd1d832549158dff31d", "e22ea372dbb26de7c538dce69b851135a9720e76883ed125141400eda76ebac1", "pass", "none", "none", false, true, true, true, "stop", false, 793, 574, 0, 34.358, 1.462, 34.35211, 0.000504, 0.848661, 33.373721, 0, 0],
+      ["lap-07", "stage03-synthetic-016", "synthetic-03-family-4", "582cedab8fbe381181fafce8f875a6d68b7f514cd480e8d096fec196f7ec4e2e", "c57c4de7e0b1e29d3b415db64a5ebbcd0f499c6283246a563e575c136e08bf58", "pass", "none", "none", false, true, true, true, "stop", false, 791, 505, 0, 30.315, 1.476, 30.30832, 0.001186, 0.844921, 29.357464, 0, 0],
+      ["lap-07", "stage03-synthetic-017", "synthetic-03-family-4", "0ec4f4c038245cb76f0808388a344ac184ebc63dee16e6e8f2891976c262922a", "784dce4701458e4d64f09c3bc4c78145581c49f62a0727f5f1706fee6e228289", "pass", "none", "none", false, true, true, true, "stop", false, 793, 526, 0, 31.763, 1.453, 31.757223, 0.000548, 0.842166, 30.807605, 0, 0],
+      ["lap-07", "stage03-synthetic-018", "synthetic-03-family-4", "7ffa2e50923f383ddb7f75e9f9c2cd83498752d076b7b8161574414d2e8eb524", "eaef231b509e2f10aecda220dcff4d5b6c48da613ff3299d96346f1b2557f9f3", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 792, 352, 0, 21.271, 0.716, 21.266425, 0.000549, 0.846255, 20.319893, 1, null],
+      ["lap-07", "stage03-synthetic-019", "synthetic-03-family-4", "bb27b0d53522480df82bac68df0788f75366cbde95b13b26e781ee688f783629", "fcfd82a6d9195d69313b6cfa606f029177fa947e68b485fb82b01f8801de9a61", "blocked", "evaluator", "none", false, true, true, true, "stop", false, 792, 529, 0, 31.996, 0.671, 31.990562, 0.000919, 0.849516, 31.044125, 1, null],
+      ["lap-08", "stage03-synthetic-000", "synthetic-03-family-0", "deaddaad954ce6b83f0c8bce7dfb68f73a5719af0ab56148f424b235f88938aa", "da95f214a5459f0faafce8a544ca5e6db3e09685bf8451eaf92f838ab9e50bb5", "pass", "none", "none", false, true, true, true, "stop", false, 898, 481, 0, 37.713, 2.489, 37.707834, 8.85384, 1.057897, 27.789302, 0, 0],
+      ["lap-08", "stage03-synthetic-001", "synthetic-03-family-0", "ee2f438e8570fd9f052222806ff79049c230a976b64464ad108e48a9d3f7af77", "34f9b055882b49410cabe07968868e4703788c39d23783ea17d1e2934f47b680", "pass", "none", "none", false, true, true, true, "stop", false, 898, 468, 0, 28.397, 1.584, 28.391186, 0.000592, 0.921128, 27.393873, 0, 0],
+      ["lap-08", "stage03-synthetic-002", "synthetic-03-family-0", "eb1b14cd98553f7c9e259821582db37852fbf3be7e03c245fd515a14398c8574", "dc985cca6f51704ec04c81da0b427a7de0eda5a3f12843f916c209a74b22ba28", "pass", "none", "none", false, true, true, true, "stop", false, 897, 481, 0, 28.74, 1.444, 28.734025, 0.000512, 0.925354, 27.731349, 0, 0],
+      ["lap-08", "stage03-synthetic-003", "synthetic-03-family-0", "598124e16ff3d86ed4f53e45f56606dc30da7203407123a5468792e5064f7bd5", "b3c3954ea92c9f7177d25ef37af0f77895e969fe391c36ea83c364991019570b", "pass", "none", "none", false, true, true, true, "stop", false, 897, 604, 0, 36.189, 1.475, 36.184226, 0.000516, 0.926224, 35.146808, 0, 0],
+      ["lap-08", "stage03-synthetic-004", "synthetic-03-family-1", "b8f606a6a9a6f340a85bab5f71fd0c33d9a2e12642b3b78c0a3676166120b484", "7daebe3d562fc2280d5e2ccf5f0e731f0e348a90cf432e305ddbca99911e8c19", "pass", "none", "none", false, true, true, true, "stop", false, 898, 504, 0, 30.26, 1.471, 30.253531, 0.000502, 0.923004, 29.231141, 0, 0],
+      ["lap-08", "stage03-synthetic-005", "synthetic-03-family-1", "5a646e1d9d64cb11d900bd6d0d2b80c20ba809af1748cdfdc2623e89ff608b98", "71027fa9eb34ec0c62ee90b419402f56c7c0a6a8f9b545e127dc86c52c18d352", "pass", "none", "none", false, true, true, true, "stop", false, 897, 490, 0, 29.476, 1.435, 29.470176, 0.000502, 0.927995, 28.443029, 0, 0],
+      ["lap-08", "stage03-synthetic-006", "synthetic-03-family-1", "9c0f455fdef2f510597fa49709945cb96e0a82648638bf36c3e761c32bdc8c04", "71027fa9eb34ec0c62ee90b419402f56c7c0a6a8f9b545e127dc86c52c18d352", "pass", "none", "none", false, true, true, true, "stop", false, 898, 478, 0, 28.828, 1.514, 28.822245, 0.000651, 0.930351, 27.787822, 0, 0],
+      ["lap-08", "stage03-synthetic-007", "synthetic-03-family-1", "f836d51b8b1ebe25cd7bf72ecd6005b4d5803e09c9f7a17154b58d8569c70f38", "7daebe3d562fc2280d5e2ccf5f0e731f0e348a90cf432e305ddbca99911e8c19", "pass", "none", "none", false, true, true, true, "stop", false, 896, 504, 0, 30.146, 1.478, 30.13907, 0.000531, 0.889009, 29.137824, 0, 0],
+      ["lap-08", "stage03-synthetic-008", "synthetic-03-family-2", "191163c9ac4baa2b1c71936cea3e68dd214aec0445b08e40846087148f9d8780", "0b0275d139c1583607c7de70a011e6a9f97ca7932cad73073e712a7590b31ae4", "pass", "none", "none", false, true, true, true, "stop", false, 898, 495, 0, 30.068, 1.492, 30.061344, 0.000534, 0.934893, 29.020094, 0, 0],
+      ["lap-08", "stage03-synthetic-009", "synthetic-03-family-2", "6983fec64ac3891e899bdb48a60467a41bb56ce964de08c77f094c1a623296b7", "149331e27275b700cc100b01f65c6f2de67116a64e26a3fc515aeadc5384944d", "pass", "none", "none", false, true, true, true, "stop", false, 898, 501, 0, 30.252, 1.485, 30.244844, 0.000517, 0.910136, 29.233235, 0, 0],
+      ["lap-08", "stage03-synthetic-010", "synthetic-03-family-2", "90172f09cf8f3ded6a117d82938cc50510708ecd6d03c0abff6bef59d665d6cf", "71ae2c09fdbe773d5b6d969455c7f27961e5397877d73f183b0a664b4cc77f8b", "pass", "none", "none", false, true, true, true, "stop", false, 898, 536, 0, 31.947, 1.476, 31.940215, 0.000519, 0.936978, 30.894375, 0, 0],
+      ["lap-08", "stage03-synthetic-011", "synthetic-03-family-2", "0146b39bb692047a906dd7e0a2c2af7e925a1e84725ffedb5ec7f04efd19d4fa", "7daebe3d562fc2280d5e2ccf5f0e731f0e348a90cf432e305ddbca99911e8c19", "pass", "none", "none", false, true, true, true, "stop", false, 898, 468, 0, 28.085, 1.462, 28.079131, 0.000763, 0.935952, 27.039874, 0, 0],
+      ["lap-08", "stage03-synthetic-012", "synthetic-03-family-3", "00b68855688f1f02df61fd08cec5ab8a840326a85212758648a3a824ace09c87", "34f9b055882b49410cabe07968868e4703788c39d23783ea17d1e2934f47b680", "pass", "none", "none", false, true, true, true, "stop", false, 896, 488, 0, 29.19, 1.557, 29.18437, 0.000446, 0.893221, 28.187881, 0, 0],
+      ["lap-08", "stage03-synthetic-013", "synthetic-03-family-3", "d81aaf6d11301d9ae4ef4baa436e9b78914e075a0524c3bea89dd220f898230f", "7daebe3d562fc2280d5e2ccf5f0e731f0e348a90cf432e305ddbca99911e8c19", "pass", "none", "none", false, true, true, true, "stop", false, 894, 488, 0, 29.182, 1.508, 29.176442, 0.000513, 0.893609, 28.175847, 0, 0],
+      ["lap-08", "stage03-synthetic-014", "synthetic-03-family-3", "a16d7ba445e5e73a20b7c55e7302137a688fc2584203e1ec66148f2d066856fe", "0855efa8f5d49e80ab91d344d894762e80e8b720c0a618ba9142b8abdbe1e198", "pass", "none", "none", false, true, true, true, "stop", false, 897, 490, 0, 29.462, 1.504, 29.455644, 0.0005, 0.935197, 28.409954, 0, 0],
+      ["lap-08", "stage03-synthetic-015", "synthetic-03-family-3", "92a3e5b7c638de02b1bd711f37713a6b1af89c237de90c692d480a6c7388104a", "bad86f4ed1ee43d6603d7557ef3ecf9910a68630b8fb2fd2b0b077439406c8fe", "pass", "none", "none", false, true, true, true, "stop", false, 898, 490, 0, 29.256, 1.405, 29.250393, 0.000566, 0.933569, 28.202691, 0, 0],
+      ["lap-08", "stage03-synthetic-016", "synthetic-03-family-4", "67cb3d53341723056cd377f73b171450cedeea781fed220343f81f50af1856e6", "ff6e2d7ef121a95133c2e7f99db6745716776c64f5662c45f0f2096abab689c5", "pass", "none", "none", false, true, true, true, "stop", false, 896, 490, 0, 29.542, 1.459, 29.535761, 0.000541, 0.879901, 28.555053, 0, 0],
+      ["lap-08", "stage03-synthetic-017", "synthetic-03-family-4", "02ac7f3c8a19e6e420965d421b439ef6505da91cfd0d52878d10310de5a2438e", "34f9b055882b49410cabe07968868e4703788c39d23783ea17d1e2934f47b680", "pass", "none", "none", false, true, true, true, "stop", false, 898, 456, 0, 27.634, 1.439, 27.627857, 0.000512, 0.923937, 26.597414, 0, 0],
+      ["lap-08", "stage03-synthetic-018", "synthetic-03-family-4", "1c0f9c93f2f231a933d129958ef18f94176dbfd7b7f381f0004e8b9156cf658c", "7daebe3d562fc2280d5e2ccf5f0e731f0e348a90cf432e305ddbca99911e8c19", "pass", "none", "none", false, true, true, true, "stop", false, 897, 456, 0, 27.508, 1.426, 27.501723, 0.000549, 0.935621, 26.467123, 0, 0],
+      ["lap-08", "stage03-synthetic-019", "synthetic-03-family-4", "b9fdd0d37a1774b402a883576614acfb3c0038f28ac9d233548311c99ad54e9c", "34f9b055882b49410cabe07968868e4703788c39d23783ea17d1e2934f47b680", "pass", "none", "none", false, true, true, true, "stop", false, 897, 502, 0, 30.179, 1.473, 30.173053, 0.000478, 0.925991, 29.135441, 0, 0]
+    ]
+  },
+  "unchanged_repeat_checks": [
+    {
+      "from_lap": "lap-03",
+      "to_lap": "lap-04",
+      "paired_cases": 20,
+      "identical_prompt_text_hash": 20,
+      "identical_generated_code_bytes": 20,
+      "identical_final_response_text_bytes": 20
+    },
+    {
+      "from_lap": "lap-04",
+      "to_lap": "lap-05",
+      "paired_cases": 20,
+      "identical_prompt_text_hash": 20,
+      "identical_generated_code_bytes": 20,
+      "identical_final_response_text_bytes": 20
+    }
+  ],
+  "real_trial_additional_observations": [
+    {
+      "trial_id": "real-primary-01",
+      "primary_first_attempt": true,
+      "phase_reached": "fresh structural verifier",
+      "repair_body_reached": false,
+      "post_run_context_inspection_was_read_only": true,
+      "inspection_counted_as_model_retry": false,
+      "candidate_review_render_views": 12,
+      "originals_verified": true,
+      "model_blobs_verified": true
+    },
+    {
+      "trial_id": "real-assisted-final-02",
+      "primary_first_attempt": false,
+      "phase_reached": "proposal validation",
+      "response_characters": 16368,
+      "identical_planning_comment_occurrences": 9,
+      "candidate_execution_records": 0,
+      "automatic_json_repair_used": false,
+      "originals_verified": true,
+      "model_blobs_verified": true
+    }
+  ],
+  "field_notes": {
+    "request_settings": "Sent application-level fields; omitted options are not proven explicit engine values. Native parameters are declarations from saved model metadata, not a full runtime-options dump.",
+    "post_lap_blob_integrity_recorded": "null means the saved lap status does not record this field; not a failed integrity check.",
+    "thinking_field_present_and_nonempty": "Presence only. No internal thinking text or continuation-token arrays are published.",
+    "code_syntax_valid": "Recorded static parser result, not a runtime pass.",
+    "builder_exit_code": "Trusted execution bundle field. null means no exit code was recorded; it does not establish execution.",
+    "cached_input_tokens": "Saved API cache metric, or null if absent; do not infer hardware utilization from it.",
+    "candidate_code_sha256": "Opaque digest of a generic synthetic proposal; code is not included. No private real-asset fingerprints are published.",
+    "real_trial_additional_observations": "Manually selected non-identifying facts from retained records; no raw paths, code, images or logs.",
+    "timings": "Relative seconds only; hardware, engine-build and load-state differences limit speed comparisons.",
+    "case_table_encoding": "For each row, pair values with columns in order. This is a lossless table encoding; all 160 cases and all fields are retained."
+  }
+}
