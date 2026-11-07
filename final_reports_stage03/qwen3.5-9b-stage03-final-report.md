@@ -1,6 +1,6 @@
 # Qwen3.5 9B — final Stage03 evaluation report
 
-Finalized 2026-11-07. Sanitized public edition. Narrative interpretation is by the benchmark operator; numerical synthetic results were regenerated from verified saved events. This report covers one model only.
+Finalized 2026-11-07. Sanitized public edition. Narrative interpretation is by the benchmark operator; numerical synthetic results were regenerated from verified saved events. This report covers one model only. [Prompts are archived by lap and trial](prompts/README.md).
 
 ## 1. Experiment Summary
 
@@ -99,7 +99,7 @@ Original assets and qualified model blobs verified unchanged after both real tri
 
 The retained setup evidence records 103 passing tests, stable repeated reference snapshots, two accepted positive controls, seven rejected negative scene controls and seven passing boundary/artifact/lifecycle probes. These bounded checks do not prove immunity to unknown application or operating-system vulnerabilities. An independent subagent implementation/review did not complete because of usage limits; no completed independent review is claimed. Human artistic acceptance and production approval were not obtained.
 
-Only this sanitized text report is published. Local usernames, absolute filesystem paths, machine/network identifiers, source-character identifiers, asset fingerprints, checkpoints, textures, renders, private manifests, full prompts, raw outputs, logs and operational sandbox details are excluded. The private original reports and evidence are retained locally.
+This sanitized report and the separately labeled per-lap prompt archive are published. Local usernames, absolute filesystem paths, machine/network identifiers, source-character identifiers, asset fingerprints, checkpoints, textures, renders, private manifests, raw outputs, logs and operational sandbox details are excluded from this report. The accompanying archive publishes exact synthetic prompts and redacted real-character prompts. The private original reports and evidence are retained locally.
 
 ## 6. Miscellaneous Findings and Future Model Analysis
 
@@ -107,7 +107,7 @@ Synthetic evidence was reverified before export: 328 hash-chained events, 160 at
 
 The real adapter stores separate controller, builder, fresh-snapshot and verifier evidence; its trials were not added to the synthetic ledger. Their values here come from the retained real-trial records. The final retry records `done_reason: length`, exactly 4,096 output tokens and zero sandbox execution records. Both before/after model-integrity records match. The primary prompt/contract/status hashes also remained unchanged.
 
-Reproducibility is limited in this public edition because prompts, private assets, manifests and raw evidence are withheld. No independent public reproduction or cryptographic attestation is claimed. The hash chain detects inconsistencies in saved data but is not a tamper-proof audit system. A finalized report does not imply an accepted model result.
+Exact synthetic prompt text and request settings are available in the accompanying archive. Real-character reproducibility remains limited because identifying prompt details are redacted and private assets, manifests and raw evidence are withheld. No independent public reproduction or cryptographic attestation is claimed. The hash chain detects inconsistencies in saved data but is not a tamper-proof audit system. A finalized report does not imply an accepted model result.
 
 ## 7. Final Verdict
 

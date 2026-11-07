@@ -1,0 +1,124 @@
+{
+  "schema": "stage03-factorized-prompts-v1",
+  "lap_id": "lap-06",
+  "stage": "03",
+  "provenance": "saved outgoing Ollama requests; prompt hashes matched to verified ledger",
+  "sanitized": false,
+  "reconstruction": "shared_prefix + case.task + shared_suffix; no extra separator or newline",
+  "request_settings": {
+    "model": "qwen3.5:9b",
+    "stream": false,
+    "format": "json",
+    "options": {
+      "temperature": 0.0,
+      "num_ctx": 8192,
+      "num_predict": 4096,
+      "presence_penalty": 0.0
+    },
+    "think": false
+  },
+  "shared_prefix": "You are <model>, a narrowly scoped local PMX-to-Blender script PROPOSAL generator. Your code will be reviewed and executed ONLY by an independent trusted Blender oracle in a disposable no-network environment. Do not run tools, use shell/network/filesystem, modify originals, approve stage gates, or invent PMX bone semantics. Return JSON with keys code and explanation. The code must define solve(scene). If uncertain, return empty code. Stage 04 is LEFT-ARM PILOT ONLY; do not create pole targets or claim full rig completion. Stage 06 must NEVER modify the accepted rig. \nSTAGE 03\nTASK ",
+  "shared_suffix": "\nEXPECTED Deform weights normalized; MASK, geometry and morph indices unchanged.\nVERIFIED API REFERENCE (lap 3 prompt specialization):\nBlender 5.2.2 API facts, verified in a separate disposable Blender process:\n- This task asks for a proposal, not live inspection. The independent builder constructs the declared scene before calling solve(scene). RepairMesh and its stated groups/shape keys exist in these synthetic development fixtures. Read weights from that object at execution time; reference tuples are not a replacement data source.\n- bpy.data.objects['RepairMesh'] is a bpy.types.Object. Its .type is 'MESH'; obj.data is a bpy.types.Mesh. isinstance(obj, bpy.types.Mesh) is false and must not reject the Object.\n- Vertex groups belong to obj.vertex_groups. Mesh datablocks (obj.data) have no vertex_groups attribute.\n- VertexGroup.weight(index) is a method taking an integer vertex index. Do not use weight[index], weights[index], or pass a MeshVertex object.\n- VertexGroup.add(index_sequence, weight, type) writes weights; use a sequence of integer indices and the 'REPLACE' mode for setting a value. Do not assign through .weight or invent a .weights array.\n- Iterate obj.data.vertices once; each vertex has an integer .index. MeshVertex.groups holds assignment elements with numeric .group indices and .weight values; it does not support group-name membership lookups. Group-name lookup is available on obj.vertex_groups.\n- Read the two original deform weights before writing either normalized value. Change only DEF_A and DEF_B; do not normalize every group together because MASK must remain unchanged.\n- Do not change positions, topology, transforms, materials, shape-key data, group names or modifiers. Do not call file-saving operators. Return the requested JSON-serializable modified-vertex count.\n- Blender collections use Python len(collection), including len(obj.data.vertices). They have no .length or .size property. Check result-return expressions as well as the main loop for invented API attributes.\n- MeshVertex.groups is a sparse collection of assignments. An assignment position is not a global vertex-group ID. Never use v.groups[group_index] to locate a group's weight. Match each assignment's .group against the desired VertexGroup.index, or use VertexGroup.weight(v.index) while handling missing membership as zero.\n- The returned modified-vertex count counts vertices whose weights you actually changed. It is not automatically the total vertex count. Preserve the required result schema.\nReturn concise code and explanation in the required JSON object. Avoid long comments/docstrings and speculative APIs. No complete solution is provided by this reference.\n",
+  "cases": [
+    {
+      "case_id": "stage03-synthetic-000",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.7296, 0.2777), (0.4152, 0.6026), (0.2938, 0.1055), (0.8322, 0.5981)].",
+      "prompt_sha256": "e71852b55ce4e4ac2c38379ee684deb874b64a9b7860eb0dcab2530259ea99ea"
+    },
+    {
+      "case_id": "stage03-synthetic-001",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.1626, 0.4193), (0.1241, 0.9348), (0.9493, 0.2362), (0.5652, 0.6999)].",
+      "prompt_sha256": "651c994accd3fcca84c0cc2e841fb74b637c6497d594cc28fe341530e138bfdb"
+    },
+    {
+      "case_id": "stage03-synthetic-002",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.198, 0.3429), (0.3475, 0.1944), (0.7545, 0.3716), (0.5282, 0.5233)].",
+      "prompt_sha256": "0efd3b1eb2f727ec6b7e3fcf699e45ede5fff4d23a6e22766398aaa197372257"
+    },
+    {
+      "case_id": "stage03-synthetic-003",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.552, 0.9312), (0.2542, 0.4538), (0.2794, 0.2303), (0.2873, 0.1308)].",
+      "prompt_sha256": "c06036071aafecb17560bf83e6ba208dc0c09826b7058f85141519ed4898c1b5"
+    },
+    {
+      "case_id": "stage03-synthetic-004",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.7142, 0.5397), (0.7917, 0.3988), (0.4238, 0.2648), (0.8035, 0.8215)].",
+      "prompt_sha256": "2da5992c067250ca529404afa8521cbe52c2aa9283b873583bdf4f2543133bfb"
+    },
+    {
+      "case_id": "stage03-synthetic-005",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.1105, 0.7361), (0.5539, 0.5688), (0.7505, 0.8893), (0.4718, 0.134)].",
+      "prompt_sha256": "85d0d77591b4c6fbe157e275def22b0af493a0deba9d8988ba7c1341385892b9"
+    },
+    {
+      "case_id": "stage03-synthetic-006",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.4689, 0.7316), (0.7121, 0.5562), (0.1042, 0.9413), (0.3192, 0.8791)].",
+      "prompt_sha256": "04c651ec00b48a587e9c20a89ce22a2c3c25e290c4cac81ba7389c700c6cbf55"
+    },
+    {
+      "case_id": "stage03-synthetic-007",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.697, 0.4124), (0.3646, 0.9433), (0.3045, 0.479), (0.2407, 0.3486)].",
+      "prompt_sha256": "59b35623ea8885297639207700d0fbf6d95e99208914d18f7a167199034eacbf"
+    },
+    {
+      "case_id": "stage03-synthetic-008",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.6364, 0.1774), (0.6056, 0.5497), (0.7145, 0.5591), (0.7828, 0.5781)].",
+      "prompt_sha256": "1c47207a62c225dfa2ed4a12265cc0e0ecd9087da52582525fb80da31fe08058"
+    },
+    {
+      "case_id": "stage03-synthetic-009",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.7523, 0.7615), (0.7238, 0.6071), (0.6157, 0.6526), (0.3573, 0.5605)].",
+      "prompt_sha256": "4df4b7fd57a041c4cd4464aaeee20228eb538becb00311e2a66bf4cfe62efd60"
+    },
+    {
+      "case_id": "stage03-synthetic-010",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.4973, 0.5422), (0.6385, 0.1738), (0.2416, 0.9354), (0.3573, 0.5134)].",
+      "prompt_sha256": "81b81c76462dbb7f33e525c222e884111cf8235681c7746cdc2ccc6ddf2294bd"
+    },
+    {
+      "case_id": "stage03-synthetic-011",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.6825, 0.2395), (0.2159, 0.9378), (0.1518, 0.5662), (0.4952, 0.3238)].",
+      "prompt_sha256": "2fc1748e14dc17a92a02cd71dd628976e11f32776f82f2ca5e51cb1124a1ad2a"
+    },
+    {
+      "case_id": "stage03-synthetic-012",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.4813, 0.8534), (0.2463, 0.8105), (0.809, 0.456), (0.6822, 0.1218)].",
+      "prompt_sha256": "9493ef3fdd180f59078d8575d910194d0fbaeeb396af04677aeca5ea16f2f262"
+    },
+    {
+      "case_id": "stage03-synthetic-013",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.323, 0.822), (0.397, 0.2664), (0.9309, 0.1077), (0.3706, 0.848)].",
+      "prompt_sha256": "147d8eba866395e8b8ce6552e76b55cf750862555455d32be83fa65e87c9d090"
+    },
+    {
+      "case_id": "stage03-synthetic-014",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.182, 0.3883), (0.4844, 0.6082), (0.2741, 0.8478), (0.1619, 0.5079)].",
+      "prompt_sha256": "dfc6f49f74da1a5e0efae63622f23719aa170f4e62f2af190f4378addf00fb60"
+    },
+    {
+      "case_id": "stage03-synthetic-015",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.4513, 0.1796), (0.6542, 0.3875), (0.4407, 0.5713), (0.1573, 0.5685)].",
+      "prompt_sha256": "7127b98730f4f64495bfbe2f5ad96cfa12ca6b680cbf18df9256b79a6ee0ecf6"
+    },
+    {
+      "case_id": "stage03-synthetic-016",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.658, 0.5229), (0.8461, 0.2282), (0.901, 0.1237), (0.3139, 0.3697)].",
+      "prompt_sha256": "9d298a3f9de1922ba2613b594917cf3412b5e40477e558ba2a0ba1c4d1e8175d"
+    },
+    {
+      "case_id": "stage03-synthetic-017",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.7803, 0.1088), (0.2473, 0.8206), (0.1232, 0.9485), (0.8009, 0.1145)].",
+      "prompt_sha256": "fa4478f86ef255b3403e442d0876ac59a1f1d0b549b7cb429b57cf95870ba458"
+    },
+    {
+      "case_id": "stage03-synthetic-018",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.3232, 0.6633), (0.1476, 0.2409), (0.2508, 0.496), (0.1401, 0.3894)].",
+      "prompt_sha256": "ac8304fc33fe1ddd57ff89bb6f6faca4468a5570a51484f92a5b7b3b1403c794"
+    },
+    {
+      "case_id": "stage03-synthetic-019",
+      "task": "Implement def solve(scene) in bpy. The synthetic mesh object is named 'RepairMesh' with vertex groups DEF_A, DEF_B, MASK and Basis/smile shape keys. Normalize only the DEF_A and DEF_B weights at every vertex to sum to 1; leave MASK, all vertices and shape keys untouched; return a JSON-serializable dictionary with modified vertex count. Never change source .blend files. Reference weights: [(0.2918, 0.5051), (0.3479, 0.7518), (0.8809, 0.138), (0.5117, 0.3634)].",
+      "prompt_sha256": "52b1af0dc7cc999f39b8319625944bb7ea4429d9fc0847a4ffdff9d9c1f7a3ca"
+    }
+  ]
+}
