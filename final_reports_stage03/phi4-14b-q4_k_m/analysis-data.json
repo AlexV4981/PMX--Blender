@@ -1,0 +1,472 @@
+{
+  "schema": "sanitized-stage03-model-analysis-v1",
+  "model": {
+    "family": "Microsoft Phi4",
+    "tag": "phi4:14b",
+    "digest": "ac896e5b8b34a1f4efa7b14d7520725140d5512484457fab45d2a4ea14c69dba",
+    "parameter_size": "14.7B",
+    "quantization": "Q4_K_M",
+    "gguf_architecture_label": "phi3",
+    "capabilities": [
+      "completion"
+    ],
+    "native_parameters": "stop                           \"<|im_start|>\"\nstop                           \"<|im_end|>\"\nstop                           \"<|im_sep|>\"",
+    "native_template_sha256": "32695b892af87ef8fca6e13a1a31c67c1441d7398be037e366e2fc763857c06a",
+    "context_capacity": 16384,
+    "training_or_adapter_updates": false,
+    "Blender": "5.2.2 LTS",
+    "Python": "3.13.5",
+    "machine_identity": "withheld"
+  },
+  "scope": {
+    "total_laps": 10,
+    "synthetic_laps": 3,
+    "synthetic_first_attempts": 60,
+    "unique_synthetic_cases": 20,
+    "correlated_families": 5,
+    "real_first_trials": 7,
+    "unique_real_characters": 1,
+    "real_first_try_passes": 0,
+    "additional_real_repair_attempts": 2,
+    "repair_passes": 0,
+    "validation_split": false,
+    "production_qualified": false
+  },
+  "laps": [
+    {
+      "lap_id": "lap-01",
+      "scope": "synthetic_development",
+      "local_date": "2026-11-08",
+      "first_try_passes": 17,
+      "denominator": 20,
+      "result_counts": {
+        "pass": 17,
+        "fail": 0,
+        "blocked": 3,
+        "not_run": 0
+      },
+      "operator_wall_seconds": 1599.6976029872894,
+      "request_settings": {
+        "model": "phi4:14b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        }
+      },
+      "change": "Original baseline prompts and explicit decoding controls; only model tag differs.",
+      "finding": "17/20; three candidates passed a list as VertexGroup.add weight, which requires one scalar float.",
+      "length_stops": 0,
+      "thinking_responses": 0,
+      "model_layers_verified": true,
+      "controller_sha256": "32ef7e6071918f0ca0a06d555483bc08bdfa45707e8c6746561bb6e58e08ce8e"
+    },
+    {
+      "lap_id": "lap-02",
+      "scope": "synthetic_development",
+      "local_date": "2026-11-08",
+      "first_try_passes": 20,
+      "denominator": 20,
+      "result_counts": {
+        "pass": 20,
+        "fail": 0,
+        "blocked": 0,
+        "not_run": 0
+      },
+      "operator_wall_seconds": 1418.3031227588654,
+      "request_settings": {
+        "model": "phi4:14b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        }
+      },
+      "change": "Append original Qwen-derived general Blender API helper, relabel heading, add scalar-float weight versus index-sequence clarification.",
+      "finding": "20/20 first try; no weight-list errors. Full helper and targeted clarification added together, so individual effects cannot be isolated.",
+      "length_stops": 0,
+      "thinking_responses": 0,
+      "model_layers_verified": true,
+      "controller_sha256": "32ef7e6071918f0ca0a06d555483bc08bdfa45707e8c6746561bb6e58e08ce8e"
+    },
+    {
+      "lap_id": "lap-03",
+      "scope": "synthetic_development",
+      "local_date": "2026-11-08",
+      "first_try_passes": 20,
+      "denominator": 20,
+      "result_counts": {
+        "pass": 20,
+        "fail": 0,
+        "blocked": 0,
+        "not_run": 0
+      },
+      "operator_wall_seconds": 1415.4115960597992,
+      "request_settings": {
+        "model": "phi4:14b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        }
+      },
+      "change": "Exact repeat of lap02; no request changes.",
+      "finding": "20/20; all20 final answer texts identical to02. Consistent observed pair, not universal reproducibility or generalization.",
+      "length_stops": 0,
+      "thinking_responses": 0,
+      "model_layers_verified": true,
+      "controller_sha256": "32ef7e6071918f0ca0a06d555483bc08bdfa45707e8c6746561bb6e58e08ce8e"
+    },
+    {
+      "lap_id": "lap-04",
+      "scope": "one_reused_real_character",
+      "trial_index": 1,
+      "first_try_passes": 0,
+      "denominator": 1,
+      "status": "complete",
+      "change": "First real exam: frozen common prompt/input/evaluator and original real decoding controls. No extra synthetic appendix or repair.",
+      "finding": "Code ran but fresh snapshot exactly matched input. Material label treated as vertex-group name and early no-op return.",
+      "request_settings": {
+        "model": "phi4:14b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "local_date": "2026-11-08",
+      "operator_wall_seconds": 238.73379945755005,
+      "first_attempt_wall_seconds": 213.5452013015747,
+      "input_tokens": 1020,
+      "output_tokens": 883,
+      "generation_seconds": 126.478194778,
+      "done_reason": "stop",
+      "thinking_present": false,
+      "candidate_execution_began": true,
+      "builder_completed": true,
+      "fresh_geometry_verifier_ran": true,
+      "diagnostic_render_views": 12,
+      "snapshot_exactly_matches_input": true,
+      "errors": [
+        "Evaluated expression/pose surfaces differ from reference"
+      ],
+      "actual_removed_evaluated_faces": 0,
+      "returned_removed_evaluated_faces": 0,
+      "original_assets_verified": true,
+      "model_layers_verified": true,
+      "controller_sha256": "791632776e1da3fd661c0a61d90cba78316ab0dfeeb2d3e79182f19778d4decd"
+    },
+    {
+      "lap_id": "lap-05",
+      "scope": "one_reused_real_character",
+      "trial_index": 2,
+      "first_try_passes": 0,
+      "denominator": 1,
+      "status": "stopped",
+      "change": "Append general identification guidance: distinguish object/material/group names and inspect measured regions.",
+      "finding": "Runtime failure: BMFace.co while iterating vertex.link_faces; no fresh verifier.",
+      "request_settings": {
+        "model": "phi4:14b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "local_date": "2026-11-08",
+      "operator_wall_seconds": 115.44287204742432,
+      "first_attempt_wall_seconds": 115.44287204742432,
+      "input_tokens": 1440,
+      "output_tokens": 629,
+      "generation_seconds": 95.14362316,
+      "done_reason": "stop",
+      "thinking_present": false,
+      "candidate_execution_began": true,
+      "builder_completed": false,
+      "fresh_geometry_verifier_ran": false,
+      "diagnostic_render_views": 0,
+      "snapshot_exactly_matches_input": null,
+      "errors": [
+        "AttributeError: BMFace has no co attribute"
+      ],
+      "actual_removed_evaluated_faces": null,
+      "returned_removed_evaluated_faces": null,
+      "original_assets_verified": true,
+      "model_layers_verified": true,
+      "controller_sha256": "e2ea1e6a630f045bfd0e66e45d355afb42e5efe64ee1196dda3b625d7b963617"
+    },
+    {
+      "lap_id": "lap-06",
+      "scope": "one_reused_real_character",
+      "trial_index": 3,
+      "first_try_passes": 0,
+      "denominator": 1,
+      "status": "stopped",
+      "change": "Append general BMesh element, adjacency, coordinate and lifecycle guidance.",
+      "finding": "Runtime failure: nonexistent bmesh.ops.bound_box; no fresh verifier.",
+      "request_settings": {
+        "model": "phi4:14b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "local_date": "2026-11-08",
+      "operator_wall_seconds": 168.21875405311584,
+      "first_attempt_wall_seconds": 168.21875405311584,
+      "input_tokens": 1820,
+      "output_tokens": 984,
+      "generation_seconds": 148.155672615,
+      "done_reason": "stop",
+      "thinking_present": false,
+      "candidate_execution_began": true,
+      "builder_completed": false,
+      "fresh_geometry_verifier_ran": false,
+      "diagnostic_render_views": 0,
+      "snapshot_exactly_matches_input": null,
+      "errors": [
+        "AttributeError: BMesh operator bound_box does not exist"
+      ],
+      "actual_removed_evaluated_faces": null,
+      "returned_removed_evaluated_faces": null,
+      "original_assets_verified": true,
+      "model_layers_verified": true,
+      "controller_sha256": "b6924bffc0f840ce1da1844c454014254b4386ade9ec13ab3d662f1c881144e0"
+    },
+    {
+      "lap_id": "lap-07",
+      "scope": "one_reused_real_character",
+      "trial_index": 4,
+      "first_try_passes": 0,
+      "denominator": 1,
+      "status": "stopped",
+      "change": "Same first request as06; allow one syntax/runtime feedback repair. Feedback extractor defect documented.",
+      "finding": "First/repair both failed on bound_box. Repair received generic Blender script-failed footer, not specific exception: harness limitation.",
+      "request_settings": {
+        "model": "phi4:14b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "local_date": "2026-11-08",
+      "operator_wall_seconds": 423.27002573013306,
+      "first_attempt_wall_seconds": 173.62089228630066,
+      "input_tokens": 1820,
+      "output_tokens": 984,
+      "generation_seconds": 150.602820107,
+      "done_reason": "stop",
+      "thinking_present": false,
+      "candidate_execution_began": true,
+      "builder_completed": false,
+      "fresh_geometry_verifier_ran": false,
+      "diagnostic_render_views": 0,
+      "snapshot_exactly_matches_input": null,
+      "errors": [
+        "AttributeError: BMesh operator bound_box does not exist"
+      ],
+      "actual_removed_evaluated_faces": null,
+      "returned_removed_evaluated_faces": null,
+      "original_assets_verified": true,
+      "model_layers_verified": true,
+      "controller_sha256": "2d9b8fc5f674b7e96d509acb0fe86bef0ef575a9c0b7348bf6fbc52dc19125a0",
+      "repair_attempted": true,
+      "assisted_pass": false
+    },
+    {
+      "lap_id": "lap-08",
+      "scope": "one_reused_real_character",
+      "trial_index": 5,
+      "first_try_passes": 0,
+      "denominator": 1,
+      "status": "stopped",
+      "change": "Same first request; repair helper corrected to send the specific exception instead of generic footer.",
+      "finding": "Specific AttributeError delivered. Repair code hash identical to first attempt; same bound_box runtime failure.",
+      "request_settings": {
+        "model": "phi4:14b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "local_date": "2026-11-08",
+      "operator_wall_seconds": 429.18694519996643,
+      "first_attempt_wall_seconds": 169.3958501815796,
+      "input_tokens": 1820,
+      "output_tokens": 984,
+      "generation_seconds": 148.852563146,
+      "done_reason": "stop",
+      "thinking_present": false,
+      "candidate_execution_began": true,
+      "builder_completed": false,
+      "fresh_geometry_verifier_ran": false,
+      "diagnostic_render_views": 0,
+      "snapshot_exactly_matches_input": null,
+      "errors": [
+        "AttributeError: BMesh operator bound_box does not exist"
+      ],
+      "actual_removed_evaluated_faces": null,
+      "returned_removed_evaluated_faces": null,
+      "original_assets_verified": true,
+      "model_layers_verified": true,
+      "controller_sha256": "ece93fcea8256e217cff0728f25a11832ad1b6918361e663dc4d9aa9b4dd606c",
+      "repair_attempted": true,
+      "assisted_pass": false
+    },
+    {
+      "lap_id": "lap-09",
+      "scope": "one_reused_real_character",
+      "trial_index": 6,
+      "first_try_passes": 0,
+      "denominator": 1,
+      "status": "complete",
+      "change": "Append brief API-review instruction; native thinking remains off. Repair policy unchanged.",
+      "finding": "Builder completed; verifier rejected protected-object change, reference surfaces and count metadata. Reported125942 removed versus actual0.",
+      "request_settings": {
+        "model": "phi4:14b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "local_date": "2026-11-08",
+      "operator_wall_seconds": 195.62293529510498,
+      "first_attempt_wall_seconds": 172.14491748809814,
+      "input_tokens": 1884,
+      "output_tokens": 488,
+      "generation_seconds": 78.299279301,
+      "done_reason": "stop",
+      "thinking_present": false,
+      "candidate_execution_began": true,
+      "builder_completed": true,
+      "fresh_geometry_verifier_ran": true,
+      "diagnostic_render_views": 12,
+      "snapshot_exactly_matches_input": false,
+      "errors": [
+        "Protected objects changed",
+        "Evaluated expression/pose surfaces differ from reference",
+        "Incorrect removed_evaluated_faces metadata"
+      ],
+      "actual_removed_evaluated_faces": 0,
+      "returned_removed_evaluated_faces": 125942,
+      "original_assets_verified": true,
+      "model_layers_verified": true,
+      "controller_sha256": "c8b39e2aab9d6d86a34aa542a53226a0150a03f7b5077b4ff965aa692ff5796d",
+      "repair_attempted": false,
+      "assisted_pass": false
+    },
+    {
+      "lap_id": "lap-10",
+      "scope": "one_reused_real_character",
+      "trial_index": 7,
+      "first_try_passes": 0,
+      "denominator": 1,
+      "status": "complete",
+      "change": "Only temperature0 to0.2; prompt and repair policy unchanged. Final speculative sampling trial.",
+      "finding": "Builder completed; snapshot exactly matched input, actual reduction0, reference surfaces still wrong. Different code but no task success.",
+      "request_settings": {
+        "model": "phi4:14b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.2,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "local_date": "2026-11-08",
+      "operator_wall_seconds": 211.58227634429932,
+      "first_attempt_wall_seconds": 188.43728971481323,
+      "input_tokens": 1884,
+      "output_tokens": 641,
+      "generation_seconds": 99.638710999,
+      "done_reason": "stop",
+      "thinking_present": false,
+      "candidate_execution_began": true,
+      "builder_completed": true,
+      "fresh_geometry_verifier_ran": true,
+      "diagnostic_render_views": 12,
+      "snapshot_exactly_matches_input": true,
+      "errors": [
+        "Evaluated expression/pose surfaces differ from reference"
+      ],
+      "actual_removed_evaluated_faces": 0,
+      "returned_removed_evaluated_faces": 0,
+      "original_assets_verified": true,
+      "model_layers_verified": true,
+      "controller_sha256": "5f6df88387061b41eb30e1d470893a36e13f07a6b73c5471b6376db4002bbfb1",
+      "repair_attempted": false,
+      "assisted_pass": false
+    }
+  ],
+  "repeatability": {
+    "synthetic_lap02_lap03_requests_identical": true,
+    "synthetic_lap02_lap03_identical_response_texts": 20,
+    "real_lap06_lap07_lap08_first_requests_identical": true,
+    "real_lap08_repair_code_identical_to_first": true,
+    "claim_limit": "Observed pairs/reused development inputs only; not universal determinism or held-out generalization."
+  },
+  "metric_limits": {
+    "synthetic_count_return": "Returned modified-vertex count is not independently scored.",
+    "operator_wall": "Real laps07+ include the repair when taken; first-attempt wall is separately recorded. Other real operator timings omit outer preflight; do not compare timing as cost-normalized evidence.",
+    "native_thinking": "Installed completion-only model exposes no native low-thinking control; brief review is a prompt instruction and think remained false in real requests.",
+    "not_measured": [
+      "original-workflow effort baseline and <=35% cost gate",
+      "RAM/VRAM time series",
+      "independent artistic approval",
+      "human stage gate",
+      "actual fallback effort"
+    ],
+    "severe": "No severe flags in synthetic ledger. Real protected-object failure is retained; real statuses do not provide the synthetic severity classification."
+  }
+}

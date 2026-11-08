@@ -1,0 +1,78 @@
+{
+  "policy": "At most one syntax/runtime repair. No repair on successful execution followed by state-verifier rejection, transport or resource errors. Original first-attempt scores unchanged.",
+  "repairs": [
+    {
+      "lap_id": "lap-07",
+      "repair_number": 1,
+      "pass": false,
+      "candidate_execution_began": true,
+      "builder_completed": false,
+      "fresh_verifier_ran": false,
+      "error": "AttributeError: BMesh operator bound_box does not exist",
+      "specific_exception_delivered": false,
+      "feedback_summary": "Generic Blender script-failed footer supplied by defective extractor",
+      "feedback_limitation": "Intended specific feedback not delivered; cannot infer model ignored that exception.",
+      "repair_code_identical_to_first": false,
+      "request_settings": {
+        "model": "phi4:14b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "input_tokens": 2893,
+      "output_tokens": 1115,
+      "done_reason": "stop",
+      "thinking_present": false,
+      "wall_seconds": 200.20916962623596,
+      "generation_seconds": 181.14845449,
+      "original_assets_verified": true,
+      "model_layers_verified": true
+    },
+    {
+      "lap_id": "lap-08",
+      "repair_number": 1,
+      "pass": false,
+      "candidate_execution_began": true,
+      "builder_completed": false,
+      "fresh_verifier_ran": false,
+      "error": "AttributeError: BMesh operator bound_box does not exist",
+      "specific_exception_delivered": true,
+      "feedback_summary": "Specific AttributeError naming nonexistent bound_box supplied",
+      "feedback_limitation": null,
+      "repair_code_identical_to_first": true,
+      "request_settings": {
+        "model": "phi4:14b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "input_tokens": 2897,
+      "output_tokens": 1193,
+      "done_reason": "stop",
+      "thinking_present": false,
+      "wall_seconds": 212.79959154129028,
+      "generation_seconds": 194.842774082,
+      "original_assets_verified": true,
+      "model_layers_verified": true
+    }
+  ],
+  "feedback_bug": "Lap07 selected generic Blender footer instead of specific AttributeError. Original evidence/frozen helper retained. Future helper filters footer; regression test failed before fix and passed afterward. Corrected helper pinned in08\u201310. No retroactive rerun of07.",
+  "tests_after_fix": "30 targeted operator/stream/syntax/real-repair tests and85 benchmark tests passed.18 real-challenge tests passed before first real trial.",
+  "no_native_thinking": "Review instruction is not a hidden/native reasoning mode."
+}

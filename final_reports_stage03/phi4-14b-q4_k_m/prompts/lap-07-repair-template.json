@@ -1,0 +1,22 @@
+{
+  "sanitized": true,
+  "lap_id": "lap-07",
+  "request_settings": {
+    "model": "phi4:14b",
+    "format": "json",
+    "think": false,
+    "stream": false,
+    "options": {
+      "temperature": 0.0,
+      "num_ctx": 8192,
+      "num_predict": 4096,
+      "presence_penalty": 0.0,
+      "seed": 0,
+      "repeat_penalty": 1.0
+    }
+  },
+  "template": "[ORIGINAL LAP PROMPT] + [ONE REPAIR INSTRUCTION] + [PREVIOUS GENERATED ANSWER WITHHELD] + [PYTHON ERROR]",
+  "feedback_summary": "Generic Blender script-failed footer supplied by defective extractor",
+  "exact_full_request_private": true,
+  "reason": "Contains generated source and private character identifiers; publish policy and measurements instead."
+}
