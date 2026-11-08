@@ -1,0 +1,421 @@
+{
+  "schema": "sanitized-stage03-model-analysis-v1",
+  "model": {
+    "tag": "gemma4:12b",
+    "digest": "6114515d63c17436a7c0417d82820ac65ad643e2806c5a3c89cb62846436ed0b",
+    "parameter_size": "11.9B",
+    "quantization": "Q4_K_M",
+    "architecture": "gemma4",
+    "native_thinking_control": {
+      "values": [
+        false,
+        true
+      ],
+      "default": true
+    },
+    "native_parameters": "top_k                          64\ntop_p                          0.95\ndraft_num_predict              3\ntemperature                    1",
+    "blender_version": "5.2.2 LTS",
+    "python_version": "3.13.5",
+    "hardware_identity": "withheld",
+    "training_or_adapter_updates": false,
+    "renderer": "gemma4-large",
+    "parser": "gemma4",
+    "template_source": "renderer_parser"
+  },
+  "laps": [
+    {
+      "lap_id": "lap-01",
+      "scope": "synthetic_development",
+      "date": "2026-11-07",
+      "first_try_passes": 0,
+      "denominator": 20,
+      "result_counts": {
+        "pass": 0,
+        "fail": 0,
+        "blocked": 0,
+        "not_run": 20
+      },
+      "wall_seconds": 2008.5422711372375,
+      "time_caveat": null,
+      "request_settings": {
+        "model": "gemma4:12b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        }
+      },
+      "change": "Original frozen baseline; thinking control omitted, native thinking default enabled.",
+      "interpretation": "All20 responses exhausted the1536-token cap with thinking and empty final response. Budget/configuration failure, not demonstrated Blender runtime failures.",
+      "completed_responses": 20,
+      "thinking_responses": 20,
+      "length_stops": 20,
+      "model_layer_hashes_verified": true,
+      "trusted_controller_sha256": "b10f27cee807b47e7b266eed5e3cdf7387934383ddb02e9784d9f45c642312b7"
+    },
+    {
+      "lap_id": "lap-02",
+      "scope": "synthetic_development",
+      "date": "2026-11-07",
+      "first_try_passes": 0,
+      "denominator": 20,
+      "result_counts": {
+        "pass": 0,
+        "fail": 4,
+        "blocked": 15,
+        "not_run": 1
+      },
+      "wall_seconds": 1037.5707881450653,
+      "time_caveat": null,
+      "request_settings": {
+        "model": "gemma4:12b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        },
+        "think": false
+      },
+      "change": "Only think=false added.",
+      "interpretation": "Thinking off enabled final answers, but API hallucinations, syntax mistakes, incomplete repairs and one truncated response remained.",
+      "completed_responses": 20,
+      "thinking_responses": 0,
+      "length_stops": 1,
+      "model_layer_hashes_verified": true,
+      "trusted_controller_sha256": "b10f27cee807b47e7b266eed5e3cdf7387934383ddb02e9784d9f45c642312b7"
+    },
+    {
+      "lap_id": "lap-03",
+      "scope": "synthetic_development",
+      "date": "2026-11-07",
+      "first_try_passes": 18,
+      "denominator": 20,
+      "result_counts": {
+        "pass": 18,
+        "fail": 0,
+        "blocked": 2,
+        "not_run": 0
+      },
+      "wall_seconds": 714.6202085018158,
+      "time_caveat": null,
+      "request_settings": {
+        "model": "gemma4:12b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        },
+        "think": false
+      },
+      "change": "Append the exact original general Blender API appendix used in the initial project benchmark.",
+      "interpretation": "18/20; two attempts treated sparse VertexGroupElement objects as unpackable pairs.",
+      "completed_responses": 20,
+      "thinking_responses": 0,
+      "length_stops": 0,
+      "model_layer_hashes_verified": true,
+      "trusted_controller_sha256": "b10f27cee807b47e7b266eed5e3cdf7387934383ddb02e9784d9f45c642312b7"
+    },
+    {
+      "lap_id": "lap-04",
+      "scope": "synthetic_development",
+      "date": "2026-11-07",
+      "first_try_passes": 17,
+      "denominator": 20,
+      "result_counts": {
+        "pass": 17,
+        "fail": 0,
+        "blocked": 3,
+        "not_run": 0
+      },
+      "wall_seconds": 945.2335381507874,
+      "time_caveat": null,
+      "request_settings": {
+        "model": "gemma4:12b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        },
+        "think": false
+      },
+      "change": "Append general vertex-group ownership, sparse membership and collection clarification.",
+      "interpretation": "17/20; three double-escaped newline syntax failures. No tuple-unpacking errors among executable candidates.",
+      "completed_responses": 20,
+      "thinking_responses": 0,
+      "length_stops": 0,
+      "model_layer_hashes_verified": true,
+      "trusted_controller_sha256": "b10f27cee807b47e7b266eed5e3cdf7387934383ddb02e9784d9f45c642312b7"
+    },
+    {
+      "lap_id": "lap-05",
+      "scope": "synthetic_development",
+      "date": "2026-11-07",
+      "first_try_passes": 19,
+      "denominator": 20,
+      "result_counts": {
+        "pass": 19,
+        "fail": 0,
+        "blocked": 1,
+        "not_run": 0
+      },
+      "wall_seconds": 1071.9071016311646,
+      "time_caveat": null,
+      "request_settings": {
+        "model": "gemma4:12b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        },
+        "think": false
+      },
+      "change": "Append JSON encode-once and newline-separator clarification.",
+      "interpretation": "19/20; one double-escaped newline remained.",
+      "completed_responses": 20,
+      "thinking_responses": 0,
+      "length_stops": 0,
+      "model_layer_hashes_verified": true,
+      "trusted_controller_sha256": "b10f27cee807b47e7b266eed5e3cdf7387934383ddb02e9784d9f45c642312b7"
+    },
+    {
+      "lap_id": "lap-06",
+      "scope": "synthetic_development",
+      "date": "2026-11-07",
+      "first_try_passes": 19,
+      "denominator": 20,
+      "result_counts": {
+        "pass": 19,
+        "fail": 0,
+        "blocked": 1,
+        "not_run": 0
+      },
+      "wall_seconds": 1047.4414422512054,
+      "time_caveat": "Includes original run until bookkeeping stop; later repair-evaluation recovery and operator effort excluded.",
+      "request_settings": {
+        "model": "gemma4:12b",
+        "stream": false,
+        "format": "json",
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 4096,
+          "num_predict": 1536
+        },
+        "think": false
+      },
+      "change": "Same first-attempt prompts/settings as lap05; allow one syntax-feedback repair, separately scored.",
+      "interpretation": "19/20 first try; the single syntax-feedback repair passed, yielding20/20 assisted. Operator bookkeeping recovery described separately.",
+      "completed_responses": 20,
+      "thinking_responses": 0,
+      "length_stops": 0,
+      "model_layer_hashes_verified": true,
+      "trusted_controller_sha256": "32ef7e6071918f0ca0a06d555483bc08bdfa45707e8c6746561bb6e58e08ce8e"
+    },
+    {
+      "lap_id": "lap-07",
+      "scope": "one_reused_real_character",
+      "date": "2026-11-07",
+      "passes": 0,
+      "denominator": 1,
+      "trial_index": 1,
+      "status": "stopped",
+      "request_settings": {
+        "model": "gemma4:12b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "change": "First real-character exam: frozen common task and original decoding profile, no retry.",
+      "interpretation": "Valid JSON/Python reached solve; invalid GeometryNodes enum stopped the builder. No fresh geometry verdict.",
+      "wall_seconds": 94.77273082733154,
+      "input_tokens": 1069,
+      "output_tokens": 947,
+      "thinking_present": false,
+      "done_reason": "stop",
+      "final_response_present": true,
+      "json_parsed": true,
+      "required_keys_valid": true,
+      "code_present": true,
+      "candidate_execution_began": true,
+      "candidate_builder_completed": false,
+      "fresh_geometry_verifier_ran": false,
+      "render_ran": false,
+      "original_asset_hashes_verified": true,
+      "model_layer_hashes_verified": true,
+      "failure_class": "node_tree_enum_api_error",
+      "generation_seconds": 77.758181771,
+      "trusted_controller_sha256": "e45edbe369b20a17599b9ccdb8677a2902f3d4d9f22173a4f745d9f9ca97c302"
+    },
+    {
+      "lap_id": "lap-08",
+      "scope": "one_reused_real_character",
+      "date": "2026-11-08",
+      "passes": 0,
+      "denominator": 1,
+      "trial_index": 2,
+      "status": "stopped",
+      "request_settings": {
+        "model": "gemma4:12b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "change": "Append general Geometry Nodes API guidance only.",
+      "interpretation": "Explanation prose emitted as a key with literal value explanation. Contract rejected response before execution.",
+      "wall_seconds": 110.54360556602478,
+      "input_tokens": 1356,
+      "output_tokens": 1191,
+      "thinking_present": false,
+      "done_reason": "stop",
+      "final_response_present": true,
+      "json_parsed": true,
+      "required_keys_valid": false,
+      "code_present": true,
+      "candidate_execution_began": false,
+      "candidate_builder_completed": false,
+      "fresh_geometry_verifier_ran": false,
+      "render_ran": false,
+      "original_asset_hashes_verified": true,
+      "model_layer_hashes_verified": true,
+      "failure_class": "reversed_explanation_key_value",
+      "generation_seconds": 93.640438124,
+      "trusted_controller_sha256": "1bdbeee670e8d896ad4edc7cfe44e099f44812200993bfa2a5ebf32df57e57f5"
+    },
+    {
+      "lap_id": "lap-09",
+      "scope": "one_reused_real_character",
+      "date": "2026-11-08",
+      "passes": 0,
+      "denominator": 1,
+      "trial_index": 3,
+      "status": "stopped",
+      "request_settings": {
+        "model": "gemma4:12b",
+        "format": "json",
+        "think": false,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "change": "Exact repeat of lap08 prompt and settings.",
+      "interpretation": "Request and final response text exactly matched lap08; same response-schema failure.",
+      "wall_seconds": 113.08711838722229,
+      "input_tokens": 1356,
+      "output_tokens": 1191,
+      "thinking_present": false,
+      "done_reason": "stop",
+      "final_response_present": true,
+      "json_parsed": true,
+      "required_keys_valid": false,
+      "code_present": true,
+      "candidate_execution_began": false,
+      "candidate_builder_completed": false,
+      "fresh_geometry_verifier_ran": false,
+      "render_ran": false,
+      "original_asset_hashes_verified": true,
+      "model_layer_hashes_verified": true,
+      "failure_class": "reversed_explanation_key_value",
+      "generation_seconds": 93.728785043,
+      "trusted_controller_sha256": "8fa4f1a049976567b67b369de087fa8d19b7ad6aab70e5e7f16a7c68d83ecfe6"
+    },
+    {
+      "lap_id": "lap-10",
+      "scope": "one_reused_real_character",
+      "date": "2026-11-08",
+      "passes": 0,
+      "denominator": 1,
+      "trial_index": 4,
+      "status": "stopped",
+      "request_settings": {
+        "model": "gemma4:12b",
+        "format": "json",
+        "think": true,
+        "stream": false,
+        "options": {
+          "temperature": 0.0,
+          "num_ctx": 8192,
+          "num_predict": 4096,
+          "presence_penalty": 0.0,
+          "seed": 0,
+          "repeat_penalty": 1.0
+        }
+      },
+      "change": "Only enable thinking; retain lap09 prompt and all other controls.",
+      "interpretation": "Thinking consumed4096 output tokens; empty final response. No candidate or Blender execution.",
+      "wall_seconds": 310.4505867958069,
+      "input_tokens": 1359,
+      "output_tokens": 4096,
+      "thinking_present": true,
+      "done_reason": "length",
+      "final_response_present": false,
+      "json_parsed": false,
+      "required_keys_valid": false,
+      "code_present": false,
+      "candidate_execution_began": false,
+      "candidate_builder_completed": false,
+      "fresh_geometry_verifier_ran": false,
+      "render_ran": false,
+      "original_asset_hashes_verified": true,
+      "model_layer_hashes_verified": true,
+      "failure_class": "thinking_output_budget_exhaustion",
+      "generation_seconds": 294.694301703,
+      "trusted_controller_sha256": "badb0ce5c590f1cdc06dfe3a1aa519c2cfbe8f03e0e47a08b2dc623ab0880e2c"
+    }
+  ],
+  "scope": {
+    "synthetic_laps": 6,
+    "synthetic_attempts": 120,
+    "unique_reused_synthetic_cases": 20,
+    "synthetic_families": 5,
+    "real_trials": 4,
+    "unique_real_characters": 1,
+    "real_passes": 0,
+    "assisted_synthetic_repair_attempts": 1,
+    "validation_split": false,
+    "production_qualified": false
+  },
+  "repeatability": {
+    "lap08_lap09_actual_requests_identical": true,
+    "lap08_lap09_final_response_text_identical": true,
+    "claim_limit": "Observed pair only; not a universal determinism guarantee"
+  },
+  "interpretation_limits": {
+    "thinking_budget": "Thinking and final response shared num_predict. Empty final responses at length stop in laps01 and10.",
+    "token_units": "Context/output controls are token counts, not GB of allocated memory.",
+    "synthetic_oracle": "Fresh independent normalization/protected-state checks; returned modified-count accuracy not independently scored.",
+    "real_oracle": "No real trial reached fresh geometry verification. Real attempt candidate_executed=false indicates builder did not complete, although lap07 traceback proves solve began.",
+    "severe_regressions": "No severe flags in validated synthetic evidence; real generated artifacts were not scored, so no blanket zero-severity claim.",
+    "cost": "Original-workflow cost baseline, RAM/VRAM time series, human review and independent artistic acceptance unmeasured."
+  }
+}

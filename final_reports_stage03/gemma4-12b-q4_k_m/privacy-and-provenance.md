@@ -1,0 +1,11 @@
+# Privacy and provenance
+
+The seven-section report uses the canonical v2.1 generator for the validated six-lap synthetic ledger, with an attributed all-ten-lap chronology and separate real/repair derivatives. Numeric synthetic tables, original result categories and thresholds are preserved. Formal validation-selected best_lap_id remains null. The generated environment row is allowlisted and raw evidence links point to public case results. The synthetic capability summary does not itself ingest the separately recorded real trial statuses; the narrative and attachments explicitly show all four real failures.
+
+Public allowlist: model tag/digest/quantization/size, numeric timing and token metrics, explicit settings and native thinking/default parameters, trusted controller hashes, synthetic case/fixture IDs, original synthetic output/candidate hashes without content, exact synthetic prompts, sanitized real prompts, generic API errors, counts and general API probe assertions. No model training was performed.
+
+Excluded: credentials, personal/machine identity, hostnames/IPs, local paths, device/OS fingerprints, original character identifiers, private real asset/reference/contract hashes, model-generated code, raw reasoning, repair prompt containing candidate code, continuation-token arrays, partial streams, raw logs and stack traces, native Modelfile/tokenizer metadata, scenes/textures/images and reference implementation. Real prompt mesh name and non-ASCII material identifiers use the already established public placeholders. All other differences from actual real prompt bodies are explicitly avoided.
+
+Verification: full synthetic and repair ledger/artifact validation;120 first-attempt request bodies and prompt hashes; separate saved repair result; four real statuses and requests; exact08/09 request/output equality; thinking-only10 change; model-integrity receipts; seven-section structure; JSON parsing; relative links; privacy denylist and SHA256SUMS. Hashes verify bytes and provenance relations, not immunity to an operator controlling the host.
+
+Private results will be archived locally, not uploaded as a ZIP. Original assets and existing evidence remain intact. No raw model reasoning is published.

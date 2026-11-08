@@ -1,0 +1,30 @@
+{
+  "lap_id": "lap-06",
+  "first_try_passes": 19,
+  "assisted_passes": 20,
+  "denominator": 20,
+  "repair_attempts": 1,
+  "repaired_case_id": "stage03-synthetic-000",
+  "repair_result": "pass",
+  "feedback": "Python SyntaxError on a double-escaped newline separator",
+  "repair_input_tokens": 1928,
+  "repair_output_tokens": 535,
+  "done_reason": "stop",
+  "thinking_present": false,
+  "repair_inference_seconds": 35.488634372,
+  "request_settings": {
+    "model": "gemma4:12b",
+    "stream": false,
+    "format": "json",
+    "options": {
+      "temperature": 0.0,
+      "num_ctx": 4096,
+      "num_predict": 1536
+    },
+    "think": false
+  },
+  "bookkeeping_recovery": "Separate ledger initially rejected attempt_no2 because its first record must be1. Original failed status and raw generated repair retained; a normalized ingestion derivative records local attempt1 and model_submission_number2. Saved candidate evaluated without new inference. Regression test reproduces this with the real ledger. First-attempt ledger and scores unchanged.",
+  "retry_policy": "One SyntaxError-only feedback attempt; no source unescaping or extraction. Transport, API runtime and verifier failures did not trigger retry.",
+  "private_repair_prompt_retained": true,
+  "public_repair_prompt_template": "Original task + one-repair instruction + [PREVIOUS ANSWER WITHHELD] + [COMPILER ERROR]. Full request contains generated source and remains private."
+}

@@ -1,0 +1,14 @@
+{
+  "scope": "Operator-authored API probes in isolated installed Blender; general API demonstrations, no character repair algorithm or reference implementation exposed",
+  "blender_version": "5.2.2 LTS",
+  "lap08_geometry_probe": {
+    "passed": true,
+    "node_tree_type": "GeometryNodeTree",
+    "modifier_type": "NODES",
+    "interface_geometry_socket": true,
+    "group_input_output_link": true,
+    "nodes_new_class_identifiers": true
+  },
+  "shared_vertex_group_guidance": "General ownership, sparse assignment IDs, method signatures and len() guidance; previously verified by isolated runtime probes.",
+  "tests": "26 targeted harness/stream/repair tests and85 benchmark tests passed after the ledger-numbering regression fix;18 real challenge tests passed before real lap07. No code change to sandbox limits, mounts or verifier acceptance criteria for these laps."
+}
