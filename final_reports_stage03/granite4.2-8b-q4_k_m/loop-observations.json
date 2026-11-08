@@ -1,0 +1,1152 @@
+{
+  "schema": "public-response-chunk-diagnostics-v1",
+  "scope": "Allowlisted counts/boundaries only; no generated source, reasoning, stream text, logs or hardware identity.",
+  "guard_source": "https://github.com/ollama/ollama/blob/v0.40.15/llm/llama_server.go#L1717-L1727",
+  "count_definition": "Consecutive equal whitespace-trimmed nonempty public response chunks. Error events excluded; chunks need not map one-to-one to internal model tokens.",
+  "observations": [
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-000",
+      "terminal_done": true,
+      "response_characters": 2261,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-001",
+      "terminal_done": true,
+      "response_characters": 2124,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-002",
+      "terminal_done": true,
+      "response_characters": 2270,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-003",
+      "terminal_done": true,
+      "response_characters": 2391,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-004",
+      "terminal_done": true,
+      "response_characters": 2073,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-005",
+      "terminal_done": true,
+      "response_characters": 4792,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-006",
+      "terminal_done": true,
+      "response_characters": 2246,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-007",
+      "terminal_done": true,
+      "response_characters": 2296,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-008",
+      "terminal_done": true,
+      "response_characters": 2368,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-009",
+      "terminal_done": true,
+      "response_characters": 2352,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-010",
+      "terminal_done": true,
+      "response_characters": 2513,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-011",
+      "terminal_done": true,
+      "response_characters": 2478,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-012",
+      "terminal_done": true,
+      "response_characters": 2052,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-013",
+      "terminal_done": true,
+      "response_characters": 2314,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-014",
+      "terminal_done": true,
+      "response_characters": 2297,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-015",
+      "terminal_done": true,
+      "response_characters": 2299,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-016",
+      "terminal_done": true,
+      "response_characters": 2305,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-017",
+      "terminal_done": true,
+      "response_characters": 2293,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-018",
+      "terminal_done": true,
+      "response_characters": 2127,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-04",
+      "case_id": "stage03-synthetic-019",
+      "terminal_done": true,
+      "response_characters": 2363,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-000",
+      "terminal_done": false,
+      "response_characters": 7691,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 101,
+      "repetition_guard_abort": true,
+      "code_value_closed_at_character": 2827,
+      "characters_after_code_value": 4864,
+      "suffix_only_whitespace": true
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-001",
+      "terminal_done": false,
+      "response_characters": 7494,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 101,
+      "repetition_guard_abort": true,
+      "code_value_closed_at_character": 1830,
+      "characters_after_code_value": 5664,
+      "suffix_only_whitespace": true
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-002",
+      "terminal_done": true,
+      "response_characters": 1875,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-003",
+      "terminal_done": false,
+      "response_characters": 2295,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 101,
+      "repetition_guard_abort": true,
+      "code_value_closed_at_character": 2177,
+      "characters_after_code_value": 118,
+      "suffix_only_whitespace": true
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-004",
+      "terminal_done": true,
+      "response_characters": 2303,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-005",
+      "terminal_done": true,
+      "response_characters": 2110,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-006",
+      "terminal_done": false,
+      "response_characters": 7031,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 101,
+      "repetition_guard_abort": true,
+      "code_value_closed_at_character": 2167,
+      "characters_after_code_value": 4864,
+      "suffix_only_whitespace": true
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-007",
+      "terminal_done": true,
+      "response_characters": 2269,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-008",
+      "terminal_done": true,
+      "response_characters": 2142,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-009",
+      "terminal_done": true,
+      "response_characters": 2282,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-010",
+      "terminal_done": true,
+      "response_characters": 2269,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-011",
+      "terminal_done": true,
+      "response_characters": 2515,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-012",
+      "terminal_done": true,
+      "response_characters": 2842,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-013",
+      "terminal_done": false,
+      "response_characters": 1614,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 101,
+      "repetition_guard_abort": true,
+      "code_value_closed_at_character": 1509,
+      "characters_after_code_value": 105,
+      "suffix_only_whitespace": true
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-014",
+      "terminal_done": true,
+      "response_characters": 3313,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-015",
+      "terminal_done": true,
+      "response_characters": 2579,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-016",
+      "terminal_done": true,
+      "response_characters": 3016,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-017",
+      "terminal_done": true,
+      "response_characters": 2705,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-018",
+      "terminal_done": true,
+      "response_characters": 7435,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-05",
+      "case_id": "stage03-synthetic-019",
+      "terminal_done": true,
+      "response_characters": 2927,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 1,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-000",
+      "terminal_done": true,
+      "response_characters": 2389,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-001",
+      "terminal_done": true,
+      "response_characters": 4054,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-002",
+      "terminal_done": true,
+      "response_characters": 3621,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-003",
+      "terminal_done": false,
+      "response_characters": 1761,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 101,
+      "repetition_guard_abort": true,
+      "code_value_closed_at_character": 1656,
+      "characters_after_code_value": 105,
+      "suffix_only_whitespace": true
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-004",
+      "terminal_done": true,
+      "response_characters": 2576,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-005",
+      "terminal_done": true,
+      "response_characters": 4463,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-006",
+      "terminal_done": true,
+      "response_characters": 4315,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-007",
+      "terminal_done": true,
+      "response_characters": 1373,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-008",
+      "terminal_done": true,
+      "response_characters": 1357,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-009",
+      "terminal_done": true,
+      "response_characters": 4254,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-010",
+      "terminal_done": true,
+      "response_characters": 2146,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-011",
+      "terminal_done": true,
+      "response_characters": 4343,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-012",
+      "terminal_done": true,
+      "response_characters": 1264,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-013",
+      "terminal_done": true,
+      "response_characters": 1250,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-014",
+      "terminal_done": true,
+      "response_characters": 2733,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-015",
+      "terminal_done": true,
+      "response_characters": 4504,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-016",
+      "terminal_done": true,
+      "response_characters": 6237,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-017",
+      "terminal_done": true,
+      "response_characters": 7497,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-018",
+      "terminal_done": true,
+      "response_characters": 5040,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-06",
+      "case_id": "stage03-synthetic-019",
+      "terminal_done": true,
+      "response_characters": 1490,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-000",
+      "terminal_done": true,
+      "response_characters": 1450,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-001",
+      "terminal_done": true,
+      "response_characters": 7078,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-002",
+      "terminal_done": true,
+      "response_characters": 2577,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-003",
+      "terminal_done": true,
+      "response_characters": 2567,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-004",
+      "terminal_done": true,
+      "response_characters": 6793,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-005",
+      "terminal_done": true,
+      "response_characters": 8132,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-006",
+      "terminal_done": true,
+      "response_characters": 4060,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-007",
+      "terminal_done": true,
+      "response_characters": 1450,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-008",
+      "terminal_done": true,
+      "response_characters": 3628,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-009",
+      "terminal_done": true,
+      "response_characters": 1420,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-010",
+      "terminal_done": true,
+      "response_characters": 2526,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-011",
+      "terminal_done": true,
+      "response_characters": 1107,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-012",
+      "terminal_done": true,
+      "response_characters": 1285,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-013",
+      "terminal_done": false,
+      "response_characters": 1830,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 101,
+      "repetition_guard_abort": true,
+      "code_value_closed_at_character": 1712,
+      "characters_after_code_value": 118,
+      "suffix_only_whitespace": true
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-014",
+      "terminal_done": true,
+      "response_characters": 1424,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 4,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-015",
+      "terminal_done": true,
+      "response_characters": 2958,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-016",
+      "terminal_done": true,
+      "response_characters": 5556,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-017",
+      "terminal_done": true,
+      "response_characters": 6056,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-018",
+      "terminal_done": false,
+      "response_characters": 2502,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 101,
+      "repetition_guard_abort": true,
+      "code_value_closed_at_character": 2384,
+      "characters_after_code_value": 118,
+      "suffix_only_whitespace": true
+    },
+    {
+      "lap_id": "lap-07",
+      "case_id": "stage03-synthetic-019",
+      "terminal_done": true,
+      "response_characters": 6526,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-000",
+      "terminal_done": true,
+      "response_characters": 5169,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-001",
+      "terminal_done": true,
+      "response_characters": 3874,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-002",
+      "terminal_done": true,
+      "response_characters": 3069,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-003",
+      "terminal_done": true,
+      "response_characters": 3771,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-004",
+      "terminal_done": true,
+      "response_characters": 3915,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-005",
+      "terminal_done": true,
+      "response_characters": 2726,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-006",
+      "terminal_done": true,
+      "response_characters": 5404,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-007",
+      "terminal_done": true,
+      "response_characters": 3816,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-008",
+      "terminal_done": true,
+      "response_characters": 2829,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-009",
+      "terminal_done": true,
+      "response_characters": 3810,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-010",
+      "terminal_done": true,
+      "response_characters": 4227,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-011",
+      "terminal_done": true,
+      "response_characters": 2852,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-012",
+      "terminal_done": true,
+      "response_characters": 3428,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-013",
+      "terminal_done": true,
+      "response_characters": 3032,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-014",
+      "terminal_done": true,
+      "response_characters": 2811,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-015",
+      "terminal_done": true,
+      "response_characters": 1986,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 3,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-016",
+      "terminal_done": true,
+      "response_characters": 4671,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-017",
+      "terminal_done": true,
+      "response_characters": 3449,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-018",
+      "terminal_done": true,
+      "response_characters": 5018,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-08",
+      "case_id": "stage03-synthetic-019",
+      "terminal_done": true,
+      "response_characters": 4335,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-000",
+      "terminal_done": true,
+      "response_characters": 4468,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-001",
+      "terminal_done": true,
+      "response_characters": 2488,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-002",
+      "terminal_done": true,
+      "response_characters": 2498,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-003",
+      "terminal_done": true,
+      "response_characters": 6745,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-004",
+      "terminal_done": true,
+      "response_characters": 3704,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-005",
+      "terminal_done": true,
+      "response_characters": 2514,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-006",
+      "terminal_done": true,
+      "response_characters": 4017,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-007",
+      "terminal_done": true,
+      "response_characters": 4071,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-008",
+      "terminal_done": true,
+      "response_characters": 4139,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-009",
+      "terminal_done": true,
+      "response_characters": 4156,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-010",
+      "terminal_done": true,
+      "response_characters": 3318,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-011",
+      "terminal_done": true,
+      "response_characters": 3560,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-012",
+      "terminal_done": true,
+      "response_characters": 5165,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-013",
+      "terminal_done": true,
+      "response_characters": 7150,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-014",
+      "terminal_done": true,
+      "response_characters": 3999,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 3,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-015",
+      "terminal_done": true,
+      "response_characters": 3832,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-016",
+      "terminal_done": true,
+      "response_characters": 2310,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-017",
+      "terminal_done": true,
+      "response_characters": 3980,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-018",
+      "terminal_done": true,
+      "response_characters": 3253,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-09",
+      "case_id": "stage03-synthetic-019",
+      "terminal_done": true,
+      "response_characters": 4965,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-000",
+      "terminal_done": true,
+      "response_characters": 5544,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-001",
+      "terminal_done": true,
+      "response_characters": 4507,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-002",
+      "terminal_done": true,
+      "response_characters": 4474,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-003",
+      "terminal_done": true,
+      "response_characters": 4731,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-004",
+      "terminal_done": true,
+      "response_characters": 5188,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-005",
+      "terminal_done": true,
+      "response_characters": 4936,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-006",
+      "terminal_done": true,
+      "response_characters": 7129,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-007",
+      "terminal_done": true,
+      "response_characters": 4539,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-008",
+      "terminal_done": true,
+      "response_characters": 9202,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-009",
+      "terminal_done": true,
+      "response_characters": 3138,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-010",
+      "terminal_done": true,
+      "response_characters": 5013,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-011",
+      "terminal_done": true,
+      "response_characters": 4804,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-012",
+      "terminal_done": true,
+      "response_characters": 4425,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-013",
+      "terminal_done": true,
+      "response_characters": 5198,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-014",
+      "terminal_done": true,
+      "response_characters": 5486,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-015",
+      "terminal_done": true,
+      "response_characters": 3640,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-016",
+      "terminal_done": true,
+      "response_characters": 3035,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-017",
+      "terminal_done": true,
+      "response_characters": 6261,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-018",
+      "terminal_done": true,
+      "response_characters": 4943,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    },
+    {
+      "lap_id": "lap-10",
+      "case_id": "stage03-synthetic-019",
+      "terminal_done": true,
+      "response_characters": 4938,
+      "max_equal_trimmed_nonempty_public_response_chunk_run": 2,
+      "repetition_guard_abort": false
+    }
+  ]
+}

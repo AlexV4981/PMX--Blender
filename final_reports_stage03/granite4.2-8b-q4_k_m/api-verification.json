@@ -1,0 +1,39 @@
+{
+  "schema": "sanitized-operator-api-probe-summary-v1",
+  "scope": "Operator-authored general API probes inside the existing Blender sandbox; no candidate execution or task solution supplied.",
+  "probes": [
+    {
+      "lap_id": "lap-04",
+      "passed": true,
+      "verified_assertions": {
+        "object_group_lookup_by_name": true,
+        "numeric_assignment_group_id_matches_vertex_group_index": true,
+        "sparse_position_differs_from_global_group_id": true,
+        "integer_find_rejected": true,
+        "missing_membership_weight_raises_RuntimeError": true,
+        "weight_method_verified": true,
+        "invented_weight_attributes_absent": true,
+        "len_collection_verified": true,
+        "bpy_imported_explicitly": true
+      }
+    },
+    {
+      "lap_id": "lap-10",
+      "passed": true,
+      "verified_assertions": {
+        "ownership_and_types": true,
+        "scene_vs_context": true,
+        "named_collection_lookup": true,
+        "index_vs_object": true,
+        "sparse_membership_ids": true,
+        "scalar_weight_sequence_indices": true,
+        "one_argument_weight_reader": true,
+        "missing_membership_raises": true,
+        "remove_one_sequence": true,
+        "len_collection": true,
+        "preserved_independent_slots": true,
+        "generic_unit_sum_identity": true
+      }
+    }
+  ]
+}
