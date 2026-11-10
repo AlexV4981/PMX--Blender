@@ -12,7 +12,7 @@
 2. Use assets/worker-task.template.json: stage, input digest, objective, allowed/forbidden edits, relevant references, outputs and stop conditions. Do not send every worker the whole conversation or pack.
 3. Give each worker private assets. Keep one writer to any live Blender session/.blend/image file. Parallelize independent research or static reports only when useful.
 4. Return compact changes, command records, evidence paths, failures and assumptions. Avoid High repeating successful worker actions. Use scripts rather than LLM loops per vertex/object.
-5. Diagnose routine failures with High; refine scope or implement a new method. Escalate to Astra if no usable candidate can be produced, supplying actual files and failed methods.
+5. Diagnose routine failures with High; refine scope or use a supported existing tool. Implement a bespoke method only for a demonstrated requirement compatible existing tools cannot meet. Escalate to Astra if no usable candidate can be produced, supplying actual files and failed methods.
 6. If Astra fails or is unavailable, stop that branch and offer actionable experiments with expected consequences and missing evidence for human selection.
 7. Keep candidate caps, dependency attempts and model effort separate. Never force Light through ten incapable retries or manufacture ten variants.
 

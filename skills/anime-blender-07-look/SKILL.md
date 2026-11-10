@@ -12,6 +12,8 @@ description: "Calibrate an already functional Cycles anime character against mat
 3. Check the pinned version, source hashes and exact approved predecessor. Stage 00 has source input instead of a predecessor. Work on a private derivative; leave source and accepted files unchanged.
 4. Locate Blender and inspect its actual API before writing version-sensitive code. If tools, model or references are unavailable, complete independent preparation and report what remains untested.
 
+Use the accepted integrated rig and material plan; do not regenerate controls or replace working imported materials to tune the look. Route rig faults to 04/05 and repeat affected tests.
+
 ## Execute with a bounded change
 
 Use the routine path in workflow.md first; expand relevant diagnosis in stage.md only for an observed or uncertain fault. State the observed fault, evidence, competing causes, distinguishing test, proposed edit and rollback file before editing. Run the distinguishing test first. Preserve a correct imported subsystem; never rebuild it simply because a template exists.

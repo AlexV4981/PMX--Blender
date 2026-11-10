@@ -1,6 +1,6 @@
 ---
 name: anime-blender-04-rig
-description: "Build a portable Blender control rig from approved PMX deformation data; verify spaces, rest transforms, IK/FK and dependency direction. Use for stage 04 of the human-reviewed PMX to native Blender pipeline, including diagnosis or resuming that stage."
+description: "Generate Rigify human controls with a proven compatible MMD bridge while preserving approved PMX deformation; verify rest spaces, IK/FK and native runtime. Use for stage 04 construction or integration diagnosis; bespoke work requires demonstrated inability of compatible tools."
 ---
 
 # 04 — Native control rig
@@ -12,7 +12,7 @@ description: "Build a portable Blender control rig from approved PMX deformation
 3. Check the pinned version, source hashes and exact approved predecessor. Stage 00 has source input instead of a predecessor. Work on a private derivative; leave source and accepted files unchanged.
 4. Locate Blender and inspect its actual API before writing version-sensitive code. If tools, model or references are unavailable, complete independent preparation and report what remains untested.
 
-Read PACK/references/construction.md for the existing MMD Tools/Rigify route, compatible bridge pilot and fully human scope. Record its evidence under existing checks; add no gate.
+Read PACK/references/construction.md. Pilot Rigify generation and a proven compatible bridge on the approved human deform rig before expansion. Bespoke mapping/controls require demonstrated inability of compatible existing tools to meet the specific requirement; preserve source bind, weights and morphs.
 
 ## Execute with a bounded change
 

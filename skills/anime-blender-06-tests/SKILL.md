@@ -1,6 +1,6 @@
 ---
 name: anime-blender-06-tests
-description: "Qualify a native anime rig using repeatable motion fixtures, evaluated geometry and clean-process testing. Use for stage 06 of the human-reviewed PMX to native Blender pipeline, including diagnosis or resuming that stage."
+description: "Qualify the generated/integrated human rig with motion and morph fixtures, evaluated geometry and clean stock Blender without MMD Tools, Rigify or bridge runtime dependencies. Use for stage 06 animation qualification or dependency diagnosis."
 ---
 
 # 06 — Animation qualification
@@ -11,6 +11,8 @@ description: "Qualify a native anime rig using repeatable motion fixtures, evalu
 2. Read PACK/references/contract.md, PACK/references/workflow.md and [stage.md](references/stage.md). Read PACK/references/diagnosis.md when a previous attempt failed. Read PACK/references/tools.md and schemas.md before ledger operations; roles.md only when delegating.
 3. Check the pinned version, source hashes and exact approved predecessor. Stage 00 has source input instead of a predecessor. Work on a private derivative; leave source and accepted files unchanged.
 4. Locate Blender and inspect its actual API before writing version-sensitive code. If tools, model or references are unavailable, complete independent preparation and report what remains untested.
+
+Qualify the accepted generated/integrated rig with MMD Tools, Rigify and any bridge unavailable. Compare source morph combinations and evaluated poses with the construction environment; generation success is not qualification.
 
 ## Execute with a bounded change
 

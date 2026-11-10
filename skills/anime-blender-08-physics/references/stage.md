@@ -6,17 +6,17 @@ Use the short cold-reset/settle/turn/landing demo and human motion critique befo
 
 ## 1. Start with one physical structure
 
-Animal ears/tails/kemonomimi are deferred. Inspect imported MMD Tools native bodies/joints first; retain them when attachment, editability, cold stability and category suspension tests pass. Imported MMD solver settings are not an automatic qualification. Construct new native solver/proxy setups only for demonstrated gaps, per PACK/references/construction.md.
+Animal ears/tails/kemonomimi are deferred. Inspect imported MMD Tools native bodies/joints first; retain them when attachment, editability, cold stability and category suspension tests pass. Imported MMD solver settings are not an automatic qualification. Construct bespoke native solver/proxy setups only when evidence shows compatible existing tools cannot meet the specific requirement, per PACK/references/construction.md.
 
 Map PMX bodies/joints plus visible hair, garments, accessories and applicable human soft tissue to source IDs. Use the PMX as intent evidence; MMD solver numbers are not transferable Blender material constants. Choose one representative chain or panel before full-character construction. Preserve manual rig behavior and approved visible shape.
 
-Choose cloth proxy for sheetlike garments; reviewed strip/volume proxy or constrained rigid-body chain for hair; constrained rigid bodies for rigid pendants; localized soft-body or cloth proxy for suitable soft regions. Record why a method fits bending/stretch/collision needs and what it cannot model. Do not call a tracked empty, sinusoidal driver or damping-only constraint a native dynamic simulation.
+For a demonstrated gap requiring a new setup, consider cloth proxy for sheetlike garments; reviewed strip/volume proxy or constrained rigid-body chain for hair; constrained rigid bodies for rigid pendants; localized soft-body or cloth proxy for suitable soft regions. Record why a method fits bending/stretch/collision needs and what it cannot model. Do not call a tracked empty, sinusoidal driver or damping-only constraint a native dynamic simulation.
 
 ## 2. Build one-way evaluation
 
-Use animation rig -> animated attachments/colliders -> simulation proxy -> visible deformation. Keep proxy rest shape, pin/goal weights, collision surface and rendered mesh separate. Never drive an attachment from the already simulated mesh. Test modifier order with rigid translation/rotation and physics disabled first: render motion must not be applied twice.
+Keep one-way evaluation for every route. Where a proxy is needed, use animation rig -> animated attachments/colliders -> simulation proxy -> visible deformation, keeping proxy rest shape, pin/goal weights, collision surface and rendered mesh separate. Passing imported bodies/joints do not require a redundant proxy. Never drive an attachment from the already simulated mesh. Test modifier order with rigid translation/rotation and physics disabled first: render motion must not be applied twice.
 
-Bind Surface Deform/Mesh Deform or other native transfer in the intended rest pose and record transforms/topology; rebind after relevant topology or rest changes. Test identity at rest, unit translation, rotation and manual fallback. Do not add Armature after proxy transfer merely to fix a double transform without measuring spaces.
+When a proxy/transfer is needed, bind Surface Deform/Mesh Deform or other native transfer in the intended rest pose and record transforms/topology; rebind after relevant topology or rest changes. Test identity at rest, unit translation, rotation and manual fallback. Do not add Armature after proxy transfer merely to fix a double transform without measuring spaces.
 
 Record real scale and apply transforms only with correspondence verification. Collision margin must be small relative to part thickness/separation, not a memorized meter value. Fix intersecting rest shapes and pinning before raising quality. Exclude adjacent constrained bodies from mutual collision where technically justified; preserve intended body/garment contacts. Add collision pairs gradually.
 

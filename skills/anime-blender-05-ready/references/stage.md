@@ -8,7 +8,7 @@ Use the shared face fixture for changed expression combinations, reset/keying an
 
 Map source vertex, group, bone, UV and material morphs to native controls explicitly. Shape keys only represent compatible vertex deformations. Record original ranges and intentional asymmetry; do not rename away the source mapping. Preserve neutral Basis and relative-key relationships.
 
-Create independent left/right blink, eye aim, brows, jaw, mouth and approved viseme controls, plus source-specific expressions. Probe 0, midpoint and full range and restore after each test. Check blink+eye aim, smile+jaw, phoneme+blink and brow combinations for eye penetration, tooth/lip intersections and overdriving. Correctives require scoped evidence and the correct owner-stage requalification.
+Provide independent left/right blink, eye aim, brows, jaw, mouth and approved viseme controls, plus source-specific expressions. Reuse compatible existing controls first; bespoke controls require demonstrated inability of compatible tools to meet the requirement. Probe 0, midpoint and full range and restore after each test. Check blink+eye aim, smile+jaw, phoneme+blink and brow combinations for eye penetration, tooth/lip intersections and overdriving. Correctives require scoped evidence and the correct owner-stage requalification.
 
 Rigify body generation does not translate the entire PMX expression system. Reuse generated eye/jaw controls only where compatible with the preserved source morphs; do not substitute a generated face rig for the source vocabulary by default.
 

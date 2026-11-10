@@ -1,10 +1,11 @@
 interface:
   display_name: 'Anime Blender 04: Native Blender control rig'
-  short_description: Focused Cycles work with compact human review
+  short_description: Rigify human controls over preserved PMX deformation
   default_prompt: Use $anime-blender-04-rig version 3 to diagnose the current stage,
     preserve correct work, and prepare an evidenced candidate for human review. Use
     Cycles only unless I explicitly request another engine; follow the lightweight
-    workflow.
+    workflow. Use Rigify with a proven compatible bridge; bespoke work requires demonstrated
+    inability of compatible tools.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

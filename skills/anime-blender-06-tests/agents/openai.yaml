@@ -1,10 +1,10 @@
 interface:
   display_name: 'Anime Blender 06: Animation qualification'
-  short_description: Focused Cycles work with compact human review
+  short_description: Qualify integrated rigs without construction add-ons
   default_prompt: Use $anime-blender-06-tests version 3 to diagnose the current stage,
     preserve correct work, and prepare an evidenced candidate for human review. Use
     Cycles only unless I explicitly request another engine; follow the lightweight
-    workflow.
+    workflow. Test with MMD Tools, Rigify and any bridge unavailable.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

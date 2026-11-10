@@ -12,6 +12,8 @@ description: "Audit appearance, deformation, dependencies and actual viewport pe
 3. Check the pinned version, source hashes and exact approved predecessor. Stage 00 has source input instead of a predecessor. Work on a private derivative; leave source and accepted files unchanged.
 4. Locate Blender and inspect its actual API before writing version-sensitive code. If tools, model or references are unavailable, complete independent preparation and report what remains untested.
 
+Deliver the native animation rig with required controls intact. Keep construction metarig/settings in the recipe bundle; test the relocated result without MMD Tools, Rigify or bridge add-ons and disclose optional generated UI helpers.
+
 ## Execute with a bounded change
 
 Use the routine path in workflow.md first; expand relevant diagnosis in stage.md only for an observed or uncertain fault. State the observed fault, evidence, competing causes, distinguishing test, proposed edit and rollback file before editing. Run the distinguishing test first. Preserve a correct imported subsystem; never rebuild it simply because a template exists.

@@ -1,6 +1,6 @@
 ---
 name: anime-blender-01-import
-description: "Import PMX without cleanup, preserve a known baseline, and account for texture, morph, normal, bone and deformation losses. Use for stage 01 of the human-reviewed PMX to native Blender pipeline, including diagnosis or resuming that stage."
+description: "Import fully human PMX with pinned MMD Tools without cleanup; preserve the baseline and inventory texture, morph, normal, bone and deformation losses. Use for stage 01 import, import diagnosis or resumption."
 ---
 
 # 01 — Import and loss inventory
@@ -12,7 +12,7 @@ description: "Import PMX without cleanup, preserve a known baseline, and account
 3. Check the pinned version, source hashes and exact approved predecessor. Stage 00 has source input instead of a predecessor. Work on a private derivative; leave source and accepted files unchanged.
 4. Locate Blender and inspect its actual API before writing version-sensitive code. If tools, model or references are unavailable, complete independent preparation and report what remains untested.
 
-Read PACK/references/construction.md for the existing MMD Tools/Rigify route, compatible bridge pilot and fully human scope. Record its evidence under existing checks; add no gate.
+Read PACK/references/construction.md. Use the pinned MMD Tools importer and record actual options, source-ID mapping and unsupported behavior. Preserve the raw import; Rigify generation/integration belongs to 04.
 
 ## Execute with a bounded change
 

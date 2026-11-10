@@ -1,6 +1,6 @@
 ---
 name: anime-blender-00-setup
-description: "Pin the Blender/importer environment, source identity, reference confidence, scene fixtures and acceptance scope before conversion. Use for stage 00 of the human-reviewed PMX to native Blender pipeline, including diagnosis or resuming that stage."
+description: "Pin and probe Blender, MMD Tools, Rigify and any proposed bridge; establish fully human source identity, references, scope and resource budget. Use for stage 00 setup or environment compatibility diagnosis before PMX conversion."
 ---
 
 # 00 — Setup and reference calibration
@@ -12,7 +12,7 @@ description: "Pin the Blender/importer environment, source identity, reference c
 3. Check the pinned version, source hashes and exact approved predecessor. Stage 00 has source input instead of a predecessor. Work on a private derivative; leave source and accepted files unchanged.
 4. Locate Blender and inspect its actual API before writing version-sensitive code. If tools, model or references are unavailable, complete independent preparation and report what remains untested.
 
-Read PACK/references/construction.md for the existing MMD Tools/Rigify route, compatible bridge pilot and fully human scope. Record its evidence under existing checks; add no gate.
+Read PACK/references/construction.md. Probe the pinned MMD Tools/Rigify/bridge combination on disposable fixtures; record tool identities and the 5 GB RAM / 60% VRAM workload plan under existing setup checks. Character rig construction remains at 04.
 
 ## Execute with a bounded change
 

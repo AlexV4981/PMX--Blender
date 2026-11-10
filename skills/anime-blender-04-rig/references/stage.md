@@ -8,7 +8,7 @@ Use the shared motion fixture for changed-control/switch smoke tests and a contr
 
 Prefer Rigify human control generation and a compatible, piloted MMD-to-Rigify bridge before writing equivalent rig machinery. Follow PACK/references/construction.md: retain the construction metarig/settings, inspect integration edits, preserve source bind/weights/morphs and test one arm/leg. Only when evidence shows compatible existing tools cannot meet a specific required behavior, use a fitted Rigify metarig with the smallest native mapping or bespoke control needed for that demonstrated gap. No automatic weights, remeshing or blanket skeleton replacement.
 
-Map anatomical roles using rest positions, hierarchy and influence regions; Japanese/English bone names are hints. Keep the imported deform skeleton/rest bind where it works. Build separate control/mechanism bones rather than rebuilding and reweighting everything. Inventory grants, twist, IK, SDEF callbacks and morph dependencies before removal.
+Map anatomical roles using rest positions, hierarchy and influence regions; Japanese/English bone names are hints. Keep the imported deform skeleton/rest bind where it works. Use generated control/mechanism bones over the preserved deform skeleton; do not rebuild and reweight everything. Inventory grants, twist, IK, SDEF callbacks and morph dependencies before removal.
 
 Write a directed dependency graph: controls -> mechanisms -> deform bones -> mesh. No mechanism may depend on the mesh it drives. Declare coordinate/constraint spaces, parent inverses, rotation modes, scale inheritance and reset values. Maintain source-to-final correspondence and compare evaluated rest geometry before animation.
 
@@ -20,11 +20,11 @@ For a limb with shoulder/hip A, elbow/knee B and hand/ankle C, project B onto li
 
 ## 3. Build and prove the interface
 
-Provide root/world/COG, spine/head, limbs with IK/FK, poles, foot roll/toes, fingers and applicable accessories. Start with one arm and one leg. Test the mirrored side independently because roll and local axes differ. Add remaining controls only after pilot switching and reset work.
+Provide root/world/COG, spine/head, limbs with IK/FK, poles, foot roll/toes, fingers and applicable accessories. Start with one arm and one leg. Test the mirrored side independently because roll and local axes differ. Expand the generated/integrated controls only after pilot switching and reset work.
 
-For IK/FK switching, sample evaluated world matrices before switching, solve destination controls in their spaces, switch, then compare endpoints and intermediate joints. Test at several bent/twisted poses and keyed frames. Parent/space switching must preserve world pose. Report translation normalized by height and quaternion angle 2*acos(clamp(abs(dot(q0,q1)),0,1)). Never conceal a switch pop by changing the test pose.
+Use tested generated IK/FK and space-switch facilities first; implement a custom solve only for a demonstrated requirement compatible existing tools cannot meet. For switching verification, sample evaluated world matrices before switching, solve destination controls in their spaces, switch, then compare endpoints and intermediate joints. Test at several bent/twisted poses and keyed frames. Parent/space switching must preserve world pose. Report translation normalized by height and quaternion angle 2*acos(clamp(abs(dot(q0,q1)),0,1)). Never conceal a switch pop by changing the test pose.
 
-Rigify may construct a rig, but generated Python UI and snapping are separate dependencies. Core posing must pass in stock Blender with auto execution disabled. Do not delete the original rig until all affected functions pass.
+Rigify constructs the controls; generated Python UI and snapping remain separate dependencies. Core posing must pass in stock Blender with auto execution disabled. Do not delete the original rig until all affected functions pass.
 
 ## Evidence
 

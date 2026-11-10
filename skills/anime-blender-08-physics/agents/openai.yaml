@@ -1,10 +1,10 @@
 interface:
   display_name: 'Anime Blender 08: Editable native physics'
-  short_description: Focused Cycles work with compact human review
+  short_description: Reuse and qualify editable native human physics
   default_prompt: Use $anime-blender-08-physics version 3 to diagnose the current
     stage, preserve correct work, and prepare an evidenced candidate for human review.
     Use Cycles only unless I explicitly request another engine; follow the lightweight
-    workflow.
+    workflow. Test imported native physics first; defer animal features.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

@@ -1,6 +1,6 @@
 ---
 name: anime-blender-08-physics
-description: "Construct and test native editable secondary motion with stable attachments, collision proxies, category controls and manual fallback. Use for stage 08 of the human-reviewed PMX to native Blender pipeline, including diagnosis or resuming that stage."
+description: "Reuse qualified imported native physics before constructing editable hair, garment, accessory and human soft-tissue motion; test attachments, category suspension and manual fallback. Use for stage 08 native physics construction or diagnosis; animal features are deferred."
 ---
 
 # 08 — Editable native physics
@@ -11,6 +11,8 @@ description: "Construct and test native editable secondary motion with stable at
 2. Read PACK/references/contract.md, PACK/references/workflow.md and [stage.md](references/stage.md). Read PACK/references/diagnosis.md when a previous attempt failed. Read PACK/references/tools.md and schemas.md before ledger operations; roles.md only when delegating.
 3. Check the pinned version, source hashes and exact approved predecessor. Stage 00 has source input instead of a predecessor. Work on a private derivative; leave source and accepted files unchanged.
 4. Locate Blender and inspect its actual API before writing version-sensitive code. If tools, model or references are unavailable, complete independent preparation and report what remains untested.
+
+Follow PACK/references/construction.md: test imported native bodies/joints first. Bespoke solver/proxy construction requires demonstrated inability of compatible existing tools to meet the requirement. Animal ears/tails/kemonomimi remain deferred.
 
 ## Execute with a bounded change
 

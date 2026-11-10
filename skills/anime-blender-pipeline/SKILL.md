@@ -1,6 +1,6 @@
 ---
 name: anime-blender-pipeline
-description: "Coordinate and diagnose a human-reviewed PMX anime character conversion to a native Cycles Blender animation asset. Use for the complete pipeline, resuming stages, failed shader repair, source-preserving reconstruction, or replaying an accepted recipe."
+description: "Coordinate a human-reviewed, fully human PMX to native Cycles Blender conversion using MMD Tools import and Rigify controls with a proven compatible bridge. Use for the complete pipeline, stage resumption, failed conversion diagnosis or accepted-recipe replay; animal features are deferred."
 ---
 
 # PMX to native Blender
@@ -11,7 +11,7 @@ Read [contract.md](references/contract.md) and [workflow.md](references/workflow
 
 Locate the Blender binary, exact build, importer and supplied model/references. Probe actual capabilities. Keep the correct import intact. Do not replace every material or reimport to solve an isolated shader fault. Treat the bundled generic shader seeds as diagnostic fixtures, not game-character presets or an original game shader recovery.
 
-Use [construction.md](references/construction.md) for the fully human MMD Tools + Rigify construction route; animal ears/tails/kemonomimi are deferred. Prefer supported existing tools before bespoke conversion code.
+Use [construction.md](references/construction.md) for the fully human MMD Tools + Rigify construction route; animal ears/tails/kemonomimi are deferred. Bespoke work requires demonstrated inability of compatible existing tools to meet the specific requirement.
 
 Read only the active [stage procedure](#stages), plus [tools.md](references/tools.md), [schemas.md](references/schemas.md) for ledger work and [sources.md](references/sources.md) for version-sensitive Blender behavior. Read [roles.md](references/roles.md) before actual delegation. Missing tools block their dependent work, not independent analysis/preparation.
 
