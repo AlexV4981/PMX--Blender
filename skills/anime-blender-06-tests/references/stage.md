@@ -18,7 +18,7 @@ Inspect actual face/hand/foot close-ups and silhouettes. Numeric metrics supplem
 
 ## 3. Repeat with a clean runtime
 
-Open the test derivative with stock Blender, construction add-ons unavailable and auto execution disabled. Run the same controls/frames and compare results. For a generated/integrated rig, explicitly make MMD Tools, Rigify and any bridge unavailable; inspect callbacks and generated text dependencies as well as constraints/drivers. Compare the same evaluated poses and source morph combinations with the construction environment. Test approved optional embedded helpers separately with their exact execution requirements. Do not infer dependency independence from the enabled-add-on list alone.
+Open the test derivative with stock Blender, construction add-ons (including MMD Tools, Rigify and any bridge) unavailable and auto execution disabled. Compare the same evaluated poses, frames and source morph combinations with the construction environment; inspect callbacks, generated text, constraints and drivers. Test approved optional embedded helpers separately with their exact execution requirements. Do not infer dependency independence from the enabled-add-on list alone.
 
 Route failures to 02/03/04/05 as appropriate with a minimal reproduction, affected frame, expected/observed result and artifact identity. Do not edit production in this qualification stage. Re-run only affected suites plus meaningful neighboring regression views after a repair.
 

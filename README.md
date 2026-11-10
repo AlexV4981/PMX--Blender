@@ -4,7 +4,7 @@ Eleven skills for PMX anime character conversion with a lightweight, human-revie
 
 ## Construction simplification
 
-For fully human characters, use MMD Tools for import and Rigify for body controls, with a compatible existing bridge where proven. Preserve source weights, topology and morphs; implement only demonstrated gaps. Animal ears/tails/kemonomimi are deferred. [Construction route](skills/anime-blender-pipeline/references/construction.md) explains version probes, integration and native runtime limits. No universal compatibility or live asset qualification is claimed. All stages and human gates remain.
+Use MMD Tools import and Rigify body controls for fully human characters; animal ears/tails/kemonomimi are deferred. The [construction route](skills/anime-blender-pipeline/references/construction.md) covers compatible bridges, version probes, source preservation and native runtime limits. Bespoke work requires demonstrated inability of compatible existing tools to meet the requirement. All stages and human gates remain; live asset qualification is still required.
 
 ## What changed
 

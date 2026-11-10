@@ -40,7 +40,7 @@ Exit 0: structurally consumed inventory; not proof every PMX effect is supported
 
 ## Construction helpers
 
-Follow [construction.md](construction.md) for MMD Tools, Rigify and optional bridge selection, exact version locks and pilot tests. No conversion wrapper is bundled or claimed qualified. Prefer the installed tools’ documented operators over a new generator; inspect actual API/help before scripting. Store the construction recipe and metarig privately; generated output still needs clean-runtime testing.
+Follow [construction.md](construction.md) for MMD Tools, Rigify, optional bridges, version locks and pilot tests. Inspect installed API/help before scripting; no conversion wrapper is bundled or claimed qualified.
 
 ## Blender tools (live qualification required)
 

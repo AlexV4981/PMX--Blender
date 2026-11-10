@@ -6,7 +6,7 @@ Use Cycles for all production materials, reference comparisons, review renders, 
 
 ## Construction route
 
-Use [construction.md](construction.md): MMD Tools import -> preserve accepted mesh/weights/morphs -> Rigify human controls with a proven bridge; use minimal native mapping only for a demonstrated requirement compatible existing tools cannot meet -> clean native qualification. Fully human characters are the current scope; animal ears/tails/kemonomimi are deferred. Tools reduce construction effort, never the ten handoffs or fidelity checks.
+Follow [construction.md](construction.md) for MMD Tools import, Rigify human controls and clean native qualification. Bespoke work requires demonstrated inability of compatible existing tools to meet the requirement. Animal ears/tails/kemonomimi are deferred; all ten handoffs and fidelity checks remain.
 
 ## Routine path
 
