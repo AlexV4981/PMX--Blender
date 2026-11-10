@@ -38,6 +38,10 @@ Stop early when succeeded. Ten failed alternatives only make a hyperspecific exc
 
 Exit 0: structurally consumed inventory; not proof every PMX effect is supported. Exit 3: partial inventory, including nonzero PMX 2.1 soft-body payload or unknown trailing bytes. Exit 2: malformed/unsupported input. Never suppress partial status and claim full support. PMX 2.0 sections and deformation-type counts are parsed without changing the source. Preserve source data and validate against the actual importer. This tool does not replace the source-to-import comparison or inspect every numeric/index invariant.
 
+## Construction helpers
+
+Follow [construction.md](construction.md) for MMD Tools, Rigify and optional bridge selection, exact version locks and pilot tests. No conversion wrapper is bundled or claimed qualified. Prefer the installed tools’ documented operators over a new generator; inspect actual API/help before scripting. Store the construction recipe and metarig privately; generated output still needs clean-runtime testing.
+
 ## Blender tools (live qualification required)
 
 Run the actual Blender executable. Do not claim normal Python has bpy. Probe first:

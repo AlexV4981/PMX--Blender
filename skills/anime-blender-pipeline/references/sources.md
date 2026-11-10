@@ -22,6 +22,15 @@ Use documentation for the exact pinned build, not a moving latest version. These
 - [PoseBone API](https://docs.blender.org/api/4.5/bpy.types.PoseBone.html), [Bone API](https://docs.blender.org/api/4.5/bpy.types.Bone.html) and [Object.convert_space](https://docs.blender.org/api/4.5/bpy.types.Object.html#bpy.types.Object.convert_space): distinguish rest, pose, local and world transforms.
 - [Driver troubleshooting](https://docs.blender.org/manual/en/4.5/animation/drivers/troubleshooting.html): driver execution/dependency limitations.
 
+## Construction tools (upstream reviewed 2026-11-09, America/Chicago)
+
+- [MMD Tools project scope and compatibility](https://github.com/MMD-Blender/blender_mmd_tools): maintained importer; direct Rigify support is outside core scope. Its documented version ranges are not a tested project lock.
+- [MMD Tools Append integration procedure](https://github.com/MMD-Blender/blender_mmd_tools_append/wiki): documents requirements and metarig/generation/integration; inspect exact release/operator behavior.
+- [Rigify basic usage, Blender 4.4](https://docs.blender.org/manual/en/4.4/addons/rigging/rigify/basics.html): metarig retention, regeneration and generated UI. This indexed primary page was available; the 4.5 direct fetch failed during review. Use installed help/API for the pinned build rather than treating 4.4 as a 4.5 guarantee.
+- [Rigify developer API](https://developer.blender.org/docs/features/animation/rigify/): generation machinery and custom UI script support.
+
+These upstream capabilities motivate construction.md; an independent Blender 4.3.2 factory-startup/disable-autoexec probe and seed-library construction passed. No MMD Tools/Rigify/bridge conversion, actual character or target-machine workload was qualified. Verify the actual combination before conversion.
+
 ## Native physics and delivery (08–09)
 
 - [Surface Deform](https://docs.blender.org/manual/en/4.5/modeling/modifiers/deform/surface_deform.html): transfer binding constraints and deformation.

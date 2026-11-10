@@ -4,6 +4,10 @@
 
 Use Cycles for all production materials, reference comparisons, review renders, animation previews and performance evidence. Set scene.render.engine='CYCLES'; use 3D viewport shading.type='RENDERED' with the scene lights/world and the recorded Cycles settings. Blender's Material Preview uses another engine even in a Cycles project: do not select it or build compatibility graphs unless the user explicitly requests it. Do not substitute another engine, an external differentiable renderer or a preview material to meet timing or color targets. Solid/wireframe inspection is permissible for topology/control diagnosis; it is not appearance or benchmark evidence. Record any explicit user-requested engine exception and its scope; keep Cycles final evaluation unless that request changes it.
 
+## Construction route
+
+Use [construction.md](construction.md): MMD Tools import -> preserve accepted mesh/weights/morphs -> Rigify human controls with a proven bridge; use minimal native mapping only for a demonstrated requirement compatible existing tools cannot meet -> clean native qualification. Fully human characters are the current scope; animal ears/tails/kemonomimi are deferred. Tools reduce construction effort, never the ten handoffs or fidelity checks.
+
 ## Routine path
 
 1. Load the current stage, accepted input and one shared recipe/fixture record. Verify identities and changed dependencies. Re-probe environment facts only after an actual environment change or inconsistent evidence; do not regenerate unchanged inventories.

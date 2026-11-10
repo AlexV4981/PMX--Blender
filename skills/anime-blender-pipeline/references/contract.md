@@ -3,12 +3,12 @@
 ## Product and priorities
 
 - Produce a native Blender Cycles animation character. PMX export compatibility is not required at delivery.
-- Focus on PMX anime humanoids resembling Wuthering Waves characters. Verify actual feature support instead of guaranteeing every game.
+- Focus on fully human PMX anime characters resembling Wuthering Waves characters. Animal ears, tails and kemonomimi are deferred; preserve encountered source data and report scope mismatch at 00. Verify actual feature support instead of guaranteeing every game.
 - Match supplied in-game references. Professional rigs inform functionality/quality, not automatic body, face or style redesign.
 - Rank conflicts: fidelity > animation > realism > performance > convenience.
 - Keep originals and accepted checkpoints immutable; use private derivative bundles and human approval at every stage.
 - Submit topology, thickness, proportions, replacement eyes and hidden surfaces as individually compared proposals. Finalize substantial geometry before final rig/morph construction. Return late geometry work to 03 and invalidate downstream bindings/tests/approvals.
-- Deliver editable native hair, clothing, accessory, tail, ear and soft-tissue simulations where applicable, with separate toggles. Do not deliver baked-only physics. Temporary calculation caches are normal; clear final simulation bakes.
+- Deliver editable native hair, clothing, accessory and applicable human soft-tissue simulations where applicable, with separate toggles. Do not deliver baked-only physics. Temporary calculation caches are normal; clear final simulation bakes.
 
 ## Candidates and human decisions
 
@@ -33,13 +33,15 @@ Run in Codex with actual access to Blender/project files. Use Sol 6.1 High orche
 
 ## Construction and final dependencies
 
-Allow third-party build tools and inspected embedded Python. Aim for no required final add-on. A hyperspecific exception requires ten distinct documented failed alternatives and explicit human acceptance. Stop early if an alternative works. Escalate hard problems rather than exhausting incapable Light retries. Ten attempts are the dependency-removal budget, not permission for ten model candidates.
+Prefer MMD Tools import, Rigify human controls and a proven compatible integration bridge before bespoke construction code; follow construction.md. Allow third-party build tools and inspected embedded Python. Aim for no required final add-on. A hyperspecific exception requires ten distinct documented failed alternatives and explicit human acceptance. Stop early if an alternative works. Escalate hard problems rather than exhausting incapable Light retries. Ten attempts are the dependency-removal budget, not permission for ten model candidates.
 
 Keep core posing usable without construction add-ons. Disclose embedded helper execution requirements separately. Test features with a clean profile; an apparently native rig can still contain dependent drivers/handlers/buttons. Preserve needed imported effects until their native replacements pass tests.
 
 ## Laptop performance
 
 Baseline: Acer Nitro V, Ryzen 5 7535HS, 16 GB RAM, 6 GB VRAM. Record exact GPU, OS, driver and power state. Desired Cycles Rendered viewport physics-off >=24 FPS, with samples/denoising/device pinned and newly qualified. Cold active simulation target approximately 12 FPS, with persistent near-1-FPS behavior unacceptable. Calibrate exact stall limits in the pilot.
+
+Use the user resource ceilings of 5 GB RAM and 60% VRAM for workload planning; record measurement scope and peak use, stop/resize a diagnostic workload before crossing them, and report any fidelity conflict at the existing gate. Do not claim hardware compliance from estimates.
 
 Measure real UI viewport updates, not headless frame stepping or cached physics. Keep simulation timebase fixed; separate calculation throughput from capped playback. Report frame-time spikes, RAM/VRAM and cold/warm results. Never hide objects, drop frames, silently lower fidelity or alter tests for a pass.
 

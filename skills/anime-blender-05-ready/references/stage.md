@@ -10,6 +10,8 @@ Map source vertex, group, bone, UV and material morphs to native controls explic
 
 Create independent left/right blink, eye aim, brows, jaw, mouth and approved viseme controls, plus source-specific expressions. Probe 0, midpoint and full range and restore after each test. Check blink+eye aim, smile+jaw, phoneme+blink and brow combinations for eye penetration, tooth/lip intersections and overdriving. Correctives require scoped evidence and the correct owner-stage requalification.
 
+Rigify body generation does not translate the entire PMX expression system. Reuse generated eye/jaw controls only where compatible with the preserved source morphs; do not substitute a generated face rig for the source vocabulary by default.
+
 Use simple portable driver variables/expressions for core behavior. Resolve actual data paths and IDs; do not assume duplicate names address the correct shape-key block. Preserve animator overrides. Evaluate controls in a clean process with auto execution disabled. Optional embedded snapping/UI helpers must be disclosed and tested separately.
 
 ## 2. Make animation usable

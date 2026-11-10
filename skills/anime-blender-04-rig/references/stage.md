@@ -6,6 +6,8 @@ Use the shared motion fixture for changed-control/switch smoke tests and a contr
 
 ## 1. Preserve the proven deform skeleton
 
+Prefer Rigify human control generation and a compatible, piloted MMD-to-Rigify bridge before writing equivalent rig machinery. Follow PACK/references/construction.md: retain the construction metarig/settings, inspect integration edits, preserve source bind/weights/morphs and test one arm/leg. Only when evidence shows compatible existing tools cannot meet a specific required behavior, use a fitted Rigify metarig with the smallest native mapping or bespoke control needed for that demonstrated gap. No automatic weights, remeshing or blanket skeleton replacement.
+
 Map anatomical roles using rest positions, hierarchy and influence regions; Japanese/English bone names are hints. Keep the imported deform skeleton/rest bind where it works. Build separate control/mechanism bones rather than rebuilding and reweighting everything. Inventory grants, twist, IK, SDEF callbacks and morph dependencies before removal.
 
 Write a directed dependency graph: controls -> mechanisms -> deform bones -> mesh. No mechanism may depend on the mesh it drives. Declare coordinate/constraint spaces, parent inverses, rotation modes, scale inheritance and reset values. Maintain source-to-final correspondence and compare evaluated rest geometry before animation.

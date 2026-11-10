@@ -10,6 +10,8 @@ Inventory PMX, archive, textures, source terms and supplied references by hash. 
 
 Record Blender executable/build hash, importer release/commit, OS, Python, GPU/driver, enabled add-ons and OCIO configuration. Pin a tested combination; do not upgrade an existing conversion to a moving latest release. Run the environment probe and existing utility tests. A missing laptop blocks hardware qualification, not preparation of the scene.
 
+Use PACK/references/construction.md for the MMD Tools/Rigify environment smoke test and optional bridge lock. Declare fully human scope; animal ears/tails/kemonomimi are deferred, with source data preserved if encountered. Probe tools on a disposable fixture here; character rig construction remains at 04. Include exact construction-tool identities and the 5 GB RAM / 60% VRAM resource ceilings, measurement scope and bounded-workload plan in environment-lock/capability-spec.
+
 ## 2. Calibrate comparison conditions
 
 Create separate immutable fixture settings for (a) texture/emission diagnosis, (b) neutral diffuse response, (c) directional light sweep and (d) final showcase. Pin cameras, projection/focal length, resolution, lights/world, exposure, view transform/look, samples, seed and denoising. Use Standard as a proposed diagnostic setting, not a global cure for washed-out colors. Preserve a separately approved showcase transform. Do not adjust exposure while tuning a texture.

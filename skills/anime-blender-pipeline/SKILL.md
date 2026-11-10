@@ -11,6 +11,8 @@ Read [contract.md](references/contract.md) and [workflow.md](references/workflow
 
 Locate the Blender binary, exact build, importer and supplied model/references. Probe actual capabilities. Keep the correct import intact. Do not replace every material or reimport to solve an isolated shader fault. Treat the bundled generic shader seeds as diagnostic fixtures, not game-character presets or an original game shader recovery.
 
+Use [construction.md](references/construction.md) for the fully human MMD Tools + Rigify construction route; animal ears/tails/kemonomimi are deferred. Prefer supported existing tools before bespoke conversion code.
+
 Read only the active [stage procedure](#stages), plus [tools.md](references/tools.md), [schemas.md](references/schemas.md) for ledger work and [sources.md](references/sources.md) for version-sensitive Blender behavior. Read [roles.md](references/roles.md) before actual delegation. Missing tools block their dependent work, not independent analysis/preparation.
 
 ## Run an evidence-driven pilot

@@ -2,6 +2,10 @@
 
 Eleven skills for PMX anime character conversion with a lightweight, human-reviewed Cycles-only workflow. The ten stage handoffs remain. Each stage uses essential checks and a short Cycles demonstration, expanding diagnosis or mathematical fitting only for an observed or uncertain fault.
 
+## Construction simplification
+
+For fully human characters, use MMD Tools for import and Rigify for body controls, with a compatible existing bridge where proven. Preserve source weights, topology and morphs; implement only demonstrated gaps. Animal ears/tails/kemonomimi are deferred. [Construction route](skills/anime-blender-pipeline/references/construction.md) explains version probes, integration and native runtime limits. No universal compatibility or live asset qualification is claimed. All stages and human gates remain.
+
 ## What changed
 
 Reuse accepted camera/environment/color definitions while their dependencies match. Share one motion/face suite and rerun affected cases. Use a no-change integrity report when geometry needs no repair. Keep regional Delta E 00 measurements, explicit limits and human artistic critique.

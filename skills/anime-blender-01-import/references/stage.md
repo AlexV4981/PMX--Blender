@@ -6,7 +6,7 @@ Preserve the working import. Reuse its inventory when identity/correspondence is
 
 ## 1. Preserve the import that works
 
-Run the read-only PMX inventory before Blender import. Read exit status: partial inventory remains partial. Extract a working copy preserving Unicode paths; preserve the original archive. Record every importer option and unavoidable conversion. Import once without merge-by-distance, triangulation changes, decimation, normal recalculation or automatic rig rebuilding.
+Prefer the pinned maintained MMD Tools importer; record actual options and supported behavior per PACK/references/construction.md. Do not run Rigify generation, integration or model cleanup during baseline import. Run the read-only PMX inventory before Blender import. Read exit status: partial inventory remains partial. Extract a working copy preserving Unicode paths; preserve the original archive. Record every importer option and unavoidable conversion. Import once without merge-by-distance, triangulation changes, decimation, normal recalculation or automatic rig rebuilding.
 
 Save a raw import baseline and inspect its beauty, flat-texture and neutral-gray views in separate test derivatives. Record missing image paths before relinking. Resolve exact PMX relative paths first; basename alone is ambiguous when multiple files share a name. Log source ID, original path, resolved path and content hash. Do not substitute a visually similar texture.
 

@@ -6,9 +6,11 @@ Use the short cold-reset/settle/turn/landing demo and human motion critique befo
 
 ## 1. Start with one physical structure
 
-Map PMX bodies/joints plus visible hair, garments, accessories, tail/ears and applicable soft tissue to source IDs. Use the PMX as intent evidence; MMD solver numbers are not transferable Blender material constants. Choose one representative chain or panel before full-character construction. Preserve manual rig behavior and approved visible shape.
+Animal ears/tails/kemonomimi are deferred. Inspect imported MMD Tools native bodies/joints first; retain them when attachment, editability, cold stability and category suspension tests pass. Imported MMD solver settings are not an automatic qualification. Construct new native solver/proxy setups only for demonstrated gaps, per PACK/references/construction.md.
 
-Choose cloth proxy for sheetlike garments; reviewed strip/volume proxy or constrained rigid-body chain for hair/tails; constrained rigid bodies for rigid pendants; localized soft-body or cloth proxy for suitable soft regions. Record why a method fits bending/stretch/collision needs and what it cannot model. Do not call a tracked empty, sinusoidal driver or damping-only constraint a native dynamic simulation.
+Map PMX bodies/joints plus visible hair, garments, accessories and applicable human soft tissue to source IDs. Use the PMX as intent evidence; MMD solver numbers are not transferable Blender material constants. Choose one representative chain or panel before full-character construction. Preserve manual rig behavior and approved visible shape.
+
+Choose cloth proxy for sheetlike garments; reviewed strip/volume proxy or constrained rigid-body chain for hair; constrained rigid bodies for rigid pendants; localized soft-body or cloth proxy for suitable soft regions. Record why a method fits bending/stretch/collision needs and what it cannot model. Do not call a tracked empty, sinusoidal driver or damping-only constraint a native dynamic simulation.
 
 ## 2. Build one-way evaluation
 

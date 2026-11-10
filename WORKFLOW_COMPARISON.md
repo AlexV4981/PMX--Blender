@@ -226,3 +226,8 @@ The simplifications are applied as version 3. The contract, frozen policy templa
 - Pin viewport samples, denoising, device and resolution. Freshly qualify the desired 24 FPS off / approximately 12 FPS cold active goals in Cycles; old preview-engine timing does not transfer.
 - Read-only inspection flags a non-Cycles scene; seed construction selects Cycles explicitly. Live Blender execution remains unqualified here.
 - An independent scenario check confirmed localized finger-control work does not trigger accepted face-material rebuilding, camera refitting or a second-engine graph; two observed final decisions require no third prompt.
+
+
+## Applied construction reuse
+
+The active workflow now prefers MMD Tools import and Rigify human body generation with a compatible existing integration bridge before bespoke rig construction. See [construction.md](skills/anime-blender-pipeline/references/construction.md) for the exact probe/lock and fallback procedure. Map A remains historical. Animal ears/tails/kemonomimi are deferred; source data remains intact. All ten handoffs and existing required-check names remain. Tool generation does not replace Cycles fidelity, source morph/deformation tests, native physics, clean runtime or target-machine evidence. Plan bounded workloads within 5 GB RAM and 60% VRAM and disclose conflicts at existing gates.
