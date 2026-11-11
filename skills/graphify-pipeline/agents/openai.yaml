@@ -1,0 +1,4 @@
+interface:
+  display_name: "Graphify Pipeline"
+  short_description: "Navigate stages, exact gates, model roles and repair routes"
+  default_prompt: "Verify or rebuild the graph; load only the active stage's authoritative source instructions and actual frozen run policy."
