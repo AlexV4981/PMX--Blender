@@ -29,3 +29,15 @@ Outputs: generated/graph.json, generated/graph.html and generated/context.md, al
 7. Do not install dependencies, launch Blender, run acceptance, copy old approvals or rewrite source policy to make the graph work. Graphify is intentionally excluded from the original pack-manifest.json.
 
 See README.md for CLI options and source-of-truth boundaries.
+
+## Detailed action-and-repair graph
+
+The default build also generates action_graph.json, action_graph.html and actions_context.md under generated/. The detailed graph uses numbered headings from each original stage.md as task nodes. After each task is a local verification checkpoint (not an additional formal gate). PASS routes to the next task. FAIL routes through diagnosis, reversible repair, retest and back to the exact interrupted check. Two consecutive non-improving experiments route to restoration of the best checkpoint and renewed diagnosis or escalation. Diagnoses and repair choices must be grounded in actual model evidence; this navigator never guesses that a particular fix succeeded.
+
+Exact mandatory check names still come from stage-policy.json, and human decisions remain at their existing positions. Stage 09 includes audit before further measurement/work and delivery as final acceptance. Navigation buttons cannot record evidence or human approval.
+
+Open generated/action_graph.html to explore or run:
+
+    python3 skills/graphify-pipeline/scripts/action_graph.py stage 04
+
+A graph is an index, not a replacement for authoritative original task instructions or the real run ledger.

@@ -22,3 +22,30 @@ The diagnostic fault mapping is provisional and derived from the existing diagno
 Local tests:
 
     python3 -m unittest discover -s skills/graphify-pipeline/tests -v
+
+## Task-level graph with recovery paths
+
+The main build command now also creates generated/action_graph.json,
+generated/action_graph.html and generated/actions_context.md. Open
+action_graph.html in a browser. It includes numbered source task nodes with
+references, local task checks, exact stage-policy checks and human decision
+nodes. Each unsuccessful check has a diagnosis → first bounded solution →
+retest → second bounded solution if needed → retest → rollback and re-diagnosis
+route. After a verified repair the navigator returns to the same interrupted
+check, then continues to the next action only if the check actually passes.
+
+The source tasks are indexed by their original numbered sections, not rewritten
+into invented specification requirements. Consult the original text for all
+step-level details. HTML PASS/FAIL controls are interactive navigation only:
+they do not inspect Blender, execute fixes, record ledger checks, grant approval
+or persist completed work. The graph identifies the correct next instruction,
+not a proven completed instruction.
+
+Run action_graph.py stage 04 to print one detailed route or
+action_graph.py verify to detect stale source fingerprints. Stage 09 retains
+the source audit and delivery decisions; all other stage handoffs still require
+their original explicit human approval.
+
+This optional graph skill is not included in the frozen original
+pack-manifest.json. It does not alter the conversion pipeline, original
+skill procedures, acceptance rules or historical runs.

@@ -231,6 +231,8 @@ def main(argv=None):
         (out / "graph.json").write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         (out / "graph.html").write_text(html_for(d), encoding="utf-8")
         (out / "context.md").write_text(context_for(d), encoding="utf-8")
+        from action_graph import build_files
+        build_files(root, out, d)
         print("Generated", out, ":", len(d["stages"]), "stages,",
               sum(len(s["required_checks"]) for s in d["stages"]), "exact required checks")
     elif args.command == "verify":
