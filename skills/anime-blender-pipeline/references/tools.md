@@ -51,6 +51,12 @@ Run the actual Blender executable. Do not claim normal Python has bpy. Probe fir
 
     blender --background --factory-startup --disable-autoexec --python "$PACK/scripts/blender_tools.py" -- probe --output "$RUN/audit/environment.json"
 
+For planned NVIDIA GPU compute, run the independent bounded Stage 00 test with the exact pinned executable (normal Python, not bpy):
+
+    python3 "$PACK/scripts/gpu_qualification.py" --blender /path/to/pinned/blender --output "$RUN/audit/gpu-001"
+
+See [gpu-qualification.md](gpu-qualification.md) for status interpretation, evidence and explicit session configuration. The generic environment probe does not test GPU rendering.
+
 Inspect a working derivative read-only:
 
     blender --background --factory-startup --disable-autoexec "$RUN/work/character.blend" --python "$PACK/scripts/blender_tools.py" -- inspect --output "$RUN/audit/scene-inspection.json"
