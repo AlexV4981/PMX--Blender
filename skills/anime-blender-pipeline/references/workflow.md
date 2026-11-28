@@ -53,3 +53,7 @@ Read [bounded-execution.md](bounded-execution.md) for the budget journal, benchm
 ## Mandatory post-review subgates (V4.1)
 
 For 00–08P use [post-review-subgates.md](post-review-subgates.md) instead of any older submit/approve sequence: pre-review checks, actual human direction, post-review checks, submit, complete. Completion rather than direction advances the stage. 09 retains audit and delivery. No earlier instruction authorizes skipping these checks.
+
+## V4.2 mandatory storage subgate
+
+After submit and before complete (or 09 delivery review), run `python3 "$PACK/scripts/pipeline.py" storage "$RUN" STAGE CANDIDATE --quiescent` with all writers stopped. This runs the bundled exact-duplicate utility on work, audit, candidates and checkpoints; preserves original paths and independent writes; records a revision-bound report. No additional human approval. Unsupported sharing retains copies and reports limitations, never unlinks files. Scan or verification errors block completion. See the shared artifact-dedup procedure. New runs only; do not change frozen V3/V4.1 policy.

@@ -14,3 +14,7 @@ Use MMD Tools import and Rigify body controls for fully human characters; animal
 Review the new stage ordering, exact package identity, debt checks and preflight tests. Current CLI does not enforce journal reservations on arbitrary shell commands, authenticate human decisions, reopen approved stages in-place, or amend a frozen performance requirement. These remain explicit limitations, not production-ready functionality.
 
 V4.1 adds mandatory [post-review technical subgates](skills/anime-blender-pipeline/references/post-review-subgates.md). Human direction no longer advances 00–08P; the existing required checks are split into preliminary and post-review groups and a technical completion command gates progression. 09 retains its audit/delivery reviews. No V3/V4.0 migration.
+
+## V4.2 mandatory storage subgate
+
+After submit and before complete (or 09 delivery review), run `python3 "$PACK/scripts/pipeline.py" storage "$RUN" STAGE CANDIDATE --quiescent` with all writers stopped. This runs the bundled exact-duplicate utility on work, audit, candidates and checkpoints; preserves original paths and independent writes; records a revision-bound report. No additional human approval. Unsupported sharing retains copies and reports limitations, never unlinks files. Scan or verification errors block completion. See the shared artifact-dedup procedure. New runs only; do not change frozen V3/V4.1 policy.

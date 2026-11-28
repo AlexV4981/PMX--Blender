@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "pack_version": "4.1.0",
+  "pack_version": "4.2.0",
   "candidate_limit": 3,
   "dependency_alternative_limit": 10,
   "stages": {
@@ -196,7 +196,7 @@
       ]
     }
   },
-  "workflow_revision": 5,
+  "workflow_revision": 6,
   "renderer_policy": {
     "default_engine": "CYCLES",
     "viewport_shading": "RENDERED",
@@ -219,5 +219,30 @@
     "08P",
     "09"
   ],
-  "stage09_readonly": true
+  "stage09_readonly": true,
+  "storage_subgate": {
+    "required_after_submission": true,
+    "stages": [
+      "00",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "08P",
+      "09"
+    ],
+    "mode": "exact-byte-path-preserving",
+    "unsupported": "retain-and-report",
+    "scope": [
+      "work",
+      "audit",
+      "candidates",
+      "checkpoints"
+    ],
+    "minimum_file_bytes": 65536
+  }
 }

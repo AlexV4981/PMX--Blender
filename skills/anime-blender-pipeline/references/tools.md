@@ -110,3 +110,7 @@ Set scene.render.engine='CYCLES' on working derivatives and viewport shading.typ
 Check names preview-behavior (02) and preview-limitations (07) are retained for continuity but mean Cycles Rendered viewport evidence. Use one compact report referencing unchanged accepted environment/camera/color/fixture facts and listing actual deltas, affected tests and limits. Evidence reuse still needs current identity and a matching-dependency rationale. See workflow.md before stage-09 reviews.
 
 V4.1 supersedes the earlier generic submit/approve order for 00–08P. Read post-review-subgates.md before CLI operations; record pre-review checks before direction and only submit after post-review checks. Use a fresh run, never migrate frozen history.
+
+## V4.2 mandatory storage subgate
+
+After submit and before complete (or 09 delivery review), run `python3 "$PACK/scripts/pipeline.py" storage "$RUN" STAGE CANDIDATE --quiescent` with all writers stopped. This runs the bundled exact-duplicate utility on work, audit, candidates and checkpoints; preserves original paths and independent writes; records a revision-bound report. No additional human approval. Unsupported sharing retains copies and reports limitations, never unlinks files. Scan or verification errors block completion. See the shared artifact-dedup procedure. New runs only; do not change frozen V3/V4.1 policy.

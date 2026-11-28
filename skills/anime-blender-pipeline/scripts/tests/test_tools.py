@@ -58,6 +58,7 @@ class LedgerTests(unittest.TestCase):
 
     def accept(self, stage="00", cid="A"):
         p.submit(args(stage=stage, candidate=cid), self.root, self.run)
+        p.storage(args(stage=stage,candidate=cid,quiescent=True),self.root,self.run)
         p.complete(args(stage=stage, candidate=cid), self.root, self.run)
 
     def test_previous_stage_gate(self):
@@ -174,6 +175,7 @@ class LedgerTests(unittest.TestCase):
         c=p.get_candidate(self.run,"09","A")
         self.assertEqual(set(c["reviews"]),{"audit"})
         p.submit(args(stage="09",candidate="A"),self.root,self.run)
+        p.storage(args(stage="09",candidate="A",quiescent=True),self.root,self.run)
         self.review09("delivery")
         self.assertEqual(c["approval"]["bundle_sha256"],c["bundle_sha256"])
 
@@ -203,6 +205,7 @@ class LedgerTests(unittest.TestCase):
             self.candidate("09")
         self.candidate("08P"); self.check_all("08P")
         p.submit(args(stage="08P",candidate="A"),self.root,self.run)
+        p.storage(args(stage="08P",candidate="A",quiescent=True),self.root,self.run)
         result=p.complete(args(stage="08P",candidate="A"),self.root,self.run)
         self.assertEqual(result["next_stage"],"09")
         self.candidate("09")
@@ -263,6 +266,25 @@ class LedgerTests(unittest.TestCase):
         p.debt(args(operation="add",id="fault",evidence=str(self.evidence),owner="00",source_stage="00",
                     severity="major",description="fixture defect"),self.root,self.run)
         with self.assertRaises(p.PipelineError): p.submit(args(stage="00",candidate="A"),self.root,self.run)
+
+    def test_storage_subgate_required(self):
+        self.candidate(); self.check_all()
+        p.submit(args(stage="00",candidate="A"),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.complete(args(stage="00",candidate="A"),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.storage(args(stage="00",candidate="A",quiescent=False),self.root,self.run)
+        p.storage(args(stage="00",candidate="A",quiescent=True),self.root,self.run)
+        p.complete(args(stage="00",candidate="A"),self.root,self.run)
+
+    def test_storage_report_tamper_blocks(self):
+        self.candidate(); self.check_all()
+        p.submit(args(stage="00",candidate="A"),self.root,self.run)
+        p.storage(args(stage="00",candidate="A",quiescent=True),self.root,self.run)
+        c=p.get_candidate(self.run,"00","A")
+        (self.root/c["storage_subgate"]["evidence"]["path"]).write_text("changed")
+        with self.assertRaises(p.PipelineError):
+            p.complete(args(stage="00",candidate="A"),self.root,self.run)
 
     def test_old_version_is_not_silently_migrated(self):
         self.run["pack_version"]="2.0.0";p.atomic_json(self.root/"run.json",self.run)

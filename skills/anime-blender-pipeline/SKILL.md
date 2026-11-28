@@ -70,3 +70,7 @@ Allow construction add-ons and inspected embedded Python. Keep core final behavi
 ## Deliver with measured limits
 
 Deliver the native Cycles blend, necessary external textures if any, embedded animator/reset guide, editable unbaked physics and accepted recipe/evidence. Test a relocated package in clean stock Blender without construction add-ons and core auto execution. Use Cycles for final renders, comparisons and animation previews; use its Rendered viewport, never a second-engine graph by default. Another engine requires an explicit user request. Measure actual Cycles Rendered viewport behavior with pinned samples/denoising/device: retain >=24 FPS off and near-12 FPS cold active as desired goals, freshly qualify them and disclose severe stalls. A headless loop is not UI FPS. Documentation and utility tests alone do not qualify Blender output, character fidelity or hardware performance.
+
+## V4.2 mandatory storage subgate
+
+After submit and before complete (or 09 delivery review), run `python3 "$PACK/scripts/pipeline.py" storage "$RUN" STAGE CANDIDATE --quiescent` with all writers stopped. This runs the bundled exact-duplicate utility on work, audit, candidates and checkpoints; preserves original paths and independent writes; records a revision-bound report. No additional human approval. Unsupported sharing retains copies and reports limitations, never unlinks files. Scan or verification errors block completion. See the shared artifact-dedup procedure. New runs only; do not change frozen V3/V4.1 policy.

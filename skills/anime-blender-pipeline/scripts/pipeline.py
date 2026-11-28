@@ -10,6 +10,7 @@ import argparse
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -19,7 +20,7 @@ import sys
 import tempfile
 
 PACK = Path(__file__).resolve().parents[1]
-VERSION = "4.1.0"
+VERSION = "4.2.0"
 REVIEW_GATES = ("audit", "delivery")
 STAGES = tuple(f"{i:02d}" for i in range(9)) + ("08P", "09")
 ID = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$")
@@ -275,6 +276,61 @@ def direction(args, root, run):
     return {"status": "qualifying", "notice": "Direction recorded; technical subgates still block advancement."}
 
 
+def storage_errors(root, c):
+    record = c.get("storage_subgate")
+    if not record or record.get("bundle_sha256") != c["bundle_sha256"] or record.get("revision") != c["revision"]:
+        return ["Missing storage subgate for this exact submission"]
+    if not verify_stamp(root, record["evidence"]):
+        return ["Storage subgate evidence missing or stale"]
+    return []
+
+
+def storage(args, root, run):
+    """Mandatory path-preserving deduplication after submission, before advancement."""
+    c = get_candidate(run, args.stage, args.candidate)
+    if c["status"] != "awaiting_review" or not args.quiescent:
+        raise PipelineError("Storage subgate needs submitted candidate and quiescent workspace")
+    require_current(root, run, args.stage, c)
+    if not c["snapshot"] or not all(verify_stamp(root,x) for x in c["snapshot"]):
+        raise PipelineError("Submission snapshot missing or stale")
+    if c.get("storage_subgate"):
+        raise PipelineError("Storage subgate already recorded; preserve evidence")
+    spec = importlib.util.spec_from_file_location("artifact_dedup", PACK/"scripts"/"artifact_dedup.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    scopes = ["work","audit","candidates","checkpoints"]
+    before = shutil.disk_usage(root).free
+    result = tool.run(root, scopes, apply=True)
+    after = shutil.disk_usage(root).free
+    # Validate current and prior model identities, snapshots and all stamped evidence.
+    for stage in run["stages"].values():
+        for candidate in stage["candidates"].values():
+            for item in candidate["artifacts"] + candidate.get("snapshot", []):
+                if not verify_stamp(root,item):
+                    raise PipelineError("Artifact identity changed during storage subgate")
+            for entry in list(candidate["checks"].values()) + list(candidate["reviews"].values()):
+                if not verify_stamp(root,entry["evidence"]):
+                    raise PipelineError("Evidence identity changed during storage subgate")
+    for source in run["sources"]:
+        if digest(source["path"]) != source["sha256"]:
+            raise PipelineError("Source identity changed during storage subgate")
+    report = root/"audit"/"storage"/f"{args.stage}-{args.candidate}-r{c['revision']:04d}.json"
+    if report.exists():
+        raise PipelineError("Storage report already exists; preserve it and investigate")
+    result.update(stage=args.stage,candidate=args.candidate,revision=c["revision"],
+                  bundle_sha256=c["bundle_sha256"],free_bytes_before=before,free_bytes_after=after,
+                  free_space_delta_unattributed=after-before,time=now())
+    atomic_json(report,result)
+    if result["status"] != "complete":
+        raise PipelineError("Storage scan/verification blocked; retain files and inspect report")
+    c["storage_subgate"]={"revision":c["revision"],"bundle_sha256":c["bundle_sha256"],
+                          "evidence":stamp(root,report)}
+    append_event(run,"storage_subgate",stage=args.stage,candidate=args.candidate,record=c["storage_subgate"])
+    return {"status":"complete","report":str(report),"logical_duplicate_bytes":result["logical_duplicate_bytes"],
+            "kernel_reported_shared_bytes":result["kernel_reported_shared_bytes"],
+            "notice":"Unsupported copies retained; shared bytes are not measured disk recovery."}
+
+
 def gate_errors(root, run, stage, c, reviews=True):
     errors = []
     try:
@@ -292,6 +348,8 @@ def gate_errors(root, run, stage, c, reviews=True):
         errors.extend(direction_errors(root, run, stage, c))
         if c["status"] != "approved":
             errors.extend(debt_errors(root, run))
+    if reviews and c["status"] in ("awaiting_review","approved"):
+        errors.extend(storage_errors(root,c))
     if reviews and stage == "09":
         for name in REVIEW_GATES:
             review = c["reviews"].get(name)
@@ -444,6 +502,7 @@ def review(args, root, run):
         if c["status"] != "awaiting_review":
             raise PipelineError("Final delivery decision requires the submitted exact candidate.")
         errors = gate_errors(root, run, args.stage, c, reviews=False)
+        errors.extend(storage_errors(root,c))
         if not c["snapshot"] or not all(verify_stamp(root, x) for x in c["snapshot"]):
             errors.append("Submission snapshot changed or is missing")
         if errors:
@@ -513,6 +572,7 @@ def feedback(args, root, run):
     c["status"] = "draft"
     c["checks"] = {}
     c.pop("direction", None)
+    c.pop("storage_subgate", None)
     c["reviews"] = {k: v for k, v in c["reviews"].items() if k == "audit"}
     append_event(run, "human_feedback", stage=args.stage, candidate=args.candidate,
                  statement=args.statement)
@@ -553,7 +613,7 @@ def parser():
     init.add_argument("workspace"); init.add_argument("--source", action="append", required=True)
     for name in ["status", "validate"]:
         q = subs.add_parser(name); q.add_argument("workspace")
-    for name in ["candidate", "check", "submit", "approve", "feedback", "review", "direction", "complete"]:
+    for name in ["candidate", "check", "submit", "approve", "feedback", "review", "direction", "complete", "storage"]:
         q = subs.add_parser(name)
         q.add_argument("workspace"); q.add_argument("stage", choices=STAGES); q.add_argument("candidate")
         if name == "candidate":
@@ -564,6 +624,7 @@ def parser():
         if name in ("approve", "review", "direction"):
             q.add_argument("--actor", required=True); q.add_argument("--statement", required=True)
         if name == "feedback": q.add_argument("--statement", required=True)
+        if name == "storage": q.add_argument("--quiescent",action="store_true",required=True)
         if name == "review":
             q.add_argument("--gate", choices=REVIEW_GATES, required=True)
             q.add_argument("--evidence", required=True)
@@ -611,7 +672,7 @@ def main(argv=None):
                 else:
                     actions = {"candidate": register, "check": record_check, "submit": submit,
                                "approve": approve, "feedback": feedback, "review": review, "attempts": attempt, "debt": debt,
-                               "direction": direction, "complete": complete}
+                               "direction": direction, "complete": complete, "storage": storage}
                     result = actions[args.command](args, root, run)
                     if not (args.command == "debt" and args.operation == "list"):
                         atomic_json(root / "run.json", run)
