@@ -62,7 +62,7 @@
     "baked_delivery": false
   },
   "benchmark": {
-    "cpu": "AMD Ryzen 5 7535HS",
+    "cpu": "6-core/12-thread AMD Ryzen mobile CPU",
     "ram_gb": 16,
     "vram_gb": 6,
     "gpu_exact": null,
