@@ -40,3 +40,7 @@ Read PACK/references/mathematics.md for the 06 procedure, equations, assumptions
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.
+
+## V4 fixture-coverage check
+
+Record actual first moving frame, measured windows, activity by relevant control/category and tested fields. Neutral startup frames do not prove articulated coverage. A field not measured or populated with a placeholder is blocked; include actual arrays/logs and positive/negative controls. The fixture manifest must bind the action, timebase, reset, selected frames and environment. Use the shared coverage checker as a structural preflight, not proof of animation quality.

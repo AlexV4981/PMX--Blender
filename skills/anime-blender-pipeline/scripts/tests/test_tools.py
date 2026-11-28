@@ -39,7 +39,11 @@ class LedgerTests(unittest.TestCase):
 
     def candidate(self, stage="00", cid="A"):
         f = self.root / "work" / (stage+cid+".json")
-        f.write_text(json.dumps({"fixture": cid, "stage": stage}))
+        if stage == "09":
+            prev = self.run["stages"]["08P"]["candidates"][self.run["stages"]["08P"]["approved"]]
+            f.write_bytes((self.root / prev["primary"]).read_bytes())
+        else:
+            f.write_text(json.dumps({"fixture": cid, "stage": stage}))
         p.register(args(stage=stage, candidate=cid, file=str(f), asset=[]), self.root, self.run)
         return f
 
@@ -185,6 +189,37 @@ class LedgerTests(unittest.TestCase):
         self.stage09()
         for gate in ("optimization","reaudit"):
             with self.assertRaises(p.PipelineError):self.review09(gate)
+
+    def test_08p_is_real_predecessor(self):
+        self.assertEqual(p.STAGES[-3:], ("08", "08P", "09"))
+        for stage in p.STAGES[:-2]:
+            self.candidate(stage); self.check_all(stage); self.accept(stage)
+        with self.assertRaises(p.PipelineError):
+            self.candidate("09")
+        self.candidate("08P"); self.check_all("08P")
+        p.submit(args(stage="08P",candidate="A"),self.root,self.run)
+        result=p.approve(args(stage="08P",candidate="A",actor="fixture-human",statement="fixture"),self.root,self.run)
+        self.assertEqual(result["next_stage"],"09")
+        self.candidate("09")
+
+    def test_final_audit_cannot_edit_model(self):
+        self.stage09(submitted=False)
+        f = self.root / "work/09A.json"
+        f.write_text("not the 08P package")
+        with self.assertRaises(p.PipelineError):
+            p.register(args(stage="09",candidate="A",file=str(f),asset=[]),self.root,self.run)
+
+    def test_debt_blocks_audit_without_rewriting_checks(self):
+        self.stage09(submitted=False)
+        p.debt(args(operation="add",id="reset",evidence=str(self.evidence),owner="08",source_stage="08",
+                    severity="major",description="reset unstable"),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.submit(args(stage="09",candidate="A"),self.root,self.run)
+        p.debt(args(operation="accept",id="reset",evidence=str(self.evidence),actor="fixture-human",
+                    statement="Scoped fixture exception"),self.root,self.run)
+        p.record_check(args(stage="09",candidate="A",name="regression-tests",status="fail",evidence=str(self.evidence)),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.submit(args(stage="09",candidate="A"),self.root,self.run)
 
     def test_old_version_is_not_silently_migrated(self):
         self.run["pack_version"]="2.0.0";p.atomic_json(self.root/"run.json",self.run)

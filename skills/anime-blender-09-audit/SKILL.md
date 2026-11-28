@@ -1,6 +1,6 @@
 ---
 name: anime-blender-09-audit
-description: "Audit appearance, deformation, dependencies and actual viewport performance, then prepare a relocated, clean-open-tested Blender delivery. Use for stage 09 of the human-reviewed PMX to native Blender pipeline, including diagnosis or resuming that stage."
+description: "Read-only audit of an exact approved 08P Blender package, including fresh relocated clean-open tests and final delivery. Use for stage 09 of the human-reviewed PMX to native Blender pipeline, including diagnosis or resuming that stage."
 ---
 
 # 09 — Audit and delivery
@@ -14,21 +14,17 @@ description: "Audit appearance, deformation, dependencies and actual viewport pe
 
 Deliver the native animation rig with required controls intact. Keep construction metarig/settings in the recipe bundle; test the relocated result without MMD Tools, Rigify or bridge add-ons and disclose optional generated UI helpers.
 
-## Execute with a bounded change
+## Read-only execution
 
-Use the routine path in workflow.md first; expand relevant diagnosis in stage.md only for an observed or uncertain fault. State the observed fault, evidence, competing causes, distinguishing test, proposed edit and rollback file before editing. Run the distinguishing test first. Preserve a correct imported subsystem; never rebuild it simply because a template exists.
-
-Change one causal variable per experiment and render/measure the affected region before expanding to the character. Treat failed experiments as reversible drafts within a candidate, not as new candidate designs. Stop and restore the best draft after two consecutive experiments without measurable improvement; diagnose or escalate before another edit. Keep at most three user-facing candidate IDs and request human critique before revising a submitted candidate.
-
-Do not compensate for a fault in another subsystem: do not fix lighting with albedo, shader faults with normals, a rest-space error with weights, or attachment faults with excessive damping. Route cross-stage changes to their owner and requalify affected downstream work.
+Require byte-identical approved 08P model and registered assets; only relocate copies and write independent audit evidence. Do not repair or optimize here. Register newly found faults as debt and route to the owner; stop if a blocker remains. No approved checkpoint mutation or approval fabrication.
 
 ## Lightweight Cycles workflow
 
-Use Cycles renders and Cycles Rendered viewport evidence by default; another engine requires an explicit user request. Combine audit plus optimization disposition into one human decision, then re-audit plus final delivery/acceptance into one exact final decision. Use only audit and delivery CLI gates. Reuse evidence only with the matching-dependency report required by workflow.md.
+Use Cycles renders and Cycles Rendered viewport evidence by default; another engine requires an explicit user request. Combine audit plus existing performance disposition into one human decision, then re-audit plus final delivery/acceptance into one exact final decision. Use only audit and delivery CLI gates. Reuse evidence only with the matching-dependency report required by workflow.md.
 
 ## Mathematical support
 
-Read the 09 section and shared rules in PACK/references/mathematics.md when applying a fit or numerical comparison. Keep quality/function/dependency/performance as separate acceptance conditions and report measurement variation. Use constrained tradeoff selection; use the two 09 decisions defined in workflow.md. Asset quality tradeoffs still require the combined audit decision. Record methods/results under the existing checks; add no new human gate.
+Read the 09 section and shared rules in PACK/references/mathematics.md when applying a fit or numerical comparison. Keep quality/function/dependency/performance as separate acceptance conditions and report measurement variation. Use constrained tradeoff selection; use the two 09 decisions defined in workflow.md. Asset quality tradeoffs require an earlier explicit owner-stage decision; audit cannot authorize model edits. Record methods/results under the existing checks; add no new human gate.
 
 ## Evidence and handoff
 
@@ -41,6 +37,7 @@ Required check names from the frozen run policy:
 - `relocated-clean-open` — use the evidence specified in stage.md.
 - `dependency-disposition` — use the evidence specified in stage.md.
 - `delivery-guide-and-recipe` — use the evidence specified in stage.md.
+- `debt-clear` — verify actual register and dispositions; failed checks remain failed.
 
 Record pass, fail or blocked honestly. A file hash proves identity; a command exit proves execution; neither proves visual correctness. Inspect actual renders, including face/hair/eye close-ups, and name regressions. If image inspection is unavailable, do not claim visual acceptance.
 

@@ -44,3 +44,7 @@ Read PACK/references/mathematics.md for the 00 procedure, equations, assumptions
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.
+
+## V4 setup contracts
+
+Add `performance-contract`, `equivalence-policy`, `investigation-budget` evidence. Pin full-fidelity Cycles benchmark settings, target hardware, target versus mandatory floors, and actual UI recorder availability. Preserve 24 FPS off and approximately 12 FPS cold goals; no automatic relaxation. Set change-specific numerical policies before experiments. Record positive integer run/stage/issue attempt caps explicitly with the human; initialize the journal once, and record the actual approved contract. A missing recorder blocks throughput claims; no performance experiment until qualified. No requirement to invent a hardware result at setup.

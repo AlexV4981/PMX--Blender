@@ -1,0 +1,10 @@
+# 08P — Working procedure
+
+1. Confirm accepted 08 identity, debt dispositions and setup contracts. Use actual Cycles Rendered UI, pinned engine/device/settings/viewport/timebase; qualify recorder with no-op and known-change controls before claims. Headless/cached/other-engine timings are diagnostic only. Record RAM/VRAM ceilings and exact measurement scope.
+2. Record physics-off, fresh cold-active and cached separately. Profile potential critical-path slices; overlapping modifier costs are not additive. Use a defensible upper bound to pre-screen weak levers; if unknown, report unknown. Run a short genuinely articulated pilot before repeated A/B and expensive full tests.
+3. Require meaningful gain above uncertainty and predefined threshold. Use interleaved paired repetitions with fresh resets and fixed timebase; seven pairs is a proposed full-qualification starting point, not a mandatory pilot. Preserve protected outputs exactly for lossless claims; corrective changes have predefined approved functional limits.
+4. Reserve every implementation/renewed diagnosis in the journal. After two non-improvements restore best, allow one new causal diagnosis; after third failure or exhausted budget stop. Route defects to their owner. Do not turn performance work into unrestricted research.
+5. Preserve full-quality native model. Optional playback mode needs separate authorization and qualification; cached speed never qualifies fresh live speed. Keep existing targets unless the human explicitly amends scope. If unattainable, record actual measured gap, evidence and decision needed; do not label it pass.
+6. Prepare neutral animation state, editable unbaked physics, relative/packed assets, guide and reconstruction recipe in the final candidate. Full affected regressions and final qualification must be real. Approve the exact package before 09.
+
+Required checks: perf-baseline, profile-attribution, lever-plan, perf-disposition, protected-function-regression, final-package-preparation. An absent UI recorder or unresolved required measurement blocks its dependent claim. Structural utility checks are not Blender qualification.

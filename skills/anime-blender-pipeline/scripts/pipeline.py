@@ -19,9 +19,9 @@ import sys
 import tempfile
 
 PACK = Path(__file__).resolve().parents[1]
-VERSION = "3.0.0"
+VERSION = "4.0.0"
 REVIEW_GATES = ("audit", "delivery")
-STAGES = tuple(f"{i:02d}" for i in range(10))
+STAGES = tuple(f"{i:02d}" for i in range(9)) + ("08P", "09")
 ID = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$")
 
 
@@ -150,7 +150,7 @@ def get_candidate(run, stage, cid):
 def input_digest(run, stage):
     if stage == "00":
         return canonical(run["sources"])
-    previous = run["stages"][f"{int(stage)-1:02d}"]
+    previous = run["stages"][STAGES[STAGES.index(stage)-1]]
     cid = previous.get("approved")
     if not cid:
         raise PipelineError("Previous stage needs explicit human approval before work can advance.")
@@ -172,10 +172,72 @@ def append_event(run, event, **data):
     run["events"].append({"time": now(), "event": event, **data})
 
 
+def debt_errors(root, run):
+    errors = []
+    for key, item in run["debts"].items():
+        if not verify_stamp(root, item["evidence"]):
+            errors.append(f"Debt evidence stale: {key}")
+        if item["status"] == "open" and item["severity"] in ("blocker", "major"):
+            errors.append(f"Unresolved debt: {key}")
+        if item["status"] != "open" and not verify_stamp(root, item["disposition"]["evidence"]):
+            errors.append(f"Debt disposition stale: {key}")
+    return errors
+
+
+def require_final_copy(run, c):
+    """09 can relocate byte-identical package artifacts, not edit the model."""
+    st = run["stages"]["08P"]
+    prior = st["candidates"][st["approved"]]
+    def signature(candidate):
+        primary = next(a["sha256"] for a in candidate["artifacts"] if a["path"] == candidate["primary"])
+        assets = sorted(a["sha256"] for a in candidate["artifacts"] if a["path"] != candidate["primary"])
+        return primary, assets
+    if signature(prior) != signature(c):
+        raise PipelineError("09 must use the exact 08P model and registered assets; route edits to an authorized owner work package.")
+
+
+def debt(args, root, run):
+    if args.operation == "list":
+        return {"debts": run["debts"], "gate_errors": debt_errors(root, run)}
+    if run["stages"]["09"]["approved"]:
+        raise PipelineError("Final approval is immutable; record later defects in a separate run.")
+    key = args.id
+    if not key or not ID.fullmatch(key):
+        raise PipelineError("Stable debt ID required")
+    evidence = stamp(root, args.evidence)
+    if not evidence["bytes"]:
+        raise PipelineError("Debt evidence is empty")
+    if args.operation == "add":
+        if key in run["debts"]:
+            raise PipelineError("Debt ID exists; do not reset or rename it")
+        if args.owner not in STAGES or args.source_stage not in STAGES or not args.description.strip():
+            raise PipelineError("Debt requires valid source/owner stages and description")
+        item = dict(owner=args.owner, source_stage=args.source_stage, severity=args.severity,
+                    description=args.description, evidence=evidence, status="open")
+        run["debts"][key] = item
+    else:
+        item = run["debts"].get(key)
+        if not item or item["status"] != "open":
+            raise PipelineError("Only existing open debt can be disposed")
+        if not args.statement.strip():
+            raise PipelineError("Record the measured fix or exact scoped exception")
+        if args.operation == "accept":
+            decision = human_fields(args)
+        else:
+            decision = {"statement": args.statement, "trust_boundary": "reported_fix_not_independent_test"}
+        item.update(status="accepted-with-scope" if args.operation == "accept" else "fixed",
+                    disposition={**decision, "evidence": evidence})
+    append_event(run, "debt_"+args.operation, id=key, record=dict(item))
+    return {"id": key, "debt": item, "notice": "Debt disposition never changes a required check status."}
+
+
 def gate_errors(root, run, stage, c, reviews=True):
     errors = []
     try:
         require_current(root, run, stage, c)
+        if stage == "09":
+            require_final_copy(run, c)
+            errors.extend(debt_errors(root, run))
     except PipelineError as e:
         errors.append(str(e))
     policy = read_json(root / "policy.json")
@@ -214,7 +276,7 @@ def init_run(args, root):
            "sources": sorted(sources, key=lambda x: x["path"]),
            "policy_sha256": digest(root / "policy.json"),
            "stages": {s: {"approved": None, "candidates": {}} for s in STAGES},
-           "dependency_attempts": {}, "events": []}
+           "dependency_attempts": {}, "debts": {}, "events": []}
     append_event(run, "created", source_count=len(sources))
     atomic_json(root / "run.json", run)
     return {"workspace": str(root), "status": "created", "next_stage": "00"}
@@ -227,6 +289,8 @@ def register(args, root, run):
     if stage["approved"]:
         raise PipelineError("Stage approved and immutable; branch a new run for retrospective changes.")
     inp = input_digest(run, args.stage)
+    if args.stage in ("08P", "09") and debt_errors(root, run):
+        raise PipelineError("; ".join(debt_errors(root, run)))
     existing = stage["candidates"].get(args.candidate)
     if not existing and len(stage["candidates"]) >= 3:
         raise PipelineError("Three candidate IDs already used. Revise an existing candidate after critique.")
@@ -253,6 +317,8 @@ def register(args, root, run):
          "primary": stamp(root, args.file)["path"], "artifacts": artifacts,
          "bundle_sha256": canonical(artifacts), "input_sha256": inp,
          "checks": {}, "reviews": historical_reviews, "snapshot": []}
+    if args.stage == "09":
+        require_final_copy(run, c)
     stage["candidates"][args.candidate] = c
     append_event(run, "candidate_registered", stage=args.stage, candidate=args.candidate,
                  revision=rev, bundle_sha256=c["bundle_sha256"])
@@ -369,7 +435,7 @@ def approve(args, root, run):
     run["stages"][args.stage]["approved"] = args.candidate
     append_event(run, "human_approval", stage=args.stage, candidate=args.candidate, record=c["approval"])
     return {"approved": args.candidate, "stage": args.stage,
-            "next_stage": f"{int(args.stage)+1:02d}" if args.stage != "09" else None}
+            "next_stage": STAGES[STAGES.index(args.stage)+1] if args.stage != "09" else None}
 
 
 def feedback(args, root, run):
@@ -434,6 +500,22 @@ def parser():
         if name == "review":
             q.add_argument("--gate", choices=REVIEW_GATES, required=True)
             q.add_argument("--evidence", required=True)
+    d = subs.add_parser("debt", help="Record unresolved issues and explicit dispositions")
+    d.add_argument("workspace")
+    ds = d.add_subparsers(dest="operation", required=True)
+    ds.add_parser("list")
+    for name in ("add", "close", "accept"):
+        q = ds.add_parser(name)
+        q.add_argument("id")
+        q.add_argument("--evidence", required=True)
+        if name == "add":
+            q.add_argument("--source-stage", required=True, choices=STAGES)
+            q.add_argument("--owner", required=True, choices=STAGES)
+            q.add_argument("--severity", choices=("blocker","major","minor"), required=True)
+            q.add_argument("--description", required=True)
+        else:
+            q.add_argument("--statement", required=True)
+            if name == "accept": q.add_argument("--actor", required=True)
     a = subs.add_parser("attempts")
     a.add_argument("workspace"); a.add_argument("dependency"); a.add_argument("--method", required=True)
     a.add_argument("--outcome", choices=["failed", "succeeded"], required=True); a.add_argument("--evidence", required=True)
@@ -461,9 +543,10 @@ def main(argv=None):
                         result = {"valid": True, "notice": "Ledger integrity only; draft/blocked stages are not production passes.", **result}
                 else:
                     actions = {"candidate": register, "check": record_check, "submit": submit,
-                               "approve": approve, "feedback": feedback, "review": review, "attempts": attempt}
+                               "approve": approve, "feedback": feedback, "review": review, "attempts": attempt, "debt": debt}
                     result = actions[args.command](args, root, run)
-                    atomic_json(root / "run.json", run)
+                    if not (args.command == "debt" and args.operation == "list"):
+                        atomic_json(root / "run.json", run)
         print(json.dumps(result, indent=2, sort_keys=True, allow_nan=False))
         return 0
     except (PipelineError, OSError, KeyError, TypeError, ValueError) as e:

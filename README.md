@@ -1,34 +1,14 @@
-# PMX to native Blender skills — version 3
+# PMX to native Blender skills — V4 bounded-execution pilot
 
-Eleven skills for PMX anime character conversion with a lightweight, human-reviewed Cycles-only workflow. The ten stage handoffs remain. Each stage uses essential checks and a short Cycles demonstration, expanding diagnosis or mathematical fitting only for an observed or uncertain fault.
+Review branch only, not a production release. Preserves Cycles-only, native editable controls/physics, immutable source and human decisions. Adds 08P before read-only 09, debt tracking, progressive testing and explicit budgets. See [V4 execution controls](skills/anime-blender-pipeline/references/bounded-execution.md) and [current-run handoff](CURRENT-AUDIT-HANDOFF.md). Install all twelve anime-blender skills as siblings for a NEW V4 run, plus separately reviewed Sprawling Instructor or equivalent persistent journal. Do not install over a pinned historical run. Historical ZIP/manifest remain V3 artifacts and are not V4 release assets. No live Blender, hardware, full historical replay or packaged release qualification is claimed. Utility tests are included; verify before adoption.
 
 ## Construction simplification
 
 Use MMD Tools import and Rigify body controls for fully human characters; animal ears/tails/kemonomimi are deferred. The [construction route](skills/anime-blender-pipeline/references/construction.md) covers compatible bridges, version probes, source preservation and native runtime limits. Bespoke work requires demonstrated inability of compatible existing tools to meet the requirement. All stages and human gates remain; live asset qualification is still required.
 
-## What changed
 
-Reuse accepted camera/environment/color definitions while their dependencies match. Share one motion/face suite and rerun affected cases. Use a no-change integrity report when geometry needs no repair. Keep regional Delta E 00 measurements, explicit limits and human artistic critique.
+## Validation
 
-Stage 09 now has two decisions: audit plus selected plan/disposition; final re-audit plus delivery and stage acceptance. The CLI applies final acceptance in the delivery operation, with current checks and submitted-bundle validation. No third approval question follows.
+    python3 -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -v
 
-## Cycles-only scope
-
-Use Cycles for all final renders, comparisons, review images and animation previews. Use the Cycles Rendered viewport (CYCLES / RENDERED), not Material Preview, for viewport evidence. No alternate-engine graph or external rendering path is built unless the user explicitly requests it. Pin viewport samples, denoising, device and resolution; freshly qualify the desired FPS goals rather than transferring an old preview-engine timing pass.
-
-## Installation and version boundary
-
-Copy all eleven directories inside skills/ into your Codex skills location as siblings, replacing matching older copies. The historical version-1 ZIP is not the current source. Keep originals and accepted checkpoints immutable.
-
-Version 3 changes approval semantics and renderer requirements. Start a new run with explicit lineage; preserve version 1/2 runs and their original tools. Never edit a historical policy/version or copy its approvals. A correct earlier imported blend can be a new source with fresh affected review; another import is not automatically required.
-
-## Maps and validation
-
-[WORKFLOW_COMPARISON.md](WORKFLOW_COMPARISON.md) preserves the historical hierarchy and shows the active lighter hierarchy. [AUDIT.md](AUDIT.md) records the previous diagnosis and subsequent changes.
-
-All eleven skills validate. Fifty-one utility tests pass, including 20 published CIEDE2000 cases and stage-09 CLI acceptance/stale-evidence checks. No live Blender/model/target-laptop qualification is claimed. Documented camera/IK/ARAP/PSD/preference/inverse-simulation solvers remain procedures or external options, not bundled Blender implementations. Numerical helpers require NumPy; the texture auditor additionally requires Pillow.
-
-```sh
-python3 -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -v
-python3 skills/anime-blender-pipeline/scripts/blender_tools.py validate-seeds
-```
+Review the new stage ordering, exact package identity, debt checks and preflight tests. Current CLI does not enforce journal reservations on arbitrary shell commands, authenticate human decisions, reopen approved stages in-place, or amend a frozen performance requirement. These remain explicit limitations, not production-ready functionality.
