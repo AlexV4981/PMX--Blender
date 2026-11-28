@@ -39,7 +39,7 @@ Keep core posing usable without construction add-ons. Disclose embedded helper e
 
 ## Laptop performance
 
-Baseline: Acer Nitro V, Ryzen 5 7535HS, 16 GB RAM, 6 GB VRAM. Record exact GPU, OS, driver and power state. Desired Cycles Rendered viewport physics-off >=24 FPS, with samples/denoising/device pinned and newly qualified. Cold active simulation target approximately 12 FPS, with persistent near-1-FPS behavior unacceptable. Calibrate exact stall limits in the pilot.
+Baseline: midrange laptop: 6-core/12-thread AMD Ryzen mobile CPU, 16 GB RAM, NVIDIA RTX 40-series laptop GPU with 6 GB VRAM. Record exact GPU, OS, driver and power state. Desired Cycles Rendered viewport physics-off >=24 FPS, with samples/denoising/device pinned and newly qualified. Cold active simulation target approximately 12 FPS, with persistent near-1-FPS behavior unacceptable. Calibrate exact stall limits in the pilot.
 
 Measure real UI viewport updates, not headless frame stepping or cached physics. Keep simulation timebase fixed; separate calculation throughput from capped playback. Report frame-time spikes, RAM/VRAM and cold/warm results. Never hide objects, drop frames, silently lower fidelity or alter tests for a pass.
 
