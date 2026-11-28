@@ -12,6 +12,8 @@ description: "Pin and probe Blender, MMD Tools, Rigify and any proposed bridge; 
 3. Check the pinned version, source hashes and exact approved predecessor. Stage 00 has source input instead of a predecessor. Work on a private derivative; leave source and accepted files unchanged.
 4. Locate Blender and inspect its actual API before writing version-sensitive code. If tools, model or references are unavailable, complete independent preparation and report what remains untested.
 
+For planned NVIDIA GPU rendering, run the bounded disposable [GPU qualification](../anime-blender-pipeline/references/gpu-qualification.md) procedure from the resolved PACK before claiming GPU support or incompatibility. CPU defaults are not a hardware failure; record results under the existing environment-lock and capability-spec. Do not repeat tests or alter drivers without causal evidence.
+
 Read PACK/references/construction.md. Probe the pinned MMD Tools/Rigify/bridge combination on disposable fixtures; record tool identities and the 5 GB RAM / 60% VRAM workload plan under existing setup checks. Character rig construction remains at 04.
 
 ## Execute with a bounded change
