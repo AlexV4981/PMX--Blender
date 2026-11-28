@@ -26,3 +26,7 @@ Use `scripts/budget.py --help`. The journal counts reservations, not tokens. It 
 ## Convergence review
 
 Use `budget.py report JOURNAL` at handoff and before authorizing more work. Compare retained improvement with effort, distinguish measured and estimated token counts, and report missing coverage. A failed renewed diagnosis is terminal for that issue under the pilot journal; do not create another issue ID to retry it. Use the project defect register to link aliases or shared causes. Before expensive verification run a static preflight and focused smoke/viability test; full acceptance is unchanged. If no viable experiment remains, report blocked/deferred rather than keeping the agent busy. Record one compact status summary for the human and preserve detailed evidence separately.
+
+## Artifact lifecycle subgate
+
+At completed technical subgate batches, run the [exact duplicate artifact procedure](references/artifact-dedup.md). Preserve all original paths and unique research evidence; use kernel copy-on-write storage sharing only on verified equal bytes in a quiescent workspace. Unsupported copies stay intact.
