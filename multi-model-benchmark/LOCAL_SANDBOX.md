@@ -28,7 +28,7 @@ python3 multi-model-benchmark/data/local-runtime/verifier_attack_checks.py
 python3 multi-model-benchmark/data/local-runtime/run_hardened_smoke.py
 ```
 
-These audit scripts are local ignored artifacts, retained in this setup. They run only authored probes/disposable synthetic fixtures, never an accepted Lynae file. Host access to the user service manager is necessary. Do not run generated code directly when a sandbox command fails. Do not replace cgroup enforcement with per-process limits.
+These audit scripts are local ignored artifacts, retained in this setup. They run only authored probes/disposable synthetic fixtures, never an accepted private character file. Host access to the user service manager is necessary. Do not run generated code directly when a sandbox command fails. Do not replace cgroup enforcement with per-process limits.
 
 Before a model lap, call `evidence.local_sandbox.install_bridge()` with its default gate enabled. It requires `data/local-runtime/HARDENED-READY.json`, exact policy/source hashes, and rechecks the pinned runtime inventory. Missing or stale evidence blocks the lap. `audit=True` is reserved for rerunning the authored audit, not for bypassing a failed model-execution gate. Runtime identity binds the complete sandbox/verifier policy and pinned runtime manifest, so results from older verifier versions have a different identity. Proposal inference and Blender verification remain separate sequential phases.
 
