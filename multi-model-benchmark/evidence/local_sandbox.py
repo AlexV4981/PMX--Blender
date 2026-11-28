@@ -12,7 +12,9 @@ import time
 import uuid
 
 HERE = Path(__file__).resolve().parent
-BLENDER = Path('/home/rootuser/Documents/BlenderWork/software/blender-5.2.2-linux-x64')
+# Set by the trusted host operator, never by candidate code.
+BLENDER = Path(os.environ['PMX_BLENDER_ROOT']) if os.environ.get('PMX_BLENDER_ROOT') else None
+
 MAX_FILE = 32 * 1024 * 1024
 MAX_PACKET = 92 * 1024 * 1024
 RECORDS = []
@@ -27,9 +29,26 @@ def file_hash(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
+def blender_root():
+    """Require an explicit, canonical, dedicated Blender installation root."""
+    if BLENDER is None or not BLENDER.is_absolute():
+        raise RuntimeError('Set PMX_BLENDER_ROOT to the absolute trusted Blender installation directory')
+    root = BLENDER.resolve(strict=True)
+    if root != BLENDER or not root.is_dir():
+        raise RuntimeError('Blender installation must be a canonical directory, not a symlink')
+    forbidden = {Path('/'), Path('/home'), Path('/usr'), Path('/usr/local'),
+                 Path('/opt'), Path('/tmp'), Path.home().resolve()}
+    if root in forbidden or HERE.is_relative_to(root):
+        raise RuntimeError('A broad or project directory cannot be mounted as Blender')
+    binary = root / 'blender'
+    if binary.is_symlink() or not binary.is_file() or not os.access(binary, os.X_OK):
+        raise RuntimeError('Dedicated Blender installation must contain an executable regular blender file')
+    return root
+
+
 def runtime_inventory():
     """Pin mounted runtime bytes, not only the Blender executable."""
-    roots = [BLENDER, Path('/usr/lib'), Path('/usr/lib64'), Path('/etc/alternatives'),
+    roots = [blender_root(), Path('/usr/lib'), Path('/usr/lib64'), Path('/etc/alternatives'),
              Path('/etc/ld.so.cache'), Path('/usr/bin/python3.13'),
              Path('/usr/bin/bwrap'), Path('/usr/bin/systemd-run'), Path('/usr/bin/prlimit')]
     records = []
@@ -146,7 +165,7 @@ def bwrap_command(mounts, script, mode):
            '--ro-bind', '/usr/bin/python3.13', '/usr/bin/python3',
            '--ro-bind', '/etc/alternatives', '/etc/alternatives',
            '--ro-bind', '/etc/ld.so.cache', '/etc/ld.so.cache',
-           '--ro-bind', str(BLENDER), '/opt/blender',
+           '--ro-bind', str(blender_root()), '/opt/blender',
            '--proc', '/proc', '--remount-ro', '/proc', '--dev', '/dev',
            '--size', '134217728', '--tmpfs', '/tmp',
            '--size', '67108864', '--tmpfs', '/candidate_out',
