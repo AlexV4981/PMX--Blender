@@ -277,6 +277,13 @@ class LedgerTests(unittest.TestCase):
         p.storage(args(stage="00",candidate="A",quiescent=True),self.root,self.run)
         p.complete(args(stage="00",candidate="A"),self.root,self.run)
 
+    def test_storage_does_not_require_abandoned_draft_current(self):
+        self.candidate(cid="B").write_text("abandoned draft")
+        self.candidate(); self.check_all()
+        p.submit(args(stage="00",candidate="A"),self.root,self.run)
+        p.storage(args(stage="00",candidate="A",quiescent=True),self.root,self.run)
+        p.complete(args(stage="00",candidate="A"),self.root,self.run)
+
     def test_storage_report_tamper_blocks(self):
         self.candidate(); self.check_all()
         p.submit(args(stage="00",candidate="A"),self.root,self.run)

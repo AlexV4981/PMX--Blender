@@ -300,11 +300,14 @@ def storage(args, root, run):
     spec.loader.exec_module(tool)
     scopes = ["work","audit","candidates","checkpoints"]
     before = shutil.disk_usage(root).free
-    result = tool.run(root, scopes, apply=True)
+    result = tool.run(root, scopes, apply=True, min_bytes=read_json(root / "policy.json")["storage_subgate"]["minimum_file_bytes"])
     after = shutil.disk_usage(root).free
-    # Validate current and prior model identities, snapshots and all stamped evidence.
+    # The dedup tool preserves every scanned file's bytes. Check required live
+    # identities too, but do not turn abandoned drafts into delivery blockers.
     for stage in run["stages"].values():
         for candidate in stage["candidates"].values():
+            if candidate is not c and candidate["status"] != "approved":
+                continue
             for item in candidate["artifacts"] + candidate.get("snapshot", []):
                 if not verify_stamp(root,item):
                     raise PipelineError("Artifact identity changed during storage subgate")
@@ -314,9 +317,8 @@ def storage(args, root, run):
     for source in run["sources"]:
         if digest(source["path"]) != source["sha256"]:
             raise PipelineError("Source identity changed during storage subgate")
-    report = root/"audit"/"storage"/f"{args.stage}-{args.candidate}-r{c['revision']:04d}.json"
-    if report.exists():
-        raise PipelineError("Storage report already exists; preserve it and investigate")
+    report_dir = root/"audit"/"storage"
+    report = report_dir/f"{args.stage}-{args.candidate}-r{c['revision']:04d}-{now().replace(chr(58), chr(45))}.json"
     result.update(stage=args.stage,candidate=args.candidate,revision=c["revision"],
                   bundle_sha256=c["bundle_sha256"],free_bytes_before=before,free_bytes_after=after,
                   free_space_delta_unattributed=after-before,time=now())

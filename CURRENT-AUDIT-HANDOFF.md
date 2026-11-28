@@ -18,3 +18,7 @@ Record a cutover timestamp, V3 tool commit, current candidate hash, current unre
 ## Optional current-run storage intervention
 
 Do not migrate the frozen ledger. Use the separate Sprawling Instructor `artifact_dedup.py` in a quiescent workspace at a safe checkpoint. Run pinned ledger validation before and after. Plan first; apply only with all writers stopped and explicit project scopes. Preserve original paths, approvals and unique evidence. Unsupported filesystem copies remain untouched. Record storage savings separately from AI usage. Do not use hardlinks or delete evidence to force savings.
+
+## Single-checkout installation
+
+The integrated V4.2 review checkout includes Sprawling Instructor and the new audit operating procedure. Pin its commit, run both test suites and use its sidecar journal with the old ledger. Do not refresh the historical tool checkout or invoke V4.2 pipeline.py on the existing V3 run. Do not redo accepted work: update the remaining defect and check list from actual local evidence, reserve only new scoped attempts and finish pending qualification. If a journal already exists, reuse it; never reset counters. The storage overlay is optional for the existing run and must not delay delivery when the filesystem cannot share extents. Record all measured intervention results separately. The original historical snapshot remains immutable.

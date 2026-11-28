@@ -1,4 +1,4 @@
-# Lightweight stage execution — version 4.1 pilot
+# Lightweight stage execution — version 4.2 integrated review
 
 ## Default renderer
 
@@ -48,11 +48,11 @@ Version 4 adds 08P and debt tracking. Start new V4 runs with explicit lineage; r
 
 ## V4 execution controls
 
-Read [bounded-execution.md](bounded-execution.md) for the budget journal, benchmark screening, debt, dependency and coverage rules. If the optional Sprawling Instructor pilot is not installed, block new experiments until a persistent equivalent budget journal is available. Do not silently substitute prose-only counters.
+Read [bounded-execution.md](bounded-execution.md) for the budget journal, benchmark screening, debt, dependency and coverage rules. If the bundled Sprawling Instructor skill is not installed, block new experiments until a persistent equivalent budget journal is available. Do not silently substitute prose-only counters.
 
 ## Mandatory post-review subgates (V4.1)
 
-For 00–08P use [post-review-subgates.md](post-review-subgates.md) instead of any older submit/approve sequence: pre-review checks, actual human direction, post-review checks, submit, complete. Completion rather than direction advances the stage. 09 retains audit and delivery. No earlier instruction authorizes skipping these checks.
+For 00–08P use [post-review-subgates.md](post-review-subgates.md) instead of any older submit/approve sequence: pre-review checks, actual human direction, post-review checks, submit, storage, complete. Completion rather than direction advances the stage. 09 retains audit and delivery. No earlier instruction authorizes skipping these checks.
 
 ## V4.2 mandatory storage subgate
 

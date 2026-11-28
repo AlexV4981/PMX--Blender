@@ -1,20 +1,20 @@
-# PMX to native Blender skills — V4.1 bounded-execution pilot
+# PMX to native Blender skills — V4.2 integrated review
 
-Review branch only, not a production release. Preserves Cycles-only, native editable controls/physics, immutable source and human decisions. Adds 08P before read-only 09, debt tracking, progressive testing and explicit budgets. See [V4 execution controls](skills/anime-blender-pipeline/references/bounded-execution.md) and [current-run handoff](CURRENT-AUDIT-HANDOFF.md). Install all twelve anime-blender skills as siblings for a NEW V4 run, plus separately reviewed Sprawling Instructor or equivalent persistent journal. Do not install over a pinned historical run. Historical ZIP/manifest remain V3 artifacts and are not V4 release assets. No live Blender, hardware, full historical replay or packaged release qualification is claimed. Utility tests are included; verify before adoption.
+One source skill pack: bounded execution, Sprawling Instructor, performance stage 08P, read-only 09, post-direction technical subgates, debt register and exact duplicate storage subgate. This is a review candidate, not a Blender-qualified release. The historical ZIP and pack-manifest.json describe V3; do not install them as V4.2.
 
-## Construction simplification
+## Refresh for a new project
 
-Use MMD Tools import and Rigify body controls for fully human characters; animal ears/tails/kemonomimi are deferred. The [construction route](skills/anime-blender-pipeline/references/construction.md) covers compatible bridges, version probes, source preservation and native runtime limits. Bespoke work requires demonstrated inability of compatible existing tools to meet the requirement. All stages and human gates remain; live asset qualification is still required.
+Check out the reviewed commit into a NEW tools directory, not the working directory of an active run. Install/copy the twelve anime-blender skill directories and sprawling-instructor as siblings from that exact checkout; do not mix versions. Run the Python utility test suites before use (NumPy and Pillow for existing tests). The old Graphify skill is unchanged.
 
-
-## Validation
-
+    python3 -m unittest discover -s skills/sprawling-instructor/tests -v
     python3 -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -v
 
-Review the new stage ordering, exact package identity, debt checks and preflight tests. Current CLI does not enforce journal reservations on arbitrary shell commands, authenticate human decisions, reopen approved stages in-place, or amend a frozen performance requirement. These remain explicit limitations, not production-ready functionality.
+Start a fresh V4.2 ledger. Read [shared workflow](skills/anime-blender-pipeline/references/workflow.md), [bounded execution](skills/anime-blender-pipeline/references/bounded-execution.md), [technical subgates](skills/anime-blender-pipeline/references/post-review-subgates.md), and [storage](skills/anime-blender-pipeline/references/artifact-dedup.md). Each stage 00–08P: register, preliminary checks, observed human direction, technical checks, submit, storage, complete. Stage 09: read-only audit and delivery reviews, submit, storage before delivery. Preserve original priority and actual Cycles benchmark requirements.
 
-V4.1 adds mandatory [post-review technical subgates](skills/anime-blender-pipeline/references/post-review-subgates.md). Human direction no longer advances 00–08P; the existing required checks are split into preliminary and post-review groups and a technical completion command gates progression. 09 retains its audit/delivery reviews. No V3/V4.0 migration.
+## Resume an active V3 audit
 
-## V4.2 mandatory storage subgate
+Do NOT replace the old skill pack, change its policy, or run the V4.2 ledger against it. Use [CURRENT-AUDIT-HANDOFF.md](CURRENT-AUDIT-HANDOFF.md) as the compatibility overlay. Read latest actual local evidence and preserve qualified progress; do not redo the audit from scratch. The current run can test bounded execution and storage intervention, not the new earlier subgates. Record a clean baseline and cutover.
 
-After submit and before complete (or 09 delivery review), run `python3 "$PACK/scripts/pipeline.py" storage "$RUN" STAGE CANDIDATE --quiescent` with all writers stopped. This runs the bundled exact-duplicate utility on work, audit, candidates and checkpoints; preserves original paths and independent writes; records a revision-bound report. No additional human approval. Unsupported sharing retains copies and reports limitations, never unlinks files. Scan or verification errors block completion. See the shared artifact-dedup procedure. New runs only; do not change frozen V3/V4.1 policy.
+## Validation boundaries
+
+No live Blender/hardware qualification, full historical replay, or measured quota savings is claimed. The budget journal is opt-in, the ledger checks recorded evidence rather than proving test semantics, and frozen requirements cannot be changed through an automated exception command. Unsupported filesystem deduplication keeps files. Run the tests and review CI before adopting this pack.
