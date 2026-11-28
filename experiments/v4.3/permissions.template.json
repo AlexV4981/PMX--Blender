@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "assets": [
+    {
+      "id": "source-model",
+      "creator": "",
+      "source": "",
+      "license_evidence": [],
+      "private_use": "unknown",
+      "modification": "unknown",
+      "redistribution": "unknown",
+      "training": "unknown"
+    }
+  ]
+}

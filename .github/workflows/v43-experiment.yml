@@ -1,0 +1,18 @@
+name: V4.3 experimental structural tests
+on:
+  push:
+    branches: [experiment/v4.3-knowledge-driven]
+permissions:
+  contents: read
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s experiments/v4.3/tests -v
+      - run: python experiments/v4.3/check.py cases experiments/v4.3/cases.json
+      - run: python experiments/v4.3/check.py scenarios experiments/v4.3/scenarios.json
+      - run: python experiments/v4.3/check.py permissions experiments/v4.3/permissions.template.json

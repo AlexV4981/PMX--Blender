@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "cases": [
+    {
+      "id": "LYN-RESET",
+      "status": "candidate",
+      "symptom": "Mixed-preset reset instability",
+      "tags": [
+        "physics",
+        "cache"
+      ],
+      "applicability": "stateful physics and category changes",
+      "procedure": "Compare fresh target preset against mixed-preset reset history",
+      "limitations": "Root cause and repair remain unresolved",
+      "evidence": []
+    },
+    {
+      "id": "LYN-HELPER",
+      "status": "candidate",
+      "symptom": "Oversized hidden contact source",
+      "tags": [
+        "physics",
+        "performance"
+      ],
+      "applicability": "hidden contact helpers with redundant input geometry",
+      "procedure": "Profile helper, preserve evaluated contact geometry and native normals before qualifying any reduction",
+      "limitations": "Lynae-specific result does not prove transfer; no source artifacts bundled",
+      "evidence": []
+    },
+    {
+      "id": "LYN-FIXTURE",
+      "status": "candidate",
+      "symptom": "Neutral startup falsely treated as articulated coverage",
+      "tags": [
+        "fixtures",
+        "validation"
+      ],
+      "applicability": "motion fixtures with pre-roll or idle startup",
+      "procedure": "Verify first moving frame and relevant category activity using V4.2 coverage preflight",
+      "limitations": "Structural check is not motion quality qualification",
+      "evidence": []
+    },
+    {
+      "id": "LYN-SEAM",
+      "status": "candidate",
+      "symptom": "Repeated seam optimization below measurement uncertainty",
+      "tags": [
+        "performance",
+        "anti-loop"
+      ],
+      "applicability": "profiled serial critical path with low potential gain",
+      "procedure": "Screen meaningful upper bound and noise before implementation; stop under V4.2 budget",
+      "limitations": "No universal performance gain estimate",
+      "evidence": []
+    }
+  ]
+}
