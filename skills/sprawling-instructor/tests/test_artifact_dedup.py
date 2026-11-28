@@ -30,7 +30,7 @@ class DedupTests(unittest.TestCase):
         self.assertEqual(r["groups"][0]["copies"][0]["status"],"retained-unsupported")
         self.assertTrue((self.scope/"b").exists())
     def test_hardlinks_not_counted_twice(self):
-        os.link(self.scope/"a",self.scope/"z")
+        os.link(self.scope/"b",self.scope/"z")
         r=d.run(self.root,["audit"],min_bytes=1)
         self.assertEqual(r["logical_duplicate_bytes"],3)
     def test_symlinks_and_outside_scope(self):

@@ -88,15 +88,18 @@ def run(root, scopes, apply=False, min_bytes=65536, share=kernel_share):
         for h,ps in sorted(byhash.items()):
             if len(ps)<2: continue
             ps=sorted(ps); source=ps[0]; entries=[]
+            inodes={(source.stat().st_dev,source.stat().st_ino)}
             for p in ps[1:]:
                 row={"path":str(p.relative_to(root)), "status":"planned", "kernel_shared_bytes":0}
                 try:
-                    if os.path.samefile(source,p):
+                    inode=(p.stat().st_dev,p.stat().st_ino)
+                    if inode in inodes:
                         row["status"]="already-linked"
                     elif not equal(source,p):
                         row["status"]="not-byte-identical"
                         errors.append("Hash match but unequal bytes: "+row["path"])
                     else:
+                        inodes.add(inode)
                         logical+=size
                         if apply:
                             try:
