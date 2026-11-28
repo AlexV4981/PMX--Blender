@@ -1,6 +1,6 @@
 # Bounded execution — V4 pilot
 
-Based on the an anonymized production audit case study: 466 recorded execution jobs, 15.52 cumulative subprocess hours, 734 working scripts, about 500 KB of active handoff text, and six r36–r41 batches without retained improvement. These are workload observations, not measured AI tokens.
+An anonymized production audit recorded hundreds of execution jobs and working scripts, over ten hours of cumulative subprocess work, oversized active handoff text, and repeated experiment batches without retained improvement. These are workload observations, not measured AI tokens.
 
 Use the separately reviewed Sprawling Instructor skill (or an equivalent persistent journal) for each experiment and diagnosis. Set run/stage/issue budgets with the human at setup. Reserve before implementation; rollback, session restart, renamed hypothesis and ownership transfer never reset counters. No unlimited extensions. A blocked attempt stops the issue, not required verification of other issues. One writer, one Blender workload. Record exact protected baseline, issue ID, hypothesis, distinguishing test, rollback and acceptance criterion. Final qualification is not an optional experiment.
 
