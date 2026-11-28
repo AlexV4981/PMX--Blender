@@ -1,10 +1,10 @@
 # V4.3 — Knowledge-driven pipeline (experimental)
  
-This branch is based on V4.2 commit `ade76f63633822229c431604c369413de663b843`. It is an opt-in pilot, not a new ledger version or an authorization to migrate existing projects. V4.2 gates, approved models, Cycles final quality, native editable physics and the three-candidate limit remain unchanged. Do not run this on the active Lynae audit. Test on a fresh run or isolated copy after V4.2 qualification.
+This branch is based on V4.2 commit `ade76f63633822229c431604c369413de663b843`. It is an opt-in pilot, not a new ledger version or an authorization to migrate existing projects. V4.2 gates, approved models, Cycles final quality, native editable physics and the three-candidate limit remain unchanged. Do not run this on the active historical audit. Test on a fresh run or isolated copy after V4.2 qualification.
 
 ## Why this experiment exists
 
-Lynae's audit recorded 466 subprocess jobs (15.52 cumulative hours), 734 working scripts, roughly 42,000 words of active instructions and six r36–r41 batches without retained improvement. These are engineering observations, not AI quota telemetry. The goal is to reduce repeated diagnosis and implementation while preserving fidelity, not to maximize feature count.
+An anonymized production audit recorded hundreds of subprocess jobs and working scripts, oversized active instructions and repeated batches without retained improvement. These are engineering observations, not AI quota telemetry. The goal is to reduce repeated diagnosis and implementation while preserving fidelity, not to maximize feature count.
 
 ## First pilot — highest return, lowest scope
 
