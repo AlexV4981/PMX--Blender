@@ -17,7 +17,9 @@ class HostBoundaryTests(unittest.TestCase):
         data=s.decode_packet(json.dumps({'exit_code':0,'files':{'result.json':base64.b64encode(b'{}').decode()},'log':''}).encode(), {'result.json'})
         self.assertEqual(data['files'], {'result.json':b'{}'})
     def test_no_host_output_mounts(self):
-        cmd=s.bwrap_command([], '/lab/probe.py', 'probe')
+        from unittest.mock import patch
+        with patch.object(s, 'blender_root', return_value=Path('/opt/example-blender')):
+            cmd=s.bwrap_command([], '/lab/probe.py', 'probe')
         self.assertNotIn('--bind',cmd)
         self.assertIn('--disable-userns',cmd)
         self.assertIn('--unshare-user',cmd)
@@ -25,6 +27,40 @@ class HostBoundaryTests(unittest.TestCase):
         cmd=s.service_command(['true'],'pmx-test',10,256*1024*1024)
         for value in ('NoNewPrivileges=yes','MemorySwapMax=0','TasksMax=64','KillMode=control-group'):
             self.assertIn(value,cmd)
+
+
+class BlenderPathTests(unittest.TestCase):
+    def test_missing_and_relative_installations_block(self):
+        from unittest.mock import patch
+        for value in (None, Path('relative/blender')):
+            with patch.object(s, 'BLENDER', value):
+                with self.assertRaises(RuntimeError):
+                    s.blender_root()
+
+    def test_broad_root_blocks(self):
+        from unittest.mock import patch
+        with patch.object(s, 'BLENDER', Path('/')):
+            with self.assertRaises(RuntimeError):
+                s.blender_root()
+
+    def test_explicit_dedicated_installation(self):
+        import tempfile
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp).resolve()
+            binary=root/'blender'
+            binary.write_text('synthetic fixture, never executed')
+            binary.chmod(0o700)
+            with patch.object(s,'BLENDER',root):
+                self.assertEqual(s.blender_root(),root)
+                cmd=s.bwrap_command([], '/lab/probe.py','probe')
+                self.assertIn(str(root),cmd)
+                self.assertIn('/opt/blender',cmd)
+            link=root/'alias'
+            link.symlink_to(root, target_is_directory=True)
+            with patch.object(s,'BLENDER',link):
+                with self.assertRaises(RuntimeError):
+                    s.blender_root()
 
 
 class VerifierFiniteTests(unittest.TestCase):
