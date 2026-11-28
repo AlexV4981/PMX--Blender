@@ -29,7 +29,7 @@ Run the skill creator quick validator on all eleven skills after edits. Check lo
 
 ## Laptop benchmark
 
-Record exact GPU, Blender build, driver, OS, power/thermal state, UI scaling and viewport pixel dimensions. Baseline: Nitro V Ryzen 5 7535HS, 16 GB RAM, 6 GB VRAM. Use a fixed full-character scene and motion fixture. Proposed initial fixture: 240 measured frames, three repetitions, Cycles Rendered viewport with pinned samples/denoising/device, 24 FPS scene timebase; obtain stage 00 approval of the exact profile.
+Record exact GPU, Blender build, driver, OS, power/thermal state, UI scaling and viewport pixel dimensions. Baseline: midrange laptop: 6-core/12-thread AMD Ryzen mobile CPU, 16 GB RAM, NVIDIA RTX 40-series laptop GPU with 6 GB VRAM. Use a fixed full-character scene and motion fixture. Proposed initial fixture: 240 measured frames, three repetitions, Cycles Rendered viewport with pinned samples/denoising/device, 24 FPS scene timebase; obtain stage 00 approval of the exact profile.
 
 Use actual completed UI redraw/evaluation timing with Play Every Frame, no dropped frames. Normal 24 FPS capped playback cannot establish throughput above that cap. Qualify an uncapped UI redraw-driven stepping method that keeps scene FPS fixed, and cross-check against observed playback; do not increase scene FPS to uncap a test because this changes simulation timing. A background frame_set loop is not a viewport test.
 
