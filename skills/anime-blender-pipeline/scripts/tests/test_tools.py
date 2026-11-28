@@ -124,7 +124,9 @@ class LedgerTests(unittest.TestCase):
         for stage in p.STAGES:
             self.candidate(stage); self.check_all(stage)
             if stage != "09": self.accept(stage)
-        if submitted: p.submit(args(stage="09", candidate="A"), self.root, self.run)
+        if submitted:
+            p.submit(args(stage="09", candidate="A"), self.root, self.run)
+            p.storage(args(stage="09", candidate="A", quiescent=True), self.root, self.run)
 
     def review09(self, gate):
         return p.review(args(stage="09", candidate="A", gate=gate, actor="fixture-human",
