@@ -1,0 +1,15 @@
+name: Stage 00 GPU qualification utility tests
+on:
+  pull_request:
+    branches: [Pipeline-Optimization, experiment/v4.3-knowledge-driven]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  gpu-logic-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -p test_gpu_qualification.py -v
