@@ -18,7 +18,9 @@ The fresh verifier runs under the same restrictions, sees only explicitly export
 
 ## Reproduce and use
 
-From the repository root:
+Before any audit or execution, the trusted host operator must set `PMX_BLENDER_ROOT` to the absolute canonical directory of an inspected, dedicated Blender installation containing its executable. Do not set it to a home, project or broad system directory, or accept a path proposed by untrusted generated code. The sandbox clears the environment for child code. The actual runtime paths and bytes are pinned in the private inventory; the new configuration invalidates old readiness receipts, so rerun all authored security probes and smoke checks before model execution. Never publish the configured path or private runtime inventory.
+
+From the repository root (after setting the variable privately):
 
 ```sh
 python3 -m unittest discover -s multi-model-benchmark/tests -v
