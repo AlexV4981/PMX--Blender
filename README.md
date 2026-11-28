@@ -18,3 +18,7 @@ Do NOT replace the old skill pack, change its policy, or run the V4.2 ledger aga
 ## Validation boundaries
 
 No live Blender/hardware qualification, full historical replay, or measured quota savings is claimed. The budget journal is opt-in, the ledger checks recorded evidence rather than proving test semantics, and frozen requirements cannot be changed through an automated exception command. Unsupported filesystem deduplication keeps files. Run the tests and review CI before adopting this pack.
+
+## Reference hardware (anonymized)
+
+Development targeted a midrange laptop with a 6-core/12-thread AMD Ryzen mobile CPU, 16 GB system RAM, and an entry-level NVIDIA RTX 40-series laptop GPU with 6 GB VRAM. This is a resource-planning reference, not a guaranteed minimum or performance certification. Record your own Blender version, drivers, device and measurements privately; do not commit hostnames, usernames, account IDs, asset names, private paths, archive manifests or raw run logs.
