@@ -57,3 +57,7 @@ For 00–08P use [post-review-subgates.md](post-review-subgates.md) instead of a
 ## V4.2 mandatory storage subgate
 
 After submit and before complete (or 09 delivery review), run `python3 "$PACK/scripts/pipeline.py" storage "$RUN" STAGE CANDIDATE --quiescent` with all writers stopped. This runs the bundled exact-duplicate utility on work, audit, candidates and checkpoints; preserves original paths and independent writes; records a revision-bound report. No additional human approval. Unsupported sharing retains copies and reports limitations, never unlinks files. Scan or verification errors block completion. See the shared artifact-dedup procedure. New runs only; do not change frozen V3/V4.1 policy.
+
+## Optional cloud stage archival
+
+After actual stage completion, a configured storage-aware orchestrator runs the explicit archive command in [stage-archive.md](stage-archive.md). Preserve all ledger-required files locally. Do not evict without separate authorization, completed dependency review and verified remote restore. Do not alter the mandatory storage subgate or approvals.
