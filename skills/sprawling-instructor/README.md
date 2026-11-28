@@ -1,6 +1,6 @@
-# Sprawling Instructor — Lynae-informed pilot
+# Sprawling Instructor — production-informed pilot
 
-Evidence from the November 27 Lynae audit: 466 distinct recorded jobs, 15.52 cumulative subprocess hours, 734 working Python scripts, roughly 500 KB of active instruction/handoff files, six r36–r41 batches without a retained model change, eight final checks still blocked. These are engineering workload measurements, not Codex usage telemetry. The lessons are generic: persistent limits, causal evidence, progressive verification, context separation and explicit escalation.
+Evidence from the an anonymized production audit: hundreds of recorded jobs and working scripts, oversized handoff files, repeated unsuccessful experiments, and unresolved final checks. These are engineering workload measurements, not Codex usage telemetry. The lessons are generic: persistent limits, causal evidence, progressive verification, context separation and explicit escalation.
 
 This is a new, optional skill; Graphify Pipeline remains unchanged. It can use Graphify's existing read-only navigator without renaming or modifying it. No installation, automatic process interception, model switching or approval authority is implied.
 
@@ -20,4 +20,4 @@ Tests: `python3 -m unittest discover -s tests -v` from this skill directory. His
 
 `finish` optionally accepts `--seconds`, `--tokens` and `--usage-source measured|estimated`. `report` returns coverage counts, outcome counts and remaining run/stage/issue limits. Unknown telemetry stays unknown; estimates and actual tokens are never combined. A failed renewed diagnosis after two non-improving implementations cannot be repeated under the same issue ID. A recorded evidence reference remains a trust boundary, not a proof of causality or artifact integrity. The journal is an opt-in gate, not a sandbox or a Codex quota meter.
 
-Historical replay targets: r37/r38 rejected -> renewed diagnosis -> r39 rejected -> stop same issue; r41 failed precheck -> no blind arithmetic retry; neutral motion fixture and placeholder measurements -> blocked rather than pass; context >20 KB -> explicit compaction. These are replay scenarios, not reproduced Blender results.
+Historical replay targets: two rejected attempts -> renewed diagnosis -> third rejection -> stop same issue; a failed precheck -> no blind arithmetic retry; neutral motion fixture and placeholder measurements -> blocked rather than pass; context >20 KB -> explicit compaction. These are replay scenarios, not reproduced Blender results.
