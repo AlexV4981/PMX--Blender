@@ -19,7 +19,7 @@ import sys
 import tempfile
 
 PACK = Path(__file__).resolve().parents[1]
-VERSION = "4.0.0"
+VERSION = "4.1.0"
 REVIEW_GATES = ("audit", "delivery")
 STAGES = tuple(f"{i:02d}" for i in range(9)) + ("08P", "09")
 ID = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$")
@@ -153,7 +153,7 @@ def input_digest(run, stage):
     previous = run["stages"][STAGES[STAGES.index(stage)-1]]
     cid = previous.get("approved")
     if not cid:
-        raise PipelineError("Previous stage needs explicit human approval before work can advance.")
+        raise PipelineError("Previous stage needs human direction and technical completion before work can advance.")
     return previous["candidates"][cid]["bundle_sha256"]
 
 
@@ -231,6 +231,50 @@ def debt(args, root, run):
     return {"id": key, "debt": item, "notice": "Debt disposition never changes a required check status."}
 
 
+def check_errors(root, c, names):
+    errors = []
+    for name in names:
+        check = c["checks"].get(name)
+        if not check or check["status"] != "pass":
+            errors.append(f"Check not passed: {name}")
+        elif check["bundle_sha256"] != c["bundle_sha256"] or not verify_stamp(root, check["evidence"]):
+            errors.append(f"Check/evidence stale: {name}")
+    return errors
+
+
+def direction_errors(root, run, stage, c):
+    policy = read_json(root / "policy.json")["stages"][stage]
+    record = c.get("direction")
+    names = policy["pre_review_checks"]
+    if not record or record["bundle_sha256"] != c["bundle_sha256"] or record["revision"] != c["revision"]:
+        return ["Missing or stale human direction for this exact revision"]
+    errors = check_errors(root, c, names)
+    if record["pre_checks_sha256"] != canonical({n: c["checks"].get(n) for n in names}):
+        errors.append("Pre-review evidence changed; obtain fresh direction")
+    return errors
+
+
+def direction(args, root, run):
+    if args.stage == "09":
+        raise PipelineError("09 uses audit and delivery reviews, not direction")
+    c = get_candidate(run, args.stage, args.candidate)
+    if c["status"] != "draft":
+        raise PipelineError("Direction requires a draft")
+    require_current(root, run, args.stage, c)
+    policy = read_json(root / "policy.json")["stages"][args.stage]
+    errors = check_errors(root, c, policy["pre_review_checks"])
+    if errors:
+        raise PipelineError("; ".join(errors))
+    record = {**human_fields(args), "time": now(), "revision": c["revision"],
+              "bundle_sha256": c["bundle_sha256"],
+              "pre_checks_sha256": canonical({n: c["checks"][n] for n in policy["pre_review_checks"]})}
+    c["direction"] = record
+    for name in policy["post_review_checks"]:
+        c["checks"].pop(name, None)
+    append_event(run, "human_direction", stage=args.stage, candidate=args.candidate, record=record)
+    return {"status": "qualifying", "notice": "Direction recorded; technical subgates still block advancement."}
+
+
 def gate_errors(root, run, stage, c, reviews=True):
     errors = []
     try:
@@ -243,12 +287,11 @@ def gate_errors(root, run, stage, c, reviews=True):
     except PipelineError as e:
         errors.append(str(e))
     policy = read_json(root / "policy.json")
-    for name in policy["stages"][stage]["required_checks"]:
-        check = c["checks"].get(name)
-        if not check or check["status"] != "pass":
-            errors.append(f"Check not passed: {name}")
-        elif check["bundle_sha256"] != c["bundle_sha256"] or not verify_stamp(root, check["evidence"]):
-            errors.append(f"Check/evidence stale: {name}")
+    errors.extend(check_errors(root, c, policy["stages"][stage]["required_checks"]))
+    if stage != "09":
+        errors.extend(direction_errors(root, run, stage, c))
+        if c["status"] != "approved":
+            errors.extend(debt_errors(root, run))
     if reviews and stage == "09":
         for name in REVIEW_GATES:
             review = c["reviews"].get(name)
@@ -332,6 +375,11 @@ def record_check(args, root, run):
     if c["status"] != "draft":
         raise PipelineError("Checks may only change on a draft candidate.")
     require_current(root, run, args.stage, c)
+    policy = read_json(root / "policy.json")["stages"][args.stage]
+    if args.name in policy.get("post_review_checks", []):
+        errors = direction_errors(root, run, args.stage, c)
+        if errors:
+            raise PipelineError("; ".join(errors))
     evidence = stamp(root, args.evidence)
     if evidence["bytes"] == 0 or evidence["path"] in {a["path"] for a in c["artifacts"]}:
         raise PipelineError("Use a separate, non-empty evidence file.")
@@ -372,7 +420,7 @@ def submit(args, root, run):
     append_event(run, "submitted", stage=args.stage, candidate=args.candidate,
                  revision=c["revision"], bundle_sha256=c["bundle_sha256"])
     return {"status": "awaiting_review", "snapshot": str(dest),
-            "notice": "Stop and ask the human to select or critique. Submission is not approval."}
+            "notice": "Use complete after technical subgates; 09 requires delivery review." if args.stage != "09" else "Stop for the explicit delivery review."}
 
 
 def human_fields(args):
@@ -422,6 +470,22 @@ def review(args, root, run):
 
 
 def approve(args, root, run):
+    if args.stage != "09":
+        raise PipelineError("Use direction before technical subgates and complete after submission; no second human approval.")
+    return finalize(args, root, run, human_fields(args))
+
+
+def complete(args, root, run):
+    if args.stage == "09":
+        raise PipelineError("09 requires the explicit delivery decision")
+    c = get_candidate(run, args.stage, args.candidate)
+    errors = direction_errors(root, run, args.stage, c)
+    if errors:
+        raise PipelineError("; ".join(errors))
+    return finalize(args, root, run, c["direction"])
+
+
+def finalize(args, root, run, decision):
     c = get_candidate(run, args.stage, args.candidate)
     if c["status"] != "awaiting_review":
         raise PipelineError("Only a submitted, reviewed candidate can be approved.")
@@ -432,7 +496,7 @@ def approve(args, root, run):
         errors.append("Submission snapshot changed or is missing")
     if errors:
         raise PipelineError("; ".join(errors))
-    c["approval"] = {**human_fields(args), "time": now(), "bundle_sha256": c["bundle_sha256"]}
+    c["approval"] = {**decision, "completed_at": now(), "bundle_sha256": c["bundle_sha256"]}
     c["status"] = "approved"
     run["stages"][args.stage]["approved"] = args.candidate
     append_event(run, "human_approval", stage=args.stage, candidate=args.candidate, record=c["approval"])
@@ -448,6 +512,7 @@ def feedback(args, root, run):
         raise PipelineError("Record the actual human critique")
     c["status"] = "draft"
     c["checks"] = {}
+    c.pop("direction", None)
     c["reviews"] = {k: v for k, v in c["reviews"].items() if k == "audit"}
     append_event(run, "human_feedback", stage=args.stage, candidate=args.candidate,
                  statement=args.statement)
@@ -476,7 +541,7 @@ def attempt(args, root, run):
 def status(root, run):
     return {"pack_version": run["pack_version"], "stages": {
         s: {"approved": st["approved"], "candidates": {
-            cid: {"status": c["status"], "revision": c["revision"],
+            cid: {"status": c["status"], "revision": c["revision"], "direction_recorded": bool(c.get("direction")),
                   "gate_errors": gate_errors(root, run, s, c)} for cid, c in st["candidates"].items()}}
         for s, st in run["stages"].items()}}
 
@@ -488,7 +553,7 @@ def parser():
     init.add_argument("workspace"); init.add_argument("--source", action="append", required=True)
     for name in ["status", "validate"]:
         q = subs.add_parser(name); q.add_argument("workspace")
-    for name in ["candidate", "check", "submit", "approve", "feedback", "review"]:
+    for name in ["candidate", "check", "submit", "approve", "feedback", "review", "direction", "complete"]:
         q = subs.add_parser(name)
         q.add_argument("workspace"); q.add_argument("stage", choices=STAGES); q.add_argument("candidate")
         if name == "candidate":
@@ -496,7 +561,7 @@ def parser():
         if name == "check":
             q.add_argument("--name", required=True); q.add_argument("--status", choices=["pass", "fail", "blocked"], required=True)
             q.add_argument("--evidence", required=True)
-        if name in ("approve", "review"):
+        if name in ("approve", "review", "direction"):
             q.add_argument("--actor", required=True); q.add_argument("--statement", required=True)
         if name == "feedback": q.add_argument("--statement", required=True)
         if name == "review":
@@ -545,7 +610,8 @@ def main(argv=None):
                         result = {"valid": True, "notice": "Ledger integrity only; draft/blocked stages are not production passes.", **result}
                 else:
                     actions = {"candidate": register, "check": record_check, "submit": submit,
-                               "approve": approve, "feedback": feedback, "review": review, "attempts": attempt, "debt": debt}
+                               "approve": approve, "feedback": feedback, "review": review, "attempts": attempt, "debt": debt,
+                               "direction": direction, "complete": complete}
                     result = actions[args.command](args, root, run)
                     if not (args.command == "debt" and args.operation == "list"):
                         atomic_json(root / "run.json", run)

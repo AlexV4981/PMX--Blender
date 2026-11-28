@@ -15,7 +15,10 @@ Repeat check for every canonical required_check in assets/stage-policy.json. Sta
 
 Only after an actual human decision:
 
-    python3 "$PACK/scripts/pipeline.py" approve "$RUN" 00 A --actor HUMAN --statement 'Exact observed human acceptance of candidate A'
+    python3 "$PACK/scripts/pipeline.py" direction "$RUN" 00 A --actor HUMAN --statement 'Exact observed human direction for candidate A'
+    # Record remaining post-review checks, then submit and complete:
+    python3 "$PACK/scripts/pipeline.py" submit "$RUN" 00 A
+    python3 "$PACK/scripts/pipeline.py" complete "$RUN" 00 A
     python3 "$PACK/scripts/pipeline.py" feedback "$RUN" 00 B --statement 'Exact observed human critique'
 
 These examples are not advance authorization or authentic approval statements. Never execute them as a worker. Submitted status is a stop condition, not approval. Feedback preserves snapshot history and clears checks for revision. Register the changed bundle again, rerun checks and resubmit. Approved stages cannot be reopened in place; branch a new run with explicit lineage and requalified gates.
@@ -105,3 +108,5 @@ Camera/IK/ARAP/PSD/preference/inverse-simulation solvers are procedures or exter
 Set scene.render.engine='CYCLES' on working derivatives and viewport shading.type='RENDERED' for visual/animation/benchmark evidence. The read-only inspector reports non-cycles-engine-review without mutating the file; a genuinely requested engine exception must be documented, never assumed. Seed-library construction explicitly selects Cycles. Material Preview and an alternate engine are not defaults.
 
 Check names preview-behavior (02) and preview-limitations (07) are retained for continuity but mean Cycles Rendered viewport evidence. Use one compact report referencing unchanged accepted environment/camera/color/fixture facts and listing actual deltas, affected tests and limits. Evidence reuse still needs current identity and a matching-dependency rationale. See workflow.md before stage-09 reviews.
+
+V4.1 supersedes the earlier generic submit/approve order for 00–08P. Read post-review-subgates.md before CLI operations; record pre-review checks before direction and only submit after post-review checks. Use a fresh run, never migrate frozen history.

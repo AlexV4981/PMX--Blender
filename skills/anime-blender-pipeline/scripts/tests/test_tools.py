@@ -48,12 +48,17 @@ class LedgerTests(unittest.TestCase):
         return f
 
     def check_all(self, stage="00", cid="A"):
-        for name in p.read_json(self.root / "policy.json")["stages"][stage]["required_checks"]:
+        policy = p.read_json(self.root / "policy.json")["stages"][stage]
+        for name in policy.get("pre_review_checks", policy["required_checks"]):
             p.record_check(args(stage=stage, candidate=cid, name=name, status="pass", evidence=str(self.evidence)), self.root, self.run)
+        if stage != "09":
+            p.direction(args(stage=stage,candidate=cid,actor="fixture-human",statement="Fixture direction"),self.root,self.run)
+            for name in policy["post_review_checks"]:
+                p.record_check(args(stage=stage, candidate=cid, name=name, status="pass", evidence=str(self.evidence)), self.root, self.run)
 
     def accept(self, stage="00", cid="A"):
         p.submit(args(stage=stage, candidate=cid), self.root, self.run)
-        p.approve(args(stage=stage, candidate=cid, actor="fixture-human", statement="Explicit fixture approval"), self.root, self.run)
+        p.complete(args(stage=stage, candidate=cid), self.root, self.run)
 
     def test_previous_stage_gate(self):
         with self.assertRaises(p.PipelineError): self.candidate("01")
@@ -198,7 +203,7 @@ class LedgerTests(unittest.TestCase):
             self.candidate("09")
         self.candidate("08P"); self.check_all("08P")
         p.submit(args(stage="08P",candidate="A"),self.root,self.run)
-        result=p.approve(args(stage="08P",candidate="A",actor="fixture-human",statement="fixture"),self.root,self.run)
+        result=p.complete(args(stage="08P",candidate="A"),self.root,self.run)
         self.assertEqual(result["next_stage"],"09")
         self.candidate("09")
 
@@ -229,6 +234,35 @@ class LedgerTests(unittest.TestCase):
         p.record_check(args(stage="09",candidate="A",name="regression-tests",status="fail",evidence=str(self.evidence)),self.root,self.run)
         with self.assertRaises(p.PipelineError):
             p.submit(args(stage="09",candidate="A"),self.root,self.run)
+
+    def test_direction_does_not_advance(self):
+        self.candidate()
+        policy=p.read_json(self.root/"policy.json")["stages"]["00"]
+        for name in policy["pre_review_checks"]:
+            p.record_check(args(stage="00",candidate="A",name=name,status="pass",evidence=str(self.evidence)),self.root,self.run)
+        name=policy["post_review_checks"][0]
+        with self.assertRaises(p.PipelineError):
+            p.record_check(args(stage="00",candidate="A",name=name,status="pass",evidence=str(self.evidence)),self.root,self.run)
+        p.direction(args(stage="00",candidate="A",actor="fixture-human",statement="fixture"),self.root,self.run)
+        self.assertIsNone(self.run["stages"]["00"]["approved"])
+        with self.assertRaises(p.PipelineError): self.candidate("01")
+        with self.assertRaises(p.PipelineError): p.submit(args(stage="00",candidate="A"),self.root,self.run)
+        self.check_all()
+        self.accept()
+        self.assertEqual(self.run["stages"]["00"]["approved"],"A")
+
+    def test_revision_invalidates_direction(self):
+        self.candidate(); self.check_all()
+        self.candidate()
+        c=p.get_candidate(self.run,"00","A")
+        self.assertNotIn("direction",c)
+        self.assertTrue(p.direction_errors(self.root,self.run,"00",c))
+
+    def test_post_review_debt_blocks_early_stage(self):
+        self.candidate(); self.check_all()
+        p.debt(args(operation="add",id="fault",evidence=str(self.evidence),owner="00",source_stage="00",
+                    severity="major",description="fixture defect"),self.root,self.run)
+        with self.assertRaises(p.PipelineError): p.submit(args(stage="00",candidate="A"),self.root,self.run)
 
     def test_old_version_is_not_silently_migrated(self):
         self.run["pack_version"]="2.0.0";p.atomic_json(self.root/"run.json",self.run)

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "pack_version": "4.0.0",
+  "pack_version": "4.1.0",
   "candidate_limit": 3,
   "dependency_alternative_limit": 10,
   "stages": {
@@ -13,11 +13,30 @@
         "performance-contract",
         "equivalence-policy",
         "investigation-budget"
+      ],
+      "pre_review_checks": [
+        "reference-and-scope",
+        "capability-spec",
+        "performance-contract",
+        "equivalence-policy",
+        "investigation-budget"
+      ],
+      "post_review_checks": [
+        "source-inventory",
+        "environment-lock"
       ]
     },
     "01": {
       "required_checks": [
         "import-inventory",
+        "feature-loss-report",
+        "texture-dependencies",
+        "baseline-integrity"
+      ],
+      "pre_review_checks": [
+        "import-inventory"
+      ],
+      "post_review_checks": [
         "feature-loss-report",
         "texture-dependencies",
         "baseline-integrity"
@@ -29,11 +48,27 @@
         "cycles-comparisons",
         "preview-behavior",
         "material-flag-report"
+      ],
+      "pre_review_checks": [
+        "material-mapping",
+        "cycles-comparisons"
+      ],
+      "post_review_checks": [
+        "preview-behavior",
+        "material-flag-report"
       ]
     },
     "03": {
       "required_checks": [
         "geometry-change-comparisons",
+        "morph-integrity",
+        "deformation-tests",
+        "correspondence-map"
+      ],
+      "pre_review_checks": [
+        "geometry-change-comparisons"
+      ],
+      "post_review_checks": [
         "morph-integrity",
         "deformation-tests",
         "correspondence-map"
@@ -45,12 +80,28 @@
         "rig-integrity",
         "switching-demonstrations",
         "runtime-dependencies"
+      ],
+      "pre_review_checks": [
+        "control-capabilities"
+      ],
+      "post_review_checks": [
+        "rig-integrity",
+        "switching-demonstrations",
+        "runtime-dependencies"
       ]
     },
     "05": {
       "required_checks": [
         "face-and-visemes",
         "animation-usability",
+        "retarget-profiles",
+        "animator-guide"
+      ],
+      "pre_review_checks": [
+        "face-and-visemes",
+        "animation-usability"
+      ],
+      "post_review_checks": [
         "retarget-profiles",
         "animator-guide"
       ]
@@ -62,6 +113,15 @@
         "integrity-lint",
         "clean-core-rig",
         "fixture-coverage"
+      ],
+      "pre_review_checks": [
+        "motion-fixtures",
+        "deformation-review"
+      ],
+      "post_review_checks": [
+        "integrity-lint",
+        "clean-core-rig",
+        "fixture-coverage"
       ]
     },
     "07": {
@@ -70,11 +130,30 @@
         "cycles-look-comparisons",
         "lighting-and-motion",
         "preview-limitations"
+      ],
+      "pre_review_checks": [
+        "final-style-spec",
+        "cycles-look-comparisons"
+      ],
+      "post_review_checks": [
+        "lighting-and-motion",
+        "preview-limitations"
       ]
     },
     "08": {
       "required_checks": [
         "physics-part-map",
+        "cold-motion-tests",
+        "category-toggles",
+        "editable-unbaked",
+        "physics-settings",
+        "helper-cost-review",
+        "reset-and-debt-review"
+      ],
+      "pre_review_checks": [
+        "physics-part-map"
+      ],
+      "post_review_checks": [
         "cold-motion-tests",
         "category-toggles",
         "editable-unbaked",
@@ -89,6 +168,16 @@
         "profile-attribution",
         "lever-plan",
         "perf-disposition",
+        "protected-function-regression",
+        "final-package-preparation"
+      ],
+      "pre_review_checks": [
+        "perf-baseline",
+        "lever-plan",
+        "perf-disposition"
+      ],
+      "post_review_checks": [
+        "profile-attribution",
         "protected-function-regression",
         "final-package-preparation"
       ]
@@ -107,7 +196,7 @@
       ]
     }
   },
-  "workflow_revision": 4,
+  "workflow_revision": 5,
   "renderer_policy": {
     "default_engine": "CYCLES",
     "viewport_shading": "RENDERED",
