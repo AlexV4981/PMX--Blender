@@ -39,17 +39,27 @@ class LedgerTests(unittest.TestCase):
 
     def candidate(self, stage="00", cid="A"):
         f = self.root / "work" / (stage+cid+".json")
-        f.write_text(json.dumps({"fixture": cid, "stage": stage}))
+        if stage == "09" and self.run["stages"]["08P"]["approved"]:
+            prev = self.run["stages"]["08P"]["candidates"][self.run["stages"]["08P"]["approved"]]
+            f.write_bytes((self.root / prev["primary"]).read_bytes())
+        else:
+            f.write_text(json.dumps({"fixture": cid, "stage": stage}))
         p.register(args(stage=stage, candidate=cid, file=str(f), asset=[]), self.root, self.run)
         return f
 
     def check_all(self, stage="00", cid="A"):
-        for name in p.read_json(self.root / "policy.json")["stages"][stage]["required_checks"]:
+        policy = p.read_json(self.root / "policy.json")["stages"][stage]
+        for name in policy.get("pre_review_checks", policy["required_checks"]):
             p.record_check(args(stage=stage, candidate=cid, name=name, status="pass", evidence=str(self.evidence)), self.root, self.run)
+        if stage != "09":
+            p.direction(args(stage=stage,candidate=cid,actor="fixture-human",statement="Fixture direction"),self.root,self.run)
+            for name in policy["post_review_checks"]:
+                p.record_check(args(stage=stage, candidate=cid, name=name, status="pass", evidence=str(self.evidence)), self.root, self.run)
 
     def accept(self, stage="00", cid="A"):
         p.submit(args(stage=stage, candidate=cid), self.root, self.run)
-        p.approve(args(stage=stage, candidate=cid, actor="fixture-human", statement="Explicit fixture approval"), self.root, self.run)
+        p.storage(args(stage=stage,candidate=cid,quiescent=True),self.root,self.run)
+        p.complete(args(stage=stage, candidate=cid), self.root, self.run)
 
     def test_previous_stage_gate(self):
         with self.assertRaises(p.PipelineError): self.candidate("01")
@@ -114,7 +124,9 @@ class LedgerTests(unittest.TestCase):
         for stage in p.STAGES:
             self.candidate(stage); self.check_all(stage)
             if stage != "09": self.accept(stage)
-        if submitted: p.submit(args(stage="09", candidate="A"), self.root, self.run)
+        if submitted:
+            p.submit(args(stage="09", candidate="A"), self.root, self.run)
+            p.storage(args(stage="09", candidate="A", quiescent=True), self.root, self.run)
 
     def review09(self, gate):
         return p.review(args(stage="09", candidate="A", gate=gate, actor="fixture-human",
@@ -165,6 +177,7 @@ class LedgerTests(unittest.TestCase):
         c=p.get_candidate(self.run,"09","A")
         self.assertEqual(set(c["reviews"]),{"audit"})
         p.submit(args(stage="09",candidate="A"),self.root,self.run)
+        p.storage(args(stage="09",candidate="A",quiescent=True),self.root,self.run)
         self.review09("delivery")
         self.assertEqual(c["approval"]["bundle_sha256"],c["bundle_sha256"])
 
@@ -185,6 +198,102 @@ class LedgerTests(unittest.TestCase):
         self.stage09()
         for gate in ("optimization","reaudit"):
             with self.assertRaises(p.PipelineError):self.review09(gate)
+
+    def test_08p_is_real_predecessor(self):
+        self.assertEqual(p.STAGES[-3:], ("08", "08P", "09"))
+        for stage in p.STAGES[:-2]:
+            self.candidate(stage); self.check_all(stage); self.accept(stage)
+        with self.assertRaises(p.PipelineError):
+            self.candidate("09")
+        self.candidate("08P"); self.check_all("08P")
+        p.submit(args(stage="08P",candidate="A"),self.root,self.run)
+        p.storage(args(stage="08P",candidate="A",quiescent=True),self.root,self.run)
+        result=p.complete(args(stage="08P",candidate="A"),self.root,self.run)
+        self.assertEqual(result["next_stage"],"09")
+        self.candidate("09")
+
+    def test_debt_added_during_performance_blocks_submission(self):
+        for stage in p.STAGES[:-2]:
+            self.candidate(stage); self.check_all(stage); self.accept(stage)
+        self.candidate("08P"); self.check_all("08P")
+        p.debt(args(operation="add",id="reset",evidence=str(self.evidence),owner="08",source_stage="08",
+                    severity="major",description="reset unstable"),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.submit(args(stage="08P",candidate="A"),self.root,self.run)
+
+    def test_final_audit_cannot_edit_model(self):
+        self.stage09(submitted=False)
+        f = self.root / "work/09A.json"
+        f.write_text("not the 08P package")
+        with self.assertRaises(p.PipelineError):
+            p.register(args(stage="09",candidate="A",file=str(f),asset=[]),self.root,self.run)
+
+    def test_debt_blocks_audit_without_rewriting_checks(self):
+        self.stage09(submitted=False)
+        p.debt(args(operation="add",id="reset",evidence=str(self.evidence),owner="08",source_stage="08",
+                    severity="major",description="reset unstable"),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.submit(args(stage="09",candidate="A"),self.root,self.run)
+        p.debt(args(operation="accept",id="reset",evidence=str(self.evidence),actor="fixture-human",
+                    statement="Scoped fixture exception"),self.root,self.run)
+        p.record_check(args(stage="09",candidate="A",name="regression-tests",status="fail",evidence=str(self.evidence)),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.submit(args(stage="09",candidate="A"),self.root,self.run)
+
+    def test_direction_does_not_advance(self):
+        self.candidate()
+        policy=p.read_json(self.root/"policy.json")["stages"]["00"]
+        for name in policy["pre_review_checks"]:
+            p.record_check(args(stage="00",candidate="A",name=name,status="pass",evidence=str(self.evidence)),self.root,self.run)
+        name=policy["post_review_checks"][0]
+        with self.assertRaises(p.PipelineError):
+            p.record_check(args(stage="00",candidate="A",name=name,status="pass",evidence=str(self.evidence)),self.root,self.run)
+        p.direction(args(stage="00",candidate="A",actor="fixture-human",statement="fixture"),self.root,self.run)
+        self.assertIsNone(self.run["stages"]["00"]["approved"])
+        with self.assertRaises(p.PipelineError): self.candidate("01")
+        with self.assertRaises(p.PipelineError): p.submit(args(stage="00",candidate="A"),self.root,self.run)
+        self.check_all()
+        self.accept()
+        self.assertEqual(self.run["stages"]["00"]["approved"],"A")
+
+    def test_revision_invalidates_direction(self):
+        self.candidate(); self.check_all()
+        self.candidate()
+        c=p.get_candidate(self.run,"00","A")
+        self.assertNotIn("direction",c)
+        self.assertTrue(p.direction_errors(self.root,self.run,"00",c))
+
+    def test_post_review_debt_blocks_early_stage(self):
+        self.candidate(); self.check_all()
+        p.debt(args(operation="add",id="fault",evidence=str(self.evidence),owner="00",source_stage="00",
+                    severity="major",description="fixture defect"),self.root,self.run)
+        with self.assertRaises(p.PipelineError): p.submit(args(stage="00",candidate="A"),self.root,self.run)
+
+    def test_storage_subgate_required(self):
+        self.candidate(); self.check_all()
+        p.submit(args(stage="00",candidate="A"),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.complete(args(stage="00",candidate="A"),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.storage(args(stage="00",candidate="A",quiescent=False),self.root,self.run)
+        p.storage(args(stage="00",candidate="A",quiescent=True),self.root,self.run)
+        p.complete(args(stage="00",candidate="A"),self.root,self.run)
+
+    def test_storage_does_not_require_abandoned_draft_current(self):
+        self.candidate(cid="B").write_text("abandoned draft")
+        self.candidate(); self.check_all()
+        p.submit(args(stage="00",candidate="A"),self.root,self.run)
+        p.storage(args(stage="00",candidate="A",quiescent=True),self.root,self.run)
+        p.complete(args(stage="00",candidate="A"),self.root,self.run)
+
+    def test_storage_report_tamper_blocks(self):
+        self.candidate(); self.check_all()
+        p.submit(args(stage="00",candidate="A"),self.root,self.run)
+        p.storage(args(stage="00",candidate="A",quiescent=True),self.root,self.run)
+        c=p.get_candidate(self.run,"00","A")
+        (self.root/c["storage_subgate"]["evidence"]["path"]).write_text("changed")
+        with self.assertRaises(p.PipelineError):
+            p.complete(args(stage="00",candidate="A"),self.root,self.run)
 
     def test_old_version_is_not_silently_migrated(self):
         self.run["pack_version"]="2.0.0";p.atomic_json(self.root/"run.json",self.run)

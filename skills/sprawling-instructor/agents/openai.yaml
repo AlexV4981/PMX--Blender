@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sprawling Instructor"
+  short_description: "Bound investigations and manage evidence in long projects"
+  default_prompt: "Use Sprawling Instructor to navigate authoritative evidence, track persistent investigation budgets, and escalate without weakening project requirements."

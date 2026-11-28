@@ -10,6 +10,7 @@ import argparse
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -19,9 +20,9 @@ import sys
 import tempfile
 
 PACK = Path(__file__).resolve().parents[1]
-VERSION = "3.0.0"
+VERSION = "4.2.0"
 REVIEW_GATES = ("audit", "delivery")
-STAGES = tuple(f"{i:02d}" for i in range(10))
+STAGES = tuple(f"{i:02d}" for i in range(9)) + ("08P", "09")
 ID = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$")
 
 
@@ -114,6 +115,19 @@ def verify_stamp(root, item):
         return False
 
 
+def source_path(root, item):
+    """Resolve a pinned source. Existing absolute records retain their meaning."""
+    p = Path(item["path"])
+    if p.is_absolute():
+        return p
+    if not p.parts or ".." in p.parts:
+        raise PipelineError("Unsafe relative source path")
+    target = (root / p).resolve()
+    if not target.is_relative_to(root):
+        raise PipelineError("Relative source escaped workspace")
+    return target
+
+
 def load(root):
     run = read_json(root / "run.json")
     if run.get("schema_version") != 1 or run.get("pack_version") != VERSION:
@@ -121,7 +135,7 @@ def load(root):
     if digest(root / "policy.json") != run.get("policy_sha256"):
         raise PipelineError("Policy changed; start a newly qualified run instead of weakening existing gates.")
     for s in run["sources"]:
-        p = Path(s["path"])
+        p = source_path(root, s)
         if not p.is_file() or digest(p) != s["sha256"]:
             raise PipelineError(f"Source changed or unavailable: {p}")
     # Validate every accepted checkpoint before allowing any further work.
@@ -150,10 +164,10 @@ def get_candidate(run, stage, cid):
 def input_digest(run, stage):
     if stage == "00":
         return canonical(run["sources"])
-    previous = run["stages"][f"{int(stage)-1:02d}"]
+    previous = run["stages"][STAGES[STAGES.index(stage)-1]]
     cid = previous.get("approved")
     if not cid:
-        raise PipelineError("Previous stage needs explicit human approval before work can advance.")
+        raise PipelineError("Previous stage needs human direction and technical completion before work can advance.")
     return previous["candidates"][cid]["bundle_sha256"]
 
 
@@ -172,19 +186,185 @@ def append_event(run, event, **data):
     run["events"].append({"time": now(), "event": event, **data})
 
 
-def gate_errors(root, run, stage, c, reviews=True):
+def debt_errors(root, run):
     errors = []
-    try:
-        require_current(root, run, stage, c)
-    except PipelineError as e:
-        errors.append(str(e))
-    policy = read_json(root / "policy.json")
-    for name in policy["stages"][stage]["required_checks"]:
+    for key, item in run["debts"].items():
+        if not verify_stamp(root, item["evidence"]):
+            errors.append(f"Debt evidence stale: {key}")
+        if item["status"] == "open" and item["severity"] in ("blocker", "major"):
+            errors.append(f"Unresolved debt: {key}")
+        if item["status"] != "open" and not verify_stamp(root, item["disposition"]["evidence"]):
+            errors.append(f"Debt disposition stale: {key}")
+    return errors
+
+
+def require_final_copy(run, c):
+    """09 can relocate byte-identical package artifacts, not edit the model."""
+    st = run["stages"]["08P"]
+    prior = st["candidates"][st["approved"]]
+    def signature(candidate):
+        primary = next(a["sha256"] for a in candidate["artifacts"] if a["path"] == candidate["primary"])
+        assets = sorted(a["sha256"] for a in candidate["artifacts"] if a["path"] != candidate["primary"])
+        return primary, assets
+    if signature(prior) != signature(c):
+        raise PipelineError("09 must use the exact 08P model and registered assets; route edits to an authorized owner work package.")
+
+
+def debt(args, root, run):
+    if args.operation == "list":
+        return {"debts": run["debts"], "gate_errors": debt_errors(root, run)}
+    if run["stages"]["09"]["approved"]:
+        raise PipelineError("Final approval is immutable; record later defects in a separate run.")
+    key = args.id
+    if not key or not ID.fullmatch(key):
+        raise PipelineError("Stable debt ID required")
+    evidence = stamp(root, args.evidence)
+    if not evidence["bytes"]:
+        raise PipelineError("Debt evidence is empty")
+    if args.operation == "add":
+        if key in run["debts"]:
+            raise PipelineError("Debt ID exists; do not reset or rename it")
+        if args.owner not in STAGES or args.source_stage not in STAGES or not args.description.strip():
+            raise PipelineError("Debt requires valid source/owner stages and description")
+        item = dict(owner=args.owner, source_stage=args.source_stage, severity=args.severity,
+                    description=args.description, evidence=evidence, status="open")
+        run["debts"][key] = item
+    else:
+        item = run["debts"].get(key)
+        if not item or item["status"] != "open":
+            raise PipelineError("Only existing open debt can be disposed")
+        if not args.statement.strip():
+            raise PipelineError("Record the measured fix or exact scoped exception")
+        if args.operation == "accept":
+            decision = human_fields(args)
+        else:
+            decision = {"statement": args.statement, "trust_boundary": "reported_fix_not_independent_test"}
+        item.update(status="accepted-with-scope" if args.operation == "accept" else "fixed",
+                    disposition={**decision, "evidence": evidence})
+    append_event(run, "debt_"+args.operation, id=key, record=dict(item))
+    return {"id": key, "debt": item, "notice": "Debt disposition never changes a required check status."}
+
+
+def check_errors(root, c, names):
+    errors = []
+    for name in names:
         check = c["checks"].get(name)
         if not check or check["status"] != "pass":
             errors.append(f"Check not passed: {name}")
         elif check["bundle_sha256"] != c["bundle_sha256"] or not verify_stamp(root, check["evidence"]):
             errors.append(f"Check/evidence stale: {name}")
+    return errors
+
+
+def direction_errors(root, run, stage, c):
+    policy = read_json(root / "policy.json")["stages"][stage]
+    record = c.get("direction")
+    names = policy["pre_review_checks"]
+    if not record or record["bundle_sha256"] != c["bundle_sha256"] or record["revision"] != c["revision"]:
+        return ["Missing or stale human direction for this exact revision"]
+    errors = check_errors(root, c, names)
+    if record["pre_checks_sha256"] != canonical({n: c["checks"].get(n) for n in names}):
+        errors.append("Pre-review evidence changed; obtain fresh direction")
+    return errors
+
+
+def direction(args, root, run):
+    if args.stage == "09":
+        raise PipelineError("09 uses audit and delivery reviews, not direction")
+    c = get_candidate(run, args.stage, args.candidate)
+    if c["status"] != "draft":
+        raise PipelineError("Direction requires a draft")
+    require_current(root, run, args.stage, c)
+    policy = read_json(root / "policy.json")["stages"][args.stage]
+    errors = check_errors(root, c, policy["pre_review_checks"])
+    if errors:
+        raise PipelineError("; ".join(errors))
+    record = {**human_fields(args), "time": now(), "revision": c["revision"],
+              "bundle_sha256": c["bundle_sha256"],
+              "pre_checks_sha256": canonical({n: c["checks"][n] for n in policy["pre_review_checks"]})}
+    c["direction"] = record
+    for name in policy["post_review_checks"]:
+        c["checks"].pop(name, None)
+    append_event(run, "human_direction", stage=args.stage, candidate=args.candidate, record=record)
+    return {"status": "qualifying", "notice": "Direction recorded; technical subgates still block advancement."}
+
+
+def storage_errors(root, c):
+    record = c.get("storage_subgate")
+    if not record or record.get("bundle_sha256") != c["bundle_sha256"] or record.get("revision") != c["revision"]:
+        return ["Missing storage subgate for this exact submission"]
+    if not verify_stamp(root, record["evidence"]):
+        return ["Storage subgate evidence missing or stale"]
+    return []
+
+
+def storage(args, root, run):
+    """Mandatory path-preserving deduplication after submission, before advancement."""
+    c = get_candidate(run, args.stage, args.candidate)
+    if c["status"] != "awaiting_review" or not args.quiescent:
+        raise PipelineError("Storage subgate needs submitted candidate and quiescent workspace")
+    require_current(root, run, args.stage, c)
+    if not c["snapshot"] or not all(verify_stamp(root,x) for x in c["snapshot"]):
+        raise PipelineError("Submission snapshot missing or stale")
+    if c.get("storage_subgate"):
+        raise PipelineError("Storage subgate already recorded; preserve evidence")
+    spec = importlib.util.spec_from_file_location("artifact_dedup", PACK/"scripts"/"artifact_dedup.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    scopes = ["work","audit","candidates","checkpoints"]
+    before = shutil.disk_usage(root).free
+    result = tool.run(root, scopes, apply=True, min_bytes=read_json(root / "policy.json")["storage_subgate"]["minimum_file_bytes"])
+    after = shutil.disk_usage(root).free
+    # The dedup tool preserves every scanned file's bytes. Check required live
+    # identities too, but do not turn abandoned drafts into delivery blockers.
+    for stage in run["stages"].values():
+        for candidate in stage["candidates"].values():
+            if candidate is not c and candidate["status"] != "approved":
+                continue
+            for item in candidate["artifacts"] + candidate.get("snapshot", []):
+                if not verify_stamp(root,item):
+                    raise PipelineError("Artifact identity changed during storage subgate")
+            for entry in list(candidate["checks"].values()) + list(candidate["reviews"].values()):
+                if not verify_stamp(root,entry["evidence"]):
+                    raise PipelineError("Evidence identity changed during storage subgate")
+    for source in run["sources"]:
+        if digest(source_path(root, source)) != source["sha256"]:
+            raise PipelineError("Source identity changed during storage subgate")
+    report_dir = root/"audit"/"storage"
+    report = report_dir/f"{args.stage}-{args.candidate}-r{c['revision']:04d}-{now().replace(chr(58), chr(45))}.json"
+    result.update(stage=args.stage,candidate=args.candidate,revision=c["revision"],
+                  bundle_sha256=c["bundle_sha256"],free_bytes_before=before,free_bytes_after=after,
+                  free_space_delta_unattributed=after-before,time=now())
+    atomic_json(report,result)
+    if result["status"] != "complete":
+        raise PipelineError("Storage scan/verification blocked; retain files and inspect report")
+    c["storage_subgate"]={"revision":c["revision"],"bundle_sha256":c["bundle_sha256"],
+                          "evidence":stamp(root,report)}
+    append_event(run,"storage_subgate",stage=args.stage,candidate=args.candidate,record=c["storage_subgate"])
+    return {"status":"complete","report":str(report),"logical_duplicate_bytes":result["logical_duplicate_bytes"],
+            "kernel_reported_shared_bytes":result["kernel_reported_shared_bytes"],
+            "notice":"Unsupported copies retained; shared bytes are not measured disk recovery."}
+
+
+def gate_errors(root, run, stage, c, reviews=True):
+    errors = []
+    try:
+        require_current(root, run, stage, c)
+        if stage == "09":
+            require_final_copy(run, c)
+            errors.extend(debt_errors(root, run))
+        elif stage == "08P" and c["status"] != "approved":
+            errors.extend(debt_errors(root, run))
+    except PipelineError as e:
+        errors.append(str(e))
+    policy = read_json(root / "policy.json")
+    errors.extend(check_errors(root, c, policy["stages"][stage]["required_checks"]))
+    if stage != "09":
+        errors.extend(direction_errors(root, run, stage, c))
+        if c["status"] != "approved":
+            errors.extend(debt_errors(root, run))
+    if reviews and c["status"] in ("awaiting_review","approved"):
+        errors.extend(storage_errors(root,c))
     if reviews and stage == "09":
         for name in REVIEW_GATES:
             review = c["reviews"].get(name)
@@ -204,7 +384,7 @@ def init_run(args, root):
         p = Path(f).resolve()
         if not p.is_file():
             raise PipelineError(f"Missing source: {p}")
-        sources.append({"path": str(p), "sha256": digest(p), "bytes": p.stat().st_size})
+        sources.append({"path": p.relative_to(root).as_posix() if p.is_relative_to(root) else str(p), "sha256": digest(p), "bytes": p.stat().st_size})
     if len({s["path"] for s in sources}) != len(sources):
         raise PipelineError("Duplicate source paths")
     for name in ["work", "audit", "candidates", "checkpoints"]:
@@ -214,7 +394,7 @@ def init_run(args, root):
            "sources": sorted(sources, key=lambda x: x["path"]),
            "policy_sha256": digest(root / "policy.json"),
            "stages": {s: {"approved": None, "candidates": {}} for s in STAGES},
-           "dependency_attempts": {}, "events": []}
+           "dependency_attempts": {}, "debts": {}, "events": []}
     append_event(run, "created", source_count=len(sources))
     atomic_json(root / "run.json", run)
     return {"workspace": str(root), "status": "created", "next_stage": "00"}
@@ -227,6 +407,8 @@ def register(args, root, run):
     if stage["approved"]:
         raise PipelineError("Stage approved and immutable; branch a new run for retrospective changes.")
     inp = input_digest(run, args.stage)
+    if args.stage in ("08P", "09") and debt_errors(root, run):
+        raise PipelineError("; ".join(debt_errors(root, run)))
     existing = stage["candidates"].get(args.candidate)
     if not existing and len(stage["candidates"]) >= 3:
         raise PipelineError("Three candidate IDs already used. Revise an existing candidate after critique.")
@@ -236,7 +418,7 @@ def register(args, root, run):
     artifacts = sorted([stamp(root, p) for p in paths], key=lambda x: x["path"])
     if len({a["path"] for a in artifacts}) != len(artifacts):
         raise PipelineError("Duplicate candidate artifact paths")
-    source_paths = {Path(s["path"]).resolve() for s in run["sources"]}
+    source_paths = {source_path(root, s).resolve() for s in run["sources"]}
     protected = {a["path"] for st in run["stages"].values() for c in st["candidates"].values()
                  if c["status"] == "approved" for a in c["artifacts"]}
     other_paths = {a["path"] for st in run["stages"].values() for cid, c in st["candidates"].items()
@@ -253,6 +435,8 @@ def register(args, root, run):
          "primary": stamp(root, args.file)["path"], "artifacts": artifacts,
          "bundle_sha256": canonical(artifacts), "input_sha256": inp,
          "checks": {}, "reviews": historical_reviews, "snapshot": []}
+    if args.stage == "09":
+        require_final_copy(run, c)
     stage["candidates"][args.candidate] = c
     append_event(run, "candidate_registered", stage=args.stage, candidate=args.candidate,
                  revision=rev, bundle_sha256=c["bundle_sha256"])
@@ -264,6 +448,11 @@ def record_check(args, root, run):
     if c["status"] != "draft":
         raise PipelineError("Checks may only change on a draft candidate.")
     require_current(root, run, args.stage, c)
+    policy = read_json(root / "policy.json")["stages"][args.stage]
+    if args.name in policy.get("post_review_checks", []):
+        errors = direction_errors(root, run, args.stage, c)
+        if errors:
+            raise PipelineError("; ".join(errors))
     evidence = stamp(root, args.evidence)
     if evidence["bytes"] == 0 or evidence["path"] in {a["path"] for a in c["artifacts"]}:
         raise PipelineError("Use a separate, non-empty evidence file.")
@@ -304,7 +493,7 @@ def submit(args, root, run):
     append_event(run, "submitted", stage=args.stage, candidate=args.candidate,
                  revision=c["revision"], bundle_sha256=c["bundle_sha256"])
     return {"status": "awaiting_review", "snapshot": str(dest),
-            "notice": "Stop and ask the human to select or critique. Submission is not approval."}
+            "notice": "Use complete after technical subgates; 09 requires delivery review." if args.stage != "09" else "Stop for the explicit delivery review."}
 
 
 def human_fields(args):
@@ -328,6 +517,7 @@ def review(args, root, run):
         if c["status"] != "awaiting_review":
             raise PipelineError("Final delivery decision requires the submitted exact candidate.")
         errors = gate_errors(root, run, args.stage, c, reviews=False)
+        errors.extend(storage_errors(root,c))
         if not c["snapshot"] or not all(verify_stamp(root, x) for x in c["snapshot"]):
             errors.append("Submission snapshot changed or is missing")
         if errors:
@@ -354,6 +544,22 @@ def review(args, root, run):
 
 
 def approve(args, root, run):
+    if args.stage != "09":
+        raise PipelineError("Use direction before technical subgates and complete after submission; no second human approval.")
+    return finalize(args, root, run, human_fields(args))
+
+
+def complete(args, root, run):
+    if args.stage == "09":
+        raise PipelineError("09 requires the explicit delivery decision")
+    c = get_candidate(run, args.stage, args.candidate)
+    errors = direction_errors(root, run, args.stage, c)
+    if errors:
+        raise PipelineError("; ".join(errors))
+    return finalize(args, root, run, c["direction"])
+
+
+def finalize(args, root, run, decision):
     c = get_candidate(run, args.stage, args.candidate)
     if c["status"] != "awaiting_review":
         raise PipelineError("Only a submitted, reviewed candidate can be approved.")
@@ -364,12 +570,12 @@ def approve(args, root, run):
         errors.append("Submission snapshot changed or is missing")
     if errors:
         raise PipelineError("; ".join(errors))
-    c["approval"] = {**human_fields(args), "time": now(), "bundle_sha256": c["bundle_sha256"]}
+    c["approval"] = {**decision, "completed_at": now(), "bundle_sha256": c["bundle_sha256"]}
     c["status"] = "approved"
     run["stages"][args.stage]["approved"] = args.candidate
     append_event(run, "human_approval", stage=args.stage, candidate=args.candidate, record=c["approval"])
     return {"approved": args.candidate, "stage": args.stage,
-            "next_stage": f"{int(args.stage)+1:02d}" if args.stage != "09" else None}
+            "next_stage": STAGES[STAGES.index(args.stage)+1] if args.stage != "09" else None}
 
 
 def feedback(args, root, run):
@@ -380,6 +586,8 @@ def feedback(args, root, run):
         raise PipelineError("Record the actual human critique")
     c["status"] = "draft"
     c["checks"] = {}
+    c.pop("direction", None)
+    c.pop("storage_subgate", None)
     c["reviews"] = {k: v for k, v in c["reviews"].items() if k == "audit"}
     append_event(run, "human_feedback", stage=args.stage, candidate=args.candidate,
                  statement=args.statement)
@@ -408,7 +616,7 @@ def attempt(args, root, run):
 def status(root, run):
     return {"pack_version": run["pack_version"], "stages": {
         s: {"approved": st["approved"], "candidates": {
-            cid: {"status": c["status"], "revision": c["revision"],
+            cid: {"status": c["status"], "revision": c["revision"], "direction_recorded": bool(c.get("direction")),
                   "gate_errors": gate_errors(root, run, s, c)} for cid, c in st["candidates"].items()}}
         for s, st in run["stages"].items()}}
 
@@ -420,7 +628,7 @@ def parser():
     init.add_argument("workspace"); init.add_argument("--source", action="append", required=True)
     for name in ["status", "validate"]:
         q = subs.add_parser(name); q.add_argument("workspace")
-    for name in ["candidate", "check", "submit", "approve", "feedback", "review"]:
+    for name in ["candidate", "check", "submit", "approve", "feedback", "review", "direction", "complete", "storage"]:
         q = subs.add_parser(name)
         q.add_argument("workspace"); q.add_argument("stage", choices=STAGES); q.add_argument("candidate")
         if name == "candidate":
@@ -428,12 +636,29 @@ def parser():
         if name == "check":
             q.add_argument("--name", required=True); q.add_argument("--status", choices=["pass", "fail", "blocked"], required=True)
             q.add_argument("--evidence", required=True)
-        if name in ("approve", "review"):
+        if name in ("approve", "review", "direction"):
             q.add_argument("--actor", required=True); q.add_argument("--statement", required=True)
         if name == "feedback": q.add_argument("--statement", required=True)
+        if name == "storage": q.add_argument("--quiescent",action="store_true",required=True)
         if name == "review":
             q.add_argument("--gate", choices=REVIEW_GATES, required=True)
             q.add_argument("--evidence", required=True)
+    d = subs.add_parser("debt", help="Record unresolved issues and explicit dispositions")
+    d.add_argument("workspace")
+    ds = d.add_subparsers(dest="operation", required=True)
+    ds.add_parser("list")
+    for name in ("add", "close", "accept"):
+        q = ds.add_parser(name)
+        q.add_argument("id")
+        q.add_argument("--evidence", required=True)
+        if name == "add":
+            q.add_argument("--source-stage", required=True, choices=STAGES)
+            q.add_argument("--owner", required=True, choices=STAGES)
+            q.add_argument("--severity", choices=("blocker","major","minor"), required=True)
+            q.add_argument("--description", required=True)
+        else:
+            q.add_argument("--statement", required=True)
+            if name == "accept": q.add_argument("--actor", required=True)
     a = subs.add_parser("attempts")
     a.add_argument("workspace"); a.add_argument("dependency"); a.add_argument("--method", required=True)
     a.add_argument("--outcome", choices=["failed", "succeeded"], required=True); a.add_argument("--evidence", required=True)
@@ -461,9 +686,11 @@ def main(argv=None):
                         result = {"valid": True, "notice": "Ledger integrity only; draft/blocked stages are not production passes.", **result}
                 else:
                     actions = {"candidate": register, "check": record_check, "submit": submit,
-                               "approve": approve, "feedback": feedback, "review": review, "attempts": attempt}
+                               "approve": approve, "feedback": feedback, "review": review, "attempts": attempt, "debt": debt,
+                               "direction": direction, "complete": complete, "storage": storage}
                     result = actions[args.command](args, root, run)
-                    atomic_json(root / "run.json", run)
+                    if not (args.command == "debt" and args.operation == "list"):
+                        atomic_json(root / "run.json", run)
         print(json.dumps(result, indent=2, sort_keys=True, allow_nan=False))
         return 0
     except (PipelineError, OSError, KeyError, TypeError, ValueError) as e:

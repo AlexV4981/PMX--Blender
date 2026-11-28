@@ -1,0 +1,4 @@
+interface:
+  display_name: "08P Performance"
+  short_description: "Bound optimization before read-only audit"
+  default_prompt: "Use the 08P performance skill and preserve native quality, evidence and persistent budgets."

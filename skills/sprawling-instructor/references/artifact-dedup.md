@@ -1,0 +1,10 @@
+# Exact duplicate artifact subgate
+
+At each completed technical subgate batch, scan explicitly authorized project artifact directories. Group files by size, SHA-256, then streaming byte comparison. Default minimum 64 KiB keeps scans focused on material storage. Do not follow symlinks or scan tool installs, Git, outside the workspace, or active writer directories. A plan is read-only. Only apply with exclusive quiescent workspace and no Blender, render, cache, sync or other writer processes. Use Linux FIDEDUPERANGE where supported: the kernel verifies equal bytes and shares disk extents copy-on-write without deleting original paths or making independent model files writable aliases. No hardlinks, symlink replacements, lossy compression, near-duplicate removal or unique-content deletion. All original paths and file bytes survive. Existing hardlinks are excluded from duplicate savings.
+
+    python3 scripts/artifact_dedup.py RUN --scope audit --scope work --output /path/to/new-plan.json
+    python3 scripts/artifact_dedup.py RUN --scope audit --scope work --apply --quiescent --output /path/to/new-report.json
+
+Verify original hashes after attempted sharing and run the authoritative project ledger validation before and afterward. A mismatch or scan error blocks progression. Unsupported filesystem/permission/partial operations retain the files; report limitation instead of repeatedly retrying. A complete report does not imply every duplicate was removed. Kernel shared bytes are not actual free-space savings: record filesystem free-space before/after separately if isolated. The CLI cannot certify no other writers; the orchestrator must establish this. No archive/delete fallback is enabled for live referenced artifacts. If storage sharing is unavailable, a separately authorized offline archive of retired files with verified restore may be used; do not erase any referenced or approved path.
+
+For analysis keep unique scripts, raw measurements, rejected model variants, render evidence, approval history and original path identities. This is generic infrastructure, not a new artistic decision.

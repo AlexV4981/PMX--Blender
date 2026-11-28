@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "pack_version": "3.0.0",
+  "pack_version": "4.2.0",
   "candidate_limit": 3,
   "dependency_alternative_limit": 10,
   "stages": {
@@ -9,12 +9,34 @@
         "source-inventory",
         "environment-lock",
         "reference-and-scope",
-        "capability-spec"
+        "capability-spec",
+        "performance-contract",
+        "equivalence-policy",
+        "investigation-budget"
+      ],
+      "pre_review_checks": [
+        "reference-and-scope",
+        "capability-spec",
+        "performance-contract",
+        "equivalence-policy",
+        "investigation-budget"
+      ],
+      "post_review_checks": [
+        "source-inventory",
+        "environment-lock"
       ]
     },
     "01": {
       "required_checks": [
         "import-inventory",
+        "feature-loss-report",
+        "texture-dependencies",
+        "baseline-integrity"
+      ],
+      "pre_review_checks": [
+        "import-inventory"
+      ],
+      "post_review_checks": [
         "feature-loss-report",
         "texture-dependencies",
         "baseline-integrity"
@@ -26,11 +48,27 @@
         "cycles-comparisons",
         "preview-behavior",
         "material-flag-report"
+      ],
+      "pre_review_checks": [
+        "material-mapping",
+        "cycles-comparisons"
+      ],
+      "post_review_checks": [
+        "preview-behavior",
+        "material-flag-report"
       ]
     },
     "03": {
       "required_checks": [
         "geometry-change-comparisons",
+        "morph-integrity",
+        "deformation-tests",
+        "correspondence-map"
+      ],
+      "pre_review_checks": [
+        "geometry-change-comparisons"
+      ],
+      "post_review_checks": [
         "morph-integrity",
         "deformation-tests",
         "correspondence-map"
@@ -42,12 +80,28 @@
         "rig-integrity",
         "switching-demonstrations",
         "runtime-dependencies"
+      ],
+      "pre_review_checks": [
+        "control-capabilities"
+      ],
+      "post_review_checks": [
+        "rig-integrity",
+        "switching-demonstrations",
+        "runtime-dependencies"
       ]
     },
     "05": {
       "required_checks": [
         "face-and-visemes",
         "animation-usability",
+        "retarget-profiles",
+        "animator-guide"
+      ],
+      "pre_review_checks": [
+        "face-and-visemes",
+        "animation-usability"
+      ],
+      "post_review_checks": [
         "retarget-profiles",
         "animator-guide"
       ]
@@ -57,13 +111,31 @@
         "motion-fixtures",
         "deformation-review",
         "integrity-lint",
-        "clean-core-rig"
+        "clean-core-rig",
+        "fixture-coverage"
+      ],
+      "pre_review_checks": [
+        "motion-fixtures",
+        "deformation-review"
+      ],
+      "post_review_checks": [
+        "integrity-lint",
+        "clean-core-rig",
+        "fixture-coverage"
       ]
     },
     "07": {
       "required_checks": [
         "final-style-spec",
         "cycles-look-comparisons",
+        "lighting-and-motion",
+        "preview-limitations"
+      ],
+      "pre_review_checks": [
+        "final-style-spec",
+        "cycles-look-comparisons"
+      ],
+      "post_review_checks": [
         "lighting-and-motion",
         "preview-limitations"
       ]
@@ -74,7 +146,40 @@
         "cold-motion-tests",
         "category-toggles",
         "editable-unbaked",
-        "physics-settings"
+        "physics-settings",
+        "helper-cost-review",
+        "reset-and-debt-review"
+      ],
+      "pre_review_checks": [
+        "physics-part-map"
+      ],
+      "post_review_checks": [
+        "cold-motion-tests",
+        "category-toggles",
+        "editable-unbaked",
+        "physics-settings",
+        "helper-cost-review",
+        "reset-and-debt-review"
+      ]
+    },
+    "08P": {
+      "required_checks": [
+        "perf-baseline",
+        "profile-attribution",
+        "lever-plan",
+        "perf-disposition",
+        "protected-function-regression",
+        "final-package-preparation"
+      ],
+      "pre_review_checks": [
+        "perf-baseline",
+        "lever-plan",
+        "perf-disposition"
+      ],
+      "post_review_checks": [
+        "profile-attribution",
+        "protected-function-regression",
+        "final-package-preparation"
       ]
     },
     "09": {
@@ -86,11 +191,12 @@
         "regression-tests",
         "relocated-clean-open",
         "dependency-disposition",
-        "delivery-guide-and-recipe"
+        "delivery-guide-and-recipe",
+        "debt-clear"
       ]
     }
   },
-  "workflow_revision": 3,
+  "workflow_revision": 6,
   "renderer_policy": {
     "default_engine": "CYCLES",
     "viewport_shading": "RENDERED",
@@ -99,5 +205,44 @@
   "stage09_human_reviews": [
     "audit",
     "delivery"
-  ]
+  ],
+  "stage_order": [
+    "00",
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "08P",
+    "09"
+  ],
+  "stage09_readonly": true,
+  "storage_subgate": {
+    "required_after_submission": true,
+    "stages": [
+      "00",
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "08P",
+      "09"
+    ],
+    "mode": "exact-byte-path-preserving",
+    "unsupported": "retain-and-report",
+    "scope": [
+      "work",
+      "audit",
+      "candidates",
+      "checkpoints"
+    ],
+    "minimum_file_bytes": 65536
+  }
 }

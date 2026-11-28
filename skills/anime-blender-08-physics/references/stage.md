@@ -53,3 +53,7 @@ Read PACK/references/mathematics.md for the 08 procedure, equations, assumptions
 ## Technical references
 
 Consult PACK/references/sources.md for primary documentation matched to the pinned Blender build. Treat formulas and proposed methods here as engineering guidance, not evidence that the character has been qualified.
+
+## V4 construction-cost and debt checks
+
+At construction, record each helper's geometry/attribute cost and relevant evaluated frame-time diagnostic, where available. Use character-specific justified budgets, not a universal vertex cap. Inspect redundant full-model inputs and duplicate dependency evaluation before expanding. Verify mixed-preset cold resets, category transitions, contacts and long settling with actual coverage; record any unresolved findings in the debt register with stable IDs. `helper-cost-review` and `reset-and-debt-review` require real evidence; unknown cost remains unknown. A human look approval cannot pass a simulation check. Open major/blocker debt blocks performance and final audit entry.
