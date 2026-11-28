@@ -3,6 +3,8 @@
 import argparse
 from contextlib import contextmanager
 import json
+import math
+from datetime import datetime, timezone
 import os
 from pathlib import Path
 import sys
@@ -64,6 +66,10 @@ def reserve(data, issue, stage, kind, evidence):
             else:
                 failures += 1
                 last_failure = i
+    if failures >= 2 and kind == "diagnosis" and any(
+        a["kind"] == "diagnosis" for a in prior[last_failure+1:]
+    ):
+        raise ValueError("Renewed diagnosis already attempted; escalate rather than repeat")
     if failures >= 3:
         raise ValueError("Three non-improvements; escalate")
     if kind == "implementation" and failures >= 2 and not any(
@@ -71,11 +77,18 @@ def reserve(data, issue, stage, kind, evidence):
     ):
         raise ValueError("Rollback and finish renewed diagnosis before implementation")
     entry = dict(id=len(attempts)+1, issue=issue, stage=stage, kind=kind,
-                 hypothesis=evidence, outcome=None, result=None)
+                 hypothesis=evidence, outcome=None, result=None,
+                 reserved_at=datetime.now(timezone.utc).isoformat())
     attempts.append(entry)
     return entry
 
-def finish(data, attempt, outcome, evidence):
+def finish(data, attempt, outcome, evidence, seconds=None, tokens=None, usage_source=None):
+    if seconds is not None and (not isinstance(seconds, (float, int)) or not math.isfinite(seconds) or seconds < 0):
+        raise ValueError("Seconds must be finite and nonnegative")
+    if tokens is not None and (type(tokens) is not int or tokens < 0 or usage_source not in ("measured", "estimated")):
+        raise ValueError("Tokens require a nonnegative integer and measured/estimated source")
+    if tokens is None and usage_source is not None:
+        raise ValueError("Usage source without token count")
     if not isinstance(evidence, str) or not evidence.strip():
         raise ValueError("Result evidence required")
     if outcome not in OUTCOMES:
@@ -87,8 +100,29 @@ def finish(data, attempt, outcome, evidence):
         raise ValueError("Outcome incompatible with attempt kind")
     if any(evidence in (x["hypothesis"], x.get("result")) for x in data["attempts"]):
         raise ValueError("Distinct result evidence required")
-    a.update(outcome=outcome, result=evidence)
+    a.update(outcome=outcome, result=evidence, finished_at=datetime.now(timezone.utc).isoformat(),
+             seconds=seconds, tokens=tokens, usage_source=usage_source)
     return a
+
+def report(data):
+    """Observed effort only; never infer quota from subprocess time."""
+    attempts = data["attempts"]
+    def summarize(items):
+        return {"reserved": len(items), "pending": sum(a["outcome"] is None for a in items),
+                "outcomes": {o: sum(a["outcome"] == o for a in items) for o in OUTCOMES},
+                "recorded_seconds": sum(a.get("seconds") or 0 for a in items),
+                "seconds_coverage": sum(a.get("seconds") is not None for a in items),
+                "measured_tokens": sum(a.get("tokens") or 0 for a in items if a.get("usage_source") == "measured"),
+                "estimated_tokens": sum(a.get("tokens") or 0 for a in items if a.get("usage_source") == "estimated"),
+                "token_coverage": sum(a.get("tokens") is not None for a in items)}
+    return {"run": summarize(attempts), "remaining_run": max(0, data["limits"]["run"]-len(attempts)),
+            "stages": {k: {**summarize([a for a in attempts if a["stage"] == k]),
+                            "remaining": max(0,data["limits"]["stage"]-sum(a["stage"] == k for a in attempts))}
+                       for k in sorted({a["stage"] for a in attempts})},
+            "issues": {k: {**summarize([a for a in attempts if a["issue"] == k]),
+                            "remaining": max(0,data["limits"]["issue"]-sum(a["issue"] == k for a in attempts))}
+                       for k in sorted({a["issue"] for a in attempts})},
+            "notice": "Coverage counts matter; missing observations are not zero usage or a quota estimate."}
 
 def context(agents, resume):
     sizes = {"agents": Path(agents).stat().st_size, "resume": Path(resume).stat().st_size}
@@ -97,7 +131,7 @@ def context(agents, resume):
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest="cmd", required=True)
-    for name in ("init", "reserve", "finish", "status"):
+    for name in ("init", "reserve", "finish", "status", "report"):
         q = sub.add_parser(name)
         q.add_argument("journal", type=Path)
         if name == "init":
@@ -111,6 +145,9 @@ def main(argv=None):
             q.add_argument("--attempt", type=int, required=True)
             q.add_argument("--outcome", choices=OUTCOMES, required=True)
             q.add_argument("--evidence", required=True)
+            q.add_argument("--seconds", type=float)
+            q.add_argument("--tokens", type=int)
+            q.add_argument("--usage-source", choices=("measured", "estimated"))
     q = sub.add_parser("context")
     q.add_argument("agents")
     q.add_argument("resume")
@@ -134,10 +171,12 @@ def main(argv=None):
                 if a.cmd == "reserve":
                     result = reserve(data, a.issue, a.stage, a.kind, a.evidence)
                 elif a.cmd == "finish":
-                    result = finish(data, a.attempt, a.outcome, a.evidence)
+                    result = finish(data, a.attempt, a.outcome, a.evidence, a.seconds, a.tokens, a.usage_source)
+                elif a.cmd == "report":
+                    result = report(data)
                 else:
                     result = data
-            if a.cmd != "status":
+            if a.cmd not in ("status", "report"):
                 save(path, data)
         print(json.dumps(result, indent=2))
         return 0

@@ -58,6 +58,27 @@ class BudgetTests(unittest.TestCase):
             self.assertEqual(b.main(["reserve", path, "--issue", "y", "--stage", "09", "--kind", "implementation", "--evidence", "h2"]), 2)
             self.assertEqual(b.main(["finish", path, "--attempt", "1", "--outcome", "rejected", "--evidence", "r1"]), 0)
 
+    def test_failed_diagnosis_cannot_repeat(self):
+        self.attempt()
+        self.attempt()
+        self.attempt(kind="diagnosis", outcome="inconclusive")
+        for kind in ("diagnosis", "implementation"):
+            with self.assertRaises(ValueError):
+                b.reserve(self.data, "x", "08", kind, "new")
+
+    def test_telemetry_kept_separate(self):
+        a = b.reserve(self.data, "x", "08", "implementation", "h1")
+        with self.assertRaises(ValueError):
+            b.finish(self.data, a["id"], "rejected", "r1", tokens=42)
+        b.finish(self.data, a["id"], "rejected", "r1", seconds=10, tokens=42, usage_source="estimated")
+        a = b.reserve(self.data, "y", "09", "implementation", "h2")
+        b.finish(self.data, a["id"], "improved", "r2", tokens=20, usage_source="measured")
+        r = b.report(self.data)
+        self.assertEqual(r["run"]["estimated_tokens"], 42)
+        self.assertEqual(r["run"]["measured_tokens"], 20)
+        self.assertEqual(r["run"]["seconds_coverage"], 1)
+        self.assertEqual(r["remaining_run"], 8)
+
     def test_context_limits(self):
         with tempfile.TemporaryDirectory() as d:
             a, r = Path(d)/"a", Path(d)/"r"

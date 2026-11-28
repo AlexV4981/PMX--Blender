@@ -15,3 +15,9 @@ Example (from the skill directory):
 The limits are examples, not universal defaults. Use an immutable evidence reference (ideally content hash + relative path); the CLI verifies uniqueness of the supplied string, not its content. An attempt is charged before work; a pending attempt blocks new reservations to avoid concurrent work. After two non-improving implementations, a diagnosis must be reserved and finished with outcome diagnosis and new evidence before another implementation. Three non-improvements block the issue. A diagnosis does not reset counters. A changed stage charges its own stage cap while the issue cap follows the ID. Keep the journal under project control; direct execution and manual edits are not intercepted. No budget extension command is offered in this pilot. Use a recorded human decision before introducing a future extension mechanism.
 
 Tests: `python3 -m unittest discover -s tests -v` from this skill directory. Historical replay and live usage comparison remain required before production adoption.
+
+### Review revision 2
+
+`finish` optionally accepts `--seconds`, `--tokens` and `--usage-source measured|estimated`. `report` returns coverage counts, outcome counts and remaining run/stage/issue limits. Unknown telemetry stays unknown; estimates and actual tokens are never combined. A failed renewed diagnosis after two non-improving implementations cannot be repeated under the same issue ID. A recorded evidence reference remains a trust boundary, not a proof of causality or artifact integrity. The journal is an opt-in gate, not a sandbox or a Codex quota meter.
+
+Historical replay targets: r37/r38 rejected -> renewed diagnosis -> r39 rejected -> stop same issue; r41 failed precheck -> no blind arithmetic retry; neutral motion fixture and placeholder measurements -> blocked rather than pass; context >20 KB -> explicit compaction. These are replay scenarios, not reproduced Blender results.
