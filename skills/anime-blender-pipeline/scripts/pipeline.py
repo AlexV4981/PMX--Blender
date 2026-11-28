@@ -115,6 +115,19 @@ def verify_stamp(root, item):
         return False
 
 
+def source_path(root, item):
+    """Resolve a pinned source. Existing absolute records retain their meaning."""
+    p = Path(item["path"])
+    if p.is_absolute():
+        return p
+    if not p.parts or ".." in p.parts:
+        raise PipelineError("Unsafe relative source path")
+    target = (root / p).resolve()
+    if not target.is_relative_to(root):
+        raise PipelineError("Relative source escaped workspace")
+    return target
+
+
 def load(root):
     run = read_json(root / "run.json")
     if run.get("schema_version") != 1 or run.get("pack_version") != VERSION:
@@ -122,7 +135,7 @@ def load(root):
     if digest(root / "policy.json") != run.get("policy_sha256"):
         raise PipelineError("Policy changed; start a newly qualified run instead of weakening existing gates.")
     for s in run["sources"]:
-        p = Path(s["path"])
+        p = source_path(root, s)
         if not p.is_file() or digest(p) != s["sha256"]:
             raise PipelineError(f"Source changed or unavailable: {p}")
     # Validate every accepted checkpoint before allowing any further work.
@@ -315,7 +328,7 @@ def storage(args, root, run):
                 if not verify_stamp(root,entry["evidence"]):
                     raise PipelineError("Evidence identity changed during storage subgate")
     for source in run["sources"]:
-        if digest(source["path"]) != source["sha256"]:
+        if digest(source_path(root, source)) != source["sha256"]:
             raise PipelineError("Source identity changed during storage subgate")
     report_dir = root/"audit"/"storage"
     report = report_dir/f"{args.stage}-{args.candidate}-r{c['revision']:04d}-{now().replace(chr(58), chr(45))}.json"
@@ -371,7 +384,7 @@ def init_run(args, root):
         p = Path(f).resolve()
         if not p.is_file():
             raise PipelineError(f"Missing source: {p}")
-        sources.append({"path": str(p), "sha256": digest(p), "bytes": p.stat().st_size})
+        sources.append({"path": p.relative_to(root).as_posix() if p.is_relative_to(root) else str(p), "sha256": digest(p), "bytes": p.stat().st_size})
     if len({s["path"] for s in sources}) != len(sources):
         raise PipelineError("Duplicate source paths")
     for name in ["work", "audit", "candidates", "checkpoints"]:
@@ -405,7 +418,7 @@ def register(args, root, run):
     artifacts = sorted([stamp(root, p) for p in paths], key=lambda x: x["path"])
     if len({a["path"] for a in artifacts}) != len(artifacts):
         raise PipelineError("Duplicate candidate artifact paths")
-    source_paths = {Path(s["path"]).resolve() for s in run["sources"]}
+    source_paths = {source_path(root, s).resolve() for s in run["sources"]}
     protected = {a["path"] for st in run["stages"].values() for c in st["candidates"].values()
                  if c["status"] == "approved" for a in c["artifacts"]}
     other_paths = {a["path"] for st in run["stages"].values() for cid, c in st["candidates"].items()

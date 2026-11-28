@@ -74,3 +74,7 @@ Deliver the native Cycles blend, necessary external textures if any, embedded an
 ## V4.2 mandatory storage subgate
 
 After submit and before complete (or 09 delivery review), run `python3 "$PACK/scripts/pipeline.py" storage "$RUN" STAGE CANDIDATE --quiescent` with all writers stopped. This runs the bundled exact-duplicate utility on work, audit, candidates and checkpoints; preserves original paths and independent writes; records a revision-bound report. No additional human approval. Unsupported sharing retains copies and reports limitations, never unlinks files. Scan or verification errors block completion. See the shared artifact-dedup procedure. New runs only; do not change frozen V3/V4.1 policy.
+
+## Optional cloud stage archival
+
+For low local storage, use [stage-archive.md](references/stage-archive.md) after actual stage completion. The archive extension is opt-in, preserves ledger-required local files and refuses automatic cleanup. Do not run it against frozen V3 ledgers.
