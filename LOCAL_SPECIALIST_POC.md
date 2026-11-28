@@ -124,7 +124,7 @@ Do not label generated reference images, synthetic guesses or successful process
 - Preserve original PMX, working import and approved Blender checkpoints; no silent redesign or destructive rewrite.
 - Maintain the active **Cycles-only** render/review/benchmark contract, stage 00–09 gating, human acceptance, and stage-09 `audit`/`delivery` decisions.
 - Use MMD Tools + Rigify/compatible bridge where justified. Local LLM workers are **experimental**; today's Codex role dispatch remains the active contract until separately proposed, tested and approved.
-- Optimize for the available dedicated compute where possible (Nitro V 6 GB VRAM or future machine); never assume a local model fits. Respect the current per-workload resource ceilings and keep Blender/LLM contention measurable.
+- Optimize for the available dedicated compute where possible (a laptop GPU with 6 GB VRAM or future machine); never assume a local model fits. Respect the current per-workload resource ceilings and keep Blender/LLM contention measurable.
 - Do not fine-tune from scratch or generate thousands of models before confirming the first conversion and specialist task actually work.
 
 ## Next session checklist
