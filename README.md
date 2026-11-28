@@ -49,3 +49,7 @@ All eleven skills validate. Fifty-one utility tests pass, including 20 published
 python3 -m unittest discover -s skills/anime-blender-pipeline/scripts/tests -v
 python3 skills/anime-blender-pipeline/scripts/blender_tools.py validate-seeds
 ```
+
+## Reference hardware (anonymized)
+
+Development targeted a midrange laptop with a 6-core/12-thread AMD Ryzen mobile CPU, 16 GB system RAM, and an entry-level NVIDIA RTX 40-series laptop GPU with 6 GB VRAM. This is a resource-planning reference, not a guaranteed minimum or performance certification. Record device-specific details and private runtime measurements outside this repository.
