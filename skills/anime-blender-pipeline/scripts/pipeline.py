@@ -238,6 +238,8 @@ def gate_errors(root, run, stage, c, reviews=True):
         if stage == "09":
             require_final_copy(run, c)
             errors.extend(debt_errors(root, run))
+        elif stage == "08P" and c["status"] != "approved":
+            errors.extend(debt_errors(root, run))
     except PipelineError as e:
         errors.append(str(e))
     policy = read_json(root / "policy.json")

@@ -39,7 +39,7 @@ class LedgerTests(unittest.TestCase):
 
     def candidate(self, stage="00", cid="A"):
         f = self.root / "work" / (stage+cid+".json")
-        if stage == "09":
+        if stage == "09" and self.run["stages"]["08P"]["approved"]:
             prev = self.run["stages"]["08P"]["candidates"][self.run["stages"]["08P"]["approved"]]
             f.write_bytes((self.root / prev["primary"]).read_bytes())
         else:
@@ -201,6 +201,15 @@ class LedgerTests(unittest.TestCase):
         result=p.approve(args(stage="08P",candidate="A",actor="fixture-human",statement="fixture"),self.root,self.run)
         self.assertEqual(result["next_stage"],"09")
         self.candidate("09")
+
+    def test_debt_added_during_performance_blocks_submission(self):
+        for stage in p.STAGES[:-2]:
+            self.candidate(stage); self.check_all(stage); self.accept(stage)
+        self.candidate("08P"); self.check_all("08P")
+        p.debt(args(operation="add",id="reset",evidence=str(self.evidence),owner="08",source_stage="08",
+                    severity="major",description="reset unstable"),self.root,self.run)
+        with self.assertRaises(p.PipelineError):
+            p.submit(args(stage="08P",candidate="A"),self.root,self.run)
 
     def test_final_audit_cannot_edit_model(self):
         self.stage09(submitted=False)
