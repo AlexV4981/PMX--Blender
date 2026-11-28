@@ -2,7 +2,7 @@
   "schema": 1,
   "cases": [
     {
-      "id": "LYN-RESET",
+      "id": "CASE-RESET",
       "status": "candidate",
       "symptom": "Mixed-preset reset instability",
       "tags": [
@@ -15,7 +15,7 @@
       "evidence": []
     },
     {
-      "id": "LYN-HELPER",
+      "id": "CASE-HELPER",
       "status": "candidate",
       "symptom": "Oversized hidden contact source",
       "tags": [
@@ -24,11 +24,11 @@
       ],
       "applicability": "hidden contact helpers with redundant input geometry",
       "procedure": "Profile helper, preserve evaluated contact geometry and native normals before qualifying any reduction",
-      "limitations": "Lynae-specific result does not prove transfer; no source artifacts bundled",
+      "limitations": "Character-specific result does not prove transfer; no source artifacts bundled",
       "evidence": []
     },
     {
-      "id": "LYN-FIXTURE",
+      "id": "CASE-FIXTURE",
       "status": "candidate",
       "symptom": "Neutral startup falsely treated as articulated coverage",
       "tags": [
@@ -41,7 +41,7 @@
       "evidence": []
     },
     {
-      "id": "LYN-SEAM",
+      "id": "CASE-SEAM",
       "status": "candidate",
       "symptom": "Repeated seam optimization below measurement uncertainty",
       "tags": [

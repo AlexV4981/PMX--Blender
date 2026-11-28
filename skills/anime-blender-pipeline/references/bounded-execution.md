@@ -1,6 +1,6 @@
 # Bounded execution — V4 pilot
 
-Based on the November 27 audit case study: 466 recorded execution jobs, 15.52 cumulative subprocess hours, 734 working scripts, about 500 KB of active handoff text, and six r36–r41 batches without retained improvement. These are workload observations, not measured AI tokens.
+An anonymized production audit recorded hundreds of execution jobs and working scripts, over ten hours of cumulative subprocess work, oversized active handoff text, and repeated experiment batches without retained improvement. These are workload observations, not measured AI tokens.
 
 Use the separately reviewed Sprawling Instructor skill (or an equivalent persistent journal) for each experiment and diagnosis. Set run/stage/issue budgets with the human at setup. Reserve before implementation; rollback, session restart, renamed hypothesis and ownership transfer never reset counters. No unlimited extensions. A blocked attempt stops the issue, not required verification of other issues. One writer, one Blender workload. Record exact protected baseline, issue ID, hypothesis, distinguishing test, rollback and acceptance criterion. Final qualification is not an optional experiment.
 
@@ -14,4 +14,4 @@ Performance: profile before implementation; only use the Amdahl upper bound when
 
 Equivalence: protect unchanged source data, visible outputs, controls and physical behavior exactly for lossless claims; permit scoped hidden implementation changes with protected-output tests. Corrective repair requires predetermined functional tolerances; artistic change human review. Never weaken tolerance post-failure. Dependency reuse requires matching actual component, fixture, harness and environment identities plus evidence hashes and causal justification; unknown dependencies rerun. The helper compares declared hashes, not Blender semantic completeness.
 
-Historical replay: r37/r38 reject then bounded renewed diagnosis, r39 reject then stop; r41 failed precheck must not spawn blind retries; neutral fixture and placeholder arrays block coverage; debt never turns a failed check into pass; 09 cannot register changed bytes; historical V3 ledger must be rejected by V4. These are pilot regression scenarios, not reproduced Blender outcomes.
+Historical replay: two rejected attempts then bounded renewed diagnosis, third rejection then stop; a failed precheck must not spawn blind retries; neutral fixture and placeholder arrays block coverage; debt never turns a failed check into pass; 09 cannot register changed bytes; historical V3 ledger must be rejected by V4. These are pilot regression scenarios, not reproduced Blender outcomes.
